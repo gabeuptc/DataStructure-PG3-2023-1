@@ -37,7 +37,7 @@ public class Person {
     }
 
     @Override
-    protected Person clone() throws CloneNotSupportedException {
+    public Person clone(){
         return new Person(getId(),getName(),getCode());
     }
 
