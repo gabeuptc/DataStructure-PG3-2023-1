@@ -43,7 +43,11 @@ public class ManagerPerson {
    }
 
     public List<Person> getPeople() {
-        return new ArrayList<Person>(listPeople);
+        List<Person> auxList = new ArrayList<>();
+        for (Person person: listPeople) {
+            auxList.add(person.clone());
+        }
+        return auxList;
 
     }
 }
