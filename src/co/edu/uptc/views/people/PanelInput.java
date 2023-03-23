@@ -83,4 +83,13 @@ public class PanelInput extends JPanel {
         jTable.setModel(tableModel);
     }
 
+    public Person getSelectedPerson(){
+        int selectedRow = jTable.getSelectedRow();
+        if (selectedRow != -1) {
+            String value = (String)jTable.getValueAt(selectedRow, jTable.getSelectedColumn());
+            return dialogPeople.getPerson(value);
+        }
+        return null;
+    }
+
 }

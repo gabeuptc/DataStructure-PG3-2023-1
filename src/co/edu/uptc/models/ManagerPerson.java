@@ -23,6 +23,24 @@ public class ManagerPerson {
         }
    }
 
+   public Person getPerson(String attribute){
+       for (Person per: listPeople) {
+           if(attribute.equals(per.getCode()) || attribute.equals(per.getName())){
+               return per;
+           }
+       }
+       return null;
+   }
+
+   public void editPerson(Person person){
+       for (Person per: listPeople) {
+           if(per.getId()==person.getId()){
+               per.setCode(person.getCode());
+               per.setName(person.getName());
+               return;
+           }
+       }
+   }
 
     public List<Person> getPeople() {
         return new ArrayList<Person>(listPeople);

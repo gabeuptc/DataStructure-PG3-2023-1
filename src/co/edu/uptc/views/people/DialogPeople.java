@@ -23,17 +23,27 @@ public class DialogPeople extends JDialog {
     }
 
     private void addComponents(){
-        panelButtom = new PanelButtom(this);
-        add(panelButtom, BorderLayout.SOUTH);
         panelInput = new PanelInput(this);
         add(panelInput,BorderLayout.CENTER);
+        panelButtom = new PanelButtom(this);
+        add(panelButtom, BorderLayout.SOUTH);
     }
 
     public void close(){
         this.setVisible(false);
     }
 
+    public Person getPerson(String attribute){
+       return dashBoard.getPerson(attribute);
+    }
 
+    public Person getSelectedPerson(){
+        return panelInput.getSelectedPerson();
+    }
+
+    public void editPerson(Person person){
+        dashBoard.editPerson(person);
+    }
     public Person getPerson(){
         Person person = new Person();
         person.setCode(panelInput.textFieldCode.getText());

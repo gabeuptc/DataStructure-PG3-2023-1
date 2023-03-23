@@ -20,6 +20,8 @@ public interface ContratBills {
         void addPerson(Person person);
         String getPerson(int pos);
         public List<Person> getPeople();
+        Person getPerson(String attribute);
+        void editPerson(Person person);
     }
 
     public interface Presenter {
@@ -29,6 +31,8 @@ public interface ContratBills {
         void addPersonInModel(Person person);
         void notifyPeopleUpdated();
         String getPerson(int pos);
+        Person getPerson(String attribute);
+        void editPerson(Person person);
 
         public List<Person> getPeople();
         public void notifyError(String value);

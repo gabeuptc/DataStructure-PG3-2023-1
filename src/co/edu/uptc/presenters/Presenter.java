@@ -40,6 +40,16 @@ public class Presenter implements ContratBills.Presenter{
     }
 
     @Override
+    public Person getPerson(String attribute) {
+        return model.getPerson(attribute);
+    }
+
+    @Override
+    public void editPerson(Person person) {
+        model.editPerson(person);
+    }
+
+    @Override
     public List<Person> getPeople() {
        return  model.getPeople();
     }

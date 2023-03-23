@@ -91,6 +91,13 @@ public class DashBoard extends JFrame implements ContratBills.View {
         presenter.addPersonInModel(person);
     }
 
+    public Person getPerson(String attribute){
+        return presenter.getPerson(attribute);
+    }
+
+    public void editPerson(Person person){
+        presenter.editPerson(person);
+    }
 
     @Override
     public void setPresenter(ContratBills.Presenter presenter) {

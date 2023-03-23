@@ -1,19 +1,27 @@
 package co.edu.uptc.pojos;
 
 public class Person {
+    private static int count;
+    private int id;
     private String code;
     private String name;
 
     public Person() {
+        this.id = count++;
     }
 
-    public Person(String code, String name) {
+    public Person(int id,String code, String name) {
+        this.id = id;
         this.code = code;
         this.name = name;
     }
 
     public String getCode() {
         return code;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setCode(String code) {
@@ -26,6 +34,11 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    protected Person clone() throws CloneNotSupportedException {
+        return new Person(getId(),getName(),getCode());
     }
 
     @Override
