@@ -12,9 +12,12 @@ public class PanelButtom extends JPanel {
 
     private JButton buttonAdd;
     private JButton buttonClose;
+    private JButton buttonEdit;
+    private EditPerson editPerson;
     private DialogPeople dialogPeople;
     public PanelButtom(DialogPeople dialogPeople) {
         this.dialogPeople = dialogPeople;
+        editPerson = new EditPerson(dialogPeople);
         setBackground(Color.yellow);
         setPreferredSize(new Dimension(0,50));
         addComponents();
@@ -23,6 +26,7 @@ public class PanelButtom extends JPanel {
     private void addComponents(){
         addButtomAdd();
         addButtonClose();
+        addEditButton();
     }
 
 
@@ -37,11 +41,17 @@ public class PanelButtom extends JPanel {
         });
     }
 
-    private void closeDialog(){
-        dialogPeople.close();
-
+    private void addEditButton(){
+        buttonEdit = new JButton("EDITAR");
+        add(buttonEdit);
+        buttonEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editPerson.setSelectedPerson();
+                showEditDialog();
+            }
+        });
     }
-
 
     private void addButtomAdd(){
         buttonAdd = new JButton("ADICIONAR");
@@ -52,6 +62,15 @@ public class PanelButtom extends JPanel {
                 dialogPeople.addPerson();
             }
         });
+    }
+
+    private void closeDialog(){
+        dialogPeople.close();
+
+    }
+
+    private void showEditDialog(){
+        editPerson.setVisible(true);
     }
 
 

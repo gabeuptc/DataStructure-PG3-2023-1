@@ -36,4 +36,14 @@ public class ManagerGeneral implements ContratBills.Model {
         List<Person> auxList = managerPerson.getPeople();
        return auxList;
     }
+
+    @Override
+    public Person getPerson(String attribute) {
+        return managerPerson.getPerson(attribute);
+    }
+
+    @Override
+    public void editPerson(Person person) {
+        managerPerson.editPerson(person);
+    }
 }
