@@ -2,6 +2,7 @@ package co.edu.uptc.presenters;
 
 
 
+import co.edu.uptc.models.ModelGerman.ManagerModel;
 import co.edu.uptc.pojos.Person;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public interface ContratBills {
         void start();
         void updatedPeople();
         public void notifyError(String value);
+        public void notifyWarning(String value);
 
     }
     public interface Model{
@@ -22,6 +24,7 @@ public interface ContratBills {
         public List<Person> getPeople();
         Person getPerson(String attribute);
         void editPerson(Person person);
+        String getAuthor();
     }
 
     public interface Presenter {
@@ -36,6 +39,8 @@ public interface ContratBills {
 
         public List<Person> getPeople();
         public void notifyError(String value);
+        String getAuthor();
+
 
     }
 }

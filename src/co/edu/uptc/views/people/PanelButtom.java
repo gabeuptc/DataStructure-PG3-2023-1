@@ -47,8 +47,9 @@ public class PanelButtom extends JPanel {
         buttonEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                editPerson.setSelectedPerson();
-                showEditDialog();
+                if (editPerson.setSelectedPerson()) {
+                    showEditDialog();
+                }
             }
         });
     }

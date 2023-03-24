@@ -12,12 +12,15 @@ public class DialogPeople extends JDialog {
     private DashBoard dashBoard;
 
     private PanelButtom panelButtom;
+    private PanelModelSelect panelModelSelect;
 
     private PanelInput panelInput;
+
+    private int height = 800;
     public DialogPeople(DashBoard dashBoard)  {
         super(dashBoard,true);
         this.dashBoard = dashBoard;
-        setSize(new Dimension(500 ,500));
+        setSize(new Dimension(700 ,height));
         setLocationRelativeTo(dashBoard);
         addComponents();
     }
@@ -27,10 +30,19 @@ public class DialogPeople extends JDialog {
         add(panelInput,BorderLayout.CENTER);
         panelButtom = new PanelButtom(this);
         add(panelButtom, BorderLayout.SOUTH);
+        addPanelModelSelect();
     }
+
+    private void addPanelModelSelect(){
+        panelModelSelect = new PanelModelSelect(this);
+        JScrollPane scrollPane = new JScrollPane(panelModelSelect);
+        add(scrollPane,BorderLayout.EAST);
+    }
+
 
     public void close(){
         this.setVisible(false);
+        this.dispose();
     }
 
     public Person getPerson(String attribute){
@@ -39,6 +51,21 @@ public class DialogPeople extends JDialog {
 
     public Person getSelectedPerson(){
         return panelInput.getSelectedPerson();
+    }
+
+    public String getAuthorOfModel(){
+        return dashBoard.getAuthorModel();
+    }
+
+    public void showMessageError(String value){
+        dashBoard.notifyError(value);
+    }
+
+    public void showMessageWarning(String value){
+        dashBoard.notifyWarning(value);
+    }
+    public void updateAuthorModel(){
+        panelInput.updateAuthorModel();
     }
 
     public void editPerson(Person person){

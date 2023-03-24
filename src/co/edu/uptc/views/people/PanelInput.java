@@ -11,6 +11,7 @@ import java.util.List;
 public class PanelInput extends JPanel {
     private JLabel labelCode;
     private JLabel labelName;
+    private JLabel labelModel ;
     protected JTextField textFieldCode;
     protected JTextField textFieldName;
     protected  JTable jTable;
@@ -34,6 +35,11 @@ public class PanelInput extends JPanel {
     }
 
     private void addLabels() {
+        labelModel = new JLabel();
+        updateAuthorModel();
+        labelModel.setBounds(40, 10, 400, 25);
+        add(labelModel);
+
         labelCode = new JLabel("Código");
         labelCode.setBounds(40, 40, 100, 25);
         labelName = new JLabel("Nombre");
@@ -41,6 +47,11 @@ public class PanelInput extends JPanel {
         add(labelCode);
         add(labelName);
     }
+
+    public void updateAuthorModel(){
+        labelModel.setText("Author del modelo: "+dialogPeople.getAuthorOfModel());
+    }
+
 
     private void addTextFilds() {
         textFieldCode = new JTextField();
@@ -55,7 +66,7 @@ public class PanelInput extends JPanel {
     private void addTable(){
         jTable = new JTable(0,2);
         JScrollPane scrollPane = new JScrollPane(jTable);
-        scrollPane.setBounds(30,110,400,300);
+        scrollPane.setBounds(30,110,400,600);
         tableHeader(jTable.getTableHeader());
         add(scrollPane);
      //   loadPeople();
@@ -77,8 +88,12 @@ public class PanelInput extends JPanel {
         clearTable();
         DefaultTableModel tableModel = (DefaultTableModel) jTable.getModel();
         List<Person> auxList = dialogPeople.getPeople();
-        for (Person person : auxList) {
-            tableModel.addRow(new Object[]{person.getCode(),person.getName()});
+        if (auxList!=null) {
+            for (Person person : auxList) {
+                tableModel.addRow(new Object[]{person.getCode(), person.getName()});
+            }
+        } else {
+            tableModel.addRow(new Object[]{"",""});
         }
         jTable.setModel(tableModel);
     }

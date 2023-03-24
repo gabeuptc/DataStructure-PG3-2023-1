@@ -1,5 +1,6 @@
 package co.edu.uptc.presenters;
 
+import co.edu.uptc.models.ModelGerman.ManagerModel;
 import co.edu.uptc.pojos.Person;
 
 import java.util.List;
@@ -24,7 +25,9 @@ public class Presenter implements ContratBills.Presenter{
 
     @Override
     public void addPersonInModel(Person person) {
-        model.addPerson(person);
+        if (validaModel()){
+            model.addPerson(person);
+        }
     }
 
     @Override
@@ -41,22 +44,39 @@ public class Presenter implements ContratBills.Presenter{
 
     @Override
     public Person getPerson(String attribute) {
-        return model.getPerson(attribute);
+        return validaModel()? model.getPerson(attribute): null;
+    }
+
+    private boolean validaModel(){
+        boolean validated = false;
+        if (model !=null) {
+              validated = true;
+        } else {
+            view.notifyError("No existe modelo seleccionado");
+        }
+        return validated;
     }
 
     @Override
     public void editPerson(Person person) {
-        model.editPerson(person);
+        if (validaModel()) {
+            model.editPerson(person);
+        }
     }
 
     @Override
     public List<Person> getPeople() {
-       return  model.getPeople();
+       return validaModel()? model.getPeople():null;
     }
 
     @Override
     public void notifyError(String value) {
         view.notifyError(value);
+    }
+
+    @Override
+    public String getAuthor() {
+        return validaModel()?model.getAuthor():"No hay modelo seleccionado";
     }
 
 

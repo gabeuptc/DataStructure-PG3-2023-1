@@ -82,19 +82,30 @@ public class EditPerson extends JDialog {
         add(labelCode);
     }
 
-    public void setSelectedPerson(){
+    public boolean setSelectedPerson(){
+        boolean selected = false;
         JLabel jLabel = new JLabel();
         jLabel.setBounds(180,20,150,30);
-        jLabel.setText(dialogPeople.getSelectedPerson().getName() + " " + dialogPeople.getSelectedPerson().getCode());
-        add(jLabel);
+        if (dialogPeople!=null&&dialogPeople.getSelectedPerson()!=null) {
+            jLabel.setText(dialogPeople.getSelectedPerson().getName() + " " + dialogPeople.getSelectedPerson().getCode());
+            add(jLabel);
+            selected = true;
+        } else {
+            dialogPeople.showMessageWarning("NO ha seleccionado ninguna persona para modificar");
+        }
 
+        return selected;
     }
 
     public void editPerson(){
         Person per = dialogPeople.getSelectedPerson();
-        per.setName(nameField.getText());
-        per.setCode(codeField.getText());
-        dialogPeople.editPerson(per);
+        if (per!=null) {
+            per.setName(nameField.getText());
+            per.setCode(codeField.getText());
+            dialogPeople.editPerson(per);
+        } else {
+            dialogPeople.showMessageWarning("NO ha seleccionado ninguna persona para modificar");
+        }
     }
 
     private void hideDialog(){

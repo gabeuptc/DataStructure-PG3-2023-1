@@ -5,6 +5,7 @@ import co.edu.uptc.presenters.ContratBills;
 import co.edu.uptc.views.people.DialogPeople;
 import co.edu.uptc.views.people.PanelButtom;
 import co.edu.uptc.views.people.PanelInput;
+import co.edu.uptc.views.people.PanelModelSelect;
 
 import javax.swing.*;
 
@@ -20,8 +21,10 @@ public class DashBoard extends JFrame implements ContratBills.View {
 
     private PanelButtom panelButtom;
 
+
     private PanelInput panelInput;
     public DashBoard()  {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(900 ,900));
         setLocationRelativeTo(null);
         setLayout(null);
@@ -49,6 +52,7 @@ public class DashBoard extends JFrame implements ContratBills.View {
 
     private void showDiaplogPeople(){
         dialogPeople = new DialogPeople(this);
+        dialogPeople.updatedPerson();
         dialogPeople.setVisible(true);
     }
 
@@ -111,15 +115,26 @@ public class DashBoard extends JFrame implements ContratBills.View {
 
     @Override
     public void updatedPeople() {
+        if (dialogPeople!=null)
       dialogPeople.updatedPerson();
     }
 
     @Override
     public void notifyError(String value) {
-        JOptionPane.showMessageDialog(this,value);
+        JOptionPane.showMessageDialog(this,value,"",JOptionPane.ERROR_MESSAGE);
+
+    }
+
+    @Override
+    public void notifyWarning(String value) {
+        JOptionPane.showMessageDialog(this,value,"",JOptionPane.WARNING_MESSAGE);
     }
 
     public List<Person> getPeople() {
         return presenter.getPeople();
+    }
+
+    public String getAuthorModel() {
+        return presenter.getAuthor();
     }
 }
