@@ -39,18 +39,31 @@ public class PanelModelSelect extends JPanel {
     private void addButtons() {
         addButtonSelectModelUserGerman();
         addButtonSelectModelUserCodeOtherStudent();
-
+        addButtonSelectModel202127061();
 
     }
 
     private void addButtonSelectModelUserCodeOtherStudent() {
         configPrefersize();
-        JButton jButtonSelectModelUser = new JButton("Model: student ");
+        JButton jButtonSelectModelUser = new JButton("Model:Test ");
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ManagerGeneral.getInstance().configModelOtherUser();
+                dialogPeople.updateAuthorModel();
+            }
+        });
+    }
+
+    private void addButtonSelectModel202127061() {
+        configPrefersize();
+        JButton jButtonSelectModelUser = new JButton("Model: 202127061 ");
+        add(jButtonSelectModelUser);
+        jButtonSelectModelUser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ManagerGeneral.getInstance().configModelUser202127061();
                 dialogPeople.updateAuthorModel();
             }
         });

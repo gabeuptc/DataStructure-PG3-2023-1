@@ -7,6 +7,7 @@ public class ManagerGeneral {
     private static ManagerGeneral instance;
     ContratBills.View view;
     ContratBills.Model modelGerman;
+    ContratBills.Model model202127061;
     ContratBills.Presenter presenter;
 
     private ManagerGeneral() {
@@ -19,7 +20,8 @@ public class ManagerGeneral {
          presenter.setView(view);
          createModels();
          configModelUserGerman();
-     }
+         configModelUser202127061();
+    }
 
      public static ManagerGeneral getInstance(){
          return instance==null?instance = new ManagerGeneral():instance;
@@ -29,6 +31,7 @@ public class ManagerGeneral {
      private void createModels(){
          // TODO aqui se cream todos los modelos
          modelGerman = new ManagerModel();
+         model202127061 = new ManagerModel();
      }
 
      public void configModelUserGerman(){
@@ -37,6 +40,11 @@ public class ManagerGeneral {
          view.updatedPeople();
      }
 
+    public void configModelUser202127061(){
+        model202127061.setPresenter(presenter);
+        presenter.setModel(model202127061);
+        view.updatedPeople();
+    }
 
     public void configModelOtherUser(){
         // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
