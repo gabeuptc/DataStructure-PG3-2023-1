@@ -1,5 +1,6 @@
 package co.edu.uptc.presenters;
 
+import co.edu.uptc.models.Model202127343.ManagerModel202127343;
 import co.edu.uptc.models.ModelGerman.ManagerModel;
 import co.edu.uptc.views.dashBoard.DashBoard;
 
@@ -8,6 +9,7 @@ public class ManagerGeneral {
     ContratBills.View view;
     ContratBills.Model modelGerman;
     ContratBills.Model model202127061;
+    ContratBills.Model model202127343;
     ContratBills.Presenter presenter;
 
     private ManagerGeneral() {
@@ -32,6 +34,8 @@ public class ManagerGeneral {
          // TODO aqui se cream todos los modelos
          modelGerman = new ManagerModel();
          model202127061 = new ManagerModel();
+         model202127343 = new ManagerModel202127343();
+
      }
 
      public void configModelUserGerman(){
@@ -43,6 +47,12 @@ public class ManagerGeneral {
     public void configModelUser202127061(){
         model202127061.setPresenter(presenter);
         presenter.setModel(model202127061);
+        view.updatedPeople();
+    }
+
+    public void configModelUser202127343(){
+        model202127343.setPresenter(presenter);
+        presenter.setModel(model202127343);
         view.updatedPeople();
     }
 
