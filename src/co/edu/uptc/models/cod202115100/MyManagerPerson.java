@@ -29,10 +29,10 @@ public class MyManagerPerson {
     }
 
     public Person getPerson(String attribute) {
-        return null;
+        return listPeople.search(listPeople.getRoot(), attribute);
     }
 
     public void editPerson(Person person) {
-
+//        listPeople.edit(person);
     }
 }

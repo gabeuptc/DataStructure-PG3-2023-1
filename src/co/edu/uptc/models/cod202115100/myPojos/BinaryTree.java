@@ -20,7 +20,6 @@ public class BinaryTree<T> {
     public NodeDouble<T> getRoot() {
         return root;
     }
-
     public void add(T data){
         root = addRecursive(root, data);
     }
@@ -48,7 +47,6 @@ public class BinaryTree<T> {
     }
 
     private NodeDouble<T> removeRecursive(NodeDouble<T> current, T data) {
-
         return current;
     }
     public List<T> toList(NodeDouble<T> current) {
@@ -61,18 +59,17 @@ public class BinaryTree<T> {
         return list;
     }
 
-    public static void main(String[] args) {
-        BinaryTree<Person> tree = new BinaryTree<>(o -> o.getName().compareTo(o.getName()));
-        tree.add(new Person(1, "123456","5"));
-        tree.add(new Person(2, "123456","3"));
-        tree.add(new Person(3, "123456","7"));
-        tree.add(new Person(4, "123456","1"));
-        tree.add(new Person(5, "123456","6"));
-        tree.add(new Person(6, "123456","8"));
-        tree.add(new Person(7, "123456","2"));
-        tree.add(new Person(8, "123456","9"));
-        List<Person> list = tree.toList(tree.getRoot());
-        System.out.println(list);
-        System.out.println(list.size());
+    public T search(NodeDouble<T> root, String attribute) {
+        if (root == null) {
+            return null;
+        }
+        if (root.getData().toString().toLowerCase().contains(attribute.toLowerCase())) {
+            return root.getData();
+        }
+        T result = search(root.getPrevious(), attribute);
+        if (result != null) {
+            return result;
+        }
+        return search(root.getNext(), attribute);
     }
 }
