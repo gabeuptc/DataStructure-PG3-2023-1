@@ -38,6 +38,7 @@ public class PanelModelSelect extends JPanel {
 
     private void addButtons() {
         addButtonSelectModelUserGerman();
+        addButtonSelectModelUserCodeOtherStudent();
         addButtonSelectBryanModel();
 
 

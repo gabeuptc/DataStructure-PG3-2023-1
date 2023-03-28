@@ -45,8 +45,8 @@ public class ManagerGeneral {
 
     public void configModelOtherUser(){
         // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
-        bryanModel.setPresenter(presenter);
-        presenter.setModel(bryanModel);
+        //bryanModel.setPresenter(presenter);
+        presenter.setModel(null);
         view.updatedPeople();
     }
     public void configBryanModel(){
