@@ -6,12 +6,12 @@ import co.edu.uptc.presenters.ContratBills;
 import java.util.List;
 
 
-public class ManagerModel implements ContratBills.Model {
+public class ManagerModel202127061 implements ContratBills.Model {
     ContratBills.Presenter presenter;
 
     private ManagerPerson managerPerson;
 
-    public ManagerModel() {
+    public ManagerModel202127061() {
          managerPerson = new ManagerPerson(this);
     }
 
