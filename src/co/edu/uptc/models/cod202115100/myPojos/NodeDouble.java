@@ -1,4 +1,4 @@
-package co.edu.uptc.models.cod202115100;
+package co.edu.uptc.models.cod202115100.myPojos;
 
 public class NodeDouble<T> {
     private T data;

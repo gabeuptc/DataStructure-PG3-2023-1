@@ -1,14 +1,13 @@
 package co.edu.uptc.models.cod202115100;
 
-
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenters.ContratBills;
 
 import java.util.List;
 
-public class ManagerModel implements ContratBills.Model {
-    private ContratBills.Presenter presenter;
-    private ManagerModel managerPerson;
+public class MyManager implements ContratBills.Model {
+    ContratBills.Presenter presenter;
+    private MyManagerPerson managerPerson;
 
     @Override
     public void setPresenter(ContratBills.Presenter presenter) {
@@ -17,7 +16,7 @@ public class ManagerModel implements ContratBills.Model {
 
     @Override
     public void addPerson(Person person) {
-
+        managerPerson.addPerson(person.clone());
     }
 
     @Override
@@ -27,21 +26,21 @@ public class ManagerModel implements ContratBills.Model {
 
     @Override
     public List<Person> getPeople() {
-        return null;
+        return managerPerson.getPeople();
     }
 
     @Override
     public Person getPerson(String attribute) {
-        return null;
+        return managerPerson.getPerson(attribute);
     }
 
     @Override
     public void editPerson(Person person) {
-//        return managerPerson.editPerson(person);
+        managerPerson.editPerson(person);
     }
 
     @Override
     public String getAuthor() {
-        return "Santiago Andrés Orjuela López";
+        return "Santiago Andres Orjuela Lopez";
     }
 }
