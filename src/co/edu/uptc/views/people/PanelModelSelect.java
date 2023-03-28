@@ -45,7 +45,7 @@ public class PanelModelSelect extends JPanel {
 
     private void addButtonSelectModelUserCodeOtherStudent() {
         configPrefersize();
-        JButton jButtonSelectModelUser = new JButton("Model:Test ");
+        JButton jButtonSelectModelUser = new JButton("Model:Test by teacher ");
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(new ActionListener() {
             @Override
