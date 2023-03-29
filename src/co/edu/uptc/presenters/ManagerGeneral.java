@@ -20,7 +20,7 @@ public class ManagerGeneral {
     ContratBills.Model model_202113059;
     ContratBills.Model modelJuan;
     ContratBills.Model modelAlex;
-    ContratBills.Model model202127061;
+
     ContratBills.Model  model202127343;
     ContratBills.Model bryanModel;
     ContratBills.Model modelPedro;
@@ -84,11 +84,7 @@ public class ManagerGeneral {
     }
 
 
-    public void configModelUser202127061(){
-        model202127061.setPresenter(presenter);
-        presenter.setModel(model202127061);
-        view.updatedPeople();
-    }
+
 
     public void configModelUser202127343(){
         model202127343.setPresenter(presenter);
