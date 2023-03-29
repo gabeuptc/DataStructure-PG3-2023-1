@@ -68,11 +68,11 @@ public class EditPerson extends JDialog {
     }
 
     private void addLabels(){
-        labelNam = new JLabel("Codigo: ");
+        labelNam = new JLabel("Nombre: ");
         labelNam.setBounds(130,60,100,25);
         add(labelNam);
 
-        labelCode = new JLabel("Nombre: ");
+        labelCode = new JLabel("Codigo: ");
         labelCode.setBounds(130,100,100,25);
         add(labelCode);
     }
