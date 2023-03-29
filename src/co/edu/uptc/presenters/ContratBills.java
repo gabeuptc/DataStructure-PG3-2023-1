@@ -27,6 +27,7 @@ public interface ContratBills {
         String getAuthor();
     }
 
+
     public interface Presenter {
         void setView(ContratBills.View view);
         void setModel(ContratBills.Model model);
@@ -40,7 +41,5 @@ public interface ContratBills {
         public List<Person> getPeople();
         public void notifyError(String value);
         String getAuthor();
-
-
     }
 }
