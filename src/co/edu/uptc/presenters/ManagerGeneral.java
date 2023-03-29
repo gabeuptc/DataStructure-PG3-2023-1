@@ -1,5 +1,6 @@
 package co.edu.uptc.presenters;
 
+import co.edu.uptc.models.Alex202128687.ManagerModelAlex;
 import co.edu.uptc.models.Model202127343.ManagerModel202127343;
 import co.edu.uptc.models.ModelGerman.ManagerModel;
 
@@ -13,8 +14,9 @@ public class ManagerGeneral {
     ContratBills.Model modelGerman;
     ContratBills.Model model_202113059;
     ContratBills.Model modelJuan;
+    ContratBills.Model modelAlex;
     ContratBills.Model model202127061;
-    ContratBills.Model model202127343;
+    ContratBills.Model  model202127343;
     ContratBills.Presenter presenter;
 
     private ManagerGeneral() {
@@ -27,8 +29,7 @@ public class ManagerGeneral {
          presenter.setView(view);
          createModels();
          configModelUserGerman();
-         configModelUser202127061();
-    }
+     }
 
      public static ManagerGeneral getInstance(){
          return instance==null?instance = new ManagerGeneral():instance;
@@ -38,6 +39,7 @@ public class ManagerGeneral {
      private void createModels(){
          // TODO aqui se cream todos los modelos
          modelGerman = new ManagerModel();
+         modelAlex = new ManagerModelAlex();
 
          model_202113059 = new ManagerModel_202113049();
          modelJuan = new Manager_Model_202128710();
@@ -77,6 +79,11 @@ public class ManagerGeneral {
     public void configModelUser202127343(){
         model202127343.setPresenter(presenter);
         presenter.setModel(model202127343);
+        view.updatedPeople();
+    }
+
+    public void configModelOtherAlex() {
+        presenter.setModel(modelAlex);
         view.updatedPeople();
     }
 
