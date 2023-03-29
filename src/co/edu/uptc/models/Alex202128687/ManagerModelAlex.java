@@ -1,8 +1,7 @@
 package co.edu.uptc.models.Alex202128687;
 
-import co.edu.uptc.models.ModelGerman.ManagerPerson;
 import co.edu.uptc.pojos.Person;
-import co.edu.uptc.presenters.ContratBills;
+import co.edu.uptc.presenter.ContratBills;
 
 import java.util.List;
 

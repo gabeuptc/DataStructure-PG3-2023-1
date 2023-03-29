@@ -1,6 +1,6 @@
 package co.edu.uptc.views.people;
 
-import co.edu.uptc.presenters.ManagerGeneral;
+import co.edu.uptc.presenter.ManagerGeneral;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,9 +54,8 @@ public class PanelModelSelect extends JPanel {
 
     private void addButtonSelectModel_202115100() {
         configPrefersize();
-        JButton jButtonSelectModelUser = new JButton("Model: student ");
+        JButton jButtonSelectModelUser = new JButton("Model: 202115100 ");
         jButtonSelectModelUser.setPreferredSize(new Dimension(180,25));
-        JButton jButtonSelectModelUser = new JButton("Model: 202115100");
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(e -> {
             ManagerGeneral.getInstance().configModelUserSantiago_202115100();
