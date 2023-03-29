@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 
 public class EditPerson extends JDialog {
 
-    private JLabel personSelected;
     private JLabel labelCode;
     private JLabel labelNam;
     protected JTextField nameField;
@@ -69,15 +68,11 @@ public class EditPerson extends JDialog {
     }
 
     private void addLabels(){
-        personSelected = new JLabel("Cliente: ");
-        personSelected.setBounds(120,20,150,30);
-        add(personSelected);
-
-        labelNam = new JLabel("Nombre: ");
+        labelNam = new JLabel("Codigo: ");
         labelNam.setBounds(130,60,100,25);
         add(labelNam);
 
-        labelCode = new JLabel("Codigo: ");
+        labelCode = new JLabel("Nombre: ");
         labelCode.setBounds(130,100,100,25);
         add(labelCode);
     }
@@ -87,8 +82,8 @@ public class EditPerson extends JDialog {
         JLabel jLabel = new JLabel();
         jLabel.setBounds(180,20,150,30);
         if (dialogPeople!=null&&dialogPeople.getSelectedPerson()!=null) {
-            jLabel.setText(dialogPeople.getSelectedPerson().getName() + " " + dialogPeople.getSelectedPerson().getCode());
-            add(jLabel);
+            nameField.setText(dialogPeople.getSelectedPerson().getName());
+            codeField.setText(dialogPeople.getSelectedPerson().getCode());
             selected = true;
         } else {
             dialogPeople.showMessageWarning("NO ha seleccionado ninguna persona para modificar");
@@ -103,6 +98,7 @@ public class EditPerson extends JDialog {
             per.setName(nameField.getText());
             per.setCode(codeField.getText());
             dialogPeople.editPerson(per);
+            dialogPeople.updatedPerson();
         } else {
             dialogPeople.showMessageWarning("NO ha seleccionado ninguna persona para modificar");
         }
