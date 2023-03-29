@@ -68,6 +68,10 @@ public class PanelModelSelect extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ManagerGeneral.getInstance().configModel202113049();
+                dialogPeople.updateAuthorModel();
+            }
+        });
+    }
 
     private void addButtonSelectModelUser202128710() {
         configPrefersize();
@@ -90,7 +94,7 @@ public class PanelModelSelect extends JPanel {
         });
     }
 
-ssssssssssssssssssssssssssssssssssssssserGerman() {
+      public void addButtonSelectModelUserGerman() {
         configPrefersize();
         JButton jButtonSelectModelUser = new JButton("Model: German");
         add(jButtonSelectModelUser);
