@@ -95,7 +95,7 @@ public class PanelModelSelect extends JPanel {
         });
     }
 
-      public void addButtonSelectModelUserGerman() {
+
     private void addButtonSelectModelUserAlex(){configPrefersize();
         JButton jButtonSelectModelAlex = new JButton("Model 202128687");
         add(jButtonSelectModelAlex);

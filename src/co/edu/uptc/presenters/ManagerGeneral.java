@@ -1,6 +1,7 @@
 package co.edu.uptc.presenters;
 
 import co.edu.uptc.models.Alex202128687.ManagerModelAlex;
+import co.edu.uptc.models.Model202127343.ManagerModel202127343;
 import co.edu.uptc.models.ModelGerman.ManagerModel;
 
 import co.edu.uptc.models.Model_202113049.ManagerModel_202113049;
@@ -11,7 +12,11 @@ public class ManagerGeneral {
     private static ManagerGeneral instance;
     ContratBills.View view;
     ContratBills.Model modelGerman;
+    ContratBills.Model model_202113059;
+    ContratBills.Model modelJuan;
     ContratBills.Model modelAlex;
+    ContratBills.Model model202127061;
+    ContratBills.Model  model202127343;
     ContratBills.Presenter presenter;
 
     private ManagerGeneral() {
