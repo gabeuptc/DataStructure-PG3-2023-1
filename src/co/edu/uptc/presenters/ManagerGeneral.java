@@ -4,6 +4,7 @@ import co.edu.uptc.models.Alex202128687.ManagerModelAlex;
 import co.edu.uptc.models.Model202127343.ManagerModel202127343;
 import co.edu.uptc.models.BryanModel.MyManagerModel;
 import co.edu.uptc.models.ModelGerman.ManagerModel;
+import co.edu.uptc.models.Pedro.ManagerModel202128778;
 
 import co.edu.uptc.models.Model_202113049.ManagerModel_202113049;
 import co.edu.uptc.models.Model_202128710.Manager_Model_202128710;
@@ -19,6 +20,7 @@ public class ManagerGeneral {
     ContratBills.Model model202127061;
     ContratBills.Model  model202127343;
     ContratBills.Model bryanModel;
+    ContratBills.Model modelPedro;
     ContratBills.Presenter presenter;
 
     private ManagerGeneral() {
@@ -51,6 +53,7 @@ public class ManagerGeneral {
 
          bryanModel = new MyManagerModel();
 
+         modelPedro = new ManagerModel202128778();
      }
 
      public void configModelUserGerman(){
@@ -91,6 +94,11 @@ public class ManagerGeneral {
         view.updatedPeople();
     }
 
+    public void configModelUserPedro(){
+        modelPedro.setPresenter(presenter);
+        presenter.setModel(modelPedro);
+        view.updatedPeople();
+    }
 
     public void configModelOtherUser(){
         // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
