@@ -36,7 +36,7 @@ public class EditPerson extends JDialog {
 
     private void addButtons(){
         saveBt = new JButton("Guardar");
-        saveBt.setBounds(120,150,80,30);
+        saveBt.setBounds(100,150,110,30);
         saveBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -47,7 +47,7 @@ public class EditPerson extends JDialog {
         add(saveBt);
 
         cancelBt = new JButton("Cancelar");
-        cancelBt.setBounds(210,150,90,30);
+        cancelBt.setBounds(220,150,110,30);
         cancelBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -59,11 +59,11 @@ public class EditPerson extends JDialog {
 
     private void addFields(){
         nameField = new JTextField(20);
-        nameField.setBounds(180,60,100,25);
+        nameField.setBounds(190,60,100,25);
         add(nameField);
 
         codeField = new JTextField(20);
-        codeField.setBounds(180,100,100,25);
+        codeField.setBounds(190,100,100,25);
         add(codeField);
     }
 
