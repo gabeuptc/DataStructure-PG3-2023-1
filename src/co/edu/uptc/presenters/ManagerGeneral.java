@@ -5,7 +5,7 @@ import co.edu.uptc.models.Model202127343.ManagerModel202127343;
 import co.edu.uptc.models.BryanModel.MyManagerModel;
 import co.edu.uptc.models.Model202127812.ManagerModel202127812;
 import co.edu.uptc.models.model202127061.ManagerModel202127061;
-import co.edu.uptc.model202114852.Model202114852;
+import co.edu.uptc.models.model202114852.Model202114852;
 import co.edu.uptc.models.ModelGerman.ManagerModel;
 import co.edu.uptc.models.Pedro.ManagerModel202128778;
 
