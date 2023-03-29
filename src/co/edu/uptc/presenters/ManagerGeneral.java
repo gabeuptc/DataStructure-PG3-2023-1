@@ -21,6 +21,7 @@ public class ManagerGeneral {
          presenter.setView(view);
          createModels();
          configModelUserGerman();
+         configModelUserSantiago_202115100();
      }
 
      public static ManagerGeneral getInstance(){
