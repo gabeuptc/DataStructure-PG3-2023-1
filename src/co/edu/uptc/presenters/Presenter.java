@@ -10,9 +10,6 @@ public class Presenter implements ContratBills.Presenter{
     private ContratBills.View view;
     private ContratBills.Model model;
 
-
-
-
     @Override
     public void setView(ContratBills.View view) {
         this.view = view;
