@@ -93,6 +93,7 @@ public class PanelInput extends JPanel {
                 tableModel.addRow(new Object[]{person.getCode(), person.getName()});
             }
         } else {
+
             tableModel.addRow(new Object[]{"",""});
         }
         jTable.setModel(tableModel);
