@@ -1,4 +1,4 @@
-package co.edu.uptc.Model202127061;
+package co.edu.uptc.models.model202127061;
 
 import co.edu.uptc.pojos.Person;
 
@@ -8,8 +8,8 @@ import java.util.List;
 public class ManagerPerson {
    List<Person> listPeople;
 
-    private ManagerModel managerGeneral;
-    public ManagerPerson(ManagerModel managerGeneral) {
+    private ManagerModel202127061 managerGeneral;
+    public ManagerPerson(ManagerModel202127061 managerGeneral) {
         this.managerGeneral = managerGeneral;
         listPeople = new ArrayList<>();
     }
