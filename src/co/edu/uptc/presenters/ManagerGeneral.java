@@ -80,7 +80,7 @@ public class ManagerGeneral {
 
 
     public void configModelUserJuan(){
-        modelGerman.setPresenter(presenter);
+        modelJuan.setPresenter(presenter);
         presenter.setModel(modelJuan);
         view.updatedPeople();
     }
