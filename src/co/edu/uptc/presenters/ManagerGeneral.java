@@ -2,6 +2,7 @@ package co.edu.uptc.presenters;
 
 import co.edu.uptc.models.Alex202128687.ManagerModelAlex;
 import co.edu.uptc.models.Model202127343.ManagerModel202127343;
+import co.edu.uptc.models.BryanModel.MyManagerModel;
 import co.edu.uptc.models.ModelGerman.ManagerModel;
 
 import co.edu.uptc.models.Model_202113049.ManagerModel_202113049;
@@ -17,6 +18,7 @@ public class ManagerGeneral {
     ContratBills.Model modelAlex;
     ContratBills.Model model202127061;
     ContratBills.Model  model202127343;
+    ContratBills.Model bryanModel;
     ContratBills.Presenter presenter;
 
     private ManagerGeneral() {
@@ -46,6 +48,8 @@ public class ManagerGeneral {
 
          model202127061 = new ManagerModel();
          model202127343 = new ManagerModel202127343();
+
+         bryanModel = new MyManagerModel();
 
      }
 
@@ -92,6 +96,12 @@ public class ManagerGeneral {
         // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
         //modelGerman.setPresenter(presenter);
         presenter.setModel(null);
+        view.updatedPeople();
+    }
+    public void configBryanModel(){
+        // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
+        bryanModel.setPresenter(presenter);
+        presenter.setModel(bryanModel);
         view.updatedPeople();
     }
 
