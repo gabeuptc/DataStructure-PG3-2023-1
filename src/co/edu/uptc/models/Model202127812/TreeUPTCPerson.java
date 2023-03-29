@@ -8,12 +8,9 @@ import java.util.List;
 
 public class TreeUPTCPerson {
     private Node head;
-    private final Comparator<Person> comparator = new Comparator<Person>() {
-        @Override
-        public int compare(Person o1, Person o2) {
-            return o1.getName().compareTo(o2.getName());
-        }
-    };
+    private Person toGet =null;
+    private Person toEdit= null;
+    private final Comparator<Person> comparator = Comparator.comparing(Person::getName);
     public void add(Person o){
         Node node = new Node(o);
         if (head==null){
@@ -83,15 +80,13 @@ public class TreeUPTCPerson {
     }
 
     public void getTreePrev(Node node, List<Person> list){
-        //System.out.println(node.getInfo());
         if (node.getMinor()!=null){
             getTreePrev(node.getMinor(),list);
         }
-        list.add(node.getInfo());
+        list.add(node.getInfo().clone());
         if (node.getMayorEqual()!=null){
             getTreePrev(node.getMayorEqual(),list);
         }
-        //System.out.println(node.getInfo());
     }
     public boolean remove(Person value){
         Node toRemove = search(value);
@@ -154,18 +149,41 @@ public class TreeUPTCPerson {
         return null;
     }
     public Person getPerson(String attribute){
-        return getNodePerson(head,attribute).getInfo();
+        if (head!=null){
+            putNodePersonToGet(head,attribute);
+        }
+        return toGet;
     }
-    public Node getNodePerson(Node node, String attribute){//probar
+    public void putNodePersonToGet(Node node, String attribute){
         if (node.getMinor()!=null){
-            getNodePerson(node.getMinor(),attribute);
+            putNodePersonToGet(node.getMinor(),attribute);
         }
         if (node.getInfo().getName().equals(attribute)||node.getInfo().getCode().equals(attribute)){
-            return node;
+            toGet =node.getInfo();
+            return;
         }
         if (node.getMayorEqual()!=null){
-            getNodePerson(node.getMayorEqual(),attribute);
+            putNodePersonToGet(node.getMayorEqual(),attribute);
         }
-        return null;
+    }
+    public void editPerson(Person person){
+        if (head!=null){
+            putPersonToEdit(head,person.getId());
+        }
+        toEdit.setCode(person.getCode());
+        toEdit.setName(person.getName());
+    }
+
+    private void putPersonToEdit(Node node, int idPerson) {
+        if (node.getMinor()!=null){
+            putPersonToEdit(node.getMinor(),idPerson);
+        }
+        if (node.getInfo().getId()==idPerson){
+            toEdit =node.getInfo();
+            return;
+        }
+        if (node.getMayorEqual()!=null){
+            putPersonToEdit(node.getMayorEqual(),idPerson);
+        }
     }
 }

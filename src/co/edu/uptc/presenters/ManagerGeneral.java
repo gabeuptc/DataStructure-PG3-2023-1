@@ -48,8 +48,6 @@ public class ManagerGeneral {
         view.updatedPeople();
     }
     public void configModel202127812(){
-        // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
-        //modelGerman.setPresenter(presenter);
         model202127812.setPresenter(presenter);
         presenter.setModel(model202127812);
         view.updatedPeople();

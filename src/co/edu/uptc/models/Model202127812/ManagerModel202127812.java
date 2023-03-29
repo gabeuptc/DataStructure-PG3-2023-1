@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ManagerModel202127812 implements ContratBills.Model {
     ContratBills.Presenter presenter;
-    private ManagerPerson managerPerson;
+    private final ManagerPerson managerPerson;
 
     public ManagerModel202127812() {
         this.managerPerson=new ManagerPerson(this);
@@ -20,7 +20,7 @@ public class ManagerModel202127812 implements ContratBills.Model {
 
     @Override
     public void addPerson(Person person) {
-        managerPerson.addPerson(person);
+        managerPerson.addPerson(person.clone());
     }
 
     @Override
@@ -30,13 +30,12 @@ public class ManagerModel202127812 implements ContratBills.Model {
 
     @Override
     public List<Person> getPeople() {
-        List<Person> auxList = managerPerson.getPeople();
-        return auxList;
+        return managerPerson.getPeople();
     }
 
     @Override
     public Person getPerson(String attribute) {
-        return managerPerson.getPerson(attribute).clone();
+        return managerPerson.getPerson(attribute);
     }
 
     @Override
