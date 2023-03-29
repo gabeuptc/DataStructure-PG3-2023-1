@@ -36,6 +36,14 @@ public class PanelModelSelect extends JPanel {
         setPreferredSize(new Dimension(250,height));
     }
 
+    private void addLabels() {
+        configPrefersize();
+        JLabel labelTitle = new JLabel("Selected Model");
+        add(labelTitle);
+    }
+
+
+
     private void addButtons() {
         addButtonSelectModelUserGerman();
         addButtonSelectModelUserCodeOtherStudent();
@@ -46,6 +54,19 @@ public class PanelModelSelect extends JPanel {
         addButtonSelectModelUser202127343();
 
 
+    }
+
+    private void addButtonSelectModelUserGerman () {
+        configPrefersize();
+        JButton jButtonSelectModelUser = new JButton("Model: German");
+        add(jButtonSelectModelUser);
+        jButtonSelectModelUser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ManagerGeneral.getInstance().configModelUserGerman();
+                dialogPeople.updateAuthorModel();
+            }
+        });
     }
 
     private void addButtonSelectModelUserCodeOtherStudent() {
@@ -65,51 +86,37 @@ public class PanelModelSelect extends JPanel {
     private void addButtonSelectModelUser202128710() {
         configPrefersize();
         JButton jButtonSelectModelUser = new JButton("Model: 202128710 ");
-
-    private void addButtonSelectModel202127061() {
-        configPrefersize();
-        JButton jButtonSelectModelUser = new JButton("Model: 202127061 ");
-
-        add(jButtonSelectModelUser);
-        jButtonSelectModelUser.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ManagerGeneral.getInstance().configModelUserJuan();
-                ManagerGeneral.getInstance().configModelUser202127061();
-                dialogPeople.updateAuthorModel();
-            }
-        });
     }
 
-    private void addButtonSelectModelUserGerman() {
-        configPrefersize();
-        JButton jButtonSelectModelUser = new JButton("Model: German");
-        add(jButtonSelectModelUser);
-        jButtonSelectModelUser.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ManagerGeneral.getInstance().configModelUserGerman();
-                dialogPeople.updateAuthorModel();
-            }
-        });
-    }
+        private void addButtonSelectModel202127061 () {
+            configPrefersize();
+            JButton jButtonSelectModelUser = new JButton("Model: 202127061 ");
 
-    private void addButtonSelectModelUser202127343() {
-        configPrefersize();
-        JButton jButtonSelectModelUser = new JButton("Model: 202127343");
-        add(jButtonSelectModelUser);
-        jButtonSelectModelUser.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ManagerGeneral.getInstance().configModelUser202127343();
-                dialogPeople.updateAuthorModel();
-            }
-        });
-    }
+            add(jButtonSelectModelUser);
+            jButtonSelectModelUser.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ManagerGeneral.getInstance().configModelUserJuan();
+                    ManagerGeneral.getInstance().configModelUser202127061();
+                    dialogPeople.updateAuthorModel();
+                }
+            });
+        }
 
-    private void addLabels() {
-        configPrefersize();
-        JLabel labelTitle = new JLabel("Selected Model");
-        add(labelTitle);
-    }
+
+
+        private void addButtonSelectModelUser202127343 () {
+            configPrefersize();
+            JButton jButtonSelectModelUser = new JButton("Model: 202127343");
+            add(jButtonSelectModelUser);
+            jButtonSelectModelUser.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ManagerGeneral.getInstance().configModelUser202127343();
+                    dialogPeople.updateAuthorModel();
+                }
+            });
+        }
+
+
 }
