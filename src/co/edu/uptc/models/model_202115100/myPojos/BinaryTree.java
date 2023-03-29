@@ -1,4 +1,4 @@
-package co.edu.uptc.models.cod202115100.myPojos;
+package co.edu.uptc.models.model_202115100.myPojos;
 
 import java.util.ArrayList;
 import java.util.Comparator;

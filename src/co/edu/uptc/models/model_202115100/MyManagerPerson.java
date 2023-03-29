@@ -1,15 +1,15 @@
-package co.edu.uptc.models.cod202115100;
+package co.edu.uptc.models.model_202115100;
 
-import co.edu.uptc.models.cod202115100.myPojos.BinaryTree;
+import co.edu.uptc.models.model_202115100.myPojos.BinaryTree;
 import co.edu.uptc.pojos.Person;
 
 import java.util.List;
 
 public class MyManagerPerson {
-    private MyManager managerGeneral;
+    private ModelSantiago_202115100 managerGeneral;
     BinaryTree<Person> listPeople;
 
-    public MyManagerPerson(MyManager managerGeneral) {
+    public MyManagerPerson(ModelSantiago_202115100 managerGeneral) {
         this.managerGeneral = managerGeneral;
         listPeople = new BinaryTree<>(new PersonComparator());
     }
@@ -32,6 +32,6 @@ public class MyManagerPerson {
 
     public void editPerson(Person person) {
 //        listPeople.edit(person);
-        System.out.println("editPerson, no implementado");
+        managerGeneral.presenter.notifyError("editPerson, no implementado aun");
     }
 }

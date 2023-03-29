@@ -1,15 +1,15 @@
-package co.edu.uptc.models.cod202115100;
+package co.edu.uptc.models.model_202115100;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenters.ContratBills;
 
 import java.util.List;
 
-public class MyManager implements ContratBills.Model {
+public class ModelSantiago_202115100 implements ContratBills.Model {
     ContratBills.Presenter presenter;
     private MyManagerPerson managerPerson;
 
-    public MyManager() {
+    public ModelSantiago_202115100() {
         managerPerson = new MyManagerPerson(this);
     }
 
