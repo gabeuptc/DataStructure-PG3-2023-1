@@ -88,7 +88,7 @@ public class PanelInput extends JPanel {
         clearTable();
         DefaultTableModel tableModel = (DefaultTableModel) jTable.getModel();
         List<Person> auxList = dialogPeople.getPeople();
-        if (auxList!=null) {
+        if (!auxList.isEmpty()) {
             for (Person person : auxList) {
                 tableModel.addRow(new Object[]{person.getCode(), person.getName()});
             }
