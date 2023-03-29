@@ -1,4 +1,4 @@
-package co.edu.uptc.models.ModelGerman;
+package co.edu.uptc.models.Pedro;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenters.ContratBills;
@@ -6,12 +6,12 @@ import co.edu.uptc.presenters.ContratBills;
 import java.util.List;
 
 
-public class ManagerModel implements ContratBills.Model {
+public class ManagerModel202128778 implements ContratBills.Model {
     ContratBills.Presenter presenter;
 
     private ManagerPerson managerPerson;
 
-    public ManagerModel() {
+    public ManagerModel202128778() {
          managerPerson = new ManagerPerson(this);
     }
 
@@ -32,6 +32,7 @@ public class ManagerModel implements ContratBills.Model {
 
     @Override
     public List<Person> getPeople() {
+
         List<Person> auxList = managerPerson.getPeople();
        return auxList;
     }
@@ -48,8 +49,6 @@ public class ManagerModel implements ContratBills.Model {
 
     @Override
     public String getAuthor() {
-        return "German Amezquita Becerra";
+        return "Pedro Eduardo Cruz López";
     }
-
-
 }
