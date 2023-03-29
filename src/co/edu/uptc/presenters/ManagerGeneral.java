@@ -1,6 +1,7 @@
 package co.edu.uptc.presenters;
 
 import co.edu.uptc.models.ModelGerman.ManagerModel;
+import co.edu.uptc.models.cod202115100.MyManager;
 import co.edu.uptc.views.dashBoard.DashBoard;
 
 public class ManagerGeneral {
@@ -40,8 +41,8 @@ public class ManagerGeneral {
 
     public void configModelOtherUser(){
         // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
-        //modelGerman.setPresenter(presenter);
-        presenter.setModel(null);
+        presenter.setModel(new MyManager());
+        modelGerman.setPresenter(presenter);
         view.updatedPeople();
     }
 

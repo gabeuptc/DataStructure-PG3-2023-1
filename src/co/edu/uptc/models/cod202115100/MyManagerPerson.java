@@ -3,7 +3,6 @@ package co.edu.uptc.models.cod202115100;
 import co.edu.uptc.models.cod202115100.myPojos.BinaryTree;
 import co.edu.uptc.pojos.Person;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyManagerPerson {
@@ -12,8 +11,7 @@ public class MyManagerPerson {
 
     public MyManagerPerson(MyManager managerGeneral) {
         this.managerGeneral = managerGeneral;
-        Person person = new Person();
-        listPeople = new BinaryTree<>(o -> person.getName().compareTo(o.getName()));
+        listPeople = new BinaryTree<>(new PersonComparator());
     }
     public void addPerson(Person person) {
         if (person.getName().equals("") || person.getCode().equals("")) {
@@ -34,5 +32,6 @@ public class MyManagerPerson {
 
     public void editPerson(Person person) {
 //        listPeople.edit(person);
+        System.out.println("editPerson, no implementado");
     }
 }

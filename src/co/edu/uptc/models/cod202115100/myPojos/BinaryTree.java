@@ -1,14 +1,13 @@
 package co.edu.uptc.models.cod202115100.myPojos;
 
-import co.edu.uptc.pojos.Person;
-
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class BinaryTree<T> {
     private NodeDouble<T> root;
-    private Comparable<T> comparable;
-    public BinaryTree(Comparable<T> comparable) {
+    private Comparator<T> comparable;
+    public BinaryTree(Comparator<T> comparable) {
         root = null;
         this.comparable = comparable;
     }
@@ -28,10 +27,10 @@ public class BinaryTree<T> {
         if(current == null){
             return new NodeDouble<>(data);
         }
-        if (comparable.compareTo(data)<0) {
+        if (comparable.compare(data, current.getData())<0) {
             current.setPrevious(addRecursive(current.getPrevious(), data));
         }
-        if (comparable.compareTo(data)>=0) {
+        if (comparable.compare(data, current.getData())>=0) {
             current.setNext(addRecursive(current.getNext(), data));
         }
         return current;

@@ -9,6 +9,10 @@ public class MyManager implements ContratBills.Model {
     ContratBills.Presenter presenter;
     private MyManagerPerson managerPerson;
 
+    public MyManager() {
+        managerPerson = new MyManagerPerson(this);
+    }
+
     @Override
     public void setPresenter(ContratBills.Presenter presenter) {
         this.presenter = presenter;
