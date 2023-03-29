@@ -2,14 +2,17 @@ package co.edu.uptc.presenters;
 
 import co.edu.uptc.models.Model202127343.ManagerModel202127343;
 import co.edu.uptc.models.ModelGerman.ManagerModel;
+import co.edu.uptc.models.Model_202128710.Manager_Model_202128710;
 import co.edu.uptc.views.dashBoard.DashBoard;
 
 public class ManagerGeneral {
     private static ManagerGeneral instance;
     ContratBills.View view;
     ContratBills.Model modelGerman;
+   ContratBills.Model modelJuan;
     ContratBills.Model model202127061;
     ContratBills.Model model202127343;
+
     ContratBills.Presenter presenter;
 
     private ManagerGeneral() {
@@ -33,8 +36,12 @@ public class ManagerGeneral {
      private void createModels(){
          // TODO aqui se cream todos los modelos
          modelGerman = new ManagerModel();
+
+         modelJuan = new Manager_Model_202128710();
+
          model202127061 = new ManagerModel();
          model202127343 = new ManagerModel202127343();
+
 
      }
 
@@ -43,6 +50,14 @@ public class ManagerGeneral {
          presenter.setModel(modelGerman);
          view.updatedPeople();
      }
+
+
+    public void configModelUserJuan(){
+        modelGerman.setPresenter(presenter);
+        presenter.setModel(modelJuan);
+        view.updatedPeople();
+    }
+
 
     public void configModelUser202127061(){
         model202127061.setPresenter(presenter);
@@ -55,6 +70,7 @@ public class ManagerGeneral {
         presenter.setModel(model202127343);
         view.updatedPeople();
     }
+
 
     public void configModelOtherUser(){
         // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
