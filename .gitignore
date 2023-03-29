@@ -19,6 +19,7 @@
 *.launch
 .settings/
 *.sublime-workspace
+Example01MVP.iml
 
 # Visual Studio Code
 .vscode/*
