@@ -1,4 +1,4 @@
-package co.edu.uptc.presenter;
+package co.edu.uptc.presenters;
 
 import co.edu.uptc.models.Alex202128687.ManagerModelAlex;
 import co.edu.uptc.models.Model202127343.ManagerModel202127343;
@@ -44,7 +44,6 @@ public class ManagerGeneral {
 
      public static ManagerGeneral getInstance(){
          return instance==null?instance = new ManagerGeneral():instance;
-
      }
 
 
@@ -82,7 +81,7 @@ public class ManagerGeneral {
 
 
     public void configModelUserJuan(){
-        modelGerman.setPresenter(presenter);
+        modelJuan.setPresenter(presenter);
         presenter.setModel(modelJuan);
         view.updatedPeople();
     }
