@@ -42,7 +42,6 @@ public class ManagerModel202127717 implements ContratBills.Model {
     public void editPerson(Person person) {
         managerPerson.editPerson(person);
     }
-
     @Override
     public String getAuthor() {
         return "Cristian Jesus Celis Gutierrez";
