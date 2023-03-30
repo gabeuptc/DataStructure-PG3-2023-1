@@ -24,12 +24,11 @@ public class ManagerGeneral {
     ContratBills.Model modelAlex;
 
     ContratBills.Model  model202127343;
-    ContratBills.Model  modelSebastian;
     ContratBills.Model bryanModel;
     ContratBills.Model modelPedro;
-    ContratBills.Model modelSantiago_202115100;
     ContratBills.Presenter presenter;
     ContratBills.Model model202127812;
+    ContratBills.Model modelSebastian;
 
     private ManagerGeneral() {
     }
@@ -46,7 +45,6 @@ public class ManagerGeneral {
 
      public static ManagerGeneral getInstance(){
          return instance==null?instance = new ManagerGeneral():instance;
-
      }
 
 
@@ -66,8 +64,7 @@ public class ManagerGeneral {
          modelPedro = new ManagerModel202128778();
          model202127812 = new ManagerModel202127812();
          model202127061 = new ManagerModel202127061();
-         modelSantiago_202115100 = new ModelSantiago_202115100();
-         modelSebastian= new ManagerModelSebastian();
+
      }
 
      public void configModelUserGerman(){
@@ -85,11 +82,15 @@ public class ManagerGeneral {
 
 
     public void configModelUserJuan(){
-        modelGerman.setPresenter(presenter);
+        modelJuan.setPresenter(presenter);
         presenter.setModel(modelJuan);
         view.updatedPeople();
     }
-
+    public void configModelUserSebastian(){
+        modelSebastian.setPresenter(presenter);
+        presenter.setModel(modelSebastian);
+        view.updatedPeople();
+    }
 
 
 
@@ -115,8 +116,7 @@ public class ManagerGeneral {
         view.updatedPeople();
     }
     public void configModelUserSantiago_202115100(){
-        modelSantiago_202115100.setPresenter(presenter);
-        presenter.setModel(modelSantiago_202115100);
+
         view.updatedPeople();
     }
 
@@ -135,12 +135,6 @@ public class ManagerGeneral {
         // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
         bryanModel.setPresenter(presenter);
         presenter.setModel(bryanModel);
-        view.updatedPeople();
-    }
-    public void configSebastianModel(){
-        // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
-        modelSebastian.setPresenter(presenter);
-        presenter.setModel(modelSebastian);
         view.updatedPeople();
     }
 
