@@ -203,6 +203,7 @@ public class PanelModelSelect extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 ManagerGeneral.getInstance().configModelDanielRojas();
                 dialogPeople.updateAuthorModel();
+                dialogPeople.addPerson();
             }
         });
     }
