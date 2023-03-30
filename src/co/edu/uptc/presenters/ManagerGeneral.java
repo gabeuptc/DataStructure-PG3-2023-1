@@ -1,6 +1,6 @@
 package co.edu.uptc.presenters;
 
-import co.edu.uptc.Model202127717.ManagerModel202127717;
+import co.edu.uptc.models.Model202127717.ManagerModel202127717;
 import co.edu.uptc.models.ModelGerman.ManagerModel;
 import co.edu.uptc.views.dashBoard.DashBoard;
 
