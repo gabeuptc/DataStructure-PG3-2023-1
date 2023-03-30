@@ -1,30 +1,30 @@
 package co.edu.uptc.models.Alex202128687;
 
 // Vamos a usar arboles binarios de busqueda
-public class Node {
-    private int info;
-    private Node less = null;
-    private Node majorAndEqual = null;
-    private Node nodeFather;
+public class Node<T>{
+    private T info;
+    private Node<T> less = null;
+    private Node<T> majorAndEqual = null;
+    private Node<T> nodeFather;
 
     public Node(){
 
     }
-    public Node(int info,Node less, Node majorAndEqual){
+    public Node(T info,Node less, Node majorAndEqual){
         this.info = info;
         this.less = less;
         this.majorAndEqual = majorAndEqual;
     }
 
-    public Node(int info){
+    public Node(T info){
         this.info = info;
     }
 
-    public int getInfo() {
-        return info;
+    public T getInfo() {
+        return this.info;
     }
 
-    public void setInfo(int info) {
+    public void setInfo(T info) {
         this.info = info;
     }
 

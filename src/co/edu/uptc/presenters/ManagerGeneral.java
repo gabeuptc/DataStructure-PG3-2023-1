@@ -93,6 +93,7 @@ public class ManagerGeneral {
     }
 
     public void configModelOtherAlex() {
+        modelAlex.setPresenter(presenter);
         presenter.setModel(modelAlex);
         view.updatedPeople();
     }

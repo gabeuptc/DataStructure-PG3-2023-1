@@ -1,18 +1,29 @@
 package co.edu.uptc.models.Alex202128687;
-public class TreeSearch {
-    Node header;
 
-    public TreeSearch(){
+import co.edu.uptc.pojos.Person;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+public class TreeSearch<T> {
+    private Node<Person> header;
+    private Comparator<T> comparator;
+    private List<T> list;
+
+    public TreeSearch(Comparator<T> comparator){
+        this.comparator = comparator;
+        header = null;
+        list = new ArrayList<>();
     }
 
-    public void add(int info) {
+    public void add(T info) {
         Node aux = new Node(info);
         if (header == null) {
             header = aux;
         } else {
             Node tmp = search(aux);
-            if (info >= tmp.getInfo()) {
+            if (comparator.compare((T) tmp.getInfo(), info) >= 0) {
                 tmp.setMajorAndEqual(aux);
                 aux.setNodeFather(tmp);
             } else {
@@ -20,13 +31,14 @@ public class TreeSearch {
                 aux.setNodeFather(tmp);
             }
         }
+        list.add(info);
     }
 
     private Node search(Node node) {
         Node aux = header;
         boolean found = false;
         while (!found) {
-            if (aux.getInfo() >= node.getInfo()) {
+            if (comparator.compare((T) aux.getInfo(), (T) node.getInfo()) >= 0) {
                 if (aux.getLess() == null) {
                     aux.setLess(node);
                 } else {
@@ -45,7 +57,6 @@ public class TreeSearch {
 
     public void showTree() {
         if (header == null) {
-            System.out.println("El arbol esta vacio");
         } else {
             showTreeOrder(header);
         }
@@ -79,20 +90,16 @@ public class TreeSearch {
         return search(node);
     }
 
-    public void delete(int info) {
+    public void delete(T info) {
         Node nodeToDelete = getToDelete(new Node(info));
         Node nodeFather = getFather(nodeToDelete);
         if (getLess(nodeToDelete) == null && getMajorAndEqual(nodeToDelete) == null) {
-            System.out.println("si el nodo no tiene hijos");
             getFather(nodeToDelete).setLess(null);
         } else if (getLess(nodeToDelete) != null && getMajorAndEqual(nodeToDelete) == null) {
-            System.out.println("si el nodo tiene un hijo menor");
             nodeFather.setLess(getLess(nodeToDelete));
         } else if (getLess(nodeToDelete) == null && getMajorAndEqual(nodeToDelete) != null) {
-            System.out.println("si el nodo tiene un hijo mayor");
             nodeFather.setMajorAndEqual(getMajorAndEqual(nodeFather));
         } else {
-            System.out.println("si el nodo tiene dos hijos");
             nodeToDelete.setInfo(getLastLeftChild(nodeToDelete).getInfo());
         }
     }
@@ -105,5 +112,9 @@ public class TreeSearch {
         father = aux.getNodeFather();
         father.setLess(null);
         return aux;
+    }
+
+    public List<T> getList() {
+        return list;
     }
 }

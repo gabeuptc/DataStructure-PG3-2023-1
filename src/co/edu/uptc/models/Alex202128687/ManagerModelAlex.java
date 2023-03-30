@@ -20,7 +20,7 @@ public class ManagerModelAlex implements ContratBills.Model {
 
     @Override
     public void addPerson(Person person) {
-        System.out.println("para agregar");
+        managerPerson.addPerson(person.clone());
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ManagerModelAlex implements ContratBills.Model {
 
     @Override
     public List<Person> getPeople() {
-        return null;
+        return managerPerson.getPeople();
     }
 
     @Override
