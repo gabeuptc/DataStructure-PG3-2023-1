@@ -1,6 +1,5 @@
-package co.edu.uptc.models.Pedro;
+package co.edu.uptc.models.Model202128778;
 
-import co.edu.uptc.models.ModelGerman.ManagerModel;
 import co.edu.uptc.pojos.Person;
 
 import java.util.ArrayList;
@@ -8,18 +7,19 @@ import java.util.List;
 
 public class ManagerPerson {
     List<Person> listPeople;
-
+    TreeUptc treeUptc;
     private ManagerModel202128778 managerGeneral;
     public ManagerPerson(ManagerModel202128778 managerGeneral) {
         this.managerGeneral = managerGeneral;
         listPeople = new ArrayList<>();
+        treeUptc = new TreeUptc();
     }
 
     public void addPerson(Person person){
         if (person.getName().equals("") || person.getCode().equals("")) {
             managerGeneral.presenter.notifyError("Información incompleta");
         } else {
-            listPeople.add(person);
+            treeUptc.add(person);
             managerGeneral.presenter.notifyPeopleUpdated();
         }
     }
@@ -43,12 +43,12 @@ public class ManagerPerson {
         }
     }
 
-    public List<Person> getPeople() {
-        List<Person> auxList = new ArrayList<>();
-        for (Person person: listPeople) {
-            auxList.add(person.clone());
-        }
-        return auxList;
+   public ArrayList<Person> getListofTree(){
+        return treeUptc.getArray();
+   }
 
+    public TreeUptc getTreeUptc() {
+        return treeUptc;
     }
+
 }

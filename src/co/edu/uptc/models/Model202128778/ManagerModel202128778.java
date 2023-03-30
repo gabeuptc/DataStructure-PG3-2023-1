@@ -1,4 +1,4 @@
-package co.edu.uptc.models.Pedro;
+package co.edu.uptc.models.Model202128778;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
@@ -33,7 +33,7 @@ public class ManagerModel202128778 implements ContratBills.Model {
     @Override
     public List<Person> getPeople() {
 
-        List<Person> auxList = managerPerson.getPeople();
+        List<Person> auxList = managerPerson.getListofTree();
        return auxList;
     }
 
