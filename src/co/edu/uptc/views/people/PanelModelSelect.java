@@ -47,10 +47,23 @@ public class PanelModelSelect extends JPanel {
         addButtonSelectModelUserAlex();
         addButtonSelectBryanModel();
         addButtonSelectSebastianModel();
-
         addButtonSelectModelUserPedro();
         addButtonSelectModel202127812();
+        addButtonSelectModel201612075();
 
+    }
+
+    private void addButtonSelectModel201612075() {
+        configPrefersize();
+        JButton jButtonSelectModelUser = new JButton("Model: 201612075 ");
+        add(jButtonSelectModelUser);
+        jButtonSelectModelUser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ManagerGeneral.getInstance().configModel201612075();
+                dialogPeople.updateAuthorModel();
+            }
+        });
     }
 
     private void addButtonSelectModel_202115100() {
