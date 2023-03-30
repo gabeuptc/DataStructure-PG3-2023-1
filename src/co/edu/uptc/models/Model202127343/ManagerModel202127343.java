@@ -31,20 +31,17 @@ public class ManagerModel202127343 implements ContratBills.Model {
     }
 
     @Override
-    public List<Person> getPeople() {
-
-        List<Person> auxList = managerPerson.getPeople();
+    public List<Person> getPeople() {List<Person> auxList = managerPerson.getPeople();
        return auxList;
     }
 
     @Override
     public Person getPerson(String attribute) {
-        return managerPerson.getPerson(attribute);
+        return null;
     }
 
     @Override
     public void editPerson(Person person) {
-        managerPerson.editPerson(person);
     }
 
     @Override
