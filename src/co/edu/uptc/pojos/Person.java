@@ -1,6 +1,6 @@
 package co.edu.uptc.pojos;
 
-public class Person {
+public class Person implements Cloneable{
     private static int count;
     private int id;
     private String code;
@@ -36,10 +36,6 @@ public class Person {
         this.name = name;
     }
 
-    @Override
-    public Person clone(){
-        return new Person(getId(),getName(),getCode());
-    }
 
     @Override
     public String toString() {
@@ -47,5 +43,15 @@ public class Person {
                 "code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public Person clone() {
+        try {
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return (Person) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

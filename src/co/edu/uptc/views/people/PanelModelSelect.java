@@ -1,6 +1,6 @@
 package co.edu.uptc.views.people;
 
-import co.edu.uptc.presenters.ManagerGeneral;
+import co.edu.uptc.presenter.ManagerGeneral;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,6 +39,7 @@ public class PanelModelSelect extends JPanel {
     private void addButtons() {
         addButtonSelectModelUserGerman();
         addButtonSelectModelUserCodeOtherStudent();
+        addButtonSelectModel_202115100();
         addButtonSelectModel202127061();
         addButtonSelectModelUserCode202113049();
         addButtonSelectModelUser202128710();
@@ -52,15 +53,25 @@ public class PanelModelSelect extends JPanel {
 
     }
 
+    private void addButtonSelectModel_202115100() {
+        configPrefersize();
+        JButton jButtonSelectModelUser = new JButton("Model: 202115100 ");
+        jButtonSelectModelUser.setPreferredSize(new Dimension(180,25));
+        add(jButtonSelectModelUser);
+        jButtonSelectModelUser.addActionListener(e -> {
+            ManagerGeneral.getInstance().configModelUserSantiago_202115100();
+            dialogPeople.updateAuthorModel();
+        });
+    }
+
     private void addButtonSelectModelUserCodeOtherStudent() {
         configPrefersize();
         JButton jButtonSelectModelUser = new JButton("Model: student ");
-        jButtonSelectModelUser.setPreferredSize(new Dimension(180,25));
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ManagerGeneral.getInstance().configModelOtherUser();
+                ManagerGeneral.getInstance().configModelUserSantiago_202115100();
                 dialogPeople.updateAuthorModel();
             }
         });
