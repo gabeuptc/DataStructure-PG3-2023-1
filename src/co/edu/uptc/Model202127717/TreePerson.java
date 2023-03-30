@@ -26,27 +26,6 @@ public class TreePerson {
         }
     }
 
-    /*private Node search(Node node){
-        Node aux = header;
-        boolean isFounded = false;
-        while (!isFounded){
-            if (comparator.compare(node.getInfo(),aux.getInfo()) < 0){
-                if (aux.getMinor() != null){
-                    aux = aux.getMinor();
-                }else {
-                    isFounded = true;
-                }
-            }else {
-                if (aux.getGreaterEqual() != null){
-                    aux = aux.getGreaterEqual();
-                }else {
-                    isFounded = true;
-                }
-            }
-        }
-        return aux;
-    }*/
-
     private Node search(Node node) {
         Node current = header;
         boolean found = false;
@@ -107,32 +86,6 @@ public class TreePerson {
         return null;
     }
 
-    /*private Node search(Person value){
-        if (header == null){
-            return null;
-        }
-        Node aux = header;
-        boolean isFounded = false;
-        while (!isFounded){
-            if (comparator.compare(value,aux.getInfo()) < 0){
-                if (aux.getMinor() != null){
-                    aux = aux.getMinor();
-                }else {
-                    isFounded = true;
-                }
-            }else {
-                if (comparator.compare(value,aux.getInfo()) == 0){
-                    return aux;
-                }
-                if (aux.getGreaterEqual() != null){
-                    aux = aux.getGreaterEqual();
-                }else {
-                    isFounded = true;
-                }
-            }
-        }
-        return null;
-    }*/
     public List<Person> getListFromTree(){
         List<Person> list = new ArrayList<>();
         if (header != null){
@@ -150,28 +103,28 @@ public class TreePerson {
             getTreePrev(node.getGreaterEqual(),list);
         }
     }
-    public boolean remove(Person value){
+    public boolean remove(Person value) {
         Node toRemove = search(value);
-        if (toRemove != null){
+        if (toRemove != null) {
             Node toAdd;
-            Node before = getBeforeTo(toRemove);
-            if (before == null){
+            Node before = getPreviousNode(toRemove);
+            if (before == null) {
                 toAdd = header.getMinor();
                 header = header.getGreaterEqual();
-            }else {
-                if (comparator.compare(before.getInfo(),toRemove.getInfo()) < 0){
+            } else {
+                if (comparator.compare(before.getInfo(),toRemove.getInfo()) < 0) {
                     toAdd = toRemove.getMinor();
                     before.setGreaterEqual(toRemove.getGreaterEqual());
-                }else {
+                } else {
                     toAdd= toRemove.getGreaterEqual();
                     before.setMinor(toRemove.getMinor());
                 }
             }
-            if (toAdd!=null){
+            if (toAdd != null) {
                 Node temp = search(toAdd);
-                if (comparator.compare(toAdd.getInfo(),temp.getInfo()) >= 0){
+                if (comparator.compare(toAdd.getInfo(),temp.getInfo()) >= 0) {
                     temp.setGreaterEqual(toAdd);
-                }else {
+                } else {
                     temp.setMinor(toAdd);
                 }
             }
@@ -179,32 +132,32 @@ public class TreePerson {
         }
         return false;
     }
-    private Node getBeforeTo(Node node){
-        if (comparator.compare(node.getInfo(), header.getInfo()) == 0){
+    private Node getPreviousNode(Node node) {
+        if (comparator.compare(node.getInfo(), header.getInfo()) == 0) {
             return null;
         }
         Node aux = header;
-        boolean isFounded = false;
-        while (!isFounded){
-            if (comparator.compare(node.getInfo(),aux.getInfo()) < 0){
-                if (aux.getMinor() != null){
-                    if (node.equals(aux.getMinor())){
+        boolean isFound = false;
+        while (!isFound) {
+            if (comparator.compare(node.getInfo(), aux.getInfo()) < 0) {
+                if (aux.getMinor() != null) {
+                    if (node.equals(aux.getMinor())) {
                         return aux;
-                    }else {
+                    } else {
                         aux = aux.getMinor();
                     }
-                }else {
-                    isFounded = true;
+                } else {
+                    isFound = true;
                 }
-            }else {
-                if (aux.getGreaterEqual() != null){
-                    if (node.equals(aux.getGreaterEqual())){
+            } else {
+                if (aux.getGreaterEqual() != null) {
+                    if (node.equals(aux.getGreaterEqual())) {
                         return aux;
-                    }else {
+                    } else {
                         aux = aux.getGreaterEqual();
                     }
-                }else {
-                    isFounded = true;
+                } else {
+                    isFound = true;
                 }
             }
         }
@@ -212,40 +165,40 @@ public class TreePerson {
     }
     public Person getPerson(String attribute){
         if (header != null){
-            putNodePersonToGet(header,attribute);
+            searchPersonInTree(header,attribute);
         }
         return toGet;
     }
-    public void putNodePersonToGet(Node node, String attribute){
-        if (node.getMinor() != null){
-            putNodePersonToGet(node.getMinor(),attribute);
+    public void searchPersonInTree(Node node, String attribute) {
+        if (node.getMinor() != null) {
+            searchPersonInTree(node.getMinor(), attribute);
         }
-        if (node.getInfo().getName().equals(attribute)||node.getInfo().getCode().equals(attribute)){
-            toGet =node.getInfo();
+        if (node.getInfo().getName().equals(attribute) || node.getInfo().getCode().equals(attribute)) {
+            toGet = node.getInfo();
             return;
         }
-        if (node.getGreaterEqual() != null){
-            putNodePersonToGet(node.getGreaterEqual(),attribute);
+        if (node.getGreaterEqual() != null) {
+            searchPersonInTree(node.getGreaterEqual(), attribute);
         }
     }
     public void editPerson(Person person){
         if (header != null){
-            putPersonToEdit(header,person.getId());
+            searchPersonToEdit(header,person.getId());
         }
         toEdit.setCode(person.getCode());
         toEdit.setName(person.getName());
     }
 
-    private void putPersonToEdit(Node node, int idPerson) {
-        if (node.getMinor() != null){
-            putPersonToEdit(node.getMinor(),idPerson);
+    private void searchPersonToEdit(Node node, int idPerson) {
+        if (node.getMinor() != null) {
+            searchPersonToEdit(node.getMinor(), idPerson);
         }
-        if (node.getInfo().getId() == idPerson){
+        if (node.getInfo().getId() == idPerson) {
             toEdit = node.getInfo();
             return;
         }
-        if (node.getGreaterEqual() != null){
-            putPersonToEdit(node.getGreaterEqual(),idPerson);
+        if (node.getGreaterEqual() != null) {
+            searchPersonToEdit(node.getGreaterEqual(), idPerson);
         }
     }
 }
