@@ -26,7 +26,6 @@ public class ManagerPerson202127061 {
             listPeople.removeAll(listPeople);
             listPeople.addAll(binaryTreeList.getList());
             managerGeneral.presenter.notifyPeopleUpdated();
-            //System.out.println("aqui");
         }
    }
 

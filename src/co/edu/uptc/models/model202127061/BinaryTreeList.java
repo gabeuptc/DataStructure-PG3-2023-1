@@ -57,15 +57,12 @@ public class BinaryTreeList<T> {
         showTreeOrden(header);
     }
     public void showTreeOrden(Node node){
-        //System.out.println(node.getInfo());
         if(node.getLess()!=null){
             showTreeOrden(node.getLess());
         }
-        //System.out.println(node.getInfo());
         if(node.getMejorAndEqual()!=null){
             showTreeOrden(node.getMejorAndEqual());
         }
-        //System.out.println(node.getInfo());
     }
     public void remove(){
         Node aux = new Node();
