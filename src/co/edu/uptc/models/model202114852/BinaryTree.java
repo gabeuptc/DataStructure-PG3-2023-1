@@ -1,5 +1,7 @@
 package co.edu.uptc.models.model202114852;
 
+import co.edu.uptc.models.model_202115100.myPojos.NodeDouble;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -74,7 +76,7 @@ public class BinaryTree<T> {
 		}
 		return aux;
 	}
-	public T obtainData(T data) {
+	public T searchObject(T data) {
 		T auxData = null;
 		if (!isEmpty()) {
 			Node<T> aux = root;
@@ -131,4 +133,21 @@ public class BinaryTree<T> {
 		return aux;
 	}
 
+	public T getPerson(String attribute){
+		return search(root, attribute);
+	}
+
+	public T search(Node<T> root, String attribute) {
+		if (root == null) {
+			return null;
+		}
+		if (root.getValue().toString().toLowerCase().contains(attribute.toLowerCase())) {
+			return root.getValue();
+		}
+		T result = search(root.getLeft(), attribute);
+		if (result != null) {
+			return result;
+		}
+		return search(root.getRight(), attribute);
+	}
 }
