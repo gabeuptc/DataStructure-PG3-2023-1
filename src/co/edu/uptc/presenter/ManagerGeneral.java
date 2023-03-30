@@ -29,6 +29,7 @@ public class ManagerGeneral {
     ContratBills.Presenter presenter;
     ContratBills.Model model202127812;
     ContratBills.Model modelSebastian;
+    ContratBills.Model modelSantiago_202115100;
 
     private ManagerGeneral() {
     }
@@ -65,7 +66,7 @@ public class ManagerGeneral {
          model202127812 = new ManagerModel202127812();
          model202127061 = new ManagerModel202127061();
          modelSebastian= new ManagerModelSebastian();
-
+         modelSantiago_202115100 = new ModelSantiago_202115100();
      }
 
      public void configModelUserGerman(){
@@ -117,7 +118,8 @@ public class ManagerGeneral {
         view.updatedPeople();
     }
     public void configModelUserSantiago_202115100(){
-
+        modelSantiago_202115100.setPresenter(presenter);
+        presenter.setModel(modelSantiago_202115100);
         view.updatedPeople();
     }
 
