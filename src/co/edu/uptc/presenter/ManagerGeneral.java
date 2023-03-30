@@ -1,6 +1,6 @@
 package co.edu.uptc.presenters;
 
-import co.edu.uptc.models.Model202128687.ManagerModel202128687;
+import co.edu.uptc.models.model202128687.ManagerModel202128687;
 import co.edu.uptc.models.Model202127343.ManagerModel202127343;
 import co.edu.uptc.models.BryanModel.MyManagerModel;
 import co.edu.uptc.models.Model202127812.ManagerModel202127812;

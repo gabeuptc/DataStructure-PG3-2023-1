@@ -1,4 +1,4 @@
-package co.edu.uptc.models.Model202128687;
+package co.edu.uptc.models.model202128687;
 
 import co.edu.uptc.pojos.Person;
 
@@ -63,15 +63,12 @@ public class TreeSearch<T> {
     }
 
     public void showTreeOrder(Node node) {
-        //System.out.println(node.getInfo());
         if (node.getLess() != null) {
             showTreeOrder(node.getLess());
         }
-        System.out.println(node.getInfo());
         if (node.getMajorAndEqual() != null) {
             showTreeOrder(node.getMajorAndEqual());
         }
-        //System.out.println(node.getInfo());
     }
 
     private Node getFather(Node node) {

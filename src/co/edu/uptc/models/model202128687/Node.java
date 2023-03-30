@@ -1,4 +1,4 @@
-package co.edu.uptc.models.Model202128687;
+package co.edu.uptc.models.model202128687;
 
 // Vamos a usar arboles binarios de busqueda
 public class Node<T>{
