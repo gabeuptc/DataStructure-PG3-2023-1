@@ -1,7 +1,7 @@
 package co.edu.uptc.presenters;
 
 import co.edu.uptc.models.ModelGerman.ManagerModel;
-import co.edu.uptc.models.Model_202023577.ManagerModel202023577;
+import co.edu.uptc.models.model202023577.ManagerModel202023577;
 import co.edu.uptc.views.dashBoard.DashBoard;
 
 public class ManagerGeneral {
