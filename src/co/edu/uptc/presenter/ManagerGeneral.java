@@ -1,3 +1,4 @@
+
 package co.edu.uptc.presenter;
 
 import co.edu.uptc.models.Alex202128687.ManagerModelAlex;
@@ -14,7 +15,7 @@ import co.edu.uptc.models.Model_202128710.Manager_Model_202128710;
 import co.edu.uptc.models.model_202115100.ModelSantiago_202115100;
 import co.edu.uptc.views.dashBoard.DashBoard;
 
-public class ManagerGeneral {
+public class ManagerGeneral  {
     private static ManagerGeneral instance;
     ContratBills.View view;
     ContratBills.Model modelGerman;
@@ -30,6 +31,7 @@ public class ManagerGeneral {
     ContratBills.Model model202127812;
     ContratBills.Model modelSebastian;
 
+    ContratBills.Model model202114852;
     private ManagerGeneral() {
     }
 
@@ -131,6 +133,11 @@ public class ManagerGeneral {
         presenter.setModel(model202127812);
         view.updatedPeople();
     }
+    public void configModelUser202114852() {
+        model202114852.setPresenter(presenter);
+        presenter.setModel(model202114852);
+        view.updatedPeople();
+    }
     public void configBryanModel(){
         // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
         bryanModel.setPresenter(presenter);
@@ -143,5 +150,6 @@ public class ManagerGeneral {
         createMVP();
         view.start();
     }
+
 
 }

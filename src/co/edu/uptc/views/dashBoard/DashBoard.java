@@ -136,4 +136,6 @@ public class DashBoard extends JFrame implements ContratBills.View {
     public String getAuthorModel() {
         return presenter.getAuthor();
     }
+
+
 }
