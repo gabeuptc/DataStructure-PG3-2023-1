@@ -1,23 +1,23 @@
 package co.edu.uptc.models.Model202114641;
 
-import co.edu.uptc.models.model202127061.ManagerPerson;
+
+
 import co.edu.uptc.pojos.Person;
-import co.edu.uptc.presenters.ContratBills;
+import co.edu.uptc.presenter.ContratBills;
 
 import java.util.List;
 
 public class ManagerModelSebastian implements ContratBills.Model {
     ContratBills.Presenter presenter;
-
-    private ManagerPersonSebastian managerPersonSebastian;
+    private final ManagerPersonSebastian managerPersonSebastian;
 
     public ManagerModelSebastian() {
-        managerPersonSebastian = new ManagerPersonSebastian(this);
+        this.managerPersonSebastian =new ManagerPersonSebastian(this);
     }
 
     @Override
     public void setPresenter(ContratBills.Presenter presenter) {
-        this.presenter = presenter;
+        this.presenter=presenter;
     }
 
     @Override
@@ -32,9 +32,7 @@ public class ManagerModelSebastian implements ContratBills.Model {
 
     @Override
     public List<Person> getPeople() {
-
-        List<Person> auxList = managerPersonSebastian.getPeople();
-        return auxList;
+        return managerPersonSebastian.getPeople();
     }
 
     @Override
@@ -49,6 +47,6 @@ public class ManagerModelSebastian implements ContratBills.Model {
 
     @Override
     public String getAuthor() {
-        return "Jorge Sebastian Mejia";
+        return "Jorge Sebastian Mejia Lopez";
     }
 }
