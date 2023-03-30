@@ -113,7 +113,7 @@ public class PanelModelSelect extends JPanel {
         jButtonSelectModelUser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ManagerGeneral.getInstance().configSebastianModel();
+                ManagerGeneral.getInstance().configModelUserSebastian();
                 dialogPeople.updateAuthorModel();
             }
         });
