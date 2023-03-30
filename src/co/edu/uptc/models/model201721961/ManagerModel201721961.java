@@ -1,9 +1,9 @@
-package co.edu.uptc.models.Model_201721961;
+package co.edu.uptc.models.model201721961;
 
 import co.edu.uptc.models.ModelGerman.ManagerPerson;
 
 import co.edu.uptc.pojos.Person;
-import co.edu.uptc.presenters.ContratBills;
+import co.edu.uptc.presenter.ContratBills;
 
 import java.util.List;
 
@@ -47,6 +47,6 @@ public class ManagerModel201721961 implements ContratBills.Model {
 
     @Override
     public String getAuthor() {
-        return null;
+        return "Brandon Steven Romero Arias";
     }
 }
