@@ -1,6 +1,6 @@
 package co.edu.uptc.presenters;
 
-import co.edu.uptc.models.Alex202128687.ManagerModelAlex;
+import co.edu.uptc.models.Model202128687.ManagerModel202128687;
 import co.edu.uptc.models.Model202127343.ManagerModel202127343;
 import co.edu.uptc.models.BryanModel.MyManagerModel;
 import co.edu.uptc.models.Model202127812.ManagerModel202127812;
@@ -48,7 +48,7 @@ public class ManagerGeneral {
      private void createModels(){
          // TODO aqui se cream todos los modelos
          modelGerman = new ManagerModel();
-         modelAlex = new ManagerModelAlex();
+         modelAlex = new ManagerModel202128687();
 
          model_202113059 = new ManagerModel_202113049();
          modelJuan = new Manager_Model_202128710();

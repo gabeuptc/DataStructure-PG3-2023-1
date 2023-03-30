@@ -1,16 +1,15 @@
-package co.edu.uptc.models.Alex202128687;
+package co.edu.uptc.models.Model202128687;
 
-import co.edu.uptc.models.ModelGerman.ManagerPerson;
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenters.ContratBills;
 
 import java.util.List;
 
-public class ManagerModelAlex implements ContratBills.Model {
+public class ManagerModel202128687 implements ContratBills.Model {
     ContratBills.Presenter presenter;
-    private ManagerPersonAlex managerPerson;
-    public ManagerModelAlex(){
-        managerPerson = new ManagerPersonAlex(this);
+    private ManagerPerson202128687 managerPerson;
+    public ManagerModel202128687(){
+        managerPerson = new ManagerPerson202128687(this);
     }
 
     @Override

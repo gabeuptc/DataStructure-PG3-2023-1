@@ -1,18 +1,17 @@
-package co.edu.uptc.models.Alex202128687;
+package co.edu.uptc.models.Model202128687;
 
 import co.edu.uptc.pojos.Person;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-public class ManagerPersonAlex{
+public class ManagerPerson202128687 {
     // cambiar la lista por el arbol
     private List<Person> listPeople;
-    private ManagerModelAlex managerGeneral;
+    private ManagerModel202128687 managerGeneral;
     private TreeSearch<Person> tree;
     private PersonCompare comparator;
 
-    public ManagerPersonAlex(ManagerModelAlex managerGeneral) {
+    public ManagerPerson202128687(ManagerModel202128687 managerGeneral) {
         this.managerGeneral = managerGeneral;
         listPeople = new ArrayList<>();
         comparator = new PersonCompare();
