@@ -1,6 +1,7 @@
 package co.edu.uptc.models.Model_202023577;
 
 import co.edu.uptc.pojos.Person;
+import co.edu.uptc.tree.TreeUptc;
 
 import java.util.Comparator;
 
