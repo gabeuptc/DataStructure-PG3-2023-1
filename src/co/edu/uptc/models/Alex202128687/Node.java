@@ -58,6 +58,6 @@ public class Node {
 
     @Override
     public String toString() {
-        return "Node [info=" + info + ", less=" + less + ", majorAndEqual=" + majorAndEqual + "]";
+        return "Node_202128687 [info=" + info + ", less=" + less + ", majorAndEqual=" + majorAndEqual + "]";
     }
 }

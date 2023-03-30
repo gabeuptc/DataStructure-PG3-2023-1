@@ -86,8 +86,6 @@ public class ManagerGeneral {
     }
 
 
-
-
     public void configModelUser202127343(){
         model202127343.setPresenter(presenter);
         presenter.setModel(model202127343);

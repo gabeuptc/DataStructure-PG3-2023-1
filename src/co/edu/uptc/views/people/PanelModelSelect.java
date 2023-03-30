@@ -53,8 +53,8 @@ public class PanelModelSelect extends JPanel {
 
     private void addButtonSelectModelUserCodeOtherStudent() {
         configPrefersize();
-        JButton jButtonSelectModelUser = new JButton("Model: student ");
-        jButtonSelectModelUser.setPreferredSize(new Dimension(180,25));
+        //JButton jButtonSelectModelUser = new JButton("Model: student ");
+        //jButtonSelectModelUser.setPreferredSize(new Dimension(180,25));
         JButton jButtonSelectModelUser = new JButton("Model: 202115100");
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(new ActionListener() {
@@ -118,10 +118,12 @@ public class PanelModelSelect extends JPanel {
         jButtonSelectModelUser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                ManagerGeneral.getInstance().configModelUserJuan();
+                dialogPeople.updateAuthorModel();
             }
         });
     }
+
     private void addButtonSelectModel202127061() {
             configPrefersize();
             JButton jButtonSelectModelUser = new JButton("Model: 202127061 ");
@@ -131,7 +133,6 @@ public class PanelModelSelect extends JPanel {
         jButtonSelectModelUser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ManagerGeneral.getInstance().configModelUserJuan();
                 ManagerGeneral.getInstance().configModelUser202127061();
 
                 dialogPeople.updateAuthorModel();

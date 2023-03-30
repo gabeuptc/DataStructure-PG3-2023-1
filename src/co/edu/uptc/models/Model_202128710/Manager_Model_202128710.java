@@ -9,15 +9,21 @@ import java.util.List;
 
 public class Manager_Model_202128710 implements ContratBills.Model {
 
+     ContratBills.Presenter presenter;
+    private Manager_Person_202128710 managerPerson202128710;
+
+    public Manager_Model_202128710(){
+        managerPerson202128710 = new Manager_Person_202128710(this);
+    }
 
     @Override
     public void setPresenter(ContratBills.Presenter presenter) {
-
+        this.presenter = presenter;
     }
 
     @Override
     public void addPerson(Person person) {
-
+        managerPerson202128710.addPerson(person);
     }
 
     @Override
@@ -27,7 +33,7 @@ public class Manager_Model_202128710 implements ContratBills.Model {
 
     @Override
     public List<Person> getPeople() {
-        return null;
+        return managerPerson202128710.getPerson();
     }
 
     @Override
