@@ -1,30 +1,30 @@
-package co.edu.uptc.models.ModelDanielRojas;
+package co.edu.uptc.models.ModelDanielRojas.pojos;
 
-public class Node {
-    private int info;
+public class Node<T> {
+    private T info;
     private Node less;
     private Node major;
 
     public Node() {
     }
 
-    public Node(int info) {
+    public Node(T info) {
         this.info = info;
         this.less = null;
         this.major = null;
     }
 
-    public Node(int info, Node less, Node major) {
+    public Node(T info, Node less, Node major) {
         this.info = info;
         this.less = less;
         this.major = major;
     }
 
-    public int getInfo() {
+    public T getInfo() {
         return info;
     }
 
-    public void setInfo(int info) {
+    public void setInfo(T info) {
         this.info = info;
     }
 

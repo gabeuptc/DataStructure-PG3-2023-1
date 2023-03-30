@@ -1,9 +1,11 @@
 package co.edu.uptc.models.ModelDanielRojas;
 
+import co.edu.uptc.models.ModelDanielRojas.pojos.Node;
+
 public class MyTree {
     Node header;
 
-    public void add(int info) {
+    /*public void add(int info) {
         Node newNode = new Node(info);
         if (header == null) {
             header = newNode;
@@ -70,7 +72,7 @@ public class MyTree {
         } else if (info < node.getInfo()) {
             return exist(info, node.getLess());
         } else return exist(info, node.getMajor());
-    }
+    }*/
 
     public void showTree() {
 //        System.out.println(header.getInfo());
