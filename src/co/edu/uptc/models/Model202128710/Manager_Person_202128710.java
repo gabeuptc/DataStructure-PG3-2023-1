@@ -1,7 +1,7 @@
-package co.edu.uptc.models.Model_202128710;
+package co.edu.uptc.models.Model202128710;
 
 
-import co.edu.uptc.model.TreeUptc;
+import co.edu.uptc.model.Tree_202128710;
 import co.edu.uptc.pojos.Person;
 
 import java.util.ArrayList;
@@ -10,12 +10,12 @@ import java.util.List;
 public class Manager_Person_202128710 {
 
     private List<Person> personList;
-    private TreeUptc treePerson;
+    private Tree_202128710 treePerson;
     private Manager_Model_202128710 managerGeneral;
 
     public Manager_Person_202128710(Manager_Model_202128710 manager_model_202128710){
         this.managerGeneral = manager_model_202128710;
-        treePerson = new TreeUptc<>();
+        treePerson = new Tree_202128710();
         personList = new ArrayList<>();
     }
 

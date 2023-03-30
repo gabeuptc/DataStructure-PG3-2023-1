@@ -1,4 +1,4 @@
-package co.edu.uptc.presenters;
+package co.edu.uptc.presenter;
 
 import co.edu.uptc.models.Alex202128687.ManagerModelAlex;
 import co.edu.uptc.models.Model202127343.ManagerModel202127343;
@@ -9,7 +9,7 @@ import co.edu.uptc.models.ModelGerman.ManagerModel;
 import co.edu.uptc.models.Pedro.ManagerModel202128778;
 
 import co.edu.uptc.models.Model_202113049.ManagerModel_202113049;
-import co.edu.uptc.models.Model_202128710.Manager_Model_202128710;
+import co.edu.uptc.models.Model202128710.Manager_Model_202128710;
 import co.edu.uptc.models.model_202115100.ModelSantiago_202115100;
 import co.edu.uptc.views.dashBoard.DashBoard;
 
