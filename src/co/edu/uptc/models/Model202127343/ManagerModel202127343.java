@@ -22,7 +22,7 @@ public class ManagerModel202127343 implements ContratBills.Model {
 
     @Override
     public void addPerson(Person person) {
-           managerPerson.addPerson(person.clone());
+        managerPerson.addPerson(new Person(person.getId(), person.getCode(), person.getName()));
     }
 
     @Override

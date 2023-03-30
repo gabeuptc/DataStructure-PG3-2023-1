@@ -30,34 +30,20 @@ public class TreeList {
     }
 
     public List<Person> getPersonArrayOfTree() {
-        return getArrayThreePerOrden(header);
-    }
-
-    public void showTree() {
-        showThreeOrden(header);
-    }
-
-    public void showThreeOrden(Node node) {
-        if (node.getLess() != null) {
-            showThreeOrden(node.getLess());
-        }
-        System.out.println(node.getInfo());
-        if (node.getMajorAndEqual() != null) {
-            showThreeOrden(node.getMajorAndEqual());
+        if(header == null){
+            return null;
+        } else {
+            return getArrayThreePerOrden(header);
         }
     }
 
     public List<Person> getArrayThreePerOrden(Node<Person> node) {
         List<Person> auxList = new ArrayList<>();
-        if (node.getLess() != null) {
-            getArrayThreePerOrden(node.getLess());
+        if(node != null){
+            auxList.addAll(getArrayThreePerOrden(node.getLess()));
+            auxList.add(node.getInfo());
+            auxList.addAll(getArrayThreePerOrden(node.getMajorAndEqual()));
         }
-        auxList.add(node.getInfo());
-        System.out.println(node.getInfo().getId());
-        if (node.getMajorAndEqual() != null) {
-            getArrayThreePerOrden(node.getMajorAndEqual());
-        }
-        System.out.println("Termino-----");
         return auxList;
     }
 
