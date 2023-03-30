@@ -6,12 +6,12 @@ import java.util.List;
 
 public class ManagerPerson202114852 {
 
-    private Model202114852 model202114852;
+    private model202114852 model202114852;
 
     BinaryTree<Person> treePerson;
 
-    public ManagerPerson202114852(Model202114852 model202114852){
-        this.model202114852 = new Model202114852();
+    public ManagerPerson202114852(model202114852 model202114852){
+        this.model202114852 = new model202114852();
         treePerson = new BinaryTree<>(new NodeComparator());
     }
 
