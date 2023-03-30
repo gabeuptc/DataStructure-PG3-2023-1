@@ -1,11 +1,10 @@
 package co.edu.uptc.views.dashBoard;
 
 import co.edu.uptc.pojos.Person;
-import co.edu.uptc.presenters.ContratBills;
+import co.edu.uptc.presenter.ContratBills;
 import co.edu.uptc.views.people.DialogPeople;
 import co.edu.uptc.views.people.PanelButtom;
 import co.edu.uptc.views.people.PanelInput;
-import co.edu.uptc.views.people.PanelModelSelect;
 
 import javax.swing.*;
 
