@@ -5,21 +5,28 @@ import co.edu.uptc.pojos.Person;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerPerson {
-   List<Person> listPeople;
+public class ManagerPerson202127061 {
+    List<Person> listPeople;
+    private BinaryTreeList<Person> binaryTreeList;
+    private ComparatePerson comparatorPerson;
 
     private ManagerModel202127061 managerGeneral;
-    public ManagerPerson(ManagerModel202127061 managerGeneral) {
+    public ManagerPerson202127061(ManagerModel202127061 managerGeneral) {
         this.managerGeneral = managerGeneral;
         listPeople = new ArrayList<>();
+        comparatorPerson = new ComparatePerson();
+        binaryTreeList = new BinaryTreeList(comparatorPerson);
     }
 
     public void addPerson(Person person){
         if (person.getName().equals("") || person.getCode().equals("")) {
            managerGeneral.presenter.notifyError("Información incompleta");
         } else {
-            listPeople.add(person);
+            binaryTreeList.add(person);
+            listPeople.removeAll(listPeople);
+            listPeople.addAll(binaryTreeList.getList());
             managerGeneral.presenter.notifyPeopleUpdated();
+            //System.out.println("aqui");
         }
    }
 

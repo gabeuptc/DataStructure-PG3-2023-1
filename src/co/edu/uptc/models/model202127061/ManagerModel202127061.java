@@ -9,10 +9,10 @@ import java.util.List;
 public class ManagerModel202127061 implements ContratBills.Model {
     ContratBills.Presenter presenter;
 
-    private ManagerPerson managerPerson;
+    private ManagerPerson202127061 managerPerson;
 
     public ManagerModel202127061() {
-         managerPerson = new ManagerPerson(this);
+         managerPerson = new ManagerPerson202127061(this);
     }
 
     @Override
