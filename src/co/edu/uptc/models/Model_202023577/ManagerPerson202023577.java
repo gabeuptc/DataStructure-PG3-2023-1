@@ -33,9 +33,9 @@ public class ManagerPerson202023577 {
        return treeUptc.search(new Node<>(new Person(0, "", namePerson))).getInfo();
    }
 
-    public ArrayList<Person> getPeople() {
+    public List<Person> getPeople() {
         ArrayList<Person> auxList = treeUptc.getDatas();
-        ArrayList<Person> result = new ArrayList<>();
+        List<Person> result = new ArrayList<>();
         for (Person person: auxList) {
             result.add(person.clone());
         }

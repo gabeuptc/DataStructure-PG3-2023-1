@@ -1,7 +1,5 @@
 package co.edu.uptc.presenters;
 
-
-
 import co.edu.uptc.models.ModelGerman.ManagerModel;
 import co.edu.uptc.pojos.Person;
 

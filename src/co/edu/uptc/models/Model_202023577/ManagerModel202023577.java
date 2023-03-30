@@ -3,8 +3,8 @@ package co.edu.uptc.models.Model_202023577;
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenters.ContratBills;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 public class ManagerModel202023577 implements ContratBills.Model {
     ContratBills.Presenter presenter;
@@ -32,14 +32,13 @@ public class ManagerModel202023577 implements ContratBills.Model {
 
     @Override
     public List<Person> getPeople() {
-
         List<Person> auxList = managerPerson.getPeople();
        return auxList;
     }
 
     @Override
-    public Person getPerson(String attribute) {
-        return managerPerson.getPerson(attribute);
+    public Person getPerson(String namePerson) {
+        return managerPerson.getPerson(namePerson);
     }
 
     @Override
@@ -49,6 +48,6 @@ public class ManagerModel202023577 implements ContratBills.Model {
 
     @Override
     public String getAuthor() {
-        return "German Amezquita Becerra";
+        return "Nicolas Esteban Avella";
     }
 }
