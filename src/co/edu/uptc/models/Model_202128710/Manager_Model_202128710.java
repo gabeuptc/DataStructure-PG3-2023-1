@@ -1,4 +1,5 @@
-package co.edu.uptc.models.ModelGerman;
+package co.edu.uptc.models.Model_202128710;
+
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
@@ -6,23 +7,17 @@ import co.edu.uptc.presenter.ContratBills;
 import java.util.List;
 
 
-public class ManagerModel implements ContratBills.Model {
-    ContratBills.Presenter presenter;
+public class Manager_Model_202128710 implements ContratBills.Model {
 
-    private ManagerPerson managerPerson;
-
-    public ManagerModel() {
-         managerPerson = new ManagerPerson(this);
-    }
 
     @Override
     public void setPresenter(ContratBills.Presenter presenter) {
-        this.presenter = presenter;
+
     }
 
     @Override
     public void addPerson(Person person) {
-           managerPerson.addPerson(person.clone());
+
     }
 
     @Override
@@ -32,22 +27,21 @@ public class ManagerModel implements ContratBills.Model {
 
     @Override
     public List<Person> getPeople() {
-        List<Person> auxList = managerPerson.getPeople();
-       return auxList;
+        return null;
     }
 
     @Override
     public Person getPerson(String attribute) {
-        return managerPerson.getPerson(attribute);
+        return null;
     }
 
     @Override
     public void editPerson(Person person) {
-        managerPerson.editPerson(person);
+
     }
 
     @Override
     public String getAuthor() {
-        return "German Amezquita Becerra";
+        return "Juan Sebastian Rodriguez Mateus";
     }
 }
