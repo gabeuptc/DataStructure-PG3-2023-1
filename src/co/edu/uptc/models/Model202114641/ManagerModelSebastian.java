@@ -2,7 +2,7 @@ package co.edu.uptc.models.Model202114641;
 
 import co.edu.uptc.models.model202127061.ManagerPerson;
 import co.edu.uptc.pojos.Person;
-import co.edu.uptc.presenters.ContratBills;
+import co.edu.uptc.presenter.ContratBills;
 
 import java.util.List;
 
