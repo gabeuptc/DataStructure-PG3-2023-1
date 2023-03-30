@@ -31,7 +31,8 @@ public class TreeList {
 
     public List<Person> getPersonArrayOfTree() {
         if(header == null){
-            return null;
+            List<Person> auxList = new ArrayList<>();
+            return auxList;
         } else {
             return getArrayThreePerOrden(header);
         }
