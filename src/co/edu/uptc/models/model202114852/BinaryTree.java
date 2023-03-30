@@ -56,9 +56,6 @@ public class BinaryTree<T> {
 		} else {
 			Node<T> auxNode = root;
 			while (!aux) {
-//				if(auxNode == null) {
-//					throw new NotValueTreeBinary();
-//				}
 				if (comparator.compare(value, auxNode.getValue()) < 0) {
 					if (auxNode.getLeft() != null && comparator.compare(auxNode.getLeft().getValue(), value) == 0) {
 						aux = true;
