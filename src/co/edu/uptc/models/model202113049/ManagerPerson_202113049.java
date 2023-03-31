@@ -1,16 +1,18 @@
-package co.edu.uptc.models.Pedro;
-
+package co.edu.uptc.models.model202113049;
 import co.edu.uptc.pojos.Person;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerPerson {
+public class ManagerPerson_202113049 {
     List<Person> listPeople;
+    UPTCTree_202113049<Person> personsTree;
 
-    private ManagerModel202128778 managerGeneral;
-    public ManagerPerson(ManagerModel202128778 managerGeneral) {
+    private ManagerModel_202113049 managerGeneral;
+
+    public ManagerPerson_202113049(ManagerModel_202113049 managerGeneral) {
         this.managerGeneral = managerGeneral;
+        this.personsTree = new UPTCTree_202113049<Person>();
         listPeople = new ArrayList<>();
     }
 
@@ -18,6 +20,7 @@ public class ManagerPerson {
         if (person.getName().equals("") || person.getCode().equals("")) {
             managerGeneral.presenter.notifyError("Información incompleta");
         } else {
+            personsTree.add(person,new PersonComparator(),new PersonComparator2());
             listPeople.add(person);
             managerGeneral.presenter.notifyPeopleUpdated();
         }
@@ -48,6 +51,5 @@ public class ManagerPerson {
             auxList.add(person.clone());
         }
         return auxList;
-
     }
 }
