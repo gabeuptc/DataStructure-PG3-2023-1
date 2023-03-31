@@ -8,10 +8,10 @@ import co.edu.uptc.models.model202127717.ManagerModel202127717;
 import co.edu.uptc.models.model202127812.ManagerModel202127812;
 import co.edu.uptc.models.model202127061.ManagerModel202127061;
 import co.edu.uptc.models.model202127812.ManagerModel202127812;
-import co.edu.uptc.models.ModelGerman.ManagerModel;
+import co.edu.uptc.models.modelGerman.ManagerModel;
 import co.edu.uptc.models.Pedro.ManagerModel202128778;
 
-import co.edu.uptc.models.Model_202113049.ManagerModel_202113049;
+import co.edu.uptc.models.model202113049.ManagerModel_202113049;
 import co.edu.uptc.models.Model_202128710.Manager_Model_202128710;
 import co.edu.uptc.models.model_202115100.ModelSantiago_202115100;
 import co.edu.uptc.views.dashBoard.DashBoard;
