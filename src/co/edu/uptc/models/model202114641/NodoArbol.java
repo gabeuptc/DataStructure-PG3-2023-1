@@ -1,4 +1,4 @@
-package co.edu.uptc.models.Model202114641;
+package co.edu.uptc.models.model202114641;
 
 import co.edu.uptc.pojos.Person;
 
@@ -28,7 +28,6 @@ public class NodoArbol {
     public void setIzquierdo(NodoArbol izquierdo) {
         this.izquierdo = izquierdo;
     }
-
     public NodoArbol getDerecho() {
         return derecho;
     }
