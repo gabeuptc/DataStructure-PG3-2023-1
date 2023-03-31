@@ -1,19 +1,16 @@
-
-package co.edu.uptc.models.model_202115100;
-
-
+package co.edu.uptc.models.model202127717;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
 
 import java.util.List;
 
-public class modelSantiago_202115100 implements ContratBills.Model {
+public class ManagerModel202127717 implements ContratBills.Model {
     ContratBills.Presenter presenter;
-    private MyManagerPerson managerPerson;
+    private final ManagerPerson managerPerson;
 
-    public modelSantiago_202115100() {
-        managerPerson = new MyManagerPerson(this);
+    public ManagerModel202127717() {
+        this.managerPerson = new ManagerPerson(this);
     }
 
     @Override
@@ -45,9 +42,8 @@ public class modelSantiago_202115100 implements ContratBills.Model {
     public void editPerson(Person person) {
         managerPerson.editPerson(person);
     }
-
     @Override
     public String getAuthor() {
-        return "Santiago Andres Orjuela Lopez";
+        return "Cristian Jesus Celis Gutierrez";
     }
 }
