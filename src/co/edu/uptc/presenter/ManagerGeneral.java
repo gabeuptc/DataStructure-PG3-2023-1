@@ -10,8 +10,7 @@ import co.edu.uptc.models.ModelGerman.ManagerModel;
 import co.edu.uptc.models.Pedro.ManagerModel202128778;
 
 import co.edu.uptc.models.Model_202113049.ManagerModel_202113049;
-import co.edu.uptc.models.Model_202128710.Manager_Model_202128710;
-import co.edu.uptc.models.model_202115100.ModelSantiago_202115100;
+import co.edu.uptc.models.model202128710.ManagerModel202128710;
 import co.edu.uptc.views.dashBoard.DashBoard;
 
 public class ManagerGeneral {
@@ -54,7 +53,7 @@ public class ManagerGeneral {
          modelAlex = new ManagerModelAlex();
 
          model_202113059 = new ManagerModel_202113049();
-         modelJuan = new Manager_Model_202128710();
+         modelJuan = new ManagerModel202128710();
 
          model202127061 = new ManagerModel();
          model202127343 = new ManagerModel202127343();
