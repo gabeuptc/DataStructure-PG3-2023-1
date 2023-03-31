@@ -33,6 +33,7 @@ public class ManagerGeneral {
     ContratBills.Model modelSebastian;
     ContratBills.Model model202127717;
 
+
     ContratBills.Model model202113214;
     private ManagerGeneral() {
     }
@@ -70,10 +71,6 @@ public class ManagerGeneral {
          model202127061 = new ManagerModel202127061();
          modelSebastian= new ManagerModelSebastian();
          model202127717 = new ManagerModel202127717();
-
-
-
-
          //model2021132148 = new ManagerModel_2021132148(); 
 
          model202113214 = new MyClass();
@@ -90,6 +87,7 @@ public class ManagerGeneral {
         presenter.setModel(model_202113059);
         view.updatedPeople();
     }
+
 
     public void configModel202127717(){
         model202127717.setPresenter(presenter);
@@ -142,6 +140,7 @@ public class ManagerGeneral {
 
         view.updatedPeople();
     }
+
 
     public void configModelOtherUser(){
         // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
