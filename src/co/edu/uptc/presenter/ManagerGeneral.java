@@ -54,7 +54,7 @@ public class ManagerGeneral {
          modelAlex = new ManagerModelAlex();
 
          model_202113059 = new ManagerModel_202113049();
-         modelJuan = new Manager_Model_202128710();
+         modelJuan = new ManagerModel202128710();
 
          model202127061 = new ManagerModel();
          model202127343 = new ManagerModel202127343();
