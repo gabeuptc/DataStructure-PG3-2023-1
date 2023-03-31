@@ -28,7 +28,6 @@ public class NodoArbol {
     public void setIzquierdo(NodoArbol izquierdo) {
         this.izquierdo = izquierdo;
     }
-
     public NodoArbol getDerecho() {
         return derecho;
     }
