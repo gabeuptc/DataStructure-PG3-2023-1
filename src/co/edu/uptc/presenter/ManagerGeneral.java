@@ -7,8 +7,9 @@ import co.edu.uptc.models.model202127343.ManagerModel202127343;
 import co.edu.uptc.models.BryanModel.MyManagerModel;
 import co.edu.uptc.models.model202127812.ManagerModel202127812;
 import co.edu.uptc.models.model202127061.ManagerModel202127061;
-import co.edu.uptc.models.modelGerman.ManagerModel;
+
 import co.edu.uptc.models.Pedro.ManagerModel202128778;
+import co.edu.uptc.models.model202114852.ManagerModel202114852;
 
 import co.edu.uptc.models.model_202113049.ManagerModel_202113049;
 import co.edu.uptc.models.model_202128710.Manager_Model_202128710;
@@ -51,13 +52,12 @@ public class ManagerGeneral  {
 
      private void createModels(){
          // TODO aqui se cream todos los modelos
-         modelGerman = new ManagerModel();
+
          modelAlex = new ManagerModelAlex();
 
          model_202113059 = new ManagerModel_202113049();
          modelJuan = new Manager_Model_202128710();
 
-         model202127061 = new ManagerModel();
          model202127343 = new ManagerModel202127343();
 
          bryanModel = new MyManagerModel();
@@ -66,6 +66,7 @@ public class ManagerGeneral  {
          model202127812 = new ManagerModel202127812();
          model202127061 = new ManagerModel202127061();
          modelSebastian= new ManagerModelSebastian();
+         model202114852 = new ManagerModel202114852();
 
      }
 
@@ -138,6 +139,8 @@ public class ManagerGeneral  {
         presenter.setModel(model202114852);
         view.updatedPeople();
     }
+
+
     public void configBryanModel(){
         // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
         bryanModel.setPresenter(presenter);

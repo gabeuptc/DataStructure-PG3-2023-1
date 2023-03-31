@@ -1,28 +1,27 @@
-package co.edu.uptc.models.modelGerman;
+package co.edu.uptc.models.model202114852;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
 
 import java.util.List;
 
+public class ManagerModel202114852 implements ContratBills.Model {
 
-public class ManagerModel implements ContratBills.Model {
     ContratBills.Presenter presenter;
+    private ManagerPerson202114852 managerPerson;
 
-    private ManagerPerson managerPerson;
-
-    public ManagerModel() {
-         managerPerson = new ManagerPerson(this);
+    public ManagerModel202114852(){
+        managerPerson = new ManagerPerson202114852(this);
     }
 
     @Override
     public void setPresenter(ContratBills.Presenter presenter) {
-        this.presenter = presenter;
+
     }
 
     @Override
     public void addPerson(Person person) {
-           managerPerson.addPerson(person.clone());
+    managerPerson.add(person.clone());
     }
 
     @Override
@@ -32,8 +31,7 @@ public class ManagerModel implements ContratBills.Model {
 
     @Override
     public List<Person> getPeople() {
-        List<Person> auxList = managerPerson.getPeople();
-       return auxList;
+        return managerPerson.getPeople();
     }
 
     @Override
@@ -43,13 +41,12 @@ public class ManagerModel implements ContratBills.Model {
 
     @Override
     public void editPerson(Person person) {
-        managerPerson.editPerson(person);
+
     }
+
 
     @Override
     public String getAuthor() {
-        return "German Amezquita Becerra";
+        return "Oscar Ivan Rojas Cuesta";
     }
-
-
 }
