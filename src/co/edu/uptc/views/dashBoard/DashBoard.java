@@ -2,6 +2,7 @@ package co.edu.uptc.views.dashBoard;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
+import co.edu.uptc.views.Map.Map;
 import co.edu.uptc.views.people.DialogPeople;
 import co.edu.uptc.views.people.PanelButtom;
 import co.edu.uptc.views.people.PanelInput;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.List;
 
 public class DashBoard extends JFrame implements ContratBills.View {
@@ -66,15 +68,27 @@ public class DashBoard extends JFrame implements ContratBills.View {
     }
 
     private void addButtonOther(){
-        JButton jButtonOther = new JButton("Otros");
+        JButton jButtonOther = new JButton("Mapa");
         jButtonOther.setBounds(100,150,120,30);
         add(jButtonOther);
         jButtonOther.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(getInstance(),"Sin definir");
+                try {
+                    if (isConnectedToInternet()){
+                        new Map().setVisible(true);
+                    }else {
+                        JOptionPane.showMessageDialog(getInstance(),"No hay conexion a internet, no se puede cargar el mapa");
+                    }
+                }catch (IOException | InterruptedException exception) {
+                    throw new RuntimeException(exception);
+                }
             }
         });
+    }
+    public boolean isConnectedToInternet() throws InterruptedException, IOException {
+        //no se si toca hacer esto desde un modelo, es para saber si hay conexion a internet
+        return (Runtime.getRuntime().exec ("ping -c 1 google.com").waitFor() == 0);
     }
 
     private void addButtonClose(){
