@@ -4,12 +4,14 @@ import co.edu.uptc.models.Alex202128687.ManagerModelAlex;
 import co.edu.uptc.models.model202114641.ManagerModelSebastian;
 import co.edu.uptc.models.Model202127343.ManagerModel202127343;
 import co.edu.uptc.models.BryanModel.MyManagerModel;
+import co.edu.uptc.models.model202127717.ManagerModel202127717;
+import co.edu.uptc.models.ModelDanielRojas.ManagerModelDaniel;
 import co.edu.uptc.models.model202127812.ManagerModel202127812;
 import co.edu.uptc.models.model202127061.ManagerModel202127061;
-import co.edu.uptc.models.ModelGerman.ManagerModel;
+import co.edu.uptc.models.modelGerman.ManagerModel;
 import co.edu.uptc.models.Pedro.ManagerModel202128778;
 
-import co.edu.uptc.models.Model_202113049.ManagerModel_202113049;
+import co.edu.uptc.models.model202113049.ManagerModel_202113049;
 import co.edu.uptc.models.Model_202128710.Manager_Model_202128710;
 import co.edu.uptc.models.model202115100.ModelSantiago_202115100;
 import co.edu.uptc.views.dashBoard.DashBoard;
@@ -22,7 +24,7 @@ public class ManagerGeneral {
     ContratBills.Model model_202113059;
     ContratBills.Model modelJuan;
     ContratBills.Model modelAlex;
-
+    ContratBills.Model modelDaniel;
     ContratBills.Model  model202127343;
     ContratBills.Model bryanModel;
     ContratBills.Model modelPedro;
@@ -30,6 +32,7 @@ public class ManagerGeneral {
     ContratBills.Model model202127812;
     ContratBills.Model modelSebastian;
     ContratBills.Model modelSantiago_202115100;
+    ContratBills.Model model202127717;
 
     private ManagerGeneral() {
     }
@@ -53,7 +56,7 @@ public class ManagerGeneral {
          // TODO aqui se cream todos los modelos
          modelGerman = new ManagerModel();
          modelAlex = new ManagerModelAlex();
-
+         modelDaniel = new ManagerModelDaniel();
          model_202113059 = new ManagerModel_202113049();
          modelJuan = new Manager_Model_202128710();
 
@@ -67,6 +70,7 @@ public class ManagerGeneral {
          model202127061 = new ManagerModel202127061();
          modelSebastian= new ManagerModelSebastian();
          modelSantiago_202115100 = new ModelSantiago_202115100();
+         model202127717 = new ManagerModel202127717();
      }
 
      public void configModelUserGerman(){
@@ -81,7 +85,11 @@ public class ManagerGeneral {
         view.updatedPeople();
     }
 
-
+    public void configModel202127717(){
+        model202127717.setPresenter(presenter);
+        presenter.setModel(model202127717);
+        view.updatedPeople();
+    }
 
     public void configModelUserJuan(){
         modelJuan.setPresenter(presenter);
@@ -141,6 +149,11 @@ public class ManagerGeneral {
         view.updatedPeople();
     }
 
+    public void configModelDanielRojas(){
+        modelDaniel.setPresenter(presenter);
+        presenter.setModel(modelDaniel);
+        view.updatedPeople();
+    }
 
     public void runProject(){
         createMVP();
