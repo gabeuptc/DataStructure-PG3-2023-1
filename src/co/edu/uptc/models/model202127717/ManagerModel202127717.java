@@ -1,20 +1,26 @@
-package co.edu.uptc.models.Model_202113049;
+package co.edu.uptc.models.model202127717;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
 
 import java.util.List;
 
-public class ManagerModel_202113049 implements ContratBills.Model {
+public class ManagerModel202127717 implements ContratBills.Model {
+    ContratBills.Presenter presenter;
+    private final ManagerPerson managerPerson;
+
+    public ManagerModel202127717() {
+        this.managerPerson = new ManagerPerson(this);
+    }
 
     @Override
     public void setPresenter(ContratBills.Presenter presenter) {
-
+        this.presenter = presenter;
     }
 
     @Override
     public void addPerson(Person person) {
-
+        managerPerson.addPerson(person.clone());
     }
 
     @Override
@@ -24,21 +30,20 @@ public class ManagerModel_202113049 implements ContratBills.Model {
 
     @Override
     public List<Person> getPeople() {
-        return null;
+        return managerPerson.getPeople();
     }
 
     @Override
     public Person getPerson(String attribute) {
-        return null;
+        return managerPerson.getPerson(attribute);
     }
 
     @Override
     public void editPerson(Person person) {
-
+        managerPerson.editPerson(person);
     }
-
     @Override
     public String getAuthor() {
-        return "DEYVID FERNANDO CRUZ MOLANO";
+        return "Cristian Jesus Celis Gutierrez";
     }
 }
