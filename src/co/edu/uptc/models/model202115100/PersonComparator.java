@@ -1,4 +1,4 @@
-package co.edu.uptc.models.model_202115100;
+package co.edu.uptc.models.model202115100;
 
 import co.edu.uptc.pojos.Person;
 
