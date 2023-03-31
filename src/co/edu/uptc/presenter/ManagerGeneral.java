@@ -12,6 +12,7 @@ import co.edu.uptc.models.modelGerman.ManagerModel;
 import co.edu.uptc.models.Pedro.ManagerModel202128778;
 
 import co.edu.uptc.models.model202113049.ManagerModel_202113049;
+import co.edu.uptc.models.model202113214.MyClass;
 import co.edu.uptc.models.Model_202128710.Manager_Model_202128710;
 import co.edu.uptc.views.dashBoard.DashBoard;
 
@@ -32,6 +33,7 @@ public class ManagerGeneral {
     ContratBills.Model modelSebastian;
     ContratBills.Model model202127717;
 
+    ContratBills.Model model202113214;
     private ManagerGeneral() {
     }
 
@@ -69,6 +71,12 @@ public class ManagerGeneral {
          modelSebastian= new ManagerModelSebastian();
          model202127717 = new ManagerModel202127717();
 
+
+
+
+         //model2021132148 = new ManagerModel_2021132148(); 
+
+         model202113214 = new MyClass();
      }
 
      public void configModelUserGerman(){
@@ -101,6 +109,13 @@ public class ManagerGeneral {
     }
 
 
+
+    public void configModel202113214(){
+        // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
+        model202113214.setPresenter(presenter);
+        presenter.setModel(model202113214);
+        view.updatedPeople();
+    }
 
     public void configModelUser202127343(){
         model202127343.setPresenter(presenter);
