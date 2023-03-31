@@ -1,4 +1,4 @@
-package co.edu.uptc.models.Model202022012;
+package co.edu.uptc.models.modelGerman;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
@@ -6,13 +6,13 @@ import co.edu.uptc.presenter.ContratBills;
 import java.util.List;
 
 
-public class MyManagerModel implements ContratBills.Model {
+public class ManagerModel implements ContratBills.Model {
     ContratBills.Presenter presenter;
 
-    private MyManagerPerson managerPerson;
+    private ManagerPerson managerPerson;
 
-    public MyManagerModel() {
-         managerPerson = new MyManagerPerson(this);
+    public ManagerModel() {
+         managerPerson = new ManagerPerson(this);
     }
 
     @Override
@@ -32,7 +32,6 @@ public class MyManagerModel implements ContratBills.Model {
 
     @Override
     public List<Person> getPeople() {
-
         List<Person> auxList = managerPerson.getPeople();
        return auxList;
     }
@@ -49,6 +48,6 @@ public class MyManagerModel implements ContratBills.Model {
 
     @Override
     public String getAuthor() {
-        return "Bryan Lopez";
+        return "German Amezquita Becerra";
     }
 }

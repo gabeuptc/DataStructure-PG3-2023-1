@@ -22,7 +22,6 @@ public class MyManagerPerson {
            managerGeneral.presenter.notifyError("Información incompleta");
         } else {
             listPeople.add(person);
-            //listPeople.initData();
             managerGeneral.presenter.notifyPeopleUpdated();
         }
    }
@@ -51,16 +50,11 @@ public class MyManagerPerson {
 
     public List<Person> getPeople() {
         List<Person> auxList = new ArrayList<>();
-    //    auxList.add(new Person(1,"8383","dd"));
-
         if(listPeople.getHeader() != null) {
-            auxList = (List<Person>) listPeople.getList();
-            //System.out.println(treeList);
-            //auxList.addAll(treeList);
+            for (Person per: listPeople.getList()) {
+                auxList.add(per.clone());
+            }
         }
-
-
-        System.out.println("1111: " + auxList);
         return auxList;
 
     }
