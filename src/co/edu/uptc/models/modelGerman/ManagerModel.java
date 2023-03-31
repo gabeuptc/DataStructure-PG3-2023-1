@@ -1,4 +1,4 @@
-package co.edu.uptc.models.ModelGerman;
+package co.edu.uptc.models.modelGerman;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
