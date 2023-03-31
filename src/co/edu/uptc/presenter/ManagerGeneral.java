@@ -5,6 +5,7 @@ import co.edu.uptc.models.model202114641.ManagerModelSebastian;
 import co.edu.uptc.models.Model202127343.ManagerModel202127343;
 import co.edu.uptc.models.BryanModel.MyManagerModel;
 import co.edu.uptc.models.model202127717.ManagerModel202127717;
+import co.edu.uptc.models.ModelDanielRojas.ManagerModelDaniel;
 import co.edu.uptc.models.model202127812.ManagerModel202127812;
 import co.edu.uptc.models.model202127061.ManagerModel202127061;
 import co.edu.uptc.models.modelGerman.ManagerModel;
@@ -22,7 +23,7 @@ public class ManagerGeneral {
     ContratBills.Model model_202113059;
     ContratBills.Model modelJuan;
     ContratBills.Model modelAlex;
-
+    ContratBills.Model modelDaniel;
     ContratBills.Model  model202127343;
     ContratBills.Model bryanModel;
     ContratBills.Model modelPedro;
@@ -53,7 +54,7 @@ public class ManagerGeneral {
          // TODO aqui se cream todos los modelos
          modelGerman = new ManagerModel();
          modelAlex = new ManagerModelAlex();
-
+         modelDaniel = new ManagerModelDaniel();
          model_202113059 = new ManagerModel_202113049();
          modelJuan = new Manager_Model_202128710();
 
@@ -145,6 +146,11 @@ public class ManagerGeneral {
         view.updatedPeople();
     }
 
+    public void configModelDanielRojas(){
+        modelDaniel.setPresenter(presenter);
+        presenter.setModel(modelDaniel);
+        view.updatedPeople();
+    }
 
     public void runProject(){
         createMVP();
