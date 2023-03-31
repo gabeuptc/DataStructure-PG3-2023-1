@@ -1,4 +1,4 @@
-package co.edu.uptc.models.BryanModel;
+package co.edu.uptc.models.Model202022012;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenters.ContratBills;
