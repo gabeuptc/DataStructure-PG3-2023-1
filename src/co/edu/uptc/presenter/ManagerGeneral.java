@@ -4,12 +4,13 @@ import co.edu.uptc.models.Alex202128687.ManagerModelAlex;
 import co.edu.uptc.models.model202114641.ManagerModelSebastian;
 import co.edu.uptc.models.Model202127343.ManagerModel202127343;
 import co.edu.uptc.models.BryanModel.MyManagerModel;
+import co.edu.uptc.models.model202127717.ManagerModel202127717;
 import co.edu.uptc.models.model202127812.ManagerModel202127812;
 import co.edu.uptc.models.model202127061.ManagerModel202127061;
 import co.edu.uptc.models.ModelGerman.ManagerModel;
 import co.edu.uptc.models.Pedro.ManagerModel202128778;
 
-import co.edu.uptc.models.Model_202113049.ManagerModel_202113049;
+import co.edu.uptc.models.model202113049.ManagerModel_202113049;
 import co.edu.uptc.models.model202128710.ManagerModel202128710;
 import co.edu.uptc.views.dashBoard.DashBoard;
 
@@ -53,7 +54,7 @@ public class ManagerGeneral {
          modelAlex = new ManagerModelAlex();
 
          model_202113059 = new ManagerModel_202113049();
-         modelJuan = new ManagerModel202128710();
+         modelJuan = new Manager_Model_202128710();
 
          model202127061 = new ManagerModel();
          model202127343 = new ManagerModel202127343();
