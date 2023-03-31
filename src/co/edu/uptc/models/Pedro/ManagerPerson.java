@@ -1,6 +1,5 @@
 package co.edu.uptc.models.Pedro;
 
-import co.edu.uptc.models.ModelGerman.ManagerModel;
 import co.edu.uptc.pojos.Person;
 
 import java.util.ArrayList;

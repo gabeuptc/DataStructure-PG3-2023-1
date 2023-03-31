@@ -1,8 +1,7 @@
-package co.edu.uptc.models.Model202127343;
+package co.edu.uptc.models.model202127343;
 
 import co.edu.uptc.pojos.Person;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ManagerPerson {
