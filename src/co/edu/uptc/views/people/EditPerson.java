@@ -1,7 +1,6 @@
 package co.edu.uptc.views.people;
 
 import co.edu.uptc.pojos.Person;
-import co.edu.uptc.views.dashBoard.DashBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,10 +15,10 @@ public class EditPerson extends JDialog {
     protected JTextField codeField;
     protected JButton saveBt;
     private JButton cancelBt;
-    private DialogPeople dialogPeople;
+    private PanelPeople dialogPeople;
 
-    public EditPerson(DialogPeople dialogPeople){
-        super(dialogPeople,true);
+    public EditPerson(PanelPeople dialogPeople){
+       // super(dialogPeople,true);
         this.dialogPeople = dialogPeople;
         setLayout(null);
         initComponents();

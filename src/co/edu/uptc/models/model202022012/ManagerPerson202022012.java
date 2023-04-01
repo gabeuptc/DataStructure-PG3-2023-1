@@ -1,18 +1,19 @@
-package co.edu.uptc.models.modelGerman;
+package co.edu.uptc.models.model202022012;
 
+import co.edu.uptc.model.BinaryTree202022012;
 import co.edu.uptc.pojos.Person;
 
 import java.util.ArrayList;
 import java.util.List;
-import co.edu.uptc.models.modelGerman.ManagerModel;
 
-public class ManagerPerson {
-   List<Person> listPeople;
+public class ManagerPerson202022012 {
 
-    private ManagerModel managerGeneral;
-    public ManagerPerson(ManagerModel managerGeneral) {
+   BinaryTree202022012<Person> listPeople;
+   private ManagerModel202022012 managerGeneral;
+    public ManagerPerson202022012(ManagerModel202022012 managerGeneral) {
+        PersonComparator personComparator = new PersonComparator();
         this.managerGeneral = managerGeneral;
-        listPeople = new ArrayList<>();
+        listPeople = new BinaryTree202022012<>(personComparator);
     }
 
     public void addPerson(Person person){
@@ -25,7 +26,7 @@ public class ManagerPerson {
    }
 
    public Person getPerson(String attribute){
-       for (Person per: listPeople) {
+       for (Person per: listPeople.getList()) {
            if(attribute.equals(per.getCode()) || attribute.equals(per.getName())){
                return per;
            }
@@ -34,7 +35,7 @@ public class ManagerPerson {
    }
 
    public void editPerson(Person person){
-       for (Person per: listPeople) {
+       for (Person per: listPeople.getList()) {
            if(per.getId()==person.getId()){
                per.setCode(person.getCode());
                per.setName(person.getName());
@@ -45,8 +46,10 @@ public class ManagerPerson {
 
     public List<Person> getPeople() {
         List<Person> auxList = new ArrayList<>();
-        for (Person person: listPeople) {
-            auxList.add(person.clone());
+        if(listPeople.getHeader() != null) {
+            for (Person per: listPeople.getList()) {
+                auxList.add(per.clone());
+            }
         }
         return auxList;
 

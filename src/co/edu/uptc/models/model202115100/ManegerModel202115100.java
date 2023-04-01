@@ -1,20 +1,17 @@
 
-package co.edu.uptc.models.model202113049;
-
+package co.edu.uptc.models.model202115100;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
 
 import java.util.List;
 
-public class ManagerModel_202113049 implements ContratBills.Model {
+public class ManegerModel202115100 implements ContratBills.Model {
+    ContratBills.Presenter presenter;
+    private ManagerPerson202115100 managerPerson;
 
-    public ContratBills.Presenter presenter;
-
-    private ManagerPerson_202113049 managerPerson;
-
-    public ManagerModel_202113049(){
-        managerPerson = new ManagerPerson_202113049(this);
+    public ManegerModel202115100() {
+        managerPerson = new ManagerPerson202115100(this);
     }
 
     @Override
@@ -34,8 +31,7 @@ public class ManagerModel_202113049 implements ContratBills.Model {
 
     @Override
     public List<Person> getPeople() {
-        List<Person> auxList = managerPerson.getPeople();
-        return auxList;
+        return managerPerson.getPeople();
     }
 
     @Override
@@ -50,7 +46,6 @@ public class ManagerModel_202113049 implements ContratBills.Model {
 
     @Override
     public String getAuthor() {
-        return "DEYVID FERNANDO CRUZ MOLANO";
+        return "Santiago Andres Orjuela Lopez";
     }
 }
-

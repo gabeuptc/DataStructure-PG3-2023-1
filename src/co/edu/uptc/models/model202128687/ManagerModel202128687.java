@@ -1,20 +1,15 @@
-
-package co.edu.uptc.models.model202113049;
-
+package co.edu.uptc.models.model202128687;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
 
 import java.util.List;
 
-public class ManagerModel_202113049 implements ContratBills.Model {
-
-    public ContratBills.Presenter presenter;
-
-    private ManagerPerson_202113049 managerPerson;
-
-    public ManagerModel_202113049(){
-        managerPerson = new ManagerPerson_202113049(this);
+public class ManagerModel202128687 implements ContratBills.Model {
+    ContratBills.Presenter presenter;
+    private ManagerPerson202128687 managerPerson;
+    public ManagerModel202128687(){
+        managerPerson = new ManagerPerson202128687(this);
     }
 
     @Override
@@ -24,7 +19,7 @@ public class ManagerModel_202113049 implements ContratBills.Model {
 
     @Override
     public void addPerson(Person person) {
-        managerPerson.addPerson(person.clone());
+        System.out.println("para agregar");
     }
 
     @Override
@@ -34,23 +29,21 @@ public class ManagerModel_202113049 implements ContratBills.Model {
 
     @Override
     public List<Person> getPeople() {
-        List<Person> auxList = managerPerson.getPeople();
-        return auxList;
+        return null;
     }
 
     @Override
     public Person getPerson(String attribute) {
-        return managerPerson.getPerson(attribute);
+        return null;
     }
 
     @Override
     public void editPerson(Person person) {
-        managerPerson.editPerson(person);
+
     }
 
     @Override
     public String getAuthor() {
-        return "DEYVID FERNANDO CRUZ MOLANO";
+        return "Alex Duvan Hernandez Buitrago";
     }
 }
-

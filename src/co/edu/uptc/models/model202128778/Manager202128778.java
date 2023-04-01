@@ -1,20 +1,17 @@
-
-package co.edu.uptc.models.model202113049;
-
+package co.edu.uptc.models.model202128778;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
 
 import java.util.List;
 
-public class ManagerModel_202113049 implements ContratBills.Model {
+public class Manager202128778 implements ContratBills.Model {
+    ContratBills.Presenter presenter;
 
-    public ContratBills.Presenter presenter;
+    private ManagerPerson202128778 managerPerson;
 
-    private ManagerPerson_202113049 managerPerson;
-
-    public ManagerModel_202113049(){
-        managerPerson = new ManagerPerson_202113049(this);
+    public Manager202128778() {
+        managerPerson = new ManagerPerson202128778(this);
     }
 
     @Override
@@ -50,7 +47,7 @@ public class ManagerModel_202113049 implements ContratBills.Model {
 
     @Override
     public String getAuthor() {
-        return "DEYVID FERNANDO CRUZ MOLANO";
+        return "Daniel Rojas";
     }
-}
 
+}
