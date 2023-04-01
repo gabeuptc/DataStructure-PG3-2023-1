@@ -13,6 +13,7 @@ import co.edu.uptc.models.Pedro.ManagerModel202128778;
 
 import co.edu.uptc.models.model202113049.ManagerModel_202113049;
 import co.edu.uptc.models.Model_202128710.Manager_Model_202128710;
+import co.edu.uptc.models.model202115100.ModelSantiago_202115100;
 import co.edu.uptc.views.dashBoard.DashBoard;
 
 public class ManagerGeneral {
@@ -30,6 +31,7 @@ public class ManagerGeneral {
     ContratBills.Presenter presenter;
     ContratBills.Model model202127812;
     ContratBills.Model modelSebastian;
+    ContratBills.Model modelSantiago_202115100;
     ContratBills.Model model202127717;
 
     private ManagerGeneral() {
@@ -67,8 +69,8 @@ public class ManagerGeneral {
          model202127812 = new ManagerModel202127812();
          model202127061 = new ManagerModel202127061();
          modelSebastian= new ManagerModelSebastian();
+         modelSantiago_202115100 = new ModelSantiago_202115100();
          model202127717 = new ManagerModel202127717();
-
      }
 
      public void configModelUserGerman(){
@@ -124,7 +126,8 @@ public class ManagerGeneral {
         view.updatedPeople();
     }
     public void configModelUserSantiago_202115100(){
-
+        modelSantiago_202115100.setPresenter(presenter);
+        presenter.setModel(modelSantiago_202115100);
         view.updatedPeople();
     }
 
