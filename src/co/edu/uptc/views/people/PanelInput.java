@@ -1,6 +1,7 @@
 package co.edu.uptc.views.people;
 
 import co.edu.uptc.pojos.Person;
+import co.edu.uptc.views.Globals.ValuesGlobals;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,15 +16,17 @@ public class PanelInput extends JPanel {
     protected JTextField textFieldCode;
     protected JTextField textFieldName;
     protected  JTable jTable;
-    private DialogPeople dialogPeople;
+    private PanelPeople dialogPeople;
 
-    public PanelInput(DialogPeople dialogPeople) {
+    public PanelInput(PanelPeople dialogPeople) {
         this.dialogPeople = dialogPeople;
         config();
         addComponents();
     }
 
     public void config() {
+
+        setBackground(ValuesGlobals.COLOR_BACK_PANEL_WORK);
         setLayout(null);
     }
 
