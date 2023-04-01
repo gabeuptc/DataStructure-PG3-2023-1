@@ -1,23 +1,25 @@
-package co.edu.uptc.models.Model_202128710;
-
+package co.edu.uptc.models.model202128687;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
 
 import java.util.List;
 
-
-public class Manager_Model_202128710 implements ContratBills.Model {
-
+public class ManagerModel202128687 implements ContratBills.Model {
+    ContratBills.Presenter presenter;
+    private ManagerPerson202128687 managerPerson;
+    public ManagerModel202128687(){
+        managerPerson = new ManagerPerson202128687(this);
+    }
 
     @Override
     public void setPresenter(ContratBills.Presenter presenter) {
-
+        this.presenter = presenter;
     }
 
     @Override
     public void addPerson(Person person) {
-
+        System.out.println("para agregar");
     }
 
     @Override
@@ -42,6 +44,6 @@ public class Manager_Model_202128710 implements ContratBills.Model {
 
     @Override
     public String getAuthor() {
-        return "Juan Sebastian Rodriguez Mateus";
+        return "Alex Duvan Hernandez Buitrago";
     }
 }

@@ -1,4 +1,4 @@
-package co.edu.uptc.models.ModelDanielRojas.pojos;
+package co.edu.uptc.models.model202128778.pojos;
 
 public class Node<T> {
     private T info;

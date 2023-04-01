@@ -1,15 +1,15 @@
-package co.edu.uptc.models.Pedro;
+package co.edu.uptc.models.model202128778;
 
 import co.edu.uptc.pojos.Person;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerPerson {
+public class ManagerPerson202128778 {
     List<Person> listPeople;
+    private Manager202128778 managerGeneral;
 
-    private ManagerModel202128778 managerGeneral;
-    public ManagerPerson(ManagerModel202128778 managerGeneral) {
+    public ManagerPerson202128778(Manager202128778 managerGeneral) {
         this.managerGeneral = managerGeneral;
         listPeople = new ArrayList<>();
     }
@@ -48,6 +48,5 @@ public class ManagerPerson {
             auxList.add(person.clone());
         }
         return auxList;
-
     }
 }

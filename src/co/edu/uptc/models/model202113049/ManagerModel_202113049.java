@@ -1,4 +1,6 @@
+
 package co.edu.uptc.models.model202113049;
+
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
@@ -7,7 +9,7 @@ import java.util.List;
 
 public class ManagerModel_202113049 implements ContratBills.Model {
 
-    ContratBills.Presenter presenter;
+    public ContratBills.Presenter presenter;
 
     private ManagerPerson_202113049 managerPerson;
 

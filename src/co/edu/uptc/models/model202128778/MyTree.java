@@ -1,6 +1,6 @@
-package co.edu.uptc.models.ModelDanielRojas;
+package co.edu.uptc.models.model202128778;
 
-import co.edu.uptc.models.ModelDanielRojas.pojos.Node;
+import co.edu.uptc.models.model202128778.pojos.Node;
 
 public class MyTree {
     Node header;

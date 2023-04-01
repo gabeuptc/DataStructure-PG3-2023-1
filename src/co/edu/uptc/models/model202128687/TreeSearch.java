@@ -1,4 +1,4 @@
-package co.edu.uptc.models.Alex202128687;
+package co.edu.uptc.models.model202128687;
 public class TreeSearch {
     Node header;
 

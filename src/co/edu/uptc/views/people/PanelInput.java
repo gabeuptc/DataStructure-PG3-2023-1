@@ -49,7 +49,7 @@ public class PanelInput extends JPanel {
     }
 
     public void updateAuthorModel(){
-        labelModel.setText("Author del modelo: "+dialogPeople.getAuthorOfModel());
+       labelModel.setText("Author del modelo: "+dialogPeople.getAuthorOfModel());
     }
 
 

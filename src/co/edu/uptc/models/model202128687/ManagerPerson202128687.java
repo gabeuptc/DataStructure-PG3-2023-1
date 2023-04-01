@@ -1,17 +1,18 @@
-package co.edu.uptc.models.ModelDanielRojas;
+package co.edu.uptc.models.model202128687;
 
 import co.edu.uptc.pojos.Person;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerPersonDaniel {
-    List<Person> listPeople;
-    private ManagerModelDaniel managerGeneral;
-
-    public ManagerPersonDaniel(ManagerModelDaniel managerGeneral) {
+public class ManagerPerson202128687 {
+    // cambiar la lista por el arbol
+    private List<Person> listPeople;
+    private ManagerModel202128687 managerGeneral;
+    private TreeSearch tree;
+    public ManagerPerson202128687(ManagerModel202128687 managerGeneral) {
         this.managerGeneral = managerGeneral;
         listPeople = new ArrayList<>();
+        tree = new TreeSearch();
     }
 
     public void addPerson(Person person){
@@ -48,5 +49,6 @@ public class ManagerPersonDaniel {
             auxList.add(person.clone());
         }
         return auxList;
+
     }
 }

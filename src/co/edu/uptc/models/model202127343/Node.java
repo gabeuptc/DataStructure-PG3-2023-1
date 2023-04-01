@@ -1,6 +1,4 @@
-package co.edu.uptc.models.Model202127343;
-
-import co.edu.uptc.pojos.Person;
+package co.edu.uptc.models.model202127343;
 
 public class Node<G> {
 

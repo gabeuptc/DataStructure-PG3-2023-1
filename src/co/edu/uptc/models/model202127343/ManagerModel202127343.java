@@ -1,17 +1,18 @@
-package co.edu.uptc.models.ModelDanielRojas;
+package co.edu.uptc.models.model202127343;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
 
 import java.util.List;
 
-public class ManagerModelDaniel implements ContratBills.Model {
+
+public class ManagerModel202127343 implements ContratBills.Model {
     ContratBills.Presenter presenter;
 
-    private ManagerPersonDaniel managerPerson;
+    private ManagerPerson managerPerson;
 
-    public ManagerModelDaniel() {
-        managerPerson = new ManagerPersonDaniel(this);
+    public ManagerModel202127343() {
+         managerPerson = new ManagerPerson(this);
     }
 
     @Override
@@ -21,7 +22,7 @@ public class ManagerModelDaniel implements ContratBills.Model {
 
     @Override
     public void addPerson(Person person) {
-        managerPerson.addPerson(person.clone());
+        managerPerson.addPerson(new Person(person.getId(), person.getCode(), person.getName()));
     }
 
     @Override
@@ -30,24 +31,21 @@ public class ManagerModelDaniel implements ContratBills.Model {
     }
 
     @Override
-    public List<Person> getPeople() {
-        List<Person> auxList = managerPerson.getPeople();
-        return auxList;
+    public List<Person> getPeople() {List<Person> auxList = managerPerson.getPeople();
+       return auxList;
     }
 
     @Override
     public Person getPerson(String attribute) {
-        return managerPerson.getPerson(attribute);
+        return null;
     }
 
     @Override
     public void editPerson(Person person) {
-        managerPerson.editPerson(person);
     }
 
     @Override
     public String getAuthor() {
-        return "Daniel Rojas";
+        return "Cristian David Tamayo Cortes";
     }
-
 }

@@ -1,15 +1,15 @@
-package co.edu.uptc.models.BryanModel;
+package co.edu.uptc.models.model202022012;
 
 import co.edu.uptc.pojos.Person;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyManagerPerson {
+public class ManagerPerson202022012 {
    List<Person> listPeople;
 
-    private MyManagerModel managerGeneral;
-    public MyManagerPerson(MyManagerModel managerGeneral) {
+    private ManagerModel202022012 managerGeneral;
+    public ManagerPerson202022012(ManagerModel202022012 managerGeneral) {
         this.managerGeneral = managerGeneral;
         listPeople = new ArrayList<>();
     }

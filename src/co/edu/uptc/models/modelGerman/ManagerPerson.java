@@ -4,6 +4,7 @@ import co.edu.uptc.pojos.Person;
 
 import java.util.ArrayList;
 import java.util.List;
+import co.edu.uptc.models.modelGerman.ManagerModel;
 
 public class ManagerPerson {
    List<Person> listPeople;
