@@ -30,6 +30,7 @@ public class PanelMaps extends JPanel {
     private JLabel longitudeMouse;
     private JLabel latitudeMouse;
     private JButton remove;
+    private int innitNumberPoint=1;
 
     public PanelMaps() {
         configGlobal();
@@ -129,18 +130,32 @@ public class PanelMaps extends JPanel {
     }
 
     public Point createPoint(double latitude, double longitude) {
-        Point point = new Point(new GeoPosition(latitude,longitude));
+        Point point = new Point(new GeoPosition(latitude,longitude),0);
         point.setButtonPoint(getButtonPoint(point));
         return point;
     }
     public Point createPointWithDefaultLocation(double latitude, double longitude, String defaultLocation) {
-        Point point = new Point(new GeoPosition(latitude,longitude),defaultLocation);
+        Point point = new Point(new GeoPosition(latitude,longitude),defaultLocation,0);
         point.setButtonPoint(getButtonPoint(point));
         return point;
     }
     public void addPoint(Point point){
-        points.add(point);
-        createPointsRender();
+        if (!isRepeated(point)){
+            point.setPointNumber(innitNumberPoint);
+            innitNumberPoint++;
+            points.add(point);
+            createPointsRender();
+        }else {
+            JOptionPane.showMessageDialog(null,"Este punto ya se ha añadido antes, no se añadira");
+        }
+    }
+    private boolean isRepeated(Point point){
+        for (Point point1:points) {
+            if (point1.getLatitude().equals(point.getLatitude())&&point1.getLongitude().equals(point.getLongitude())){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void comboMapTypeActionPerformed(ActionEvent evt) {

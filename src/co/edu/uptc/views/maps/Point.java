@@ -7,26 +7,30 @@ import javax.swing.*;
 
 public class Point extends DefaultWaypoint {
     private JButton buttonPoint;
-    private String latitude;
-    private String longitude;
+    private final String latitude;
+    private final String longitude;
     private String defaultLocation;
-    private boolean isDefaultLocation;
-    private static int pointNumber=0;
+    private final boolean isDefaultLocation;
+    private int pointNumber;
 
-    public Point(GeoPosition coord) {
+    public Point(GeoPosition coord,int ppointNumber) {
         super(coord);
         this.latitude = String.valueOf(coord.getLatitude());
         this.longitude = String.valueOf(coord.getLongitude());
         this.isDefaultLocation = false;
-        pointNumber++;
+        this.pointNumber=pointNumber;
     }
-    public Point(GeoPosition coord,String defaultLocation) {
+    public Point(GeoPosition coord,String defaultLocation,int pointNumber) {
         super(coord);
         this.latitude = String.valueOf(coord.getLatitude());
         this.longitude = String.valueOf(coord.getLongitude());
         this.defaultLocation = defaultLocation;
         this.isDefaultLocation = true;
-        pointNumber++;
+        this.pointNumber=pointNumber;
+    }
+
+    public void setPointNumber(int pointNumber) {
+        this.pointNumber = pointNumber;
     }
 
     public int getPointNumber() {
