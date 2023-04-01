@@ -44,7 +44,7 @@ public class PanelMenu extends JPanel {
         listItemMenu = new ArrayList<>();
         listItemMenu.add( new ItemMenu("MENÚ",0,false));
         listItemMenu.add( new ItemMenu("Personas",1,true));
-        listItemMenu.add( new ItemMenu("Other",1,true));
+        listItemMenu.add( new ItemMenu("Mapa",1,true));
         listItemMenu.add( new ItemMenu("Salir",1,true));
 
     }
@@ -137,7 +137,7 @@ public class PanelMenu extends JPanel {
                 dashBoard.showPanelPeople();
                 break;
             }
-            case "Other": {
+            case "Mapa": {
               dashBoard.showPanelMap();
                 break;
             }

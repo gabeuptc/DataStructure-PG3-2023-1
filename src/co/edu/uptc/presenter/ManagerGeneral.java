@@ -14,8 +14,7 @@ import co.edu.uptc.models.model202113049.ManagerModel_202113049;
 
 
 import co.edu.uptc.models.model202115100.ManegerModel202115100;
-import co.edu.uptc.views.dashBoard.DashBoard;
-import co.edu.uptc.models.Model_202128710.Manager_Model_202128710;
+
 import co.edu.uptc.views.board.DashBoard;
 
 
