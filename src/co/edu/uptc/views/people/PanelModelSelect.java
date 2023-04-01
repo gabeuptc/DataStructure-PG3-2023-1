@@ -1,6 +1,7 @@
 package co.edu.uptc.views.people;
 
 import co.edu.uptc.presenter.ManagerGeneral;
+import co.edu.uptc.views.Globals.ValuesGlobals;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,18 +12,18 @@ public class PanelModelSelect extends JPanel {
 
     private int height=0;
 
-    private DialogPeople dialogPeople;
+    private PanelPeople dialogPeople;
 
 
 
-    public PanelModelSelect(DialogPeople dialogPeople) {
+    public PanelModelSelect(PanelPeople dialogPeople) {
         this.dialogPeople = dialogPeople;
         config();
         addComponents();
     }
 
     public void config() {
-        setBackground(Color.yellow);
+        setBackground(ValuesGlobals.COLOR_BACK_PANEL_WORK);
         configPrefersize();
     }
 

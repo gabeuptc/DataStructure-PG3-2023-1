@@ -13,7 +13,8 @@ import co.edu.uptc.models.Pedro.ManagerModel202128778;
 
 import co.edu.uptc.models.model202113049.ManagerModel_202113049;
 import co.edu.uptc.models.Model_202128710.Manager_Model_202128710;
-import co.edu.uptc.views.dashBoard.DashBoard;
+import co.edu.uptc.views.board.DashBoard;
+
 
 public class ManagerGeneral {
     private static ManagerGeneral instance;
@@ -51,7 +52,6 @@ public class ManagerGeneral {
 
 
      private void createModels(){
-         // TODO aqui se cream todos los modelos
          modelGerman = new ManagerModel();
          modelAlex = new ManagerModelAlex();
          modelDaniel = new ManagerModelDaniel();
@@ -129,8 +129,6 @@ public class ManagerGeneral {
     }
 
     public void configModelOtherUser(){
-        // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
-        //modelGerman.setPresenter(presenter);
         presenter.setModel(null);
         view.updatedPeople();
     }
@@ -140,7 +138,6 @@ public class ManagerGeneral {
         view.updatedPeople();
     }
     public void configBryanModel(){
-        // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
         bryanModel.setPresenter(presenter);
         presenter.setModel(bryanModel);
         view.updatedPeople();
