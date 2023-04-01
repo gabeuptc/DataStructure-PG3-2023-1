@@ -5,11 +5,11 @@ import co.edu.uptc.pojos.Person;
 
 import java.util.List;
 
-public class MyManagerPerson {
-    private ModelSantiago_202115100 managerGeneral;
+public class ManagerPerson202115100 {
+    private ManegerModel202115100 managerGeneral;
     BinaryTree<Person> listPeople;
 
-    public MyManagerPerson(ModelSantiago_202115100 managerGeneral) {
+    public ManagerPerson202115100(ManegerModel202115100 managerGeneral) {
         this.managerGeneral = managerGeneral;
         listPeople = new BinaryTree<>(new PersonComparator());
     }

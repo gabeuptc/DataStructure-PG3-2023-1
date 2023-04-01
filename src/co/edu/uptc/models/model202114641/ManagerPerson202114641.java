@@ -4,11 +4,11 @@ import co.edu.uptc.pojos.Person;
 
 import java.util.List;
 
-public class ManagerPersonSebastian {
+public class ManagerPerson202114641 {
      private ArbolUPTC arbolUPTC;
-     private ManagerModelSebastian managerModel;
+     private ManagerModel202114641 managerModel;
      List<Person> listPeople;
-    public ManagerPersonSebastian(ManagerModelSebastian managerModel) {
+    public ManagerPerson202114641(ManagerModel202114641 managerModel) {
         this.managerModel = managerModel;
         arbolUPTC= new ArbolUPTC();
     }

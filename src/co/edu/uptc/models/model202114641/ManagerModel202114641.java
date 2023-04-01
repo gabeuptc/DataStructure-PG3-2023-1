@@ -7,12 +7,12 @@ import co.edu.uptc.presenter.ContratBills;
 
 import java.util.List;
 
-public class ManagerModelSebastian implements ContratBills.Model {
+public class ManagerModel202114641 implements ContratBills.Model {
     ContratBills.Presenter presenter;
-    private final ManagerPersonSebastian managerPersonSebastian;
+    private final ManagerPerson202114641 managerPersonSebastian;
 
-    public ManagerModelSebastian() {
-        this.managerPersonSebastian =new ManagerPersonSebastian(this);
+    public ManagerModel202114641() {
+        this.managerPersonSebastian =new ManagerPerson202114641(this);
     }
 
     @Override

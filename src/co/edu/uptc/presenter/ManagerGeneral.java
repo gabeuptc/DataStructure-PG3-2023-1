@@ -1,7 +1,7 @@
 package co.edu.uptc.presenter;
 
 import co.edu.uptc.models.model202128687.ManagerModel202128687;
-import co.edu.uptc.models.model202114641.ManagerModelSebastian;
+import co.edu.uptc.models.model202114641.ManagerModel202114641;
 import co.edu.uptc.models.model202127343.ManagerModel202127343;
 import co.edu.uptc.models.model202022012.ManagerModel202022012;
 import co.edu.uptc.models.model202127717.ManagerModel202127717;
@@ -13,7 +13,7 @@ import co.edu.uptc.models.modelGerman.ManagerModel;
 import co.edu.uptc.models.model202113049.ManagerModel_202113049;
 
 
-import co.edu.uptc.models.model202115100.ModelSantiago_202115100;
+import co.edu.uptc.models.model202115100.ManegerModel202115100;
 import co.edu.uptc.views.dashBoard.DashBoard;
 
 public class ManagerGeneral {
@@ -21,20 +21,17 @@ public class ManagerGeneral {
     ContratBills.View view;
     ContratBills.Model modelGerman;
     ContratBills.Model model202127061;
-    ContratBills.Model model_202113059;
-    ContratBills.Model modelJuan;
-    ContratBills.Model modelAlex;
+    ContratBills.Model model202113059;
+    ContratBills.Model model202128687;
     ContratBills.Model model202128778;
     ContratBills.Model  model202127343;
-    ContratBills.Model bryanModel;
-    ContratBills.Model modelPedro;
+    ContratBills.Model model202022012;
     ContratBills.Presenter presenter;
     ContratBills.Model model202127812;
     ContratBills.Model modelSebastian;
-    ContratBills.Model modelSantiago_202115100;
+    ContratBills.Model model202115100;
     ContratBills.Model model202127717;
 
-    ContratBills.Model model202114852;
     private ManagerGeneral() {
     }
 
@@ -56,20 +53,16 @@ public class ManagerGeneral {
      private void createModels(){
          // TODO aqui se cream todos los modelos
          modelGerman = new ManagerModel();
-         modelAlex = new ManagerModel202128687();
+         model202128687 = new ManagerModel202128687();
          model202128778 = new Manager202128778();
-         model_202113059 = new ManagerModel_202113049();
-         model202127061 = new ManagerModel202127061();
+         model202113059 = new ManagerModel_202113049();
          model202127343 = new ManagerModel202127343();
-         bryanModel = new ManagerModel202022012();
-
+         model202022012 = new ManagerModel202022012();
          model202127812 = new ManagerModel202127812();
          model202127061 = new ManagerModel202127061();
-         modelSebastian= new ManagerModelSebastian();
-         modelSantiago_202115100 = new ModelSantiago_202115100();
+         modelSebastian= new ManagerModel202114641();
+         model202115100 = new ManegerModel202115100();
          model202127717 = new ManagerModel202127717();
-         modelJuan  = new ManagerModel202127061();
-
      }
 
      public void configModelUserGerman(){
@@ -79,8 +72,8 @@ public class ManagerGeneral {
      }
 
     public void configModel202113049(){
-        model_202113059.setPresenter(presenter);
-        presenter.setModel(model_202113059);
+        model202113059.setPresenter(presenter);
+        presenter.setModel(model202113059);
         view.updatedPeople();
     }
 
@@ -90,12 +83,8 @@ public class ManagerGeneral {
         view.updatedPeople();
     }
 
-    public void configModelUserJuan(){
-        modelJuan.setPresenter(presenter);
-        presenter.setModel(modelJuan);
-        view.updatedPeople();
-    }
-    public void configModelUserSebastian(){
+
+    public void configModelUser202114641(){
         modelSebastian.setPresenter(presenter);
         presenter.setModel(modelSebastian);
         view.updatedPeople();
@@ -110,13 +99,7 @@ public class ManagerGeneral {
     }
 
     public void configModelOtherAlex() {
-        presenter.setModel(modelAlex);
-        view.updatedPeople();
-    }
-
-    public void configModelUserPedro(){
-        modelPedro.setPresenter(presenter);
-        presenter.setModel(modelPedro);
+        presenter.setModel(model202128687);
         view.updatedPeople();
     }
     public void configModelUser202127061(){
@@ -125,17 +108,11 @@ public class ManagerGeneral {
         view.updatedPeople();
     }
     public void configModelUserSantiago_202115100(){
-        modelSantiago_202115100.setPresenter(presenter);
-        presenter.setModel(modelSantiago_202115100);
+        model202115100.setPresenter(presenter);
+        presenter.setModel(model202115100);
         view.updatedPeople();
     }
 
-    public void configModelOtherUser(){
-        // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
-        //modelGerman.setPresenter(presenter);
-        presenter.setModel(null);
-        view.updatedPeople();
-    }
     public void configModel202127812(){
         model202127812.setPresenter(presenter);
         presenter.setModel(model202127812);
@@ -145,8 +122,8 @@ public class ManagerGeneral {
 
     public void configBryanModel(){
         // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
-        bryanModel.setPresenter(presenter);
-        presenter.setModel(bryanModel);
+        model202022012.setPresenter(presenter);
+        presenter.setModel(model202022012);
         view.updatedPeople();
     }
 
