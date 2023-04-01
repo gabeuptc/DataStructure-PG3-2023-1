@@ -1,7 +1,6 @@
 package co.edu.uptc.views.people;
 
-import co.edu.uptc.pojos.Person;
-import co.edu.uptc.views.dashBoard.DashBoard;
+import co.edu.uptc.views.Globals.ValuesGlobals;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,32 +13,22 @@ public class PanelButtom extends JPanel {
     private JButton buttonClose;
     private JButton buttonEdit;
     private EditPerson editPerson;
-    private DialogPeople dialogPeople;
-    public PanelButtom(DialogPeople dialogPeople) {
+    private PanelPeople dialogPeople;
+    public PanelButtom(PanelPeople dialogPeople) {
         this.dialogPeople = dialogPeople;
         editPerson = new EditPerson(dialogPeople);
-        setBackground(Color.yellow);
+        setBackground(ValuesGlobals.COLOR_BACK_PANEL_BUTTOM);
         setPreferredSize(new Dimension(0,50));
+        this.setBorder(ValuesGlobals.BORDER_PANEL);
         addComponents();
     }
 
     private void addComponents(){
         addButtomAdd();
-        addButtonClose();
+
         addEditButton();
     }
 
-
-    private void addButtonClose(){
-        buttonClose = new JButton("CERRAR");
-        add(buttonClose);
-        buttonClose.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                closeDialog();
-            }
-        });
-    }
 
     private void addEditButton(){
         buttonEdit = new JButton("EDITAR");
