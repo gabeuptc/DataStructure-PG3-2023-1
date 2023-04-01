@@ -24,9 +24,7 @@ public class PanelPeople extends JPanel{
       //  super(dashBoard,true);
         this.dashBoard = dashBoard;
         this.setBackground(ValuesGlobals.COLOR_BACK_PANEL_WORK);
-     //   setSize(new Dimension(1000,1000));
         setLayout(new BorderLayout());
-      //  setLocationRelativeTo(dashBoard);
         addComponents();
     }
 
@@ -47,7 +45,6 @@ public class PanelPeople extends JPanel{
 
     public void close(){
         this.setVisible(false);
-  //      this.dispose();
     }
 
     public Person getPerson(String attribute){

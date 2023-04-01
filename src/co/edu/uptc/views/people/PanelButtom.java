@@ -19,6 +19,7 @@ public class PanelButtom extends JPanel {
         editPerson = new EditPerson(dialogPeople);
         setBackground(ValuesGlobals.COLOR_BACK_PANEL_BUTTOM);
         setPreferredSize(new Dimension(0,50));
+        this.setBorder(ValuesGlobals.BORDER_PANEL);
         addComponents();
     }
 

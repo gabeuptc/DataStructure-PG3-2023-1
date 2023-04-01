@@ -9,13 +9,13 @@ public class ValuesGlobals {
     public static final Color COLOR_BACK_FRAME = ColorPalette.ColorEnum.DARK_GREEN.getColor();
     public static final Color COLOR_BACK_PANEL_HEADER = ColorPalette.ColorEnum.LIGHT_ORANGE_N4.getColor();
     public static final Color COLOR_BACK_PANEL_MENU = ColorPalette.ColorEnum.LIGHT_ORANGE_N4.getColor();
-    public static final Color COLOR_BACK_PANEL_BUTTOM = ColorPalette.ColorEnum.LIGHT_BLUE_N2.getColor();
+    public static final Color COLOR_BACK_PANEL_BUTTOM = ColorPalette.ColorEnum.LIGHT_ORANGE_N5.getColor();
     public static final Color COLOR_BACK_PANEL_WORK = ColorPalette.ColorEnum.LIGHT_ORANGE_N5.getColor();
     public static final Color COLOR_BACK_PANEL_N3 = new Color(253, 246, 242);
-    //Color a = new Color(256, 0, 0);
+
     public static final Color COLOR_BACK_PANEL_N4 = Color.MAGENTA;//new Color(86, 118, 176);
 
-    public static final Border BORDER_PANEL =     BorderFactory.createLineBorder(Color.black, 2);
+    public static final Border BORDER_PANEL =     BorderFactory.createLineBorder(Color.black, 1);
     public static final String PATH_IMAGE_MENU = "assets/tigre.jpeg";
     public static final String PATH_IMAGE_CONFIG = "assets/iconConfig2.png";
     public static final String PATH_LOGO_UPTC = "assets/logouptc1.png";

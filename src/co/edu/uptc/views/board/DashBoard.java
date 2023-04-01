@@ -31,6 +31,7 @@ public class DashBoard extends JFrame implements ContratBills.View  {
     private void configGlobal(){
         getContentPane().setBackground(ValuesGlobals.COLOR_BACK_FRAME);
         setSize(new Dimension(1000,1000));
+        setLocationRelativeTo(null);
     }
 
     private void initializeComponents() {
@@ -69,10 +70,15 @@ public class DashBoard extends JFrame implements ContratBills.View  {
 
     protected void showPanelMap(){
         setPanel();
+        configFullSizeScren();
         panelmaps = new PanelMaps();
         panelCenter.add(panelmaps);
+    }
 
-
+    private void configFullSizeScren(){
+        GraphicsEnvironment env =GraphicsEnvironment.getLocalGraphicsEnvironment();
+        this.setMaximizedBounds(env.getMaximumWindowBounds());
+        this.setExtendedState(this.getExtendedState() | this.MAXIMIZED_BOTH);
     }
 
 

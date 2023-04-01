@@ -29,7 +29,6 @@ public class PanelHeader extends JPanel {
     private void configGlobal(){
         setBackground(ValuesGlobals.COLOR_BACK_PANEL_HEADER);
         setPreferredSize(new Dimension(0,100));
-      //  setSize(new Dimension(0,150));
         this.setBorder(ValuesGlobals.BORDER_PANEL);
         setLayout(null);
 
