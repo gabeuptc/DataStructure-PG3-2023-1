@@ -10,6 +10,7 @@ import co.edu.uptc.views.people.PanelPeople;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.List;
 
 public class DashBoard extends JFrame implements ContratBills.View  {
@@ -32,6 +33,7 @@ public class DashBoard extends JFrame implements ContratBills.View  {
         getContentPane().setBackground(ValuesGlobals.COLOR_BACK_FRAME);
         setSize(new Dimension(1000,1000));
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void initializeComponents() {
@@ -69,10 +71,18 @@ public class DashBoard extends JFrame implements ContratBills.View  {
     }
 
     protected void showPanelMap(){
-        setPanel();
-        configFullSizeScren();
-        panelmaps = new PanelMaps();
-        panelCenter.add(panelmaps);
+        try {
+            if ((Runtime.getRuntime().exec ("ping -c 1 google.com").waitFor() == 0)){
+                setPanel();
+                configFullSizeScren();
+                panelmaps = new PanelMaps();
+                panelCenter.add(panelmaps);
+            }else {
+                JOptionPane.showMessageDialog(this,"No Hay conexion a internet,no se puede cargar el mapa");
+            }
+        }catch (IOException | InterruptedException e){
+            JOptionPane.showMessageDialog(this,"Error Tecnico");
+        }
     }
 
     private void configFullSizeScren(){
