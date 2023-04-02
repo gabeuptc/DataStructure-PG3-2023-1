@@ -1,10 +1,10 @@
 package co.edu.uptc.presenters;
 
-import co.edu.uptc.models.ModelGerman.ManagerModel;
+import co.edu.uptc.models.modelGerman.ManagerModel;
 import co.edu.uptc.models.model202023577.ManagerModel202023577;
 import co.edu.uptc.presenter.ContratBills;
 import co.edu.uptc.presenter.Presenter;
-import co.edu.uptc.views.dashBoard.DashBoard;
+import co.edu.uptc.views.board.DashBoard;
 
 public class ManagerGeneral {
     private static ManagerGeneral instance;

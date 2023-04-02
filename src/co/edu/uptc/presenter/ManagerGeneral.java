@@ -33,7 +33,6 @@ public class ManagerGeneral {
     ContratBills.Model modelSebastian;
     ContratBills.Model model202115100;
     ContratBills.Model model202127717;
-    ContratBills.Model model202023577;
 
     private ManagerGeneral() {
     }
@@ -122,12 +121,6 @@ public class ManagerGeneral {
     }
 
 
-
-    public void configModel202023577(){
-        model202023577.setPresenter(presenter);
-        presenter.setModel(model202023577);
-        view.updatedPeople();
-    }
     public void configBryanModel(){
         // TODO  aqui se configura para cado estudiante el modelo y este metodo se llama desde la vista
         model202022012.setPresenter(presenter);
