@@ -12,7 +12,6 @@ import org.jxmapviewer.viewer.WaypointPainter;
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -38,6 +37,44 @@ public class PanelMaps extends JPanel {
         points = new HashSet<>();
         createComponents();
         putMapConfigs();
+        addCheckConnexion();
+    }
+
+    private void addCheckConnexion() {
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                try {
+                    if (!(Runtime.getRuntime().exec ("ping -c 1 google.com").waitFor() == 0)){
+                        JOptionPane.showMessageDialog(null,"Se ha perdido la conexion a internet");
+                        getInstance().setEnabled(false);
+                        getInstance().setVisible(false);
+                    }
+                }catch (IOException | InterruptedException ex){
+                    JOptionPane.showMessageDialog(null,"error tecnico");
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
     }
 
 
@@ -49,7 +86,7 @@ public class PanelMaps extends JPanel {
     private void createComponents() {
         jXMapViewer = new org.jxmapviewer.JXMapViewer();
         comboMapType = new JComboBox<>(new String[] { "Open Street", "Virtual Earth", "Hybrid", "Satellite" });
-        comboMapType.addActionListener(this::comboMapTypeActionPerformed);
+        comboMapType.addActionListener(e -> comboMapTypeActionPerformed());
         this.setLayout(new BorderLayout());
         panelNorth.add(comboMapType);
         addButtonCreatePoint();
@@ -159,7 +196,7 @@ public class PanelMaps extends JPanel {
         return false;
     }
 
-    private void comboMapTypeActionPerformed(ActionEvent evt) {
+    private void comboMapTypeActionPerformed() {
         switch (comboMapType.getSelectedIndex()) {
             case 0 -> jXMapViewer.setTileFactory(new DefaultTileFactory(new OSMTileFactoryInfo()));
             case 1 -> jXMapViewer.setTileFactory(new DefaultTileFactory(new VirtualEarthTileFactoryInfo(VirtualEarthTileFactoryInfo.MAP)));
@@ -197,15 +234,6 @@ public class PanelMaps extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                try {
-                    if (!(Runtime.getRuntime().exec ("ping -c 1 google.com").waitFor() == 0)){
-                        JOptionPane.showMessageDialog(null,"Se ha perdido la conexion a internet");
-                        getInstance().setEnabled(false);
-                        getInstance().setVisible(false);
-                    }
-                }catch (IOException | InterruptedException ex){
-                    JOptionPane.showMessageDialog(null,"error tecnico");
-                }
             }
 
             @Override
