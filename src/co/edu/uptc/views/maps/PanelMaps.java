@@ -14,6 +14,7 @@ import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -41,40 +42,27 @@ public class PanelMaps extends JPanel {
     }
 
     private void addCheckConnexion() {
-        this.addMouseListener(new MouseListener() {
+        this.addMouseMotionListener(new MouseMotionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-
+            public void mouseDragged(MouseEvent e) {
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                try {
-                    if (!(Runtime.getRuntime().exec ("ping -c 1 google.com").waitFor() == 0)){
-                        JOptionPane.showMessageDialog(null,"Se ha perdido la conexion a internet");
-                        getInstance().setEnabled(false);
-                        getInstance().setVisible(false);
-                    }
-                }catch (IOException | InterruptedException ex){
-                    JOptionPane.showMessageDialog(null,"error tecnico");
-                }
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
+            public void mouseMoved(MouseEvent e) {
+                checkConnection();
             }
         });
+    }
+    private void checkConnection(){
+        try {
+            if (!(Runtime.getRuntime().exec ("ping -c 1 google.com").waitFor() == 0)){
+                JOptionPane.showMessageDialog(null,"Se ha perdido la conexion a internet");
+                getInstance().setEnabled(false);
+                getInstance().setVisible(false);
+            }
+        }catch (IOException | InterruptedException ex){
+            JOptionPane.showMessageDialog(null,"error tecnico");
+        }
     }
 
 
@@ -224,7 +212,7 @@ public class PanelMaps extends JPanel {
 
             @Override
             public void mousePressed(MouseEvent e) {
-
+                checkConnection();
             }
 
             @Override
