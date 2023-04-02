@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -196,7 +197,15 @@ public class PanelMaps extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-
+                try {
+                    if (!(Runtime.getRuntime().exec ("ping -c 1 google.com").waitFor() == 0)){
+                        JOptionPane.showMessageDialog(null,"Se ha perdido la conexion a internet");
+                        getInstance().setEnabled(false);
+                        getInstance().setVisible(false);
+                    }
+                }catch (IOException | InterruptedException ex){
+                    JOptionPane.showMessageDialog(null,"error tecnico");
+                }
             }
 
             @Override
@@ -204,6 +213,9 @@ public class PanelMaps extends JPanel {
 
             }
         });
+    }
+    private JPanel getInstance(){
+        return this;
     }
     public JButton getButtonPoint(Point point){
         JButton buttonPoint = new JButton(new ImageIcon("assets/punto.png"));
