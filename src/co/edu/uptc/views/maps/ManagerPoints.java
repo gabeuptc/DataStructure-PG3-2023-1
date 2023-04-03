@@ -25,7 +25,14 @@ public class ManagerPoints {
     public void addPoint(GeoPosition position){
         points.add(createPoint(position.getLatitude(),position.getLongitude()));
         panelMaps.createPointsRender();
-        showAll();
+       // showAll();
+    }
+
+    public void delPoint(MapPoint mapPoint){
+        points.remove(mapPoint);
+        panelMaps.jXMapViewer.remove(mapPoint.getButtonPoint());
+        panelMaps.createPointsRender();
+
     }
 
 
@@ -56,7 +63,8 @@ public class ManagerPoints {
                         " \nLongitud: "+point.getLongitude()+
                         " \n\nDesea Borrar el Punto?", "aaa",JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
                 if (opt==0){
-                    panelMaps.jXMapViewer.remove(point.getButtonPoint());
+                    delPoint(point);
+
 
                 }
             }
