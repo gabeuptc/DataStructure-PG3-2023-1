@@ -4,6 +4,8 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,7 +48,19 @@ public class ManagerPoints {
         buttonPoint.setBorder(null);
         buttonPoint.setCursor(new Cursor(Cursor.HAND_CURSOR));
         buttonPoint.setSize(new Dimension(24, 24));
-        //      buttonPoint.addActionListener(e -> actionPoint(point));
+        buttonPoint.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                int opt = JOptionPane.showConfirmDialog(buttonPoint,"Latitud: "+point.getLatitude()+
+                        " \nLongitud: "+point.getLongitude()+
+                        " \n\nDesea Borrar el Punto?", "aaa",JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                if (opt==0){
+                    panelMaps.jXMapViewer.remove(point.getButtonPoint());
+
+                }
+            }
+        });
         return buttonPoint;
     }
 
