@@ -11,22 +11,34 @@ public class JDialogCreatePoint extends JDialog {
     private JTextField longitude;
     private JComboBox<String> defaultLocations;
 
-    public JDialogCreatePoint(PanelMaps map, boolean isDefaultLocation) {
+    public JDialogCreatePoint(PanelMaps map, int selection) {
         setLocationRelativeTo(null);
         setModal(true);
         this.map = map;
         setSize(400,180);
         setLocationRelativeTo(map);
         setResizable(false);
-        createComponents(isDefaultLocation);
+        createComponents(selection);
     }
 
-    private void createComponents(boolean isDefaultLocation) {
-        if (isDefaultLocation){
-            createDefaultLocationComponents();
-        }else {
-            createManualLocation();
+    private void createComponents(int selection) {
+        switch (selection) {
+            case 0 -> createDefaultLocationComponents();
+            case 1 -> createManualLocation();
+            case 2 -> createWithPointMouse();
         }
+    }
+    private void createWithPointMouse(){
+        this.setLayout(new BorderLayout());
+        this.add(new JLabel("  Quieres crear un punto con la localizacion del mouse?"),BorderLayout.CENTER);
+        JPanel panel = new JPanel();
+        JButton yes = new JButton("Si");
+        yes.addActionListener(e -> {map.createPointWithPointMouse();this.dispose();});
+        panel.add(yes);
+        JButton no = new JButton("No");
+        no.addActionListener(e -> this.dispose());
+        panel.add(no);
+        this.add(panel,BorderLayout.SOUTH);
     }
 
     private void createManualLocation() {

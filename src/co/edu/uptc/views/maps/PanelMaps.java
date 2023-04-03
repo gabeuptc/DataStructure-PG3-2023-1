@@ -146,12 +146,19 @@ public class PanelMaps extends JPanel {
         panelNorth.add(create);
     }
     private void putPanelCreate(){
-        if (JOptionPane.showConfirmDialog(this,"Quieres utilizar las localizaciones predeterminadas?","Mapa",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
-            JDialogCreatePoint dialogCreatePoint = new JDialogCreatePoint(this,true);
-            dialogCreatePoint.setVisible(true);
-        }else {
-            JDialogCreatePoint dialogCreatePoint = new JDialogCreatePoint(this,false);
-            dialogCreatePoint.setVisible(true);
+        String[] options= {"Localizacion Predeterminada", "Manualmente", "Localizacion del mouse"};
+        switch (JOptionPane.showOptionDialog(null, "Elige una opcion para crear un Punto",
+                "Crear Punto", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0])) {
+            case 0 -> new JDialogCreatePoint(this, 0).setVisible(true);
+            case 1 -> new JDialogCreatePoint(this, 1).setVisible(true);
+            case 2 -> new JDialogCreatePoint(this, 2).setVisible(true);
+        }
+    }
+    public void createPointWithPointMouse(){
+        try {
+            addPoint(createPoint(Double.parseDouble(latitudeMouse.getText()),Double.parseDouble(longitudeMouse.getText())));
+        }catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "No se ha clikeado una locallizacion", "Crear Punto", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
