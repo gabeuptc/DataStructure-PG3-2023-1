@@ -113,11 +113,11 @@ public class PanelMaps extends JPanel {
 
 
     public void createPointsRender() {
-        WaypointPainter<Point> render = new PointRender();
+        WaypointPainter<MapPoint> render = new PointRender();
         render.setWaypoints(managerPoints.getPoints());
         jXMapViewer.setOverlayPainter(render);
         if (visiblePoints) {
-            for (Point point1 : managerPoints.getPoints()) {
+            for (MapPoint point1 : managerPoints.getPoints()) {
                 jXMapViewer.add(point1.getButtonPoint());
             }
         }
@@ -125,7 +125,7 @@ public class PanelMaps extends JPanel {
 
 
     public void removePoint() {
-        for (Point point : managerPoints.getPoints()) {
+        for (MapPoint point : managerPoints.getPoints()) {
             jXMapViewer.remove(point.getButtonPoint());
         }
     }

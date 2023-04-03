@@ -7,10 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public class PointRender extends WaypointPainter<Point> {
+public class PointRender extends WaypointPainter<MapPoint> {
     @Override
     protected void doPaint(Graphics2D g, JXMapViewer map, int width, int height) {
-        for (Point point:getWaypoints()) {
+        for (MapPoint point:getWaypoints()) {
             Point2D p = map.getTileFactory().geoToPixel(point.getPosition(), map.getZoom());
             Rectangle rec = map.getViewportBounds();
             int x = (int) (p.getX() - rec.getX());

@@ -10,7 +10,7 @@ import java.util.Set;
 public class ManagerPoints {
 
 
-    private Set<Point> points;
+    private Set<MapPoint> points;
     private PanelMaps panelMaps;
 
 
@@ -29,18 +29,18 @@ public class ManagerPoints {
 
     public void showAll(){
         System.out.println("----------------------------");
-        for (Point p : points) {
+        for (MapPoint p : points) {
             System.out.println(p.getLatitude()+"  "+p.getLongitude());
         }
     }
 
-    public Point createPoint(double latitude, double longitude) {
-        Point point = new Point(new GeoPosition(latitude,longitude),0);
+    public MapPoint createPoint(double latitude, double longitude) {
+        MapPoint point = new MapPoint(new GeoPosition(latitude,longitude),0);
         point.setButtonPoint(getButtonPoint(point));
         return point;
     }
 
-    public JButton getButtonPoint(Point point){
+    public JButton getButtonPoint(MapPoint point){
         JButton buttonPoint = new JButton(new ImageIcon("assets/punto.png"));
         buttonPoint.setContentAreaFilled(false);
         buttonPoint.setBorder(null);
@@ -51,7 +51,7 @@ public class ManagerPoints {
     }
 
 
-    public Set<Point> getPoints() {
+    public Set<MapPoint> getPoints() {
         return points;
     }
 }
