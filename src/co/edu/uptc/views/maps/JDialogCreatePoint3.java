@@ -5,13 +5,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class JDialogCreatePoint extends JDialog {
-    private final PanelMaps map;
+public class JDialogCreatePoint3 extends JDialog {
+    private final PanelMaps3 map;
     private JTextField latitude;
     private JTextField longitude;
     private JComboBox<String> defaultLocations;
 
-    public JDialogCreatePoint(PanelMaps map, boolean isDefaultLocation) {
+    public JDialogCreatePoint3(PanelMaps3 map, boolean isDefaultLocation) {
         setLocationRelativeTo(null);
         setModal(true);
         this.map = map;

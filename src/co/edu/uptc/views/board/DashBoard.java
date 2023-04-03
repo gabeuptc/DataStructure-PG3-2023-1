@@ -5,6 +5,7 @@ import co.edu.uptc.presenter.ContratBills;
 import co.edu.uptc.views.Globals.ColorPalette;
 import co.edu.uptc.views.Globals.ValuesGlobals;
 import co.edu.uptc.views.maps.PanelMaps;
+import co.edu.uptc.views.maps.PanelMaps2;
 import co.edu.uptc.views.people.PanelPeople;
 
 

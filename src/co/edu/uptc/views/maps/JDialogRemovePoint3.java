@@ -5,11 +5,11 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class JDialogRemovePoint extends JDialog {
-    private final PanelMaps map;
+public class JDialogRemovePoint3 extends JDialog {
+    private final PanelMaps3 map;
     private JTextField number;
 
-    public JDialogRemovePoint(PanelMaps map) {
+    public JDialogRemovePoint3(PanelMaps3 map) {
         setLocationRelativeTo(null);
         setModal(true);
         this.map = map;
