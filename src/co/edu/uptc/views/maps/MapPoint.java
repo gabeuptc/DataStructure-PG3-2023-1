@@ -5,37 +5,31 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.swing.*;
 
-public class MapPoint extends DefaultWaypoint {
-    private JButton buttonPoint;
+public class MapPoint {
+
+        private JButton buttonPoint;
     private final String latitude;
     private final String longitude;
     private String defaultLocation;
     private final boolean isDefaultLocation;
-    private int pointNumber;
 
-    public MapPoint(GeoPosition coord, int ppointNumber) {
-        super(coord);
+    private boolean visible;
+
+    public MapPoint(GeoPosition coord) {
+      //  super(coord);
         this.latitude = String.valueOf(coord.getLatitude());
         this.longitude = String.valueOf(coord.getLongitude());
         this.isDefaultLocation = false;
-        this.pointNumber=pointNumber;
+
     }
-    public MapPoint(GeoPosition coord, String defaultLocation, int pointNumber) {
-        super(coord);
+    public MapPoint(GeoPosition coord, String defaultLocation) {
+        //super(coord);
         this.latitude = String.valueOf(coord.getLatitude());
         this.longitude = String.valueOf(coord.getLongitude());
         this.defaultLocation = defaultLocation;
         this.isDefaultLocation = true;
-        this.pointNumber=pointNumber;
     }
 
-    public void setPointNumber(int pointNumber) {
-        this.pointNumber = pointNumber;
-    }
-
-    public int getPointNumber() {
-        return pointNumber;
-    }
 
     public JButton getButtonPoint() {
         return buttonPoint;

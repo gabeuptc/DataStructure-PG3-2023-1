@@ -11,6 +11,7 @@ import org.jxmapviewer.viewer.WaypointPainter;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -20,54 +21,61 @@ import java.io.IOException;
 public class PanelMaps extends JPanel {
 
     protected JXMapViewer jXMapViewer;
-    protected ManagerPoints managerPoints;
-    PopUpOperationMenu popUpOperationMenu;
-    private GeoPosition position;
+    protected  ManagerElements managerElements;
+
+    protected PopUpOperationMenu popUpOperationMenu;
+
+
+    protected PanelStatus panelStatus;
     private int zoom = 5;
     private boolean visiblePoints = true;
+    private boolean visibleRoutes = true;
+
 
     public PanelMaps() {
         configGlobal();
-        configJXMapViewer();
+        addJXMapViewer();
+        addPanelStatus();
         putMapConfigs();
         addCheckConnexion();
         jXMapViewer.setTileFactory(new DefaultTileFactory(new OSMTileFactoryInfo()));
-        jXMapViewer.setZoom(5);
+        jXMapViewer.setZoom(zoom);
+        showStatus(PanelStatus.TYPE_MAP_PREDETERMINED);
+        showStatus();
 
     }
 
 
-    private void configJXMapViewer() {
+    private void addJXMapViewer() {
         jXMapViewer = new JXMapViewer();
         add(jXMapViewer, BorderLayout.CENTER);
         jXMapViewer.addMouseListener(new PopupTriggerListener());
     }
 
+    private void addPanelStatus() {
+        panelStatus = new PanelStatus();
+        add(panelStatus, BorderLayout.SOUTH);
+    }
+
+
     private void configGlobal() {
         this.setLayout(new BorderLayout());
-        managerPoints = new ManagerPoints(this);
+        managerElements = new ManagerElements(this);
         popUpOperationMenu = new PopUpOperationMenu(this);
+       // manegerRoutes = new ManegerRoutes(this);
 
     }
 
 
     class PopupTriggerListener extends MouseAdapter {
         public void mousePressed(MouseEvent ev) {
-            if (ev.isPopupTrigger()) {
+            if (ev.getButton() == MouseEvent.BUTTON3) {
                 GeoPosition position = jXMapViewer.convertPointToGeoPosition(ev.getPoint());
                 popUpOperationMenu.setPosition(position);
                 popUpOperationMenu.popupMenu.show(ev.getComponent(), ev.getX(), ev.getY());
             }
         }
 
-        public void mouseReleased(MouseEvent ev) {
-            if (ev.isPopupTrigger()) {
-                popUpOperationMenu.popupMenu.show(ev.getComponent(), ev.getX(), ev.getY());
-            }
-        }
-
-        public void mouseClicked(MouseEvent ev) {
-        }
     }
 
 
@@ -113,21 +121,13 @@ public class PanelMaps extends JPanel {
 
 
     public void createPointsRender() {
-        WaypointPainter<MapPoint> render = new PointRender();
-        render.setWaypoints(managerPoints.getPoints());
+        WaypointPainter<MapElement> render = new PointRender();
+        render.setWaypoints(managerElements.getElements());
         jXMapViewer.setOverlayPainter(render);
-        if (visiblePoints) {
-            for (MapPoint point1 : managerPoints.getPoints()) {
-                jXMapViewer.add(point1.getButtonPoint());
-            }
+        for (MapElement element : managerElements.getElements()) {
+            jXMapViewer.add(element.getComponent());
         }
-    }
 
-
-    public void removePoint() {
-        for (MapPoint point : managerPoints.getPoints()) {
-            jXMapViewer.remove(point.getButtonPoint());
-        }
     }
 
 
@@ -135,34 +135,99 @@ public class PanelMaps extends JPanel {
         this.zoom = zoom;
     }
 
-    public void showPoints(boolean visible) {
-        this.visiblePoints = visible;
-        if (!visible) {
-            removePoint();
-            createPointsRender();
+    public void showPoints() {
+        if (visiblePoints) {
+            for (MapElement mapElement : managerElements.getElements()) {
+                if (mapElement.getTypeElement()==TypeElement.POINT)
+                    mapElement.getComponent().setVisible(true);
+            }
         } else {
-            createPointsRender();
+            for (MapElement mapElement : managerElements.getElements()) {
+                if (mapElement.getTypeElement()==TypeElement.POINT)
+                  mapElement.getComponent().setVisible(false);
+            }
         }
+
+    }
+
+
+    public void showRoutes() {
+        if (visibleRoutes) {
+            for (MapElement mapElement : managerElements.getElements()) {
+                if (mapElement.getTypeElement()==TypeElement.ROUTE)
+                    mapElement.getComponent().setVisible(true);
+            }
+        } else {
+            for (MapElement mapElement : managerElements.getElements()) {
+                if (mapElement.getTypeElement()==TypeElement.ROUTE)
+                    mapElement.getComponent().setVisible(false);
+            }
+        }
+
     }
 
     public boolean isVisiblePoints() {
         return visiblePoints;
     }
 
+    public void setVisiblePoints(boolean visiblePoints) {
+        this.visiblePoints = visiblePoints;
+    }
+
+
+    public boolean isVisibleRoutes() {
+        return visibleRoutes;
+    }
+
+    public void setVisibleRoutes(boolean visibleRoutes) {
+        this.visibleRoutes = visibleRoutes;
+    }
+
     protected void comboMapTypeActionPerformed(int opt) {
 
         switch (opt) {
-            case 0 -> jXMapViewer.setTileFactory(new DefaultTileFactory(new OSMTileFactoryInfo()));
-            case 1 ->
-                    jXMapViewer.setTileFactory(new DefaultTileFactory(new VirtualEarthTileFactoryInfo(VirtualEarthTileFactoryInfo.MAP)));
-            case 2 ->
-                    jXMapViewer.setTileFactory(new DefaultTileFactory(new VirtualEarthTileFactoryInfo(VirtualEarthTileFactoryInfo.HYBRID)));
-            case 3 ->
-                    jXMapViewer.setTileFactory(new DefaultTileFactory(new VirtualEarthTileFactoryInfo(VirtualEarthTileFactoryInfo.SATELLITE)));
+            case 0 -> {
+                jXMapViewer.setTileFactory(new DefaultTileFactory(new OSMTileFactoryInfo()));
+                showStatus(PanelStatus.TYPE_MAP_PREDETERMINED);
+            }
+            case 1 -> {
+                jXMapViewer.setTileFactory(new DefaultTileFactory(new VirtualEarthTileFactoryInfo(VirtualEarthTileFactoryInfo.MAP)));
+                showStatus(PanelStatus.TYPE_MAP_MAP);
+            }
+            case 2 -> {
+                jXMapViewer.setTileFactory(new DefaultTileFactory(new VirtualEarthTileFactoryInfo(VirtualEarthTileFactoryInfo.HYBRID)));
+                showStatus(PanelStatus.TYPE_MAP_HYBRID);
+            }
+            case 3 -> {
+                jXMapViewer.setTileFactory(new DefaultTileFactory(new VirtualEarthTileFactoryInfo(VirtualEarthTileFactoryInfo.SATELLITE)));
+                showStatus(PanelStatus.TYPE_MAP_SATELLITE);
+            }
         }
         zoom = opt != 0 && zoom < 2 ? 2 : zoom;
 
         jXMapViewer.setZoom(zoom);
     }
+
+    public void showStatus(int value) {
+        panelStatus.setMessageS(value);
+        showStatus();
+    }
+
+    public void showStatus() {
+        if (popUpOperationMenu.isSelectRoute()) {
+            panelStatus.setMessageS(PanelStatus.ORIGEN_ROUTE);
+
+            if (managerElements.auxRoute!= null && managerElements.auxRoute.getCountPoint() == 1) {
+                panelStatus.setMessageS(PanelStatus.DESTINATION_ROUTE);
+            }
+        } else {
+            panelStatus.setMessageS(PanelStatus.NORMAL);
+        }
+        panelStatus.setMessageS(visiblePoints ? PanelStatus.VISIBLE_ELEMENT : PanelStatus.NOT_VISIBLE_ELEMENT);
+
+
+
+    }
+
 
 }

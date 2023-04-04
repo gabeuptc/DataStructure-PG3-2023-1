@@ -6,21 +6,44 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class PopUpOperationMenu extends MouseAdapter {
+public class PopUpOperationMenu implements  ActionListener{
     private JMenuItem itemShowPoint;
     private JMenuItem itemAddPoint;
+    private JMenuItem itemAddRoute;
+    private JMenuItem itemShowRoutes;
 
     GeoPosition position;
+
+    private boolean selectRoute=false;
     PanelMaps panelMaps;
     final JPopupMenu popupMenu = new JPopupMenu("popup");
 
     public PopUpOperationMenu(PanelMaps panelMaps) {
         this.panelMaps = panelMaps;
         makeMenuPoint();
+        addItemAddRoutes();
         makeMenuItemLayers();
         makeMenuItemAddOther();
     }
 
+    public boolean isSelectRoute() {
+        return selectRoute;
+    }
+
+    public void finishSelectRoute(){
+        selectRoute = false;
+        panelMaps.managerElements.finish();
+    }
+
+    public void cancelSelectRoute(){
+        selectRoute = false;
+       panelMaps.managerElements.cancel();
+    }
+
+    public void startSelectRoute(){
+        selectRoute = true;
+        panelMaps.showStatus();
+    }
 
     public void setPosition(GeoPosition position) {
         this.position = position;
@@ -30,22 +53,54 @@ public class PopUpOperationMenu extends MouseAdapter {
     private void makeMenuPoint() {
         JMenu menu = new JMenu("Punto");
         addItemAddPoint(menu);
-        addItemShowPoints(menu);
+     //   addItemShowPoints(menu);
         popupMenu.add(menu);
     }
 
     private void addItemAddPoint(JMenu menu) {
         itemAddPoint = new JMenuItem("Adicionar Punto");
-        itemAddPoint.setName("ItemAddPoint");
+        itemAddPoint.setActionCommand("ItemAddPoint");
         menu.add(itemAddPoint);
-        itemAddPoint.addMouseListener(this);
+        itemAddPoint.addActionListener(this);
     }
+
+    private void addItemAddRoutes() {
+        JMenu menu = new JMenu("Rutas");
+        menu.setActionCommand("ItemRoutes");
+        popupMenu.add(menu);
+        addItemRouteSRoute(menu);
+      //  addItemShowRoutes(menu);
+        addItemRouteSRouteCancel(menu);
+    }
+
+    private void addItemRouteSRoute(JMenu menu) {
+         itemAddRoute = new JMenuItem("Adicionar Ruta");
+        itemAddRoute.setActionCommand("addItemRouteSRoute");
+        menu.add(itemAddRoute);
+        itemAddRoute.addActionListener(this);
+    }
+
+
+    private void addItemShowRoutes(JMenu menu) {
+         itemShowRoutes = new JMenuItem("Ocultar Rutas");
+        itemShowRoutes.setActionCommand("addItemShowRoutes");
+        menu.add(itemShowRoutes);
+        itemShowRoutes.addActionListener(this);
+    }
+
+    private void addItemRouteSRouteCancel(JMenu menu) {
+        JMenuItem itemLayer = new JMenuItem("Cancelar Ruta");
+        itemLayer.setActionCommand("addItemRouteSRouteCancel");
+        menu.add(itemLayer);
+        itemLayer.addActionListener(this);
+    }
+
 
     private void addItemShowPoints(JMenu menu) {
         itemShowPoint = new JMenuItem("Ocultar puntos");
-        itemShowPoint.setName("ItemShowPoints");
+        itemShowPoint.setActionCommand("ItemShowPoints");
         menu.add(itemShowPoint);
-        itemShowPoint.addMouseListener(this);
+        itemShowPoint.addActionListener(this);
     }
 
 
@@ -60,31 +115,31 @@ public class PopUpOperationMenu extends MouseAdapter {
 
     private void addItemDefault(JMenu menu) {
         JMenuItem itemLayer = new JMenuItem("Predeterminado");
-        itemLayer.setName("ItemDefault");
+        itemLayer.setActionCommand("ItemDefault");
         menu.add(itemLayer);
-        itemLayer.addMouseListener(this);
+        itemLayer.addActionListener(this);
     }
 
     private void addItemMap(JMenu menu) {
         JMenuItem itemLayer = new JMenuItem("Mapa");
-        itemLayer.setName("ItemMap");
+        itemLayer.setActionCommand("ItemMap");
         menu.add(itemLayer);
-        itemLayer.addMouseListener(this);
+        itemLayer.addActionListener(this);
     }
 
     private void addItemHybrid(JMenu menu) {
         JMenuItem itemLayer = new JMenuItem("Hibrido");
-        itemLayer.setName("ItemHybrid");
+        itemLayer.setActionCommand("ItemHybrid");
         menu.add(itemLayer);
-        itemLayer.addMouseListener(this);
+        itemLayer.addActionListener(this);
 
     }
 
     private void addItemSatellite(JMenu menu) {
         JMenuItem itemLayer = new JMenuItem("Satelital");
-        itemLayer.setName("ItemSatellite");
+        itemLayer.setActionCommand("ItemSatellite");
         menu.add(itemLayer);
-        itemLayer.addMouseListener(this);
+        itemLayer.addActionListener(this);
     }
 
 
@@ -93,10 +148,12 @@ public class PopUpOperationMenu extends MouseAdapter {
         popupMenu.add(item);
     }
 
+
+
     @Override
-    public void mousePressed(MouseEvent e) {
-        super.mousePressed(e);
-        switch (e.getComponent().getName()) {
+    public void actionPerformed(ActionEvent e) {
+
+        switch (e.getActionCommand()){
             case "ItemDefault": {
                 panelMaps.setZoom(panelMaps.jXMapViewer.getZoom());
                 panelMaps.comboMapTypeActionPerformed(0);
@@ -119,21 +176,55 @@ public class PopUpOperationMenu extends MouseAdapter {
             }
 
             case "ItemAddPoint": {
-                panelMaps.managerPoints.addPoint(position);
-                break;
-            }
-            case "ItemShowPoints": {
-                if (panelMaps.isVisiblePoints()) {
-                    itemShowPoint.setText("Mostrar Puntos");
-                    panelMaps.showPoints(false);
-                    itemAddPoint.setEnabled(false);
-                } else {
-                    itemShowPoint.setText("Ocultar Puntos");
-                    panelMaps.showPoints(true);
-                    itemAddPoint.setEnabled(true);
+                if (!selectRoute) {
+                    panelMaps.managerElements.addPoint(position);
                 }
                 break;
             }
+
+            case "addItemRouteSRoute": {
+                startSelectRoute();
+                break;
+            }
+
+            case "addItemRouteSRouteCancel": {
+                finishSelectRoute();
+                break;
+            }
+
+            case "ItemShowPoints": {
+                if (panelMaps.isVisiblePoints()) {
+                    itemShowPoint.setText("Mostrar Puntos");
+                    panelMaps.setVisiblePoints(false);
+                    panelMaps.showPoints();
+                    itemAddPoint.setEnabled(false);
+                } else {
+                    itemShowPoint.setText("Ocultar Puntos");
+                    panelMaps.setVisiblePoints(true);
+                    panelMaps.showPoints();
+                    itemAddPoint.setEnabled(true);
+                }
+                panelMaps.showStatus();
+                break;
+            }
+
+            case "addItemShowRoutes": {
+                if (panelMaps.isVisibleRoutes()) {
+                    itemShowRoutes.setText("Mostrar Rutas");
+                    panelMaps.setVisibleRoutes(false);
+                    panelMaps.showRoutes();
+                    itemAddRoute.setEnabled(false);
+                } else {
+                    itemShowRoutes.setText("Ocultar Rutas");
+                    panelMaps.setVisibleRoutes(true);
+                    panelMaps.showRoutes();
+                    itemAddRoute.setEnabled(true);
+                }
+                panelMaps.showStatus();
+                break;
+            }
+
+
 
         }
 
