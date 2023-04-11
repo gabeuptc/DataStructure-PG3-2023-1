@@ -9,7 +9,7 @@
 ## Autor: German Amezquita Becerra Y ESTUDIANTES DE PROGRAMACION 3
 ## 30 marzo de 2023
 
-## version de java: 18 o superior
+## version de java: 17 o superior
 
 ## Descripción
 
