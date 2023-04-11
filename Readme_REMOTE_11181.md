@@ -9,10 +9,9 @@
 ## Autor: German Amezquita Becerra Y ESTUDIANTES DE PROGRAMACION 3
 ## 30 marzo de 2023
 
-## version de java: 17 o superior
+## version de java: 11 o superior
 
-## Descripción
+La vista esta implementada en swing
+se implementa el patron MVP
 
-- Este proyecto contiene la estructura de un proyecto donde se implementa MVP
-- La vista esta implementada en swing
 
