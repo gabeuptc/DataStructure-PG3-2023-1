@@ -2,6 +2,7 @@ package co.edu.uptc.views.board;
 
 import co.edu.uptc.pojos.Person;
 import co.edu.uptc.presenter.ContratBills;
+import co.edu.uptc.utils.UtilSystem;
 import co.edu.uptc.views.Globals.ValuesGlobals;
 import co.edu.uptc.views.maps.PanelMaps;
 import co.edu.uptc.views.people.PanelPeople;
@@ -9,8 +10,10 @@ import co.edu.uptc.views.people.PanelPeople;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 public class DashBoard extends JFrame implements ContratBills.View  {
 
@@ -70,8 +73,11 @@ public class DashBoard extends JFrame implements ContratBills.View  {
     }
 
     protected void showPanelMap(){
+
+
         try {
-            if ((Runtime.getRuntime().exec ("ping -c 1 google.com").waitFor() == 0)){
+            //if ((Runtime.getRuntime().exec ("ping -c 1 google.com").waitFor() == 0)){
+            if ((Runtime.getRuntime().exec (getConnectGoogle()).waitFor() == 0)){
                 setPanel();
                 configFullSizeScren();
                 panelmaps = new PanelMaps();
@@ -83,6 +89,24 @@ public class DashBoard extends JFrame implements ContratBills.View  {
             JOptionPane.showMessageDialog(this,"Error Tecnico");
         }
     }
+
+    private String getConnectGoogle(){
+        String aux = UtilSystem.getOsGenaral();
+        Properties prop = new Properties();
+        String connect = "";
+        try {
+            prop.load(new FileInputStream("resources/config.properties"));
+            switch (aux){
+               case "Windows" -> connect = prop.getProperty("CONNECT_GOOGLE_MAP_WINDOWS");
+               case "Linux" -> connect = prop.getProperty("CONNECT_GOOGLE_MAP_LINUX");
+               case "Mac" -> connect = prop.getProperty("CONNECT_GOOGLE_MAP_MAC");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return connect;
+    }
+
 
     private void configFullSizeScren(){
         GraphicsEnvironment env =GraphicsEnvironment.getLocalGraphicsEnvironment();
