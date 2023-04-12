@@ -1,6 +1,5 @@
 package co.edu.uptc.views.maps;
 
-import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.swing.*;
@@ -13,9 +12,7 @@ public class MapPoint {
     private String defaultLocation;
     private final boolean isDefaultLocation;
 
-    private boolean visible;
-
-    public MapPoint(GeoPosition coord) {
+        public MapPoint(GeoPosition coord) {
       //  super(coord);
         this.latitude = String.valueOf(coord.getLatitude());
         this.longitude = String.valueOf(coord.getLongitude());
