@@ -1,38 +1,38 @@
 package co.edu.uptc.presenter;
 
-import co.edu.uptc.models.model202128687.ManagerModel202128687;
-import co.edu.uptc.models.model202114641.ManagerModel202114641;
-import co.edu.uptc.models.model202127343.ManagerModel202127343;
-import co.edu.uptc.models.model202022012.ManagerModel202022012;
-import co.edu.uptc.models.model202127717.ManagerModel202127717;
-import co.edu.uptc.models.model202128778.Manager202128778;
-import co.edu.uptc.models.model202127812.ManagerModel202127812;
-import co.edu.uptc.models.model202127061.ManagerModel202127061;
-import co.edu.uptc.models.modelGerman.ManagerModel;
+import co.edu.uptc.models.people.model202128687.ManagerModel202128687;
+import co.edu.uptc.models.people.model202114641.ManagerModel202114641;
+import co.edu.uptc.models.people.model202127343.ManagerModel202127343;
+import co.edu.uptc.models.people.model202022012.ManagerModel202022012;
+import co.edu.uptc.models.people.model202127717.ManagerModel202127717;
+import co.edu.uptc.models.people.model202128778.Manager202128778;
+import co.edu.uptc.models.people.model202127812.ManagerModel202127812;
+import co.edu.uptc.models.people.model202127061.ManagerModel202127061;
+import co.edu.uptc.models.people.modelGerman.ManagerModel;
 
-import co.edu.uptc.models.model202113049.ManagerModel_202113049;
+import co.edu.uptc.models.people.model202113049.ManagerModel_202113049;
 
 
-import co.edu.uptc.models.model202115100.ManegerModel202115100;
+import co.edu.uptc.models.people.model202115100.ManegerModel202115100;
 
 import co.edu.uptc.views.board.DashBoard;
 
 
 public class ManagerGeneral {
     private static ManagerGeneral instance;
-    ContratBills.View view;
-    ContratBills.Model modelGerman;
-    ContratBills.Model model202127061;
-    ContratBills.Model model202113059;
-    ContratBills.Model model202128687;
-    ContratBills.Model model202128778;
-    ContratBills.Model  model202127343;
-    ContratBills.Model model202022012;
-    ContratBills.Presenter presenter;
-    ContratBills.Model model202127812;
-    ContratBills.Model modelSebastian;
-    ContratBills.Model model202115100;
-    ContratBills.Model model202127717;
+    ContractPeople.View view;
+    ContractPeople.Model modelGerman;
+    ContractPeople.Model model202127061;
+    ContractPeople.Model model202113059;
+    ContractPeople.Model model202128687;
+    ContractPeople.Model model202128778;
+    ContractPeople.Model  model202127343;
+    ContractPeople.Model model202022012;
+    ContractPeople.Presenter presenter;
+    ContractPeople.Model model202127812;
+    ContractPeople.Model modelSebastian;
+    ContractPeople.Model model202115100;
+    ContractPeople.Model model202127717;
 
     private ManagerGeneral() {
     }
