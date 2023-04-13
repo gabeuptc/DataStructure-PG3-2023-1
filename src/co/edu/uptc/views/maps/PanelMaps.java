@@ -71,14 +71,12 @@ public class PanelMaps extends JPanel {
         this.setLayout(new BorderLayout());
         managerElements = new ManagerElements(this);
         popUpOperationMenu = new PopUpOperationMenu(this);
-        ManagerGraphs.getInstance().updateGraph();
        // manegerRoutes = new ManegerRoutes(this);
 
     }
 
     public void updateElements(){
-        Set<MapElement> get =ManagerGraphs.getInstance().getElements();
-        managerElements.updateElements(get!=null?get:new HashSet<>());
+        createPointsRender();
     }
 
 
@@ -140,11 +138,10 @@ public class PanelMaps extends JPanel {
 
     public void createPointsRender() {
         removeAllMapElements();
-        ManagerGraphs.getInstance().updateGraph();
         WaypointPainter<MapElement> render = new PointRender();
-        render.setWaypoints(managerElements.getElements());
+        render.setWaypoints(ManagerGraphs.getInstance().getElements());
         jXMapViewer.setOverlayPainter(render);
-        for (MapElement element : managerElements.getElements()) {
+        for (MapElement element : ManagerGraphs.getInstance().getElements()) {
             jXMapViewer.add(element.getComponent());
         }
 
@@ -157,7 +154,7 @@ public class PanelMaps extends JPanel {
 
     public void renderRouteCalculated(Set<MapElement> elements){
         removeAllMapElements();
-        WaypointPainter<MapElement> render = new PointRender();
+        WaypointPainter<MapElement> render = new ResultsRender();
         render.setWaypoints(elements);
         jXMapViewer.setOverlayPainter(render);
         for (MapElement element : elements) {

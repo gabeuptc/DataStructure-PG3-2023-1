@@ -29,7 +29,6 @@ public class ManagerElements {
     public void addPoint(GeoPosition position) {
         ManagerGraphs.getInstance().addElement(createPoint(position.getLatitude(), position.getLongitude()));
         ManagerGraphs.getInstance().updateGraph();
-        panelMaps.createPointsRender();
         panelMaps.showStatus(PanelStatus.CREATED_POINT);
     }
 
@@ -37,7 +36,6 @@ public class ManagerElements {
         ManagerGraphs.getInstance().deletePoint(element.getIdElement());
         panelMaps.jXMapViewer.remove(mapPoint.getButtonPoint());
         ManagerGraphs.getInstance().updateGraph();
-        panelMaps.createPointsRender();
         panelMaps.showStatus(PanelStatus.DELETE_POINT);
     }
 
@@ -115,7 +113,6 @@ public class ManagerElements {
             elementNumber++;
             ManagerGraphs.getInstance().addElement(mapElement);
             ManagerGraphs.getInstance().updateGraph();
-            panelMaps.createPointsRender();
             panelMaps.popUpOperationMenu.finishSelectRoute();
         }
     }
