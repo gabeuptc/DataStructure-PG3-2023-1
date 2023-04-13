@@ -1,5 +1,6 @@
 package co.edu.uptc.views.maps;
 
+import co.edu.uptc.views.board.DashBoard;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.VirtualEarthTileFactoryInfo;
@@ -11,12 +12,13 @@ import org.jxmapviewer.viewer.WaypointPainter;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PanelMaps extends JPanel {
 
@@ -31,8 +33,11 @@ public class PanelMaps extends JPanel {
     private boolean visiblePoints = true;
     private boolean visibleRoutes = true;
 
+    private DashBoard dashBoard;
 
-    public PanelMaps() {
+    public PanelMaps(DashBoard dashBoard) {
+        this.dashBoard = dashBoard;
+        ManagerGraphs.getInstance().setPanelMaps(this);
         configGlobal();
         addJXMapViewer();
         addPanelStatus();
@@ -42,9 +47,13 @@ public class PanelMaps extends JPanel {
         jXMapViewer.setZoom(zoom);
         showStatus(PanelStatus.TYPE_MAP_PREDETERMINED);
         showStatus();
-
+        addPanelButtons();
     }
 
+    private void addPanelButtons() {
+        PanelButtonsModels panelButtonsModels = new PanelButtonsModels(this);
+        this.add(new JScrollPane(panelButtonsModels),BorderLayout.EAST);
+    }
 
     private void addJXMapViewer() {
         jXMapViewer = new JXMapViewer();
@@ -62,8 +71,14 @@ public class PanelMaps extends JPanel {
         this.setLayout(new BorderLayout());
         managerElements = new ManagerElements(this);
         popUpOperationMenu = new PopUpOperationMenu(this);
+        ManagerGraphs.getInstance().updateGraph();
        // manegerRoutes = new ManegerRoutes(this);
 
+    }
+
+    public void updateElements(){
+        Set<MapElement> get =ManagerGraphs.getInstance().getElements();
+        managerElements.updateElements(get!=null?get:new HashSet<>());
     }
 
 
@@ -91,28 +106,31 @@ public class PanelMaps extends JPanel {
 
 
     private void addCheckConnexion() {
-        this.addMouseMotionListener(new MouseMotionListener() {
+        this.jXMapViewer.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
+                checkConnection();
             }
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                checkConnection();
             }
         });
     }
 
     private void checkConnection() {
         try {
-            if (!(Runtime.getRuntime().exec("ping -c 1 google.com").waitFor() == 0)) {
+            if (!(Runtime.getRuntime().exec(dashBoard.getConnectGoogle()).waitFor() == 0)) {
                 JOptionPane.showMessageDialog(null, "Se ha perdido la conexión a internet");
-                getInstance().setEnabled(false);
-                getInstance().setVisible(false);
+                setEnableMap(false);
             }
         } catch (IOException | InterruptedException ex) {
             JOptionPane.showMessageDialog(null, "error técnico");
         }
+    }
+    public void setEnableMap(boolean value){
+        this.setVisible(value);
+        jXMapViewer.setFocusable(value);
     }
 
     private JPanel getInstance() {
@@ -121,6 +139,8 @@ public class PanelMaps extends JPanel {
 
 
     public void createPointsRender() {
+        removeAllMapElements();
+        ManagerGraphs.getInstance().updateGraph();
         WaypointPainter<MapElement> render = new PointRender();
         render.setWaypoints(managerElements.getElements());
         jXMapViewer.setOverlayPainter(render);
@@ -129,7 +149,21 @@ public class PanelMaps extends JPanel {
         }
 
     }
+    private void removeAllMapElements(){
+        for (Component c:jXMapViewer.getComponents()) {
+            jXMapViewer.remove(c);
+        }
+    }
 
+    public void renderRouteCalculated(Set<MapElement> elements){
+        removeAllMapElements();
+        WaypointPainter<MapElement> render = new PointRender();
+        render.setWaypoints(elements);
+        jXMapViewer.setOverlayPainter(render);
+        for (MapElement element : elements) {
+            jXMapViewer.add(element.getComponent());
+        }
+    }
 
     public void setZoom(int zoom) {
         this.zoom = zoom;
@@ -203,7 +237,7 @@ public class PanelMaps extends JPanel {
                 showStatus(PanelStatus.TYPE_MAP_SATELLITE);
             }
         }
-        zoom = opt != 0 && zoom < 2 ? 2 : zoom;
+        zoom = opt != 0 && ( zoom < 2 || zoom > 17 ) ? ( zoom > 17 ? 17 : 2 ) : zoom;
 
         jXMapViewer.setZoom(zoom);
     }

@@ -6,6 +6,9 @@ import java.awt.*;
 public class MapRouteA {
 
     private Component component;
+    private TypeRoute typeRoute;
+    private double speedRoute;
+    private double distance;
 
     private MapPoint  point1;
     private MapPoint point2;
@@ -30,6 +33,30 @@ public class MapRouteA {
                 return super.isVisible();
             }
         };
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public void setTypeRoute(TypeRoute typeRoute) {
+        this.typeRoute = typeRoute;
+    }
+
+    public void setSpeedRoute(double speedRoute) {
+        this.speedRoute = speedRoute;
+    }
+
+    public TypeRoute getTypeRoute() {
+        return typeRoute;
+    }
+
+    public double getSpeedRoute() {
+        return speedRoute;
     }
 
     public MapPoint getPoint1() {
