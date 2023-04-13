@@ -122,7 +122,6 @@ public class ManagerElements {
 
 
     public Set<MapElement> getElements() {
-        ManagerGraphs.getInstance().updateGraph();
         return elements;
     }
 
