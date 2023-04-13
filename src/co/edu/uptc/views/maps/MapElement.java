@@ -6,9 +6,10 @@ import org.jxmapviewer.viewer.GeoPosition;
 import javax.swing.*;
 import java.awt.*;
 
-public class MapElement extends DefaultWaypoint {
+public class MapElement extends DefaultWaypoint implements Cloneable{
 
     private TypeElement typeElement;
+    private int idElement;
 
     private MapPoint mapPoint;
 
@@ -44,11 +45,33 @@ public class MapElement extends DefaultWaypoint {
         return null;
     }
 
+    public int getIdElement() {
+        return idElement;
+    }
+
+    public void setIdElement(int idElement) {
+        this.idElement = idElement;
+    }
+
     public TypeElement getTypeElement() {
         return typeElement;
     }
 
     public MapRouteA getMapRoute() {
         return mapRoute;
+    }
+
+    public MapPoint getMapPoint() {
+        return mapPoint;
+    }
+
+    @Override
+    public MapElement clone() {
+        try {
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return (MapElement) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

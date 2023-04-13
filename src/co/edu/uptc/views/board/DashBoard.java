@@ -81,7 +81,11 @@ public class DashBoard extends JFrame implements ContractPeople.View {
             if ((Runtime.getRuntime().exec(getConnectGoogle()).waitFor() == 0)) {
                 setPanel();
                 configFullSizeScren();
-                panelmaps = new PanelMaps();
+                if (panelmaps!=null){
+                    panelmaps.setEnableMap(true);
+                }else {
+                    panelmaps = new PanelMaps(this);
+                }
                 panelCenter.add(panelmaps);
             } else {
                 JOptionPane.showMessageDialog(this, "No Hay conexion a internet,no se puede cargar el mapa");
@@ -91,7 +95,7 @@ public class DashBoard extends JFrame implements ContractPeople.View {
         }
     }
 
-    private String getConnectGoogle() {
+    public String getConnectGoogle() {
         String aux = UtilSystem.getOsGenaral();
         Properties prop = new Properties();
         String connect = "";
@@ -125,7 +129,10 @@ public class DashBoard extends JFrame implements ContractPeople.View {
             panelmaps.setVisible(false);
             remove(panelmaps);
         }
-
+        if (panelAbout != null) {
+            panelAbout.setVisible(false);
+            remove(panelAbout);
+        }
     }
 
 

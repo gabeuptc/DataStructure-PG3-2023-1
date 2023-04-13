@@ -3,7 +3,6 @@ package co.edu.uptc.views.maps;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
 public class PopUpOperationMenu implements  ActionListener{
@@ -17,12 +16,16 @@ public class PopUpOperationMenu implements  ActionListener{
     private boolean selectRoute=false;
     PanelMaps panelMaps;
     final JPopupMenu popupMenu = new JPopupMenu("popup");
+    private ManagerGraphs managerGraphs;
 
     public PopUpOperationMenu(PanelMaps panelMaps) {
         this.panelMaps = panelMaps;
+        this.managerGraphs = ManagerGraphs.getInstance();
         makeMenuPoint();
         addItemAddRoutes();
         makeMenuItemLayers();
+        calculateRoutes();
+        makeMenuItemChangeOrientation();
         makeMenuItemAddOther();
     }
 
@@ -141,13 +144,34 @@ public class PopUpOperationMenu implements  ActionListener{
         menu.add(itemLayer);
         itemLayer.addActionListener(this);
     }
-
+    private void calculateRoutes(){
+        JMenu menu = new JMenu("calcular rutas");
+        calculateShortestDistanceRoute(menu);
+        calculateShortestTimeRoute(menu);
+        popupMenu.add(menu);
+    }
+    private void calculateShortestDistanceRoute(JMenu menu){
+        JMenuItem item = new JMenuItem("ruta con menor distancia");
+        item.setActionCommand("ShortestDistance");
+        menu.add(item);
+        item.addActionListener(this);
+    }
+    private void calculateShortestTimeRoute(JMenu menu){
+        JMenuItem item = new JMenuItem("ruta con menor tiempo");
+        item.setActionCommand("ShortestTime");
+        menu.add(item);
+        item.addActionListener(this);
+    }
 
     private void makeMenuItemAddOther() {
         JMenuItem item = new JMenuItem("Adicionar Other");
         popupMenu.add(item);
     }
-
+    private void makeMenuItemChangeOrientation() {
+        JMenuItem item = new JMenuItem("Cambiar orientacion de rutas");
+        item.setActionCommand("ChangeOrientation");
+        popupMenu.add(item);
+    }
 
 
     @Override
@@ -224,8 +248,21 @@ public class PopUpOperationMenu implements  ActionListener{
                 break;
             }
 
+            case "ShortestDistance": {//seleccionar los puntos como se seleccionan las rutas, poner cabios en la barra
+                panelMaps.renderRouteCalculated(managerGraphs.calculateShortestDistanceRoute(null,null));
+                managerGraphs.showDetails();
+                break;
+            }
 
-
+            case "ShortestTime": {//seleccionar los puntos como se seleccionan las rutas, poner cabios en la barra
+                panelMaps.renderRouteCalculated(managerGraphs.calculateShortestTimeRoute(null,null));
+                managerGraphs.showDetails();
+                break;
+            }
+            case "ChangeOrientation":{//elegir el cambio, poner cabios en la barra
+                managerGraphs.setOrientationRoutes(OrientationRoutes.BOTH);
+                break;
+            }
         }
 
     }
