@@ -6,17 +6,17 @@ import co.edu.uptc.pojos.Person;
 import java.util.List;
 
 
-public class Presenter implements ContratBills.Presenter{
-    private ContratBills.View view;
-    private ContratBills.Model model;
+public class Presenter implements ContractPeople.Presenter{
+    private ContractPeople.View view;
+    private ContractPeople.Model model;
 
     @Override
-    public void setView(ContratBills.View view) {
+    public void setView(ContractPeople.View view) {
         this.view = view;
     }
 
     @Override
-    public void setModel(ContratBills.Model model) {
+    public void setModel(ContractPeople.Model model) {
     this.model=model;
     }
 
