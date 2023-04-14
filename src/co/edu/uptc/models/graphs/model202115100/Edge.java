@@ -7,6 +7,7 @@ public class Edge {
     private Node origin;
     private Node destine;
     private double speed;
+    private double distance;
     private TypeRoute typeRoute;
     private OrientationRoutes orientationRoutes;
 
@@ -18,10 +19,11 @@ public class Edge {
         orientationRoutes = null;
     }
 
-    public Edge(Node origin, Node destine, double speed, TypeRoute typeRoute, OrientationRoutes orientationRoutes) {
+    public Edge(Node origin, Node destine, double speed, double distance, TypeRoute typeRoute, OrientationRoutes orientationRoutes) {
         this.origin = origin;
         this.destine = destine;
         this.speed = speed;
+        this.distance = distance;
         this.typeRoute = typeRoute;
         this.orientationRoutes = orientationRoutes;
     }
@@ -64,5 +66,13 @@ public class Edge {
 
     public void setOrientationRoutes(OrientationRoutes orientationRoutes) {
         this.orientationRoutes = orientationRoutes;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 }
