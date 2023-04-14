@@ -17,7 +17,7 @@ public class ManagerElements {
     private MapPoint  aux1Point;
     private MapPoint  aux2Point;
     private int elementNumber=1;
-
+    public boolean isComplete=true;
 
     public ManagerElements(PanelMaps panelMaps) {
         this.panelMaps = panelMaps;
@@ -113,12 +113,15 @@ public class ManagerElements {
         }
         auxRoute.setPoint(mapPoint);
         if (auxRoute.isAssigneds()){
-            MapElement mapElement = new MapElement(auxRoute,null);
-            mapElement.setIdElement(elementNumber);
-            elementNumber++;
-            ManagerGraphs.getInstance().addElement(mapElement);
-            ManagerGraphs.getInstance().updateGraph();
-            panelMaps.popUpOperationMenu.finishSelectRoute();
+            new JDialogRouteIformation(auxRoute,panelMaps,elementNumber).setVisible(true);
+            if (isComplete){
+                MapElement mapElement = new MapElement(auxRoute,null);
+                mapElement.setIdElement(elementNumber);
+                elementNumber++;
+                ManagerGraphs.getInstance().addElement(mapElement);
+                ManagerGraphs.getInstance().updateGraph();
+                panelMaps.popUpOperationMenu.finishSelectRoute();
+            }
         }
     }
     private void choosePoints(MapPoint point){
