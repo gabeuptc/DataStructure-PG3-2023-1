@@ -2,12 +2,6 @@ package co.edu.uptc.models.graphs.a202127812Graphs;
 
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.*;
-import org.jxmapviewer.viewer.GeoPosition;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.HashSet;
 import java.util.Set;
 

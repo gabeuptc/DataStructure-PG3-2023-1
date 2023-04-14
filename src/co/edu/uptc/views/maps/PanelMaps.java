@@ -17,7 +17,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
 public class PanelMaps extends JPanel {
@@ -168,12 +167,12 @@ public class PanelMaps extends JPanel {
 
     public void showPoints() {
         if (visiblePoints) {
-            for (MapElement mapElement : managerElements.getElements()) {
+            for (MapElement mapElement : ManagerGraphs.getInstance().getElements()) {
                 if (mapElement.getTypeElement()==TypeElement.POINT)
                     mapElement.getComponent().setVisible(true);
             }
         } else {
-            for (MapElement mapElement : managerElements.getElements()) {
+            for (MapElement mapElement : ManagerGraphs.getInstance().getElements()) {
                 if (mapElement.getTypeElement()==TypeElement.POINT)
                   mapElement.getComponent().setVisible(false);
             }
@@ -184,12 +183,12 @@ public class PanelMaps extends JPanel {
 
     public void showRoutes() {
         if (visibleRoutes) {
-            for (MapElement mapElement : managerElements.getElements()) {
+            for (MapElement mapElement : ManagerGraphs.getInstance().getElements()) {
                 if (mapElement.getTypeElement()==TypeElement.ROUTE)
                     mapElement.getComponent().setVisible(true);
             }
         } else {
-            for (MapElement mapElement : managerElements.getElements()) {
+            for (MapElement mapElement : ManagerGraphs.getInstance().getElements()) {
                 if (mapElement.getTypeElement()==TypeElement.ROUTE)
                     mapElement.getComponent().setVisible(false);
             }

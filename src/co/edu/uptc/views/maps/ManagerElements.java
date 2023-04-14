@@ -87,7 +87,7 @@ public class ManagerElements {
     }
 
     public boolean isRelatedWithARoute(MapPoint point){
-        for (MapElement element:elements) {
+        for (MapElement element:ManagerGraphs.getInstance().getElements()) {
             if (element.getTypeElement()== TypeElement.ROUTE){
                 if (element.getMapRoute().getPoint1().getLatitude().equals(point.getLatitude())&&
                         element.getMapRoute().getPoint1().getLongitude().equals(point.getLongitude())){
