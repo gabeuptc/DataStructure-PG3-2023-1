@@ -11,6 +11,12 @@ import java.util.Set;
 public class GraphManager202115100 implements ContractGraphs.Model {
 
     private ContractGraphs.Presenter presenter;
+    private Graph202115100 graph;
+    private Set<MapElement> elements;
+
+    public GraphManager202115100() {
+        graph = new Graph202115100();
+    }
 
     @Override
     public void setPresenter(ContractGraphs.Presenter presenter) {
@@ -29,7 +35,7 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public void setArcType(int elementID, TypeRoute typeRoute) {
-
+//        graph.setArcType(elementID, typeRoute);
     }
 
     @Override
@@ -54,7 +60,10 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public void addElement(MapElement element) {
-
+        switch (element.getTypeElement()) {
+//            case POINT -> graph.addVertex(element.getIdElement());
+//            case ROUTE -> graph.addEdge(element.getIdElement(), element.getMapRoute().getPoint1().getIdElement(), element.getMapRoute().getPoint2().getIdElement());
+        }
     }
 
     @Override
