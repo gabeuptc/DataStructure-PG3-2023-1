@@ -206,11 +206,30 @@ public class PopUpOperationMenu implements  ActionListener{
         popupMenu.add(item);
     }
     private void makeMenuItemChangeOrientation() {
-        JMenuItem item = new JMenuItem("Cambiar orientacion de rutas");
-        item.setActionCommand("ChangeOrientation");
-        popupMenu.add(item);
+        JMenu menu = new JMenu("Cambiar orientacion de rutas");
+        changeToOriginDestin(menu);
+        changeToDestinOrigin(menu);
+        changeToBoth(menu);
+        popupMenu.add(menu);
     }
-
+    private void changeToOriginDestin(JMenu menu){
+        JMenuItem item = new JMenuItem("Origen-Destino");
+        item.setActionCommand("OriginDestin");
+        menu.add(item);
+        item.addActionListener(this);
+    }
+    private void changeToDestinOrigin(JMenu menu){
+        JMenuItem item = new JMenuItem("Destino-Origen");
+        item.setActionCommand("DestinOrigin");
+        menu.add(item);
+        item.addActionListener(this);
+    }
+    private void changeToBoth(JMenu menu){
+        JMenuItem item = new JMenuItem("Ambos");
+        item.setActionCommand("Both");
+        menu.add(item);
+        item.addActionListener(this);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -286,12 +305,12 @@ public class PopUpOperationMenu implements  ActionListener{
                 break;
             }
 
-            case "ShortestDistance": {//seleccionar los puntos como se seleccionan las rutas, poner cabios en la barra
+            case "ShortestDistance": {
                 startSelectCalculeDistance();
                 break;
             }
 
-            case "ShortestTime": {//seleccionar los puntos como se seleccionan las rutas, poner cabios en la barra
+            case "ShortestTime": {
                 startSelectCalculeTime();
                 break;
             }
@@ -303,8 +322,16 @@ public class PopUpOperationMenu implements  ActionListener{
                 managerGraphs.updateGraph();
                 break;
             }
-            case "ChangeOrientation":{//elegir el cambio, poner cabios en la barra
-                managerGraphs.setOrientationRoutes(OrientationRoutes.BOTH);
+            case "OriginDestin":{
+                managerGraphs.setArcsOrientation(OrientationRoutes.ORIGIN_DESTIN);
+                break;
+            }
+            case "DestinOrigin":{
+                managerGraphs.setArcsOrientation(OrientationRoutes.DESTIN_ORIGIN);
+                break;
+            }
+            case "Both":{
+                managerGraphs.setArcsOrientation(OrientationRoutes.BOTH);
                 break;
             }
         }
