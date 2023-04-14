@@ -13,8 +13,9 @@ import java.util.Set;
 public class ManagerElements {
     private Set<MapElement> elements;
     private PanelMaps panelMaps;
-
     protected MapRouteA auxRoute;
+    private MapPoint  aux1Point;
+    private MapPoint  aux2Point;
     private int elementNumber=1;
 
 
@@ -67,7 +68,11 @@ public class ManagerElements {
                 if (panelMaps.popUpOperationMenu.isSelectRoute()) {
                     panelMaps.showStatus(PanelStatus.SELECTED_POINT);
                     addPoint(point);
-                } else {
+                }else if (panelMaps.popUpOperationMenu.isSelectCalculeDistance()){
+                    choosePoints(point);
+                } else if (panelMaps.popUpOperationMenu.isSelectCalculeTime()){
+                    choosePoints(point);
+                }else {
                     int opt = JOptionPane.showConfirmDialog(buttonPoint, "Latitud: " + point.getLatitude() +
                             " \nLongitud: " + point.getLongitude() +
                             " \nId del elemento: " + element.getIdElement() +
@@ -116,6 +121,27 @@ public class ManagerElements {
             panelMaps.popUpOperationMenu.finishSelectRoute();
         }
     }
+    private void choosePoints(MapPoint point){
+        if (aux1Point==null){
+            aux1Point=point;
+        }else if (aux2Point==null){
+            aux2Point=point;
+        }
+        if (aux1Point!=null&&aux2Point!=null){
+            if (panelMaps.popUpOperationMenu.isSelectCalculeDistance()){
+                panelMaps.renderRouteCalculated(ManagerGraphs.getInstance().calculateShortestDistanceRoute(aux1Point,aux2Point));
+                ManagerGraphs.getInstance().showDetails();
+            }else if (panelMaps.popUpOperationMenu.isSelectCalculeTime()){
+                panelMaps.renderRouteCalculated(ManagerGraphs.getInstance().calculateShortestTimeRoute(aux1Point,aux2Point));
+                ManagerGraphs.getInstance().showDetails();
+            }
+            panelMaps.popUpOperationMenu.finishCalcule();
+        }
+    }
+    public void finishCalcules(){
+        aux1Point=null;
+        aux2Point=null;
+    }
 
 
     public Set<MapElement> getElements() {
@@ -131,6 +157,9 @@ public class ManagerElements {
     public void finish(){
         auxRoute = null;
         panelMaps.showStatus(PanelStatus.CREATE_ROUTED);
+    }
+    public void finishCalcule(){
+        //TODO
     }
 
 }
