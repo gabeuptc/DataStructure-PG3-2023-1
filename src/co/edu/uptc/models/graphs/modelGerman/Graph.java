@@ -1,4 +1,4 @@
-package co.edu.uptc.models.graphs.modelGraphs202127812;
+package co.edu.uptc.models.graphs.modelGerman;
 
 import co.edu.uptc.views.maps.MapElementGraph;
 import co.edu.uptc.views.maps.MapPointGraph;
@@ -87,9 +87,10 @@ public class Graph {
         //es mejor usar los elementos del set proporcionado, para retornar un recorrido calculado
         //esto para garantizar que se muestre el recorrido en la vista adecuadamente
         MapPointGraph point = new MapPointGraph(new GeoPosition(lat, lon));
-        MapElementGraph element = new MapElementGraph(point,new GeoPosition(lat, lon));
+      //  MapElementGraph element = new MapElementGraph(point,new GeoPosition(lat, lon));
         point.setButtonPoint(getButtonPoint(point));
-        return element;
+        //return element;
+        return null;
     }
 
     public Set<MapElementGraph> calculateShortestDistanceRoute(MapPointGraph point1, MapPointGraph point2) {
@@ -103,10 +104,11 @@ public class Graph {
         MapRouteGraph route = new MapRouteGraph();
         route.setPoint1(element1.getMapPoint());
         route.setPoint2(element2.getMapPoint());
-        MapElementGraph routeEl = new MapElementGraph(route,null);
-        routeEl.getMapRoute().setDistance(250.89);
-        routeEl.getMapRoute().setSpeedRoute(34.57);
-        elements.add(routeEl);
+        //MapElementGraph routeEl = new MapElementGraph(route,null);
+      //  MapElementGraph routeEl = new MapElementGraph(route);
+       // routeEl.getMapRoute().setDistance(250.89);
+       // routeEl.getMapRoute().setSpeedRoute(34.57);
+       // elements.add(routeEl);
         return cloneSet(elements);//clonar set para que la vista no la afecte
     }
 
@@ -121,10 +123,11 @@ public class Graph {
         MapRouteGraph route = new MapRouteGraph();
         route.setPoint1(element1.getMapPoint());
         route.setPoint2(element2.getMapPoint());
-        MapElementGraph routeEl = new MapElementGraph(route,null);
-        routeEl.getMapRoute().setDistance(2477.89);
-        routeEl.getMapRoute().setSpeedRoute(50.54);
-        elements.add(routeEl);
+        //MapElementGraph routeEl = new MapElementGraph(route,null);
+      //  MapElementGraph routeEl = new MapElementGraph(route);
+       // routeEl.getMapRoute().setDistance(2477.89);
+       // routeEl.getMapRoute().setSpeedRoute(50.54);
+       // elements.add(routeEl);
         return cloneSet(elements);//clonar set para que la vista no la afecte
     }
     private Set<MapElementGraph> cloneSet(Set<MapElementGraph> set){

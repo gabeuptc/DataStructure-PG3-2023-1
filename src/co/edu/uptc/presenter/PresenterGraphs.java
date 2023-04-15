@@ -1,5 +1,6 @@
 package co.edu.uptc.presenter;
 
+import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.views.maps.MapElementGraph;
 import co.edu.uptc.views.maps.MapPointGraph;
 import co.edu.uptc.views.maps.OrientationRoutes;
@@ -25,6 +26,7 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
         return modelGraphs;
     }
 
+    /*
     @Override
     public Set<MapElementGraph> calculateShortestDistanceRoute(MapPointGraph point1, MapPointGraph point2) {
         return modelGraphs.calculateShortestDistanceRoute(point1, point2);
@@ -72,6 +74,8 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
         return modelGraphs.getElements();
     }
 
+     */
+
     @Override
     public void updateGraph() {
         viewGraphs.updateGraph();
@@ -80,5 +84,20 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
     @Override
     public String getUser() {
         return modelGraphs.getUser();
+    }
+
+    @Override
+    public void addElement(MapElement mapElement) {
+        modelGraphs.addElement(mapElement);
+    }
+
+    @Override
+    public Set<MapElement> getElements() {
+        return modelGraphs.getElements();
+    }
+
+    @Override
+    public MapElement getElement(int id) {
+        return modelGraphs.getElement(id);
     }
 }

@@ -69,12 +69,17 @@ public class ManagerGeneral {
     private void createMVP() {
         view = new DashBoard();
         viewGraphs = ManagerGraphs.getInstance();
+
         presenter = new Presenter();
+        presenter.setView(view);
+
         presenterGraphs = new PresenterGraphs();
+        presenterGraphs.setView(viewGraphs);
+
         view.setPresenter(presenter);
         viewGraphs.setPresenter(presenterGraphs);
-        presenter.setView(view);
-        presenterGraphs.setView(viewGraphs);
+
+
         createModelsPeople();
         createModelGraphs();
         configModelUserGerman();
@@ -125,7 +130,7 @@ public class ManagerGeneral {
         //modelGraphs202127343 = new ManagerModelGraphs202127343();
 
 
-        modelGraphsPrueba = new ManagerModelGraphs202127812();
+       // modelGraphsPrueba = new ManagerModelGraphs202127812();
     }
 
 
@@ -200,18 +205,17 @@ public class ManagerGeneral {
 
     public void configModelGraphs202127812() {
         try {
-            System.out.println("aaaa11111");
+            System.out.println("config user");
             modelGraphs202127812.setPresenter(presenterGraphs);
-            System.out.println("aaaa2222");
             presenterGraphs.setModel(modelGraphs202127812);
-            System.out.println("aaaa33333");
-            modelGraphs202127812.loadGraphs();
-            viewGraphs.updateGraph();
-            System.out.println("aaaa44444");
+           // modelGraphs202127812.loadGraphs();
+           // viewGraphs.updateGraph();
+            System.out.println("Modelo de: "+presenterGraphs.getModel().getUser());
+            System.out.println("viewGraphs  "+viewGraphs);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            System.out.println("aaaa5555");
         } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
+            e.printStackTrace();
+            viewGraphs.notifyError("Modelo1 sin definir");
         }
     }
 

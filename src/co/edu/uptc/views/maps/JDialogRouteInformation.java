@@ -1,5 +1,6 @@
 package co.edu.uptc.views.maps;
 
+import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.utils.UtilComponents;
 import co.edu.uptc.views.Globals.ValuesGlobals;
 
@@ -9,7 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class JDialogRouteInformation extends JDialog {
-    private MapRouteGraph route;
+    private MapRoute route;
     private PanelMaps panelMaps;
     private JComboBox<String> typeRoute;
     private JComboBox<String> orientationRoutes;
@@ -20,7 +21,7 @@ public class JDialogRouteInformation extends JDialog {
     private int[] possitionY = {10, 10};
     private int padding = 35;
 
-    public JDialogRouteInformation(MapRouteGraph route, PanelMaps panelMaps, int idElement) {
+    public JDialogRouteInformation(MapRoute route, PanelMaps panelMaps, int idElement) {
         setModal(true);
         this.route = route;
         this.panelMaps = panelMaps;
@@ -89,7 +90,7 @@ public class JDialogRouteInformation extends JDialog {
     }
 
     private void createSourceInfoLabel() {
-        JLabel idLabel = new JLabel("<HTML>"+ route.getPoint1().getLatitude() + " <br> " + route.getPoint1().getLongitude()+"</HTML>");
+        JLabel idLabel = new JLabel("<HTML>"+ route.getPoint1().getGeoPosition().getLatitude() + " <br> " + route.getPoint1().getGeoPosition().getLongitude()+"</HTML>");
         idLabel.setSize(400, 40);
         assignPosition(1,idLabel);
         mainPanel.add(idLabel);
@@ -102,7 +103,7 @@ public class JDialogRouteInformation extends JDialog {
     }
 
     private void createTargetInfoLabel() {
-        JLabel idLabel = new JLabel("<HTML>"+ route.getPoint2().getLatitude() + " <br> " + route.getPoint2().getLongitude()+"</HTML>");
+        JLabel idLabel = new JLabel("<HTML>"+ route.getPoint2().getGeoPosition().getLatitude() + " <br> " + route.getPoint2().getGeoPosition().getLongitude()+"</HTML>");
         idLabel.setSize( 400, 40);
         assignPosition(1,idLabel);
         mainPanel.add(idLabel);

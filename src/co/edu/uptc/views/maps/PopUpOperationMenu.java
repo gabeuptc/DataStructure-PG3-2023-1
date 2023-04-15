@@ -22,7 +22,7 @@ public class PopUpOperationMenu implements  ActionListener{
 
     public PopUpOperationMenu(PanelMaps panelMaps) {
         this.panelMaps = panelMaps;
-        this.managerGraphs = ManagerGraphs.getInstance();
+        //this.managerGraphs = ManagerGraphs.getInstance();
         makeMenuPoint();
         addItemAddRoutes();
         makeMenuItemLayers();
@@ -93,7 +93,9 @@ public class PopUpOperationMenu implements  ActionListener{
         itemAddPoint = new JMenuItem("Adicionar Punto");
         itemAddPoint.setActionCommand("ItemAddPoint");
         menu.add(itemAddPoint);
-        itemAddPoint.addActionListener(this);
+        itemAddPoint.addActionListener(e-> {
+            panelMaps.addPoint(position);
+        });
     }
 
     private void addItemAddRoutes() {
@@ -107,9 +109,9 @@ public class PopUpOperationMenu implements  ActionListener{
 
     private void addItemRouteSRoute(JMenu menu) {
          itemAddRoute = new JMenuItem("Adicionar Ruta");
-        itemAddRoute.setActionCommand("addItemRouteSRoute");
+        //itemAddRoute.setActionCommand("addItemRouteSRoute");
         menu.add(itemAddRoute);
-        itemAddRoute.addActionListener(this);
+        itemAddRoute.addActionListener(e->  startSelectRoute());
     }
 
 
@@ -263,7 +265,7 @@ public class PopUpOperationMenu implements  ActionListener{
 
             case "ItemAddPoint": {
                 if (!selectRoute) {
-                    panelMaps.managerElements.addPoint(position);
+                  //  panelMaps.managerElements.addPoint(position);
                 }
                 break;
             }
@@ -328,15 +330,15 @@ public class PopUpOperationMenu implements  ActionListener{
                 break;
             }
             case "OriginDestin":{
-                managerGraphs.setArcsOrientation(OrientationRoutes.ORIGIN_DESTIN);
+             //   managerGraphs.setArcsOrientation(OrientationRoutes.ORIGIN_DESTIN);
                 break;
             }
             case "DestinOrigin":{
-                managerGraphs.setArcsOrientation(OrientationRoutes.DESTIN_ORIGIN);
+               // managerGraphs.setArcsOrientation(OrientationRoutes.DESTIN_ORIGIN);
                 break;
             }
             case "Both":{
-                managerGraphs.setArcsOrientation(OrientationRoutes.BOTH);
+                //managerGraphs.setArcsOrientation(OrientationRoutes.BOTH);
                 break;
             }
         }

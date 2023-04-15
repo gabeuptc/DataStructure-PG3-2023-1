@@ -24,7 +24,7 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
     }
 
     public ManagerGraphs() {
-        addComponents();
+      //  addComponents();
         setPreferredSize(new Dimension(200,30));
         setBackground(ValuesGlobals.COLOR_BACK_PANEL_WORK);
     }
@@ -38,7 +38,7 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
         averageSpeed = new JLabel();
         add(averageSpeed);
         JButton buttonClose= new JButton("cerrar detalles");
-        buttonClose.addActionListener(e -> closeDetails());
+       // buttonClose.addActionListener(e -> closeDetails());
         this.add(buttonClose);
     }
 
@@ -51,54 +51,59 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
         this.presenterGraphs=presenter;
     }
 
-    @Override
-    public Set<MapElementGraph> calculateShortestDistanceRoute(MapPointGraph point1, MapPointGraph point2) {
-        elementsCalculated = presenterGraphs.calculateShortestDistanceRoute(point1, point2);
-        return elementsCalculated;
+    public ContractGraphs.Presenter getPresenterGraphs() {
+        return presenterGraphs;
     }
 
-    @Override
-    public Set<MapElementGraph> calculateShortestTimeRoute(MapPointGraph point1, MapPointGraph point2) {
-        elementsCalculated = presenterGraphs.calculateShortestTimeRoute(point1, point2);
-        return elementsCalculated;
-    }
+    /*
+        @Override
+        public Set<MapElementGraph> calculateShortestDistanceRoute(MapPointGraph point1, MapPointGraph point2) {
+         //   elementsCalculated = presenterGraphs.calculateShortestDistanceRoute(point1, point2);
+            return elementsCalculated;
+        }
 
-    @Override
-    public void setArcType(int elementID, TypeRoute typeRoute) {
-        presenterGraphs.setArcType(elementID, typeRoute);
-    }
+        @Override
+        public Set<MapElementGraph> calculateShortestTimeRoute(MapPointGraph point1, MapPointGraph point2) {
+          //  elementsCalculated = presenterGraphs.calculateShortestTimeRoute(point1, point2);
+            return elementsCalculated;
+        }
 
-    @Override
-    public void setArcSpeed(int elementID, double speed) {
-        presenterGraphs.setArcSpeed(elementID, speed);
-    }
+        @Override
+        public void setArcType(int elementID, TypeRoute typeRoute) {
+          //  presenterGraphs.setArcType(elementID, typeRoute);
+        }
 
-    @Override
-    public void setArcsOrientation(OrientationRoutes orientation) {
-        presenterGraphs.setArcsOrientation(orientationRoutes);
-        this.orientationRoutes = getOrientation();
-    }
+        @Override
+        public void setArcSpeed(int elementID, double speed) {
+        //    presenterGraphs.setArcSpeed(elementID, speed);
+        }
 
-    @Override
-    public OrientationRoutes getOrientation() {
-        return presenterGraphs.getOrientation();
-    }
+        @Override
+        public void setArcsOrientation(OrientationRoutes orientation) {
+        //    presenterGraphs.setArcsOrientation(orientationRoutes);
+            this.orientationRoutes = getOrientation();
+        }
 
-    @Override
-    public void deletePoint(int idPoint) {
-        presenterGraphs.deletePoint(idPoint);
-    }
+        @Override
+        public OrientationRoutes getOrientation() {
+            return presenterGraphs.getOrientation();
+        }
 
-    @Override
-    public void addElement(MapElementGraph element) {
-        presenterGraphs.addElement(element);
-    }
+        @Override
+        public void deletePoint(int idPoint) {
+            presenterGraphs.deletePoint(idPoint);
+        }
 
-    @Override
-    public Set<MapElementGraph> getElements() {
-        return presenterGraphs.getElements();
-    }
+        @Override
+        public void addElement(MapElementGraph element) {
+            presenterGraphs.addElement(element);
+        }
 
+        @Override
+        public Set<MapElementGraph> getElements() {
+            return presenterGraphs.getElements();
+        }
+    */
     @Override
     public void updateGraph() {
         if (panelMaps!=null){
@@ -117,7 +122,7 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
         panelMaps.panelUser.setUser(user);
     }
 
-
+/*
     public void setOrientationRoutes(OrientationRoutes orientationRoutes) {
         this.orientationRoutes = orientationRoutes;
     }
@@ -159,4 +164,7 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
         panelMaps.setVisible(false);
         panelMaps.setVisible(true);
     }
+
+
+ */
 }

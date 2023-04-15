@@ -7,18 +7,29 @@ import javax.swing.*;
 public class MapPointGraph {
 
         private JButton buttonPoint;
+
+        GeoPosition geoPosition;
+        /*
     private final String latitude;
     private final String longitude;
     private String defaultLocation;
     private final boolean isDefaultLocation;
 
-        public MapPointGraph(GeoPosition coord) {
+         */
+        public MapPointGraph(GeoPosition position) {
       //  super(coord);
+            this.geoPosition = position;
+            /*
         this.latitude = String.valueOf(coord.getLatitude());
         this.longitude = String.valueOf(coord.getLongitude());
         this.isDefaultLocation = false;
+        */
+
 
     }
+
+
+    /*
     public MapPointGraph(GeoPosition coord, String defaultLocation) {
         //super(coord);
         this.latitude = String.valueOf(coord.getLatitude());
@@ -26,7 +37,7 @@ public class MapPointGraph {
         this.defaultLocation = defaultLocation;
         this.isDefaultLocation = true;
     }
-
+*/
 
     public JButton getButtonPoint() {
         return buttonPoint;
@@ -36,20 +47,12 @@ public class MapPointGraph {
         this.buttonPoint = buttonPoint;
     }
 
-    public String getLatitude() {
-        return latitude;
+
+    public GeoPosition getGeoPosition() {
+        return geoPosition;
     }
 
-    public String getLongitude() {
-        return longitude;
+    public void setGeoPosition(GeoPosition geoPosition) {
+        this.geoPosition = geoPosition;
     }
-
-    public String getDefaultLocation() {
-        return defaultLocation;
-    }
-
-    public boolean isDefaultLocation() {
-        return isDefaultLocation;
-    }
-
 }

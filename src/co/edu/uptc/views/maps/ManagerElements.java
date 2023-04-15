@@ -1,17 +1,20 @@
 package co.edu.uptc.views.maps;
 
+import co.edu.uptc.pojos.MapElement;
+import co.edu.uptc.pojos.MapRoute;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashSet;
 import java.util.Set;
 
 public class ManagerElements {
     private Set<MapElementGraph> elements;
     private PanelMaps panelMaps;
-    protected MapRouteGraph auxRoute;
+    protected MapRoute auxRoute;
     private MapPointGraph aux1Point;
     private MapPointGraph aux2Point;
     private int elementNumber=1;
@@ -19,26 +22,34 @@ public class ManagerElements {
 
     public ManagerElements(PanelMaps panelMaps) {
         this.panelMaps = panelMaps;
+        elements = new HashSet<>();
     }
     public void updateElements(Set<MapElementGraph> elements){
         this.elements = elements;
     }
 
 
-    public void addPoint(GeoPosition position) {
-        ManagerGraphs.getInstance().addElement(createPoint(position.getLatitude(), position.getLongitude()));
-        ManagerGraphs.getInstance().updateGraph();
-        panelMaps.showStatus(PanelStatus.CREATED_POINT);
+    public void addPointG(MapElement mapElement) {
+        MapElementGraph mapElementGraph=null;
+        if (mapElement.getTypeElement()==TypeElement.POINT) {
+            mapElementGraph = createPoint(mapElement.getGeoPosition().getLatitude(), mapElement.getGeoPosition().getLongitude());
+        }
+        if (mapElement.getTypeElement()==TypeElement.ROUTE){
+            mapElementGraph = createRoute(mapElement);
+        }
+        mapElementGraph.setIdElement(mapElement.getIdElement());
+        elements.add(mapElementGraph);
+
     }
 
     public void delPoint(MapPointGraph mapPoint, MapElementGraph element) {
-        ManagerGraphs.getInstance().deletePoint(element.getIdElement());
+       /* ManagerGraphs.getInstance().deletePoint(element.getIdElement());
         panelMaps.jXMapViewer.remove(mapPoint.getButtonPoint());
         ManagerGraphs.getInstance().updateGraph();
         panelMaps.showStatus(PanelStatus.DELETE_POINT);
+
+        */
     }
-
-
 
     public MapElementGraph createPoint(double latitude, double longitude) {
         MapPointGraph point = new MapPointGraph(new GeoPosition(latitude, longitude));
@@ -47,6 +58,26 @@ public class ManagerElements {
         element.setIdElement(elementNumber);
         elementNumber++;
         return element;
+    }
+
+    public MapElementGraph createRoute(MapElement mapElement) {
+        MapRouteGraph route = new MapRouteGraph();
+        route.setTypeRoute(mapElement.getMapRoute().getTypeRoute());
+        route.setOrientationRoutes(mapElement.getMapRoute().getOrientationRoutes());
+        route.setSpeedRoute(mapElement.getMapRoute().getSpeedRoute());
+        route.setPoint1(getPoint(mapElement.getMapRoute().getPoint1().getIdElement()));
+        route.setPoint2(getPoint(mapElement.getMapRoute().getPoint2().getIdElement()));
+        MapElementGraph element = new MapElementGraph(route,null);
+        return element;
+    }
+
+    public MapPointGraph getPoint(int id){
+        for (MapElementGraph mapRouteGraph1 : elements) {
+            if (mapRouteGraph1.getIdElement()==id){
+                return mapRouteGraph1.getMapPoint();
+            }
+        }
+        return null;
     }
 
 
@@ -65,14 +96,11 @@ public class ManagerElements {
                 super.mousePressed(e);
                 if (panelMaps.popUpOperationMenu.isSelectRoute()) {
                     panelMaps.showStatus(PanelStatus.SELECTED_POINT);
-                    addPoint(point);
-                }else if (panelMaps.popUpOperationMenu.isSelectCalculeDistance()){
-                    choosePoints(point);
-                } else if (panelMaps.popUpOperationMenu.isSelectCalculeTime()){
-                    choosePoints(point);
+                    addElementInRoute(element);
+                    //TODO  gabe
                 }else {
-                    int opt = JOptionPane.showConfirmDialog(buttonPoint, "Latitud: " + point.getLatitude() +
-                            " \nLongitud: " + point.getLongitude() +
+                    int opt = JOptionPane.showConfirmDialog(buttonPoint, "Latitud: " + element.getMapPoint().geoPosition.getLatitude() +
+                            " \nLongitud: " + element.getMapPoint().geoPosition.getLatitude() +
                             " \nId del elemento: " + element.getIdElement() +
                             " \n\nDesea Borrar el Punto?", "aaa", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
                     if (opt == 0) {
@@ -90,6 +118,7 @@ public class ManagerElements {
     }
 
     public boolean isRelatedWithARoute(MapPointGraph point){
+        /*
         for (MapElementGraph element:ManagerGraphs.getInstance().getElements()) {
             if (element.getTypeElement()== TypeElement.ROUTE){
                 if (element.getMapRoute().getPoint1().getLatitude().equals(point.getLatitude())&&
@@ -101,14 +130,39 @@ public class ManagerElements {
                 }
             }
         }
+
+         */
         return false;
     }
 
 
-    public void addPoint(MapPointGraph mapPoint){
+    public void addElementInRoute(MapElementGraph element){
         if (auxRoute==null){
-            auxRoute = new MapRouteGraph();
+            auxRoute = new MapRoute();
         }
+        MapElement mapElement = ManagerGraphs.getInstance().getPresenterGraphs().getElement(element.getIdElement());
+        auxRoute.setPoint(mapElement);
+        if (auxRoute.isAssigneds()){
+            new JDialogRouteInformation(auxRoute,panelMaps,elementNumber).setVisible(true);
+            if (isComplete){
+                MapElement auxMapElement = new MapElement(auxRoute);
+                ManagerGraphs.getInstance().getPresenterGraphs().addElement(auxMapElement);
+                panelMaps.popUpOperationMenu.finishSelectRoute();
+            }
+        }
+
+
+
+
+    }
+
+
+
+    public void addPoint1(MapPointGraph mapPoint){
+     /*   if (auxRoute==null){
+            auxRoute = new MapRoute();
+        }
+        ManagerGraphs.getInstance().getPresenterGraphs().getElements(mapPoint.get);
         auxRoute.setPoint(mapPoint);
         if (auxRoute.isAssigneds()){
             System.out.println("initial route   "+auxRoute);
@@ -117,13 +171,16 @@ public class ManagerElements {
                 MapElementGraph mapElement = new MapElementGraph(auxRoute,null);
                 mapElement.setIdElement(elementNumber);
                 elementNumber++;
-                ManagerGraphs.getInstance().addElement(mapElement);
-                ManagerGraphs.getInstance().updateGraph();
+                //ManagerGraphs.getInstance().addElement(mapElement);
+                //ManagerGraphs.getInstance().updateGraph();
                 panelMaps.popUpOperationMenu.finishSelectRoute();
             }
         }
+
+*/
     }
     private void choosePoints(MapPointGraph point){
+        /*
         if (aux1Point==null){
             aux1Point=point;
         }else if (aux2Point==null){
@@ -139,6 +196,8 @@ public class ManagerElements {
             }
             panelMaps.popUpOperationMenu.finishCalcule();
         }
+
+         */
     }
     public void finishCalcules(){
         aux1Point=null;
