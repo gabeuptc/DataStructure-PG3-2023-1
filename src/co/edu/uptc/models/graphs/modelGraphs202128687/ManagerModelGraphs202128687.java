@@ -66,7 +66,15 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> getElements() {
-        return null;
+        return cloneSet(elements);
+    }
+
+    private Set<MapElement> cloneSet(Set<MapElement> elements) {
+         Set<MapElement> clone = new HashSet<>();
+         for (MapElement element : elements) {
+               clone.add(element.clone());
+         }
+         return clone;
     }
 
     @Override
@@ -76,6 +84,6 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     @Override
     public String getUser() {
-        return null;
+        return "202128687 HERNANDEZ BUITRAGO ALEX DUVAN";
     }
 }
