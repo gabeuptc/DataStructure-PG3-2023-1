@@ -1,4 +1,4 @@
-package co.edu.uptc.models.graphs.a202127812Graphs;
+package co.edu.uptc.models.graphs.modelGraphs202127812;
 
 import co.edu.uptc.views.maps.MapPoint;
 

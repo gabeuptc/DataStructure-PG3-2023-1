@@ -21,6 +21,11 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
     }
 
     @Override
+    public ContractGraphs.Model getModel() {
+        return modelGraphs;
+    }
+
+    @Override
     public Set<MapElement> calculateShortestDistanceRoute(MapPoint point1, MapPoint point2) {
         return modelGraphs.calculateShortestDistanceRoute(point1, point2);
     }
@@ -68,5 +73,10 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
     @Override
     public void updateGraph() {
         viewGraphs.updateGraph();
+    }
+
+    @Override
+    public String getUser() {
+        return modelGraphs.getUser();
     }
 }

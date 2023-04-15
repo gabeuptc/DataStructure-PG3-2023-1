@@ -6,17 +6,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 public class ManagerElements {
     private Set<MapElement> elements;
     private PanelMaps panelMaps;
-
-    protected MapRouteA auxRoute;
+    protected MapRoute auxRoute;
+    private MapPoint  aux1Point;
+    private MapPoint  aux2Point;
     private int elementNumber=1;
-
+    public boolean isComplete=true;
 
     public ManagerElements(PanelMaps panelMaps) {
         this.panelMaps = panelMaps;
@@ -29,7 +28,6 @@ public class ManagerElements {
     public void addPoint(GeoPosition position) {
         ManagerGraphs.getInstance().addElement(createPoint(position.getLatitude(), position.getLongitude()));
         ManagerGraphs.getInstance().updateGraph();
-        panelMaps.createPointsRender();
         panelMaps.showStatus(PanelStatus.CREATED_POINT);
     }
 
@@ -37,7 +35,6 @@ public class ManagerElements {
         ManagerGraphs.getInstance().deletePoint(element.getIdElement());
         panelMaps.jXMapViewer.remove(mapPoint.getButtonPoint());
         ManagerGraphs.getInstance().updateGraph();
-        panelMaps.createPointsRender();
         panelMaps.showStatus(PanelStatus.DELETE_POINT);
     }
 
@@ -69,7 +66,11 @@ public class ManagerElements {
                 if (panelMaps.popUpOperationMenu.isSelectRoute()) {
                     panelMaps.showStatus(PanelStatus.SELECTED_POINT);
                     addPoint(point);
-                } else {
+                }else if (panelMaps.popUpOperationMenu.isSelectCalculeDistance()){
+                    choosePoints(point);
+                } else if (panelMaps.popUpOperationMenu.isSelectCalculeTime()){
+                    choosePoints(point);
+                }else {
                     int opt = JOptionPane.showConfirmDialog(buttonPoint, "Latitud: " + point.getLatitude() +
                             " \nLongitud: " + point.getLongitude() +
                             " \nId del elemento: " + element.getIdElement() +
@@ -89,7 +90,7 @@ public class ManagerElements {
     }
 
     public boolean isRelatedWithARoute(MapPoint point){
-        for (MapElement element:elements) {
+        for (MapElement element:ManagerGraphs.getInstance().getElements()) {
             if (element.getTypeElement()== TypeElement.ROUTE){
                 if (element.getMapRoute().getPoint1().getLatitude().equals(point.getLatitude())&&
                         element.getMapRoute().getPoint1().getLongitude().equals(point.getLongitude())){
@@ -106,18 +107,42 @@ public class ManagerElements {
 
     public void addPoint(MapPoint mapPoint){
         if (auxRoute==null){
-            auxRoute = new MapRouteA();
+            auxRoute = new MapRoute();
         }
         auxRoute.setPoint(mapPoint);
         if (auxRoute.isAssigneds()){
-            MapElement mapElement = new MapElement(auxRoute,null);
-            mapElement.setIdElement(elementNumber);
-            elementNumber++;
-            ManagerGraphs.getInstance().addElement(mapElement);
-            ManagerGraphs.getInstance().updateGraph();
-            panelMaps.createPointsRender();
-            panelMaps.popUpOperationMenu.finishSelectRoute();
+            System.out.println("initial route   "+auxRoute);
+            new JDialogRouteInformation(auxRoute,panelMaps,elementNumber).setVisible(true);
+            if (isComplete){
+                MapElement mapElement = new MapElement(auxRoute,null);
+                mapElement.setIdElement(elementNumber);
+                elementNumber++;
+                ManagerGraphs.getInstance().addElement(mapElement);
+                ManagerGraphs.getInstance().updateGraph();
+                panelMaps.popUpOperationMenu.finishSelectRoute();
+            }
         }
+    }
+    private void choosePoints(MapPoint point){
+        if (aux1Point==null){
+            aux1Point=point;
+        }else if (aux2Point==null){
+            aux2Point=point;
+        }
+        if (aux1Point!=null&&aux2Point!=null){
+            if (panelMaps.popUpOperationMenu.isSelectCalculeDistance()){
+                panelMaps.renderRouteCalculated(ManagerGraphs.getInstance().calculateShortestDistanceRoute(aux1Point,aux2Point));
+                ManagerGraphs.getInstance().showDetails();
+            }else if (panelMaps.popUpOperationMenu.isSelectCalculeTime()){
+                panelMaps.renderRouteCalculated(ManagerGraphs.getInstance().calculateShortestTimeRoute(aux1Point,aux2Point));
+                ManagerGraphs.getInstance().showDetails();
+            }
+            panelMaps.popUpOperationMenu.finishCalcule();
+        }
+    }
+    public void finishCalcules(){
+        aux1Point=null;
+        aux2Point=null;
     }
 
 
@@ -134,6 +159,9 @@ public class ManagerElements {
     public void finish(){
         auxRoute = null;
         panelMaps.showStatus(PanelStatus.CREATE_ROUTED);
+    }
+    public void finishCalcule(){
+        //TODO
     }
 
 }

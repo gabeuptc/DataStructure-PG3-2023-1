@@ -3,7 +3,6 @@ package co.edu.uptc.views.maps;
 import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class MapElement extends DefaultWaypoint implements Cloneable{
@@ -13,7 +12,7 @@ public class MapElement extends DefaultWaypoint implements Cloneable{
 
     private MapPoint mapPoint;
 
-    private MapRouteA mapRoute;
+    private MapRoute mapRoute;
 
     private boolean visible;
 
@@ -28,7 +27,7 @@ public class MapElement extends DefaultWaypoint implements Cloneable{
         typeElement = TypeElement.POINT;
     }
 
-    public MapElement(MapRouteA mapRoute,GeoPosition coord) {
+    public MapElement(MapRoute mapRoute, GeoPosition coord) {
         super(coord);
         this.mapRoute = mapRoute;
         typeElement = TypeElement.ROUTE;
@@ -57,7 +56,7 @@ public class MapElement extends DefaultWaypoint implements Cloneable{
         return typeElement;
     }
 
-    public MapRouteA getMapRoute() {
+    public MapRoute getMapRoute() {
         return mapRoute;
     }
 

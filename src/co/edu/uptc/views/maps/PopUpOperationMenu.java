@@ -17,6 +17,8 @@ public class PopUpOperationMenu implements  ActionListener{
     PanelMaps panelMaps;
     final JPopupMenu popupMenu = new JPopupMenu("popup");
     private ManagerGraphs managerGraphs;
+    private boolean isSelectCalculeDistance=false;
+    private boolean isSelectCalculeTime=false;
 
     public PopUpOperationMenu(PanelMaps panelMaps) {
         this.panelMaps = panelMaps;
@@ -33,9 +35,28 @@ public class PopUpOperationMenu implements  ActionListener{
         return selectRoute;
     }
 
+    public boolean isSelectCalculeDistance() {
+        return isSelectCalculeDistance;
+    }
+
+    public boolean isSelectCalculeTime() {
+        return isSelectCalculeTime;
+    }
+
     public void finishSelectRoute(){
         selectRoute = false;
         panelMaps.managerElements.finish();
+    }
+
+    public void CancelSelectRoute(){
+        selectRoute = false;
+        panelMaps.managerElements.cancel();
+    }
+    public void finishCalcule(){
+        panelMaps.managerElements.finishCalcules();
+        isSelectCalculeDistance=false;
+        isSelectCalculeTime=false;
+        panelMaps.managerElements.finishCalcule();
     }
 
     public void cancelSelectRoute(){
@@ -46,6 +67,14 @@ public class PopUpOperationMenu implements  ActionListener{
     public void startSelectRoute(){
         selectRoute = true;
         panelMaps.showStatus();
+    }
+    public void startSelectCalculeDistance(){
+        isSelectCalculeDistance=true;
+        //TODO ver en la barra de estado
+    }
+    public void startSelectCalculeTime(){
+        isSelectCalculeTime=true;
+        //TODO ver en la barra de estado
     }
 
     public void setPosition(GeoPosition position) {
@@ -148,6 +177,8 @@ public class PopUpOperationMenu implements  ActionListener{
         JMenu menu = new JMenu("calcular rutas");
         calculateShortestDistanceRoute(menu);
         calculateShortestTimeRoute(menu);
+        cancelCalculateRoute(menu);
+        backToGraph(menu);
         popupMenu.add(menu);
     }
     private void calculateShortestDistanceRoute(JMenu menu){
@@ -162,17 +193,48 @@ public class PopUpOperationMenu implements  ActionListener{
         menu.add(item);
         item.addActionListener(this);
     }
+    private void cancelCalculateRoute(JMenu menu){
+        JMenuItem item = new JMenuItem("Cancelar calculo");
+        item.setActionCommand("cancelCalcule");
+        menu.add(item);
+        item.addActionListener(this);
+    }
+    private void backToGraph(JMenu menu){
+        JMenuItem item = new JMenuItem("volver a mostrar todos los elementos");
+        item.setActionCommand("backGraph");
+        menu.add(item);
+        item.addActionListener(this);
+    }
 
     private void makeMenuItemAddOther() {
         JMenuItem item = new JMenuItem("Adicionar Other");
         popupMenu.add(item);
     }
     private void makeMenuItemChangeOrientation() {
-        JMenuItem item = new JMenuItem("Cambiar orientacion de rutas");
-        item.setActionCommand("ChangeOrientation");
-        popupMenu.add(item);
+        JMenu menu = new JMenu("Cambiar orientacion de rutas");
+        changeToOriginDestin(menu);
+        changeToDestinOrigin(menu);
+        changeToBoth(menu);
+        popupMenu.add(menu);
     }
-
+    private void changeToOriginDestin(JMenu menu){
+        JMenuItem item = new JMenuItem("Origen-Destino");
+        item.setActionCommand("OriginDestin");
+        menu.add(item);
+        item.addActionListener(this);
+    }
+    private void changeToDestinOrigin(JMenu menu){
+        JMenuItem item = new JMenuItem("Destino-Origen");
+        item.setActionCommand("DestinOrigin");
+        menu.add(item);
+        item.addActionListener(this);
+    }
+    private void changeToBoth(JMenu menu){
+        JMenuItem item = new JMenuItem("Ambos");
+        item.setActionCommand("Both");
+        menu.add(item);
+        item.addActionListener(this);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -212,7 +274,7 @@ public class PopUpOperationMenu implements  ActionListener{
             }
 
             case "addItemRouteSRouteCancel": {
-                finishSelectRoute();
+                cancelSelectRoute();
                 break;
             }
 
@@ -248,19 +310,33 @@ public class PopUpOperationMenu implements  ActionListener{
                 break;
             }
 
-            case "ShortestDistance": {//seleccionar los puntos como se seleccionan las rutas, poner cabios en la barra
-                panelMaps.renderRouteCalculated(managerGraphs.calculateShortestDistanceRoute(null,null));
-                managerGraphs.showDetails();
+            case "ShortestDistance": {
+                startSelectCalculeDistance();
                 break;
             }
 
-            case "ShortestTime": {//seleccionar los puntos como se seleccionan las rutas, poner cabios en la barra
-                panelMaps.renderRouteCalculated(managerGraphs.calculateShortestTimeRoute(null,null));
-                managerGraphs.showDetails();
+            case "ShortestTime": {
+                startSelectCalculeTime();
                 break;
             }
-            case "ChangeOrientation":{//elegir el cambio, poner cabios en la barra
-                managerGraphs.setOrientationRoutes(OrientationRoutes.BOTH);
+            case "cancelCalcule":{
+                finishCalcule();
+                break;
+            }
+            case "backGraph":{
+                managerGraphs.updateGraph();
+                break;
+            }
+            case "OriginDestin":{
+                managerGraphs.setArcsOrientation(OrientationRoutes.ORIGIN_DESTIN);
+                break;
+            }
+            case "DestinOrigin":{
+                managerGraphs.setArcsOrientation(OrientationRoutes.DESTIN_ORIGIN);
+                break;
+            }
+            case "Both":{
+                managerGraphs.setArcsOrientation(OrientationRoutes.BOTH);
                 break;
             }
         }
