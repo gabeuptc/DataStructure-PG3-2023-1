@@ -2,7 +2,7 @@ package co.edu.uptc.views.maps;
 
 import java.awt.*;
 
-public class MapRoute {
+public class MapRouteGraph {
 
     private Component component;
     private TypeRoute typeRoute;
@@ -15,7 +15,7 @@ public class MapRoute {
     private int countPoint=0;
 
 
-    public MapRoute() {
+    public MapRouteGraph() {
         component = new Component() {
             @Override
             public String getName() {

@@ -1,19 +1,19 @@
 package co.edu.uptc.models.graphs.modelGraphs202127812;
 
-import co.edu.uptc.views.maps.MapRoute;
+import co.edu.uptc.views.maps.MapRouteGraph;
 
 public class Arc {
-    private MapRoute route;
+    private MapRouteGraph route;
 
-    public Arc(MapRoute route) {
+    public Arc(MapRouteGraph route) {
         this.route = route;
     }
 
-    public MapRoute getRoute() {
+    public MapRouteGraph getRoute() {
         return route;
     }
 
-    public void setRoute(MapRoute route) {
+    public void setRoute(MapRouteGraph route) {
         this.route = route;
     }
 }

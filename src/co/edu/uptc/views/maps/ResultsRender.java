@@ -29,7 +29,7 @@ public class ResultsRender extends WaypointPainter<MapElementGraph> {
     }
 
 
-    private void paintRoutes(Graphics2D g, MapRoute route) {
+    private void paintRoutes(Graphics2D g, MapRouteGraph route) {
 
             Color color = new Color(55, 243, 3, 255);
             g.setPaint(color);

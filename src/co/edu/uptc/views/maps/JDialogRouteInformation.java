@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class JDialogRouteInformation extends JDialog {
-    private MapRoute route;
+    private MapRouteGraph route;
     private PanelMaps panelMaps;
     private JComboBox<String> typeRoute;
     private JComboBox<String> orientationRoutes;
@@ -20,7 +20,7 @@ public class JDialogRouteInformation extends JDialog {
     private int[] possitionY = {10, 10};
     private int padding = 35;
 
-    public JDialogRouteInformation(MapRoute route, PanelMaps panelMaps, int idElement) {
+    public JDialogRouteInformation(MapRouteGraph route, PanelMaps panelMaps, int idElement) {
         setModal(true);
         this.route = route;
         this.panelMaps = panelMaps;

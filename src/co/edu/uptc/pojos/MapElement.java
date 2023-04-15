@@ -1,7 +1,6 @@
 package co.edu.uptc.pojos;
 
-import co.edu.uptc.views.maps.MapPointGraph;
-import co.edu.uptc.views.maps.MapRoute;
+import co.edu.uptc.views.maps.MapRouteGraph;
 import co.edu.uptc.views.maps.TypeElement;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -12,7 +11,7 @@ public class MapElement {
 
     private GeoPosition geoPosition;
 
-    private MapRoute mapRoute;
+    private MapRouteGraph mapRoute;
 
 
 }

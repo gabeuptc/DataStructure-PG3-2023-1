@@ -2,7 +2,7 @@ package co.edu.uptc.models.graphs.modelGraphs202127812;
 
 import co.edu.uptc.views.maps.MapElementGraph;
 import co.edu.uptc.views.maps.MapPointGraph;
-import co.edu.uptc.views.maps.MapRoute;
+import co.edu.uptc.views.maps.MapRouteGraph;
 import co.edu.uptc.views.maps.OrientationRoutes;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -54,7 +54,7 @@ public class Graph {
         }
         nodes.remove(toRemove);
     }
-    public Arc getArc(MapRoute route){
+    public Arc getArc(MapRouteGraph route){
         for (Arc arc:arcs) {
             if (arc.getRoute().equals(route)){
                 return arc;
@@ -100,7 +100,7 @@ public class Graph {
         elements.add(element1);
         MapElementGraph element2 = createPoint(5.545083,-73.361206);
         elements.add(element2);
-        MapRoute route = new MapRoute();
+        MapRouteGraph route = new MapRouteGraph();
         route.setPoint1(element1.getMapPoint());
         route.setPoint2(element2.getMapPoint());
         MapElementGraph routeEl = new MapElementGraph(route,null);
@@ -118,7 +118,7 @@ public class Graph {
         elements.add(element1);
         MapElementGraph element2 = createPoint(5.535083,-73.331206);
         elements.add(element2);
-        MapRoute route = new MapRoute();
+        MapRouteGraph route = new MapRouteGraph();
         route.setPoint1(element1.getMapPoint());
         route.setPoint2(element2.getMapPoint());
         MapElementGraph routeEl = new MapElementGraph(route,null);

@@ -11,7 +11,7 @@ import java.util.Set;
 public class ManagerElements {
     private Set<MapElementGraph> elements;
     private PanelMaps panelMaps;
-    protected MapRoute auxRoute;
+    protected MapRouteGraph auxRoute;
     private MapPointGraph aux1Point;
     private MapPointGraph aux2Point;
     private int elementNumber=1;
@@ -107,7 +107,7 @@ public class ManagerElements {
 
     public void addPoint(MapPointGraph mapPoint){
         if (auxRoute==null){
-            auxRoute = new MapRoute();
+            auxRoute = new MapRouteGraph();
         }
         auxRoute.setPoint(mapPoint);
         if (auxRoute.isAssigneds()){

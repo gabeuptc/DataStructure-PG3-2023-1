@@ -119,7 +119,7 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
 
 
 
-    private void calculateDistance(MapRoute mapRoute) {
+    private void calculateDistance(MapRouteGraph mapRoute) {
         MapPointGraph origin = mapRoute.getPoint1();
         MapPointGraph destin = mapRoute.getPoint1();
         //TODO deben calcular la distancia de una ruta

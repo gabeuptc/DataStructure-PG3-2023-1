@@ -12,7 +12,7 @@ public class MapElementGraph extends DefaultWaypoint implements Cloneable{
 
     private MapPointGraph mapPoint;
 
-    private MapRoute mapRoute;
+    private MapRouteGraph mapRoute;
 
     private boolean visible;
 
@@ -27,7 +27,7 @@ public class MapElementGraph extends DefaultWaypoint implements Cloneable{
         typeElement = TypeElement.POINT;
     }
 
-    public MapElementGraph(MapRoute mapRoute, GeoPosition coord) {
+    public MapElementGraph(MapRouteGraph mapRoute, GeoPosition coord) {
         super(coord);
         this.mapRoute = mapRoute;
         typeElement = TypeElement.ROUTE;
@@ -56,7 +56,7 @@ public class MapElementGraph extends DefaultWaypoint implements Cloneable{
         return typeElement;
     }
 
-    public MapRoute getMapRoute() {
+    public MapRouteGraph getMapRoute() {
         return mapRoute;
     }
 

@@ -30,7 +30,7 @@ public class PointRender extends WaypointPainter<MapElementGraph> {
     }
 
 
-    private void paintRoutes(Graphics2D g, MapRoute route) {
+    private void paintRoutes(Graphics2D g, MapRouteGraph route) {
 
             Color color = new Color(234, 8, 8, 255); //Red
             g.setPaint(color);
