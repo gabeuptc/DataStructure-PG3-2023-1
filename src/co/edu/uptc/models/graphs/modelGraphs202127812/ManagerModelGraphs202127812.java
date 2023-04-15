@@ -99,7 +99,7 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
 
     @Override
     public String getUser() {
-        return "201920742   AMAYA VARGAS ANDRES LEONARDO";
+        return "202127812 ALVARADO LEANDRO HAROLD RICARDO";
     }
 
     private void calculateDistance(MapRoute mapRoute) {
