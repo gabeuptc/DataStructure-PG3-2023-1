@@ -1,4 +1,4 @@
-package co.edu.uptc.models.graphs.a202127812Graphs;
+package co.edu.uptc.models.graphs.modelGraphs202127812;
 
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.*;
@@ -97,7 +97,12 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         presenter.updateGraph();
     }
 
-    private void calculateDistance(MapRouteA mapRoute) {
+    @Override
+    public String getUser() {
+        return "201920742   AMAYA VARGAS ANDRES LEONARDO";
+    }
+
+    private void calculateDistance(MapRoute mapRoute) {
         MapPoint origin = mapRoute.getPoint1();
         MapPoint destin = mapRoute.getPoint1();
         //TODO deben calcular la distancia de una ruta

@@ -106,6 +106,18 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
         }
     }
 
+    @Override
+    public void notifyError(String value) {
+        JOptionPane.showMessageDialog(this, value, "", JOptionPane.ERROR_MESSAGE);
+
+    }
+
+    @Override
+    public void setUser(String user) {
+        panelMaps.panelUser.setUser(user);
+    }
+
+
     public void setOrientationRoutes(OrientationRoutes orientationRoutes) {
         this.orientationRoutes = orientationRoutes;
     }

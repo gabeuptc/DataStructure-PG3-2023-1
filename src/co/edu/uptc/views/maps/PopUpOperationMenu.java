@@ -47,6 +47,11 @@ public class PopUpOperationMenu implements  ActionListener{
         selectRoute = false;
         panelMaps.managerElements.finish();
     }
+
+    public void CancelSelectRoute(){
+        selectRoute = false;
+        panelMaps.managerElements.cancel();
+    }
     public void finishCalcule(){
         panelMaps.managerElements.finishCalcules();
         isSelectCalculeDistance=false;
@@ -269,7 +274,7 @@ public class PopUpOperationMenu implements  ActionListener{
             }
 
             case "addItemRouteSRouteCancel": {
-                finishSelectRoute();
+                cancelSelectRoute();
                 break;
             }
 

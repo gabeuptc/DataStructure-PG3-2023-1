@@ -1,22 +1,21 @@
 package co.edu.uptc.views.maps;
 
-import javax.swing.*;
 import java.awt.*;
 
-public class MapRouteA {
+public class MapRoute {
 
     private Component component;
     private TypeRoute typeRoute;
     private double speedRoute;
     private double distance;
-
+    private OrientationRoutes orientationRoutes;
     private MapPoint  point1;
     private MapPoint point2;
 
     private int countPoint=0;
 
 
-    public MapRouteA() {
+    public MapRoute() {
         component = new Component() {
             @Override
             public String getName() {
@@ -98,5 +97,13 @@ public class MapRouteA {
 
     public Component getComponent() {
         return component;
+    }
+
+    public OrientationRoutes getOrientationRoutes() {
+        return orientationRoutes;
+    }
+
+    public void setOrientationRoutes(OrientationRoutes orientationRoutes) {
+        this.orientationRoutes = orientationRoutes;
     }
 }

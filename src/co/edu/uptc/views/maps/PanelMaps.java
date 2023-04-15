@@ -28,6 +28,7 @@ public class PanelMaps extends JPanel {
 
 
     protected PanelStatus panelStatus;
+    protected PanelUser panelUser;
     private int zoom = 5;
     private boolean visiblePoints = true;
     private boolean visibleRoutes = true;
@@ -40,6 +41,7 @@ public class PanelMaps extends JPanel {
         configGlobal();
         addJXMapViewer();
         addPanelStatus();
+        addPanelUser();
         putMapConfigs();
         addCheckConnexion();
         jXMapViewer.setTileFactory(new DefaultTileFactory(new OSMTileFactoryInfo()));
@@ -51,7 +53,9 @@ public class PanelMaps extends JPanel {
 
     private void addPanelButtons() {
         PanelButtonsModels panelButtonsModels = new PanelButtonsModels(this);
-        this.add(new JScrollPane(panelButtonsModels),BorderLayout.EAST);
+        JScrollPane jScrollPane = new  JScrollPane(panelButtonsModels);
+        jScrollPane.setHorizontalScrollBar(null);
+        this.add(jScrollPane,BorderLayout.EAST);
     }
 
     private void addJXMapViewer() {
@@ -65,13 +69,20 @@ public class PanelMaps extends JPanel {
         add(panelStatus, BorderLayout.SOUTH);
     }
 
+    private void addPanelUser() {
+        panelUser = new PanelUser();
+        add(panelUser, BorderLayout.NORTH);
+    }
+
 
     private void configGlobal() {
         this.setLayout(new BorderLayout());
         managerElements = new ManagerElements(this);
         popUpOperationMenu = new PopUpOperationMenu(this);
-       // manegerRoutes = new ManegerRoutes(this);
+    }
 
+    public void showMessageError(String value){
+        dashBoard.notifyError(value);
     }
 
     public void updateElements(){

@@ -9,6 +9,8 @@ public class ValuesGlobals {
     public static final Color COLOR_BACK_FRAME = ColorPalette.ColorEnum.DARK_GREEN.getColor();
     public static final Color COLOR_BACK_PANEL_HEADER = ColorPalette.ColorEnum.LIGHT_ORANGE_N4.getColor();
     public static final Color COLOR_BACK_PANEL_MENU = ColorPalette.ColorEnum.LIGHT_ORANGE_N4.getColor();
+    public static final Color COLOR_BACK_PANEL_USER = ColorPalette.ColorEnum.LIGHT_ORANGE_N1.getColor();
+
     public static final Color COLOR_BACK_PANEL_BUTTOM = ColorPalette.ColorEnum.LIGHT_ORANGE_N5.getColor();
     public static final Color COLOR_BACK_PANEL_WORK = ColorPalette.ColorEnum.LIGHT_ORANGE_N5.getColor();
     public static final Color COLOR_BACK_PANEL_N3 = new Color(253, 246, 242);

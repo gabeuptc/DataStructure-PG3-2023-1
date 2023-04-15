@@ -6,14 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 public class ManagerElements {
     private Set<MapElement> elements;
     private PanelMaps panelMaps;
-    protected MapRouteA auxRoute;
+    protected MapRoute auxRoute;
     private MapPoint  aux1Point;
     private MapPoint  aux2Point;
     private int elementNumber=1;
@@ -109,11 +107,12 @@ public class ManagerElements {
 
     public void addPoint(MapPoint mapPoint){
         if (auxRoute==null){
-            auxRoute = new MapRouteA();
+            auxRoute = new MapRoute();
         }
         auxRoute.setPoint(mapPoint);
         if (auxRoute.isAssigneds()){
-            new JDialogRouteIformation(auxRoute,panelMaps,elementNumber).setVisible(true);
+            System.out.println("initial route   "+auxRoute);
+            new JDialogRouteInformation(auxRoute,panelMaps,elementNumber).setVisible(true);
             if (isComplete){
                 MapElement mapElement = new MapElement(auxRoute,null);
                 mapElement.setIdElement(elementNumber);
