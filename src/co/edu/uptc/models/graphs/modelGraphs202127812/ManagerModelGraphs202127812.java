@@ -77,6 +77,14 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
 
     @Override
     public void addElement(MapElement element) {
+
+
+        System.out.println("element.getIdElement() -> "+element.getIdElement());
+        System.out.println("element.getTypeElement() ->  "+element.getTypeElement());
+        System.out.println("element.getPosition() -> "+element.getPosition());
+        System.out.println("element.getMapPoint() -> "+element.getMapPoint());
+        System.out.println("element.getMapRoute() -> "+element.getMapRoute());
+
         elements.add(element);
         //asegurarse que el grafo tenga los cambios tambien
         if (element.getTypeElement()==TypeElement.POINT){
@@ -117,5 +125,11 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
             setClonabled.add(element.clone());
         }
         return setClonabled;
+    }
+
+
+
+    private void testMapPoint(){
+      //  MapElement mapElement = new MapElement();
     }
 }

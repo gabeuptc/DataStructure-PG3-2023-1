@@ -62,7 +62,9 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
 
     @Override
     public void addElement(MapElement element) {
-        modelGraphs.addElement(element);
+        if (modelGraphs!=null) {
+            modelGraphs.addElement(element);
+        } else viewGraphs.notifyError("No hay modelo seleccionado");
     }
 
     @Override
