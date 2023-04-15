@@ -9,8 +9,8 @@ public class MapRoute {
     private double speedRoute;
     private double distance;
     private OrientationRoutes orientationRoutes;
-    private MapPoint  point1;
-    private MapPoint point2;
+    private MapPointGraph point1;
+    private MapPointGraph point2;
 
     private int countPoint=0;
 
@@ -58,15 +58,15 @@ public class MapRoute {
         return speedRoute;
     }
 
-    public MapPoint getPoint1() {
+    public MapPointGraph getPoint1() {
         return point1;
     }
 
-    public MapPoint getPoint2() {
+    public MapPointGraph getPoint2() {
         return point2;
     }
 
-     public void setPoint(MapPoint point){
+     public void setPoint(MapPointGraph point){
         if (point1==null) {
             setPoint1(point);
             countPoint = 1;
@@ -77,7 +77,7 @@ public class MapRoute {
             }
         }
      }
-    public void setPoint1(MapPoint point1) {
+    public void setPoint1(MapPointGraph point1) {
         this.point1 = point1;
     }
 
@@ -87,7 +87,7 @@ public class MapRoute {
 
 
 
-    public void setPoint2(MapPoint point2) {
+    public void setPoint2(MapPointGraph point2) {
         this.point2 = point2;
     }
 

@@ -1,12 +1,12 @@
 package co.edu.uptc.models.graphs.modelGraphs202127812;
 
-import co.edu.uptc.views.maps.MapPoint;
+import co.edu.uptc.views.maps.MapPointGraph;
 
 public class Node {
     private boolean isResolve =false;
-    private MapPoint point;
+    private MapPointGraph point;
 
-    public Node(MapPoint point) {
+    public Node(MapPointGraph point) {
         this.point = point;
     }
 
@@ -18,11 +18,11 @@ public class Node {
         isResolve = resolve;
     }
 
-    public MapPoint getPoint() {
+    public MapPointGraph getPoint() {
         return point;
     }
 
-    public void setPoint(MapPoint point) {
+    public void setPoint(MapPointGraph point) {
         this.point = point;
     }
 }

@@ -1,7 +1,7 @@
 package co.edu.uptc.models.graphs.modelGraphs202127812;
 
-import co.edu.uptc.views.maps.MapElement;
-import co.edu.uptc.views.maps.MapPoint;
+import co.edu.uptc.views.maps.MapElementGraph;
+import co.edu.uptc.views.maps.MapPointGraph;
 import co.edu.uptc.views.maps.MapRoute;
 import co.edu.uptc.views.maps.OrientationRoutes;
 import org.jxmapviewer.viewer.GeoPosition;
@@ -45,7 +45,7 @@ public class Graph {
     public void addArc(Arc arc){
         arcs.add(arc);
     }
-    public void removeNode(MapPoint point){
+    public void removeNode(MapPointGraph point){
         Node toRemove = null;
         for (Node node1:nodes) {
             if (node1.getPoint().equals(point)){
@@ -62,7 +62,7 @@ public class Graph {
         }
         return null;
     }
-    public JButton getButtonPoint(MapPoint point) {
+    public JButton getButtonPoint(MapPointGraph point) {
         //no usar este metodo solo es para las pruebas de calcular recorrido
         // no es recomendable crear elementos en el modelo
         //es mejor usar los elementos del set proporcionado, para retornar un recorrido calculado
@@ -81,55 +81,55 @@ public class Graph {
         });
         return buttonPoint;
     }
-    private MapElement createPoint(double lat, double lon){
+    private MapElementGraph createPoint(double lat, double lon){
         //no usar este metodo solo es para las pruebas de calcular recorrido
         // no es recomendable crear elementos en el modelo
         //es mejor usar los elementos del set proporcionado, para retornar un recorrido calculado
         //esto para garantizar que se muestre el recorrido en la vista adecuadamente
-        MapPoint point = new MapPoint(new GeoPosition(lat, lon));
-        MapElement element = new MapElement(point,new GeoPosition(lat, lon));
+        MapPointGraph point = new MapPointGraph(new GeoPosition(lat, lon));
+        MapElementGraph element = new MapElementGraph(point,new GeoPosition(lat, lon));
         point.setButtonPoint(getButtonPoint(point));
         return element;
     }
 
-    public Set<MapElement> calculateShortestDistanceRoute(MapPoint point1, MapPoint point2) {
+    public Set<MapElementGraph> calculateShortestDistanceRoute(MapPointGraph point1, MapPointGraph point2) {
         //el retorno debe ser los elementos que hacen parte del recorrido calculado
         //solo es una prueba, no usar
-        Set<MapElement> elements = new HashSet<>();
-        MapElement element1 = createPoint(5.546963,-73.362579);
+        Set<MapElementGraph> elements = new HashSet<>();
+        MapElementGraph element1 = createPoint(5.546963,-73.362579);
         elements.add(element1);
-        MapElement element2 = createPoint(5.545083,-73.361206);
+        MapElementGraph element2 = createPoint(5.545083,-73.361206);
         elements.add(element2);
         MapRoute route = new MapRoute();
         route.setPoint1(element1.getMapPoint());
         route.setPoint2(element2.getMapPoint());
-        MapElement routeEl = new MapElement(route,null);
+        MapElementGraph routeEl = new MapElementGraph(route,null);
         routeEl.getMapRoute().setDistance(250.89);
         routeEl.getMapRoute().setSpeedRoute(34.57);
         elements.add(routeEl);
         return cloneSet(elements);//clonar set para que la vista no la afecte
     }
 
-    public Set<MapElement> calculateShortestTimeRoute(MapPoint point1, MapPoint point2) {
+    public Set<MapElementGraph> calculateShortestTimeRoute(MapPointGraph point1, MapPointGraph point2) {
         //el retorno debe ser los elementos que hacen parte del recorrido calculado
         //solo es una prueba, no usar
-        Set<MapElement> elements = new HashSet<>();
-        MapElement element1 = createPoint(5.566963,-73.382579);
+        Set<MapElementGraph> elements = new HashSet<>();
+        MapElementGraph element1 = createPoint(5.566963,-73.382579);
         elements.add(element1);
-        MapElement element2 = createPoint(5.535083,-73.331206);
+        MapElementGraph element2 = createPoint(5.535083,-73.331206);
         elements.add(element2);
         MapRoute route = new MapRoute();
         route.setPoint1(element1.getMapPoint());
         route.setPoint2(element2.getMapPoint());
-        MapElement routeEl = new MapElement(route,null);
+        MapElementGraph routeEl = new MapElementGraph(route,null);
         routeEl.getMapRoute().setDistance(2477.89);
         routeEl.getMapRoute().setSpeedRoute(50.54);
         elements.add(routeEl);
         return cloneSet(elements);//clonar set para que la vista no la afecte
     }
-    private Set<MapElement> cloneSet(Set<MapElement> set){
-        Set<MapElement> setClonabled = new HashSet<>();
-        for (MapElement element:set) {
+    private Set<MapElementGraph> cloneSet(Set<MapElementGraph> set){
+        Set<MapElementGraph> setClonabled = new HashSet<>();
+        for (MapElementGraph element:set) {
             setClonabled.add(element.clone());
         }
         return setClonabled;

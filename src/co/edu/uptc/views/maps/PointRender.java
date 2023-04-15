@@ -8,12 +8,12 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
-public class PointRender extends WaypointPainter<MapElement> {
+public class PointRender extends WaypointPainter<MapElementGraph> {
 
     @Override
     protected void doPaint(Graphics2D g, JXMapViewer map, int width, int height) {
-        MapPoint pointAux = null;
-        for (MapElement point : getWaypoints()) {
+        MapPointGraph pointAux = null;
+        for (MapElementGraph point : getWaypoints()) {
             if (point.getTypeElement() == TypeElement.POINT) {
                 Point2D p = map.getTileFactory().geoToPixel(point.getPosition(), map.getZoom());
                 Rectangle rec = map.getViewportBounds();

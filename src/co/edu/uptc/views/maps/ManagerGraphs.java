@@ -12,7 +12,7 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
     private static ManagerGraphs instance;
     private ContractGraphs.Presenter presenterGraphs;
     private OrientationRoutes orientationRoutes;
-    private Set<MapElement> elementsCalculated;
+    private Set<MapElementGraph> elementsCalculated;
     private JLabel totalDistance;
     private JLabel averageSpeed;
 
@@ -52,13 +52,13 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
     }
 
     @Override
-    public Set<MapElement> calculateShortestDistanceRoute(MapPoint point1, MapPoint point2) {
+    public Set<MapElementGraph> calculateShortestDistanceRoute(MapPointGraph point1, MapPointGraph point2) {
         elementsCalculated = presenterGraphs.calculateShortestDistanceRoute(point1, point2);
         return elementsCalculated;
     }
 
     @Override
-    public Set<MapElement> calculateShortestTimeRoute(MapPoint point1, MapPoint point2) {
+    public Set<MapElementGraph> calculateShortestTimeRoute(MapPointGraph point1, MapPointGraph point2) {
         elementsCalculated = presenterGraphs.calculateShortestTimeRoute(point1, point2);
         return elementsCalculated;
     }
@@ -90,12 +90,12 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
     }
 
     @Override
-    public void addElement(MapElement element) {
+    public void addElement(MapElementGraph element) {
         presenterGraphs.addElement(element);
     }
 
     @Override
-    public Set<MapElement> getElements() {
+    public Set<MapElementGraph> getElements() {
         return presenterGraphs.getElements();
     }
 
@@ -133,7 +133,7 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
     private void showAverageSpeed() {
         int countRoutes =0;
         double total =0;
-        for (MapElement element:elementsCalculated) {
+        for (MapElementGraph element:elementsCalculated) {
             if (element.getTypeElement()==TypeElement.ROUTE){
                 total+=element.getMapRoute().getSpeedRoute();
                 countRoutes++;
@@ -145,7 +145,7 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
 
     private void showTotalDistance() {
         double total=0;
-        for (MapElement element:elementsCalculated) {
+        for (MapElementGraph element:elementsCalculated) {
             if (element.getTypeElement()==TypeElement.ROUTE){
                 total+=element.getMapRoute().getDistance();
             }

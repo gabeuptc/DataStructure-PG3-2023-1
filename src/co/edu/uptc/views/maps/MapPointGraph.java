@@ -4,7 +4,7 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.swing.*;
 
-public class MapPoint {
+public class MapPointGraph {
 
         private JButton buttonPoint;
     private final String latitude;
@@ -12,14 +12,14 @@ public class MapPoint {
     private String defaultLocation;
     private final boolean isDefaultLocation;
 
-        public MapPoint(GeoPosition coord) {
+        public MapPointGraph(GeoPosition coord) {
       //  super(coord);
         this.latitude = String.valueOf(coord.getLatitude());
         this.longitude = String.valueOf(coord.getLongitude());
         this.isDefaultLocation = false;
 
     }
-    public MapPoint(GeoPosition coord, String defaultLocation) {
+    public MapPointGraph(GeoPosition coord, String defaultLocation) {
         //super(coord);
         this.latitude = String.valueOf(coord.getLatitude());
         this.longitude = String.valueOf(coord.getLongitude());

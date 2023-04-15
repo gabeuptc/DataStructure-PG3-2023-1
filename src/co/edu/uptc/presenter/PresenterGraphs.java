@@ -1,7 +1,7 @@
 package co.edu.uptc.presenter;
 
-import co.edu.uptc.views.maps.MapElement;
-import co.edu.uptc.views.maps.MapPoint;
+import co.edu.uptc.views.maps.MapElementGraph;
+import co.edu.uptc.views.maps.MapPointGraph;
 import co.edu.uptc.views.maps.OrientationRoutes;
 import co.edu.uptc.views.maps.TypeRoute;
 
@@ -26,12 +26,12 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
     }
 
     @Override
-    public Set<MapElement> calculateShortestDistanceRoute(MapPoint point1, MapPoint point2) {
+    public Set<MapElementGraph> calculateShortestDistanceRoute(MapPointGraph point1, MapPointGraph point2) {
         return modelGraphs.calculateShortestDistanceRoute(point1, point2);
     }
 
     @Override
-    public Set<MapElement> calculateShortestTimeRoute(MapPoint point1, MapPoint point2) {
+    public Set<MapElementGraph> calculateShortestTimeRoute(MapPointGraph point1, MapPointGraph point2) {
         return modelGraphs.calculateShortestTimeRoute(point1, point2);
     }
 
@@ -61,14 +61,14 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
     }
 
     @Override
-    public void addElement(MapElement element) {
+    public void addElement(MapElementGraph element) {
         if (modelGraphs!=null) {
             modelGraphs.addElement(element);
         } else viewGraphs.notifyError("No hay modelo seleccionado");
     }
 
     @Override
-    public Set<MapElement> getElements() {
+    public Set<MapElementGraph> getElements() {
         return modelGraphs.getElements();
     }
 

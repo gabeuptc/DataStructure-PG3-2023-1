@@ -200,10 +200,16 @@ public class ManagerGeneral {
 
     public void configModelGraphs202127812() {
         try {
+            System.out.println("aaaa11111");
             modelGraphs202127812.setPresenter(presenterGraphs);
+            System.out.println("aaaa2222");
             presenterGraphs.setModel(modelGraphs202127812);
+            System.out.println("aaaa33333");
+            modelGraphs202127812.loadGraphs();
             viewGraphs.updateGraph();
+            System.out.println("aaaa44444");
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            System.out.println("aaaa5555");
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
         }

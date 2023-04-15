@@ -9,18 +9,18 @@ import java.awt.event.MouseEvent;
 import java.util.Set;
 
 public class ManagerElements {
-    private Set<MapElement> elements;
+    private Set<MapElementGraph> elements;
     private PanelMaps panelMaps;
     protected MapRoute auxRoute;
-    private MapPoint  aux1Point;
-    private MapPoint  aux2Point;
+    private MapPointGraph aux1Point;
+    private MapPointGraph aux2Point;
     private int elementNumber=1;
     public boolean isComplete=true;
 
     public ManagerElements(PanelMaps panelMaps) {
         this.panelMaps = panelMaps;
     }
-    public void updateElements(Set<MapElement> elements){
+    public void updateElements(Set<MapElementGraph> elements){
         this.elements = elements;
     }
 
@@ -31,7 +31,7 @@ public class ManagerElements {
         panelMaps.showStatus(PanelStatus.CREATED_POINT);
     }
 
-    public void delPoint(MapPoint mapPoint, MapElement element) {
+    public void delPoint(MapPointGraph mapPoint, MapElementGraph element) {
         ManagerGraphs.getInstance().deletePoint(element.getIdElement());
         panelMaps.jXMapViewer.remove(mapPoint.getButtonPoint());
         ManagerGraphs.getInstance().updateGraph();
@@ -40,9 +40,9 @@ public class ManagerElements {
 
 
 
-    public MapElement createPoint(double latitude, double longitude) {
-        MapPoint point = new MapPoint(new GeoPosition(latitude, longitude));
-        MapElement element = new MapElement(point,new GeoPosition(latitude, longitude));
+    public MapElementGraph createPoint(double latitude, double longitude) {
+        MapPointGraph point = new MapPointGraph(new GeoPosition(latitude, longitude));
+        MapElementGraph element = new MapElementGraph(point,new GeoPosition(latitude, longitude));
         point.setButtonPoint(getButtonPoint(point,element));
         element.setIdElement(elementNumber);
         elementNumber++;
@@ -50,7 +50,7 @@ public class ManagerElements {
     }
 
 
-    public JButton getButtonPoint(MapPoint point,MapElement element) {
+    public JButton getButtonPoint(MapPointGraph point, MapElementGraph element) {
         JButton buttonPoint = new JButton(new ImageIcon("assets/punto21.png"));
         buttonPoint.setName("Point");
         buttonPoint.setContentAreaFilled(false);
@@ -89,8 +89,8 @@ public class ManagerElements {
         return buttonPoint;
     }
 
-    public boolean isRelatedWithARoute(MapPoint point){
-        for (MapElement element:ManagerGraphs.getInstance().getElements()) {
+    public boolean isRelatedWithARoute(MapPointGraph point){
+        for (MapElementGraph element:ManagerGraphs.getInstance().getElements()) {
             if (element.getTypeElement()== TypeElement.ROUTE){
                 if (element.getMapRoute().getPoint1().getLatitude().equals(point.getLatitude())&&
                         element.getMapRoute().getPoint1().getLongitude().equals(point.getLongitude())){
@@ -105,7 +105,7 @@ public class ManagerElements {
     }
 
 
-    public void addPoint(MapPoint mapPoint){
+    public void addPoint(MapPointGraph mapPoint){
         if (auxRoute==null){
             auxRoute = new MapRoute();
         }
@@ -114,7 +114,7 @@ public class ManagerElements {
             System.out.println("initial route   "+auxRoute);
             new JDialogRouteInformation(auxRoute,panelMaps,elementNumber).setVisible(true);
             if (isComplete){
-                MapElement mapElement = new MapElement(auxRoute,null);
+                MapElementGraph mapElement = new MapElementGraph(auxRoute,null);
                 mapElement.setIdElement(elementNumber);
                 elementNumber++;
                 ManagerGraphs.getInstance().addElement(mapElement);
@@ -123,7 +123,7 @@ public class ManagerElements {
             }
         }
     }
-    private void choosePoints(MapPoint point){
+    private void choosePoints(MapPointGraph point){
         if (aux1Point==null){
             aux1Point=point;
         }else if (aux2Point==null){
@@ -146,7 +146,7 @@ public class ManagerElements {
     }
 
 
-    public Set<MapElement> getElements() {
+    public Set<MapElementGraph> getElements() {
         return elements;
     }
 

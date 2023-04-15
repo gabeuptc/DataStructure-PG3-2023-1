@@ -1,13 +1,16 @@
 package co.edu.uptc.models.graphs.modelGraphs202127812;
 
+import co.edu.uptc.views.maps.MapPointGraph;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.*;
+import org.jxmapviewer.viewer.GeoPosition;
+
 import java.util.HashSet;
 import java.util.Set;
 
 public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     private ContractGraphs.Presenter presenter;
-    private Set<MapElement> elements;
+    private Set<MapElementGraph> elements;
     private Graph graph;
 
     public ManagerModelGraphs202127812() {
@@ -21,18 +24,18 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     }
 
     @Override
-    public Set<MapElement> calculateShortestDistanceRoute(MapPoint point1, MapPoint point2) {
+    public Set<MapElementGraph> calculateShortestDistanceRoute(MapPointGraph point1, MapPointGraph point2) {
         return graph.calculateShortestDistanceRoute(point1, point2);
     }
 
     @Override
-    public Set<MapElement> calculateShortestTimeRoute(MapPoint point1, MapPoint point2) {
+    public Set<MapElementGraph> calculateShortestTimeRoute(MapPointGraph point1, MapPointGraph point2) {
         return graph.calculateShortestTimeRoute(point1, point2);
     }
 
     @Override
     public void setArcType(int elementID, TypeRoute typeRoute) {
-        for (MapElement element:elements) {
+        for (MapElementGraph element:elements) {
             if (element.getIdElement()== elementID && element.getTypeElement() == TypeElement.ROUTE){
                 element.getMapRoute().setTypeRoute(typeRoute);
                 //asegurarse que el grafo tenga los cambios tambien
@@ -43,7 +46,7 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
 
     @Override
     public void setArcSpeed(int elementID, double speed) {
-        for (MapElement element:elements) {
+        for (MapElementGraph element:elements) {
             if (element.getIdElement()== elementID && element.getTypeElement() == TypeElement.ROUTE){
                 element.getMapRoute().setSpeedRoute(speed);
                 //asegurarse que el grafo tenga los cambios tambien
@@ -64,8 +67,8 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
 
     @Override
     public void deletePoint(int idPoint) {
-        MapElement toRemove = null;
-        for (MapElement element:elements) {
+        MapElementGraph toRemove = null;
+        for (MapElementGraph element:elements) {
             if (element.getIdElement()== idPoint){
                 toRemove = element;
                 //asegurarse que el grafo tenga los cambios tambien
@@ -76,7 +79,7 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     }
 
     @Override
-    public void addElement(MapElement element) {
+    public void addElement(MapElementGraph element) {
 
 
         System.out.println("element.getIdElement() -> "+element.getIdElement());
@@ -85,18 +88,22 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         System.out.println("element.getMapPoint() -> "+element.getMapPoint());
         System.out.println("element.getMapRoute() -> "+element.getMapRoute());
 
+        System.out.println("88888888888");
         elements.add(element);
+        System.out.println("9999999999999999999");
         //asegurarse que el grafo tenga los cambios tambien
         if (element.getTypeElement()==TypeElement.POINT){
+            System.out.println("aaaaaaaaaaaaaaaaaa");
             graph.addNode(new Node(element.getMapPoint()));
+            System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbb");
         }else {
-            calculateDistance(element.getMapRoute());//calcular distancia de la ruta añadida
+            //calculateDistance(element.getMapRoute());//calcular distancia de la ruta añadida
             graph.addArc(new Arc(element.getMapRoute()));
         }
     }
 
     @Override
-    public Set<MapElement> getElements() {
+    public Set<MapElementGraph> getElements() {
         return cloneSet(elements);
     }
 
@@ -110,26 +117,36 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         return "202127812 ALVARADO LEANDRO HAROLD RICARDO";
     }
 
+
+
     private void calculateDistance(MapRoute mapRoute) {
-        MapPoint origin = mapRoute.getPoint1();
-        MapPoint destin = mapRoute.getPoint1();
+        MapPointGraph origin = mapRoute.getPoint1();
+        MapPointGraph destin = mapRoute.getPoint1();
         //TODO deben calcular la distancia de una ruta
         //cuando calculen la distancia (en metros) de una ruta deben setearla en el elemento
         //ejs:
         mapRoute.setDistance(230.556);
         //esto para que se puedan mostrar esos detalles en la vista
     }
-    private Set<MapElement> cloneSet(Set<MapElement> set){
-        Set<MapElement> setClonabled = new HashSet<>();
-        for (MapElement element:set) {
+    private Set<MapElementGraph> cloneSet(Set<MapElementGraph> set){
+        Set<MapElementGraph> setClonabled = new HashSet<>();
+        for (MapElementGraph element:set) {
             setClonabled.add(element.clone());
         }
         return setClonabled;
     }
 
 
+    @Override
+    public void loadGraphs() {
 
-    private void testMapPoint(){
-      //  MapElement mapElement = new MapElement();
+        GeoPosition geoPosition = new GeoPosition(5.551840856754293, -73.35609912872314);
+        MapPointGraph mapPoint = new MapPointGraph(geoPosition);
+
+       MapElementGraph mapElement = new MapElementGraph(mapPoint,geoPosition);
+
+       addElement(mapElement);
+        System.out.println("11111111111111111111111");
+
     }
 }
