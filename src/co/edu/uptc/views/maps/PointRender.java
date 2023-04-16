@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.util.List;
 
 public class PointRender extends WaypointPainter<MapElement> {
 
@@ -31,7 +30,7 @@ public class PointRender extends WaypointPainter<MapElement> {
     }
 
 
-    private void paintRoutes(Graphics2D g, MapRouteA route) {
+    private void paintRoutes(Graphics2D g, MapRoute route) {
 
             Color color = new Color(234, 8, 8, 255); //Red
             g.setPaint(color);

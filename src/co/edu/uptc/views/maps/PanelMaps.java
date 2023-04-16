@@ -17,7 +17,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
 public class PanelMaps extends JPanel {
@@ -29,6 +28,7 @@ public class PanelMaps extends JPanel {
 
 
     protected PanelStatus panelStatus;
+    protected PanelUser panelUser;
     private int zoom = 5;
     private boolean visiblePoints = true;
     private boolean visibleRoutes = true;
@@ -41,6 +41,7 @@ public class PanelMaps extends JPanel {
         configGlobal();
         addJXMapViewer();
         addPanelStatus();
+        addPanelUser();
         putMapConfigs();
         addCheckConnexion();
         jXMapViewer.setTileFactory(new DefaultTileFactory(new OSMTileFactoryInfo()));
@@ -52,7 +53,9 @@ public class PanelMaps extends JPanel {
 
     private void addPanelButtons() {
         PanelButtonsModels panelButtonsModels = new PanelButtonsModels(this);
-        this.add(new JScrollPane(panelButtonsModels),BorderLayout.EAST);
+        JScrollPane jScrollPane = new  JScrollPane(panelButtonsModels);
+        jScrollPane.setHorizontalScrollBar(null);
+        this.add(jScrollPane,BorderLayout.EAST);
     }
 
     private void addJXMapViewer() {
@@ -66,19 +69,24 @@ public class PanelMaps extends JPanel {
         add(panelStatus, BorderLayout.SOUTH);
     }
 
+    private void addPanelUser() {
+        panelUser = new PanelUser();
+        add(panelUser, BorderLayout.NORTH);
+    }
+
 
     private void configGlobal() {
         this.setLayout(new BorderLayout());
         managerElements = new ManagerElements(this);
         popUpOperationMenu = new PopUpOperationMenu(this);
-        ManagerGraphs.getInstance().updateGraph();
-       // manegerRoutes = new ManegerRoutes(this);
+    }
 
+    public void showMessageError(String value){
+        dashBoard.notifyError(value);
     }
 
     public void updateElements(){
-        Set<MapElement> get =ManagerGraphs.getInstance().getElements();
-        managerElements.updateElements(get!=null?get:new HashSet<>());
+        createPointsRender();
     }
 
 
@@ -140,11 +148,10 @@ public class PanelMaps extends JPanel {
 
     public void createPointsRender() {
         removeAllMapElements();
-        ManagerGraphs.getInstance().updateGraph();
         WaypointPainter<MapElement> render = new PointRender();
-        render.setWaypoints(managerElements.getElements());
+        render.setWaypoints(ManagerGraphs.getInstance().getElements());
         jXMapViewer.setOverlayPainter(render);
-        for (MapElement element : managerElements.getElements()) {
+        for (MapElement element : ManagerGraphs.getInstance().getElements()) {
             jXMapViewer.add(element.getComponent());
         }
 
@@ -157,7 +164,7 @@ public class PanelMaps extends JPanel {
 
     public void renderRouteCalculated(Set<MapElement> elements){
         removeAllMapElements();
-        WaypointPainter<MapElement> render = new PointRender();
+        WaypointPainter<MapElement> render = new ResultsRender();
         render.setWaypoints(elements);
         jXMapViewer.setOverlayPainter(render);
         for (MapElement element : elements) {
@@ -171,12 +178,12 @@ public class PanelMaps extends JPanel {
 
     public void showPoints() {
         if (visiblePoints) {
-            for (MapElement mapElement : managerElements.getElements()) {
+            for (MapElement mapElement : ManagerGraphs.getInstance().getElements()) {
                 if (mapElement.getTypeElement()==TypeElement.POINT)
                     mapElement.getComponent().setVisible(true);
             }
         } else {
-            for (MapElement mapElement : managerElements.getElements()) {
+            for (MapElement mapElement : ManagerGraphs.getInstance().getElements()) {
                 if (mapElement.getTypeElement()==TypeElement.POINT)
                   mapElement.getComponent().setVisible(false);
             }
@@ -187,12 +194,12 @@ public class PanelMaps extends JPanel {
 
     public void showRoutes() {
         if (visibleRoutes) {
-            for (MapElement mapElement : managerElements.getElements()) {
+            for (MapElement mapElement : ManagerGraphs.getInstance().getElements()) {
                 if (mapElement.getTypeElement()==TypeElement.ROUTE)
                     mapElement.getComponent().setVisible(true);
             }
         } else {
-            for (MapElement mapElement : managerElements.getElements()) {
+            for (MapElement mapElement : ManagerGraphs.getInstance().getElements()) {
                 if (mapElement.getTypeElement()==TypeElement.ROUTE)
                     mapElement.getComponent().setVisible(false);
             }
