@@ -59,14 +59,7 @@ public class Graph {
             finalValues.add(Double.MAX_VALUE);
         }
         temporalValues.set(nodes.indexOf(point1), 0.0);
-
-        //Buscar el punto minimo con un clon de las listas
         dijkstra(nodes, temporalValues, finalValues);
-        //Buscar los hijos del punto minimo
-        //Darles un valor temporal
-        //Buscar el minimo
-        //Repetir hasta que todos los nodos tengan un valor final
-
         System.out.println("Temporal values: " + temporalValues);
         System.out.println("Final values: " + finalValues);
 
@@ -91,7 +84,7 @@ public class Graph {
             int index = nodes.indexOf(child.getPoint1().equals(actual) ? child.getPoint2() : child.getPoint1());
             double temporalValue = temporalValues.get(nodes.indexOf(actual)) + child.getDistance();
             if (temporalValues.get(index) == Double.MAX_VALUE) {
-                temporalValues.set(index, child.getDistance());
+                temporalValues.set(index, temporalValue);
             } else {
                 temporalValues.set(index, Math.min(temporalValues.get(index), temporalValue));
             }
