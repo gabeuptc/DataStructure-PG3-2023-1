@@ -1,4 +1,4 @@
-package model;
+package co.edu.uptc.models.graphs.modelGraphs202022012;
 
 import com.google.gson.annotations.Expose;
 import pojo.Edge;

@@ -1,4 +1,4 @@
-package pojo;
+package co.edu.uptc.models.graphs.modelGraphs202022012;
 
 
 import com.google.gson.annotations.Expose;

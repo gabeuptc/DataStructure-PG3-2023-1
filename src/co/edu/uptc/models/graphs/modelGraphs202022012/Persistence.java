@@ -1,9 +1,8 @@
-package model;
+package co.edu.uptc.models.graphs.modelGraphs202022012;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import pojo.Edge;
-import pojo.Node;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
