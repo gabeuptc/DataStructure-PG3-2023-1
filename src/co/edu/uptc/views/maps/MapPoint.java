@@ -4,7 +4,7 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.swing.*;
 
-public class MapPoint {
+public class  MapPoint {
 
         private JButton buttonPoint;
     private final String latitude;
