@@ -1,4 +1,4 @@
-package co.edu.uptc.models.graphs.model202115100;
+package co.edu.uptc.models.graphs.modelGraphs202115100;
 
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.MapElement;
