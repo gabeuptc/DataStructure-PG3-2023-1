@@ -64,6 +64,11 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public void updateGraph() {
+        presenter.updateGraph();
+    }
 
+    @Override
+    public String getUser() {
+        return "Santiago Andr\u00e9s G\u00f3mez";
     }
 }
