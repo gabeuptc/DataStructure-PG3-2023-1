@@ -34,3 +34,6 @@ Example01MVP.iml
 # System files
 .DS_Store
 Thumbs.db
+
+#myLibs
+lib/*.jar
