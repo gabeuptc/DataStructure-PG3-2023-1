@@ -17,6 +17,7 @@ public interface ContractGraphs {
         public void notifyError(String value);
         void setUser(String user);
 
+        void notifyWarning(String value);
     }
     public interface Presenter{
         void setView(ContractGraphs.View view);
@@ -32,6 +33,10 @@ public interface ContractGraphs {
         void addElement(MapElement mapElement);
         Set<MapElement> getElements();
         MapElement getElement(int id);
+
+        void deletePoint(int idElement);
+
+        void notifyWarning(String s);
     }
     public interface Model{
         void setPresenter(ContractGraphs.Presenter presenter);
@@ -43,5 +48,7 @@ public interface ContractGraphs {
         void updateGraph();
         String getUser();
         void loadGraphs();
+
+        void deletePoint(int idElement);
     }
 }

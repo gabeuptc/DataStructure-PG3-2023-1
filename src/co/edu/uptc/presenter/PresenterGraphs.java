@@ -100,4 +100,14 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
     public MapElement getElement(int id) {
         return modelGraphs.getElement(id);
     }
+
+    @Override
+    public void deletePoint(int idElement) {
+          modelGraphs.deletePoint(idElement);
+    }
+
+    @Override
+    public void notifyWarning(String value) {
+        viewGraphs.notifyWarning(value);
+    }
 }

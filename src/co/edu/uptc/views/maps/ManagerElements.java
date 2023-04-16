@@ -8,11 +8,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class ManagerElements {
-    private Set<MapElementGraph> elements;
+    private Map<Integer,MapElementGraph> elements;
     private PanelMaps panelMaps;
     protected MapRoute auxRoute;
     private MapPointGraph aux1Point;
@@ -22,12 +24,12 @@ public class ManagerElements {
 
     public ManagerElements(PanelMaps panelMaps) {
         this.panelMaps = panelMaps;
-        elements = new HashSet<>();
-    }
-    public void updateElements(Set<MapElementGraph> elements){
-        this.elements = elements;
+        elements = new HashMap<>();
     }
 
+    public void clear(){
+        elements = new HashMap<>();
+    }
 
     public void addPointG(MapElement mapElement) {
         MapElementGraph mapElementGraph=null;
@@ -36,27 +38,21 @@ public class ManagerElements {
         }
         if (mapElement.getTypeElement()==TypeElement.ROUTE){
             mapElementGraph = createRoute(mapElement);
+
         }
         mapElementGraph.setIdElement(mapElement.getIdElement());
-        elements.add(mapElementGraph);
+        elements.put(mapElementGraph.getIdElement(),mapElementGraph);
 
     }
 
     public void delPoint(MapPointGraph mapPoint, MapElementGraph element) {
-       /* ManagerGraphs.getInstance().deletePoint(element.getIdElement());
-        panelMaps.jXMapViewer.remove(mapPoint.getButtonPoint());
-        ManagerGraphs.getInstance().updateGraph();
-        panelMaps.showStatus(PanelStatus.DELETE_POINT);
-
-        */
+        ManagerGraphs.getInstance().getPresenterGraphs().deletePoint(element.getIdElement());
     }
 
     public MapElementGraph createPoint(double latitude, double longitude) {
         MapPointGraph point = new MapPointGraph(new GeoPosition(latitude, longitude));
         MapElementGraph element = new MapElementGraph(point,new GeoPosition(latitude, longitude));
         point.setButtonPoint(getButtonPoint(point,element));
-        element.setIdElement(elementNumber);
-        elementNumber++;
         return element;
     }
 
@@ -72,12 +68,7 @@ public class ManagerElements {
     }
 
     public MapPointGraph getPoint(int id){
-        for (MapElementGraph mapRouteGraph1 : elements) {
-            if (mapRouteGraph1.getIdElement()==id){
-                return mapRouteGraph1.getMapPoint();
-            }
-        }
-        return null;
+        return elements.get(id).getMapPoint();
     }
 
 
@@ -104,35 +95,12 @@ public class ManagerElements {
                             " \nId del elemento: " + element.getIdElement() +
                             " \n\nDesea Borrar el Punto?", "aaa", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
                     if (opt == 0) {
-                        if (!isRelatedWithARoute(point)){
-                            delPoint(point,element);
-                            panelMaps.showStatus(PanelStatus.DELETE_POINT);
-                        }else {
-                            JOptionPane.showMessageDialog(buttonPoint,"esta relacionado en una ruta, no se puede borrar");
-                        }
+                        delPoint(point,element);
                     }
                 }
             }
         });
         return buttonPoint;
-    }
-
-    public boolean isRelatedWithARoute(MapPointGraph point){
-        /*
-        for (MapElementGraph element:ManagerGraphs.getInstance().getElements()) {
-            if (element.getTypeElement()== TypeElement.ROUTE){
-                if (element.getMapRoute().getPoint1().getLatitude().equals(point.getLatitude())&&
-                        element.getMapRoute().getPoint1().getLongitude().equals(point.getLongitude())){
-                    return true;
-                }else if (element.getMapRoute().getPoint2().getLatitude().equals(point.getLatitude())&&
-                        element.getMapRoute().getPoint2().getLongitude().equals(point.getLongitude())){
-                    return true;
-                }
-            }
-        }
-
-         */
-        return false;
     }
 
 
@@ -150,62 +118,10 @@ public class ManagerElements {
                 panelMaps.popUpOperationMenu.finishSelectRoute();
             }
         }
-
-
-
-
     }
 
 
-
-    public void addPoint1(MapPointGraph mapPoint){
-     /*   if (auxRoute==null){
-            auxRoute = new MapRoute();
-        }
-        ManagerGraphs.getInstance().getPresenterGraphs().getElements(mapPoint.get);
-        auxRoute.setPoint(mapPoint);
-        if (auxRoute.isAssigneds()){
-            System.out.println("initial route   "+auxRoute);
-            new JDialogRouteInformation(auxRoute,panelMaps,elementNumber).setVisible(true);
-            if (isComplete){
-                MapElementGraph mapElement = new MapElementGraph(auxRoute,null);
-                mapElement.setIdElement(elementNumber);
-                elementNumber++;
-                //ManagerGraphs.getInstance().addElement(mapElement);
-                //ManagerGraphs.getInstance().updateGraph();
-                panelMaps.popUpOperationMenu.finishSelectRoute();
-            }
-        }
-
-*/
-    }
-    private void choosePoints(MapPointGraph point){
-        /*
-        if (aux1Point==null){
-            aux1Point=point;
-        }else if (aux2Point==null){
-            aux2Point=point;
-        }
-        if (aux1Point!=null&&aux2Point!=null){
-            if (panelMaps.popUpOperationMenu.isSelectCalculeDistance()){
-                panelMaps.renderRouteCalculated(ManagerGraphs.getInstance().calculateShortestDistanceRoute(aux1Point,aux2Point));
-                ManagerGraphs.getInstance().showDetails();
-            }else if (panelMaps.popUpOperationMenu.isSelectCalculeTime()){
-                panelMaps.renderRouteCalculated(ManagerGraphs.getInstance().calculateShortestTimeRoute(aux1Point,aux2Point));
-                ManagerGraphs.getInstance().showDetails();
-            }
-            panelMaps.popUpOperationMenu.finishCalcule();
-        }
-
-         */
-    }
-    public void finishCalcules(){
-        aux1Point=null;
-        aux2Point=null;
-    }
-
-
-    public Set<MapElementGraph> getElements() {
+    public Map<Integer,MapElementGraph> getElements() {
         return elements;
     }
 
@@ -218,9 +134,6 @@ public class ManagerElements {
     public void finish(){
         auxRoute = null;
         panelMaps.showStatus(PanelStatus.CREATE_ROUTED);
-    }
-    public void finishCalcule(){
-        //TODO
     }
 
 }

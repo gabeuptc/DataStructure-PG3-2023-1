@@ -5,11 +5,11 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 import java.awt.*;
 
-public class MapElementGraph extends DefaultWaypoint implements Cloneable{
+public class MapElementGraph extends DefaultWaypoint implements Cloneable {
 
     private TypeElement typeElement;
 
-        private int idElement;
+    private int idElement;
 
     private MapPointGraph mapPoint;
 
@@ -29,18 +29,18 @@ public class MapElementGraph extends DefaultWaypoint implements Cloneable{
     }
 
     //, GeoPosition coord
-    public MapElementGraph(MapRouteGraph mapRoute,GeoPosition coord) {
+    public MapElementGraph(MapRouteGraph mapRoute, GeoPosition coord) {
         super(coord);
         this.mapRoute = mapRoute;
         typeElement = TypeElement.ROUTE;
     }
 
 
-    public Component getComponent(){
-        if (typeElement==TypeElement.POINT){
+    public Component getComponent() {
+        if (typeElement == TypeElement.POINT) {
             return mapPoint.getButtonPoint();
         }
-        if (typeElement==TypeElement.ROUTE){
+        if (typeElement == TypeElement.ROUTE) {
             return mapRoute.getComponent();
         }
         return null;

@@ -208,11 +208,9 @@ public class ManagerGeneral {
             System.out.println("config user");
             modelGraphs202127812.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202127812);
-           // modelGraphs202127812.loadGraphs();
+            modelGraphs202127812.loadGraphs();
            // viewGraphs.updateGraph();
-            System.out.println("Modelo de: "+presenterGraphs.getModel().getUser());
-            System.out.println("viewGraphs  "+viewGraphs);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+
         } catch (Exception e) {
             e.printStackTrace();
             viewGraphs.notifyError("Modelo1 sin definir");

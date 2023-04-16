@@ -12,7 +12,7 @@ public class MapRouteGraph {
     private MapPointGraph point1;
     private MapPointGraph point2;
 
-    private int countPoint=0;
+    private int countPoint = 0;
 
 
     public MapRouteGraph() {
@@ -66,17 +66,18 @@ public class MapRouteGraph {
         return point2;
     }
 
-     public void setPoint(MapPointGraph point){
-        if (point1==null) {
+    public void setPoint(MapPointGraph point) {
+        if (point1 == null) {
             setPoint1(point);
             countPoint = 1;
         } else {
-            if (point2 ==null) {
+            if (point2 == null) {
                 setPoint2(point);
                 countPoint = 2;
             }
         }
-     }
+    }
+
     public void setPoint1(MapPointGraph point1) {
         this.point1 = point1;
     }
@@ -86,14 +87,10 @@ public class MapRouteGraph {
     }
 
 
-
     public void setPoint2(MapPointGraph point2) {
         this.point2 = point2;
     }
 
-    public boolean isAssigneds() {
-         return point1!=null&&point2!=null?true:false;
-    }
 
     public Component getComponent() {
         return component;

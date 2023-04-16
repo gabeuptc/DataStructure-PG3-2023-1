@@ -11,8 +11,7 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
     private PanelMaps panelMaps;
     private static ManagerGraphs instance;
     private ContractGraphs.Presenter presenterGraphs;
-    private OrientationRoutes orientationRoutes;
-    private Set<MapElementGraph> elementsCalculated;
+
     private JLabel totalDistance;
     private JLabel averageSpeed;
 
@@ -29,18 +28,6 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
         setBackground(ValuesGlobals.COLOR_BACK_PANEL_WORK);
     }
 
-    private void addComponents() {
-        this.add(new JLabel("Detalles de recorrido:"));
-        this.add(new JLabel("Distancia total:"));
-        totalDistance = new JLabel();
-        add(totalDistance);
-        this.add(new JLabel("Velocidad promedio:"));
-        averageSpeed = new JLabel();
-        add(averageSpeed);
-        JButton buttonClose= new JButton("cerrar detalles");
-       // buttonClose.addActionListener(e -> closeDetails());
-        this.add(buttonClose);
-    }
 
     public void setPanelMaps(PanelMaps panelMaps) {
         this.panelMaps = panelMaps;
@@ -55,55 +42,6 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
         return presenterGraphs;
     }
 
-    /*
-        @Override
-        public Set<MapElementGraph> calculateShortestDistanceRoute(MapPointGraph point1, MapPointGraph point2) {
-         //   elementsCalculated = presenterGraphs.calculateShortestDistanceRoute(point1, point2);
-            return elementsCalculated;
-        }
-
-        @Override
-        public Set<MapElementGraph> calculateShortestTimeRoute(MapPointGraph point1, MapPointGraph point2) {
-          //  elementsCalculated = presenterGraphs.calculateShortestTimeRoute(point1, point2);
-            return elementsCalculated;
-        }
-
-        @Override
-        public void setArcType(int elementID, TypeRoute typeRoute) {
-          //  presenterGraphs.setArcType(elementID, typeRoute);
-        }
-
-        @Override
-        public void setArcSpeed(int elementID, double speed) {
-        //    presenterGraphs.setArcSpeed(elementID, speed);
-        }
-
-        @Override
-        public void setArcsOrientation(OrientationRoutes orientation) {
-        //    presenterGraphs.setArcsOrientation(orientationRoutes);
-            this.orientationRoutes = getOrientation();
-        }
-
-        @Override
-        public OrientationRoutes getOrientation() {
-            return presenterGraphs.getOrientation();
-        }
-
-        @Override
-        public void deletePoint(int idPoint) {
-            presenterGraphs.deletePoint(idPoint);
-        }
-
-        @Override
-        public void addElement(MapElementGraph element) {
-            presenterGraphs.addElement(element);
-        }
-
-        @Override
-        public Set<MapElementGraph> getElements() {
-            return presenterGraphs.getElements();
-        }
-    */
     @Override
     public void updateGraph() {
         if (panelMaps!=null){
@@ -122,49 +60,9 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
         panelMaps.panelUser.setUser(user);
     }
 
-/*
-    public void setOrientationRoutes(OrientationRoutes orientationRoutes) {
-        this.orientationRoutes = orientationRoutes;
-    }
-    public void showDetails(){
-        showTotalDistance();
-        showAverageSpeed();
-        this.setVisible(true);
-        panelMaps.add(this,BorderLayout.WEST);
-        panelMaps.setVisible(false);
-        panelMaps.setVisible(true);
+    @Override
+    public void notifyWarning(String value) {
+        JOptionPane.showMessageDialog(this, value, "", JOptionPane.WARNING_MESSAGE);
     }
 
-    private void showAverageSpeed() {
-        int countRoutes =0;
-        double total =0;
-        for (MapElementGraph element:elementsCalculated) {
-            if (element.getTypeElement()==TypeElement.ROUTE){
-                total+=element.getMapRoute().getSpeedRoute();
-                countRoutes++;
-            }
-        }
-        double average = total/countRoutes;
-        averageSpeed.setText((Math.round(average*100.0)/100.0) + " metros/segundos");
-    }
-
-    private void showTotalDistance() {
-        double total=0;
-        for (MapElementGraph element:elementsCalculated) {
-            if (element.getTypeElement()==TypeElement.ROUTE){
-                total+=element.getMapRoute().getDistance();
-            }
-        }
-        totalDistance.setText((Math.round(total*100.0)/100.0) + " metros");
-    }
-
-    private void closeDetails(){
-        this.setVisible(false);
-        panelMaps.remove(this);
-        panelMaps.setVisible(false);
-        panelMaps.setVisible(true);
-    }
-
-
- */
 }

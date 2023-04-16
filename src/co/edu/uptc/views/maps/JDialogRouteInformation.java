@@ -202,14 +202,13 @@ public class JDialogRouteInformation extends JDialog {
                 case 4 -> route.setTypeRoute(TypeRoute.ROAD);
             }
 
-            System.out.println(orientationRoutes.getSelectedIndex());
+
             switch (orientationRoutes.getSelectedIndex()){
                 case 0 -> route.setOrientationRoutes(OrientationRoutes.ORIGIN_DESTIN);
                 case 1 -> route.setOrientationRoutes(OrientationRoutes.DESTIN_ORIGIN);
                 case 3 -> route.setOrientationRoutes(OrientationRoutes.BOTH);
             }
 
-            System.out.println("route.getTypeRoute()   "+route.getTypeRoute());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "la velocidad es incorrecta");
         }

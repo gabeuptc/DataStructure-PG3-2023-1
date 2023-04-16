@@ -18,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 public class PanelMaps extends JPanel {
@@ -30,7 +31,7 @@ public class PanelMaps extends JPanel {
 
     protected PanelStatus panelStatus;
     protected PanelUser panelUser;
-    private int zoom = 5;
+    private int zoom = 2;
     private boolean visiblePoints = true;
     private boolean visibleRoutes = true;
 
@@ -87,31 +88,35 @@ public class PanelMaps extends JPanel {
     }
 
     public void updateElements(){
+        managerElements.clear();
+        jXMapViewer.removeAll();
+
         Set<MapElement> mapElements = ManagerGraphs.getInstance().getPresenterGraphs().getElements();
         for (MapElement mapElement: mapElements) {
-            System.out.println("  Update                              "+mapElement.getTypeElement());
+            if (mapElement.getTypeElement()==TypeElement.POINT)
              managerElements.addPointG(mapElement);
-           // ManagerGraphs.getInstance().addElement(createPoint(position.getLatitude(), position.getLongitude()));
         }
-
+        for (MapElement mapElement: mapElements) {
+            if (mapElement.getTypeElement()==TypeElement.ROUTE)
+            managerElements.addPointG(mapElement);
+        }
         createPointsRender();
+
     }
 
 
 
     public void addPoint(GeoPosition position) {
         MapElement mapElement = new MapElement(position);
-        //mapElement.setTypeElement(TypeElement.POINT);
-        //mapElement.setGeoPosition(position);
         ManagerGraphs.getInstance().getPresenterGraphs().addElement(mapElement);
     }
 
     public void createPointsRender() {
-        removeAllMapElements();
         WaypointPainter<MapElementGraph> render = new PointRender();
-        render.setWaypoints(managerElements.getElements());
+        Set<MapElementGraph> ss = new HashSet<>(managerElements.getElements().values());
+        render.setWaypoints(ss);
         jXMapViewer.setOverlayPainter(render);
-        for (MapElementGraph element : managerElements.getElements()) {
+        for (MapElementGraph element : ss) {
             jXMapViewer.add(element.getComponent());
         }
     }
@@ -173,62 +178,10 @@ public class PanelMaps extends JPanel {
     }
 
 
-
-
-    private void removeAllMapElements(){
-        for (Component c:jXMapViewer.getComponents()) {
-            jXMapViewer.remove(c);
-        }
-    }
-
-    public void renderRouteCalculated(Set<MapElementGraph> elements){
-        removeAllMapElements();
-        WaypointPainter<MapElementGraph> render = new ResultsRender();
-        render.setWaypoints(elements);
-        jXMapViewer.setOverlayPainter(render);
-        for (MapElementGraph element : elements) {
-            jXMapViewer.add(element.getComponent());
-        }
-    }
-
     public void setZoom(int zoom) {
         this.zoom = zoom;
     }
 
-    public void showPoints() {
-        /*
-        if (visiblePoints) {
-            for (MapElementGraph mapElement : ManagerGraphs.getInstance().getElements()) {
-                if (mapElement.getTypeElement()==TypeElement.POINT)
-                    mapElement.getComponent().setVisible(true);
-            }
-        } else {
-            for (MapElementGraph mapElement : ManagerGraphs.getInstance().getElements()) {
-                if (mapElement.getTypeElement()==TypeElement.POINT)
-                  mapElement.getComponent().setVisible(false);
-            }
-        }
-*/
-    }
-
-
-    public void showRoutes() {
-        /*
-        if (visibleRoutes) {
-            for (MapElementGraph mapElement : ManagerGraphs.getInstance().getElements()) {
-                if (mapElement.getTypeElement()==TypeElement.ROUTE)
-                    mapElement.getComponent().setVisible(true);
-            }
-        } else {
-            for (MapElementGraph mapElement : ManagerGraphs.getInstance().getElements()) {
-                if (mapElement.getTypeElement()==TypeElement.ROUTE)
-                    mapElement.getComponent().setVisible(false);
-            }
-        }
-
-         */
-
-    }
 
     public boolean isVisiblePoints() {
         return visiblePoints;
@@ -280,20 +233,14 @@ public class PanelMaps extends JPanel {
     public void showStatus() {
         if (popUpOperationMenu.isSelectRoute()) {
             panelStatus.setMessageS(PanelStatus.ORIGEN_ROUTE);
-
           /*  if (managerElements.auxRoute!= null && managerElements.auxRoute.getCountPoint() == 1) {
                 panelStatus.setMessageS(PanelStatus.DESTINATION_ROUTE);
             }
-
            */
         } else {
             panelStatus.setMessageS(PanelStatus.NORMAL);
         }
         panelStatus.setMessageS(visiblePoints ? PanelStatus.VISIBLE_ELEMENT : PanelStatus.NOT_VISIBLE_ELEMENT);
-
-
-
     }
-
 
 }
