@@ -2,12 +2,10 @@ package co.edu.uptc.views.board;
 
 import co.edu.uptc.utils.UtilComponents;
 import co.edu.uptc.utils.UtilImages;
-import co.edu.uptc.views.Globals.ColorPalette;
 import co.edu.uptc.views.Globals.ValuesGlobals;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -67,16 +65,10 @@ public class PanelMenu extends JPanel {
         addImage();
         utilComponents.setAuxY((int)imageLabel.getLocation().getY()+imageLabel.getHeight());
         for (ItemMenu val: listItemMenu) {
-            //addItemMenu(val.text,30,val.level,val.isSelectable);
             addItemMenu(val,30);
         }
+
     }
-
-    private PanelMenu getInstance(){
-        return this;
-    }
-
-
 
     private void addImage(){
         UtilImages utilImages = new UtilImages();

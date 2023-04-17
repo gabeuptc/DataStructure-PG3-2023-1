@@ -16,18 +16,18 @@ public class PanelStatus extends JPanel {
     public static final int CREATED_POINT =100;
     public static final int DELETE_POINT =101;
     public static final int SELECTED_POINT =102;
-    public static final int CREATE_ROUTED =103;
+    public static final int CREATED_ROUTED =103;
     public static final int CANCELED_ROUTE =104;
+    public static final int SHORTEST_ROUTE_IN_DISTANCE = 105;
+    public static final int SHORTEST_ROUTE_IN_TIME = 106;
 
-    public static final int VISIBLE_ELEMENT =200;
-    public static final int NOT_VISIBLE_ELEMENT =201;
+    public static final int  MODIFIED_ROUTE = 107;
 
 
     public static final int TYPE_MAP_PREDETERMINED =300;
     public static final int TYPE_MAP_MAP =301;
     public static final int TYPE_MAP_HYBRID =302;
     public static final int TYPE_MAP_SATELLITE =303;
-
 
 
     private JLabel titulo1;
@@ -39,14 +39,13 @@ public class PanelStatus extends JPanel {
     private JLabel titleTypeMap;
     private JLabel typeMap;
 
-    private JLabel titleElement;
     private JLabel statusElement;
 
 
     String []titles = {"Estado: ","      Ultima acción: ","    Estado elementos: ","   Tipo de Mapa: "};
     String []messages1 = {"Normal","Seleccionar Origen de Ruta","Seleccionar destino de ruta"};
-    String [] messagesLastAction = {"Punto Creado","Punto Borrado","Punto Selecciondo","Ruta Creada","Ruta Cancelada"};
-    String [] messagesStatusElement = {"VIsible","Ocultos"};
+    String [] messagesLastAction = {"Punto Creado","Punto Borrado","Punto Selecciondo","Ruta Creada","Ruta Cancelada","Ruta mas corta en distancia","Ruta mas corta en tiempo","Ruta Modificada"};
+    //String [] messagesStatusElement = {"VIsible","Ocultos"};
 
     String [] messagesTypeMap = {"Predeterminado","Mapa","Hibrido","Satelital"};
 
@@ -61,7 +60,7 @@ public class PanelStatus extends JPanel {
     private void createComponents(){
         titulo1 = new JLabel(titles[0]);
         titleLastAction = new JLabel(titles[1]);
-        titleElement = new JLabel(titles[2]);
+
         titleTypeMap = new JLabel(titles[3]);
 
         message1 = new JLabel(messages1[0]);
@@ -76,7 +75,7 @@ public class PanelStatus extends JPanel {
         add(titleLastAction);
         add(lastAction);
 
-        add(titleElement);
+
         add(statusElement);
 
         add(titleTypeMap);
@@ -86,20 +85,16 @@ public class PanelStatus extends JPanel {
 
     public void setMessageS(int value){
         switch (value){
-            case 0,1,2,3,4,5,6 : {
+            case 0,1,2,3,4,5,6,7,8,9,10 : {
                 setMessage1(messages1[value]);
                 break;
             }
-            case 100,101,102,103,104,105: {
+            case 100,101,102,103,104,105,106,107,108,109,110: {
                 setLastAction(messagesLastAction[value-100]);
                 break;
             }
-            case 200,201: {
-                setStatusElement(messagesStatusElement[value-200]);
-                break;
-            }
 
-            case 300,301,302,303,304: {
+            case 300,301,302,303,304,305,306: {
                 setStatusTypeMap(messagesTypeMap[value-300]);
                 break;
             }

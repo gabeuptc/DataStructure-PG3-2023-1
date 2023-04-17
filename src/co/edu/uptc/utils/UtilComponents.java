@@ -49,7 +49,7 @@ public class UtilComponents {
                 if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9')
                         || (ke.getKeyCode() == 8)
                         || (ke.getKeyCode() == 127)) {
-                    if (UtilComponents.validaNum(value,ke.getKeyChar(),max)) {
+                    if (UtilComponents.validaNumDouble(value,ke.getKeyChar(),max)) {
                         tfPort.setEditable(true);
                         if (message!=null)
                         message.setText("");
@@ -68,7 +68,20 @@ public class UtilComponents {
             }
         });
     }
-    public static boolean validaNum(String num,char n,int max){
+    public static boolean validaNumDouble(String num,char n,int max){
+        boolean res=true;
+        num=num+n;
+        if (n >= '0' && n <= '9') {
+            double i = Double.parseDouble(num);
+            if (i > max)
+                res= false;
+            else
+                res=true;
+        }
+        return res;
+    }
+
+    public static boolean validaNumInt(String num,char n,int max){
         boolean res=true;
         num=num+n;
         if (n >= '0' && n <= '9') {
