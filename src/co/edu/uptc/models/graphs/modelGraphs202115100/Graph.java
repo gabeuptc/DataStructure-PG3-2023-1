@@ -116,15 +116,6 @@ public class Graph {
         return null;
     }
 
-    private MapElement searchElementById(int id) {
-        for (MapElement element : elements.values()) {
-            if (element.getIdElement() == id) {
-                return element;
-            }
-        }
-        return null;
-    }
-
     private void dijkstra(List<MapElement> nodes, List<Double> temporalValues, List<Double> finalValues, int attributeToCompare) {
         MapElement minPoint = getMinPoint(new LinkedList<>(nodes), new LinkedList<>(temporalValues), new LinkedList<>(finalValues));
         finalValues.set(nodes.indexOf(minPoint), temporalValues.get(nodes.indexOf(minPoint)));

@@ -1,6 +1,7 @@
 package co.edu.uptc.models.graphs.modelGraphs202115100;
 
 import co.edu.uptc.pojos.MapElement;
+import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.types.ElementType;
 
@@ -32,11 +33,21 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public MapElement getElement(int id) {
-        return null;
+        return graph.getElement(id);
     }
 
     @Override
     public MapElement getElement(int idElementPoint1, int idElementPoint2) {
+        for (MapElement mapElement : graph.getElements()) {
+            if (mapElement.getElementType() == ElementType.ROUTE) {
+                MapElement point1 = mapElement.getMapRoute().getPoint1();
+                MapElement point2 = mapElement.getMapRoute().getPoint2();
+                if ((point1.getIdElement() == idElementPoint1 && point2.getIdElement() == idElementPoint2) ||
+                        (point1.getIdElement() == idElementPoint2 && point2.getIdElement() == idElementPoint1)) {
+                    return mapElement;
+                }
+            }
+        }
         return null;
     }
 
@@ -93,6 +104,6 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public void modifyElement(MapElement mapElementModify) {
-
+        //Pendiente - Modificar el elemento
     }
 }
