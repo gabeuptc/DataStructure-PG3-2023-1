@@ -1,16 +1,18 @@
 package co.edu.uptc.models.graphs.modelGraphs202115100;
 
 import co.edu.uptc.presenter.ContractGraphs;
-import co.edu.uptc.views.maps.MapElement;
-import co.edu.uptc.views.maps.MapPoint;
-import co.edu.uptc.views.maps.OrientationRoutes;
-import co.edu.uptc.views.maps.TypeRoute;
+import co.edu.uptc.views.maps.*;
 
 import java.util.Set;
 
 public class GraphManager202115100 implements ContractGraphs.Model {
 
     private ContractGraphs.Presenter presenter;
+    private Graph graph;
+
+    public GraphManager202115100() {
+        graph = new Graph();
+    }
 
     @Override
     public void setPresenter(ContractGraphs.Presenter presenter) {
@@ -19,47 +21,48 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> calculateShortestDistanceRoute(MapPoint point1, MapPoint point2) {
-        return null;
+        return graph.calculateShortestDistanceRoute(point1, point2);
     }
 
     @Override
     public Set<MapElement> calculateShortestTimeRoute(MapPoint point1, MapPoint point2) {
-        return null;
+        return graph.calculateShortestTimeRoute(point1, point2);
     }
 
     @Override
     public void setArcType(int elementID, TypeRoute typeRoute) {
-
+        graph.getElement(elementID).getMapRoute().setTypeRoute(typeRoute);
     }
 
     @Override
     public void setArcSpeed(int elementID, double speed) {
-
+        graph.getElement(elementID).getMapRoute().setSpeedRoute(speed);
     }
 
     @Override
     public void setArcsOrientation(OrientationRoutes orientation) {
-
+        //Pendiente
     }
 
     @Override
     public OrientationRoutes getOrientation() {
+        //Pendiente
         return null;
     }
 
     @Override
     public void deletePoint(int idPoint) {
-
+        graph.removeElement(idPoint);
     }
 
     @Override
     public void addElement(MapElement element) {
-
+        graph.addElement(element);
     }
 
     @Override
     public Set<MapElement> getElements() {
-        return null;
+        return graph.getElements();
     }
 
     @Override
