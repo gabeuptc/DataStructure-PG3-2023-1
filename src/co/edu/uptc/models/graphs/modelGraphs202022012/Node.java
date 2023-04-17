@@ -1,50 +1,31 @@
 package co.edu.uptc.models.graphs.modelGraphs202022012;
 
 
-import com.google.gson.annotations.Expose;
 
-import java.util.ArrayList;
-import java.util.List;
+import co.edu.uptc.views.maps.MapPoint;
 
-public class Node <T>{
 
-    @Expose
-    private T information;
-    @Expose
-    private List<Edge<T>> edges;
+public class Node{
 
-    public Node(T information){
-        this.information = information;
-        edges = new ArrayList<>();
+    private MapPoint mapPoint;
+
+    public Node(MapPoint mapPoint){
+        this.mapPoint = mapPoint;
     }
 
     public Node() {
-
     }
 
-    public T getInformation() {
-        return information;
+    public MapPoint getMapPoint() {
+        return mapPoint;
     }
 
-    public List<Edge<T>> getEdges() {
-        return edges;
-    }
-
-    public void setInformation(T information) {
-        this.information = information;
+    public void setMapPoint(MapPoint mapPoint) {
+        this.mapPoint = mapPoint;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Info: ").append(information).append(" Arco: [");
-        for (Edge<T> edge : edges) {
-            sb.append("{source: ").append(edge.getSource().getInformation())
-                    .append(", destination: ").append(edge.getDestination().getInformation())
-                    .append(", weight: ").append(edge.getWeight())
-                    .append(", direction: ").append(edge.getDirection()).append("}, ");
-        }
-        sb.append("]");
-        return sb.toString();
+        return "Longitud: " + mapPoint.getLongitude() + " Latitud: " + mapPoint.getLatitude();
     }
 }
