@@ -68,6 +68,63 @@ public class Graph {
         for (Double finalValue : finalValues) {
             System.out.println("Valor final del nodo: " + (char) (Double.parseDouble(points.get(finalValues.indexOf(finalValue)).getLatitude()) + 65) + " es: " + finalValue);
         }
+        System.err.println("Ruta mas corta por distancia: " + setToString(getShortestRoute(point2, finalValues, points, DISTANCE)));
+        return getShortestRoute(point2, finalValues, points, DISTANCE);
+    }
+
+    private String setToString(Set<MapElement> shortestRoute) {
+        StringBuilder result = new StringBuilder();
+        for (MapElement element : shortestRoute) {
+            if (element.getTypeElement() == TypeElement.POINT) {
+                result.append((char) (Double.parseDouble(element.getMapPoint().getLatitude()) + 65)).append(" ");
+            } else {
+                result.append((char) (Double.parseDouble(element.getMapRoute().getPoint1().getLatitude()) + 65));
+                result.append((char) (Double.parseDouble(element.getMapRoute().getPoint2().getLatitude()) + 65)).append(" ");
+            }
+        }
+        return result.toString();
+    }
+
+    private Set<MapElement> getShortestRoute(MapPoint actual, List<Double> finalValues, List<MapPoint> points, int attributeToCompare) {
+        Set<MapElement> shortestRoute = new HashSet<>();
+        List<MapRouteA> children = getChildren(actual);
+        for (MapRouteA child : children) {
+            int index = points.indexOf(actual.equals(child.getPoint1()) ? child.getPoint2() : child.getPoint1());
+            double value = switch (attributeToCompare) {
+                case DISTANCE -> child.getDistance();
+                case SPEED -> child.getSpeedRoute();
+                default -> throw new IllegalStateException("Unexpected value: " + attributeToCompare);
+            };
+            if (finalValues.get(index) == finalValues.get(points.indexOf(actual)) - value) {
+                shortestRoute.add(searchElementByRoute(child));
+                shortestRoute.add(searchElementByPoint(actual));
+                shortestRoute.addAll(getShortestRoute(points.get(index), finalValues, points, attributeToCompare));
+            } else {
+                shortestRoute.add(searchElementByPoint(actual));
+            }
+        }
+        return shortestRoute;
+    }
+
+    private MapElement searchElementByPoint(MapPoint actual) {
+        for (MapElement element : elements) {
+            if (element.getTypeElement() == TypeElement.POINT) {
+                if (element.getMapPoint().equals(actual)) {
+                    return element;
+                }
+            }
+        }
+        return null;
+    }
+
+    private MapElement searchElementByRoute(MapRouteA child) {
+        for (MapElement element : elements) {
+            if (element.getTypeElement() == TypeElement.ROUTE) {
+                if (element.getMapRoute().equals(child)) {
+                    return element;
+                }
+            }
+        }
         return null;
     }
 
@@ -143,7 +200,9 @@ public class Graph {
         for (Double finalValue : finalValues) {
             System.out.println("Valor final del nodo: " + (char) (Double.parseDouble(points.get(finalValues.indexOf(finalValue)).getLatitude()) + 65) + " es: " + finalValue);
         }
-        return null;
+        System.err.println("Ruta mas corta por velocidad" +" : " + setToString(getShortestRoute(point2, finalValues, points, SPEED)));
+        return getShortestRoute(point2, finalValues, points, SPEED);
+
     }
 
     public MapElement getElement(int id) {
@@ -272,6 +331,12 @@ public class Graph {
         graph.addElement(new MapElement(FD, new GeoPosition(5, 3)));
         graph.addElement(new MapElement(FG, new GeoPosition(5, 6)));
         graph.addElement(new MapElement(FI, new GeoPosition(5, 8)));
+
+        int id = 0;
+        for (MapElement element : graph.getElements()) {
+            element.setIdElement(id++);
+        }
+
         graph.calculateShortestDistanceRoute(A.getMapPoint(), I.getMapPoint());
         System.out.println("____________________________________________________________");
         graph.calculateShortestTimeRoute(A.getMapPoint(), I.getMapPoint());
