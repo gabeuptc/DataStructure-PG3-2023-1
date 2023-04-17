@@ -91,7 +91,7 @@ public class ManagerGeneral {
 
 
     private void createModelsPeople() {
-        // TODO aqui se cream todos los modelos
+
         modelGerman = new ManagerModel();
         model202128687 = new ManagerModel202128687();
         model202128778 = new Manager202128778();

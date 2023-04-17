@@ -98,6 +98,11 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
     }
 
     @Override
+    public MapElement getElement(int idElementPoint1, int idElementPoint2) {
+        return modelGraphs.getElement(idElementPoint1, idElementPoint2);
+    }
+
+    @Override
     public void deletePoint(int idElement) {
           modelGraphs.deletePoint(idElement);
     }
@@ -125,5 +130,10 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
     @Override
     public Set<MapElement> getResultElements() {
         return modelGraphs.getResultElements();
+    }
+
+    @Override
+    public void modifyElement(MapElement mapElementModify) {
+          modelGraphs.modifyElement(mapElementModify);
     }
 }

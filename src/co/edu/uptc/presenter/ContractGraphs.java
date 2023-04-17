@@ -13,6 +13,7 @@ public interface ContractGraphs {
 
         void notifyWarning(String value);
 
+
         void updateResultGraph();
     }
     public interface Presenter{
@@ -30,6 +31,8 @@ public interface ContractGraphs {
         Set<MapElement> getElements();
         MapElement getElement(int id);
 
+        MapElement getElement(int idElementPoint1, int idElementPoint2);
+
         void deletePoint(int idElement);
 
         void notifyWarning(String s);
@@ -41,6 +44,8 @@ public interface ContractGraphs {
         void updateResultGraph();
 
         Set<MapElement> getResultElements();
+
+        void modifyElement(MapElement mapElementModify);
     }
     public interface Model{
         void setPresenter(ContractGraphs.Presenter presenter);
@@ -49,6 +54,7 @@ public interface ContractGraphs {
 
         Set<MapElement>  getElements();
         MapElement getElement(int id);
+        MapElement getElement(int idElementPoint1, int idElementPoint2);
         void updateGraph();
         String getUser();
         void loadGraphs();
@@ -60,5 +66,7 @@ public interface ContractGraphs {
         void findShortestRouteInTime(int idElementPoint1, int idElementPoint2);
 
         Set<MapElement> getResultElements();
+
+        void modifyElement(MapElement mapElementModify);
     }
 }

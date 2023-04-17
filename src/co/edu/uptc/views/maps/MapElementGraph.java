@@ -16,20 +16,17 @@ public class MapElementGraph extends DefaultWaypoint implements Cloneable {
 
     private MapRouteGraph mapRoute;
 
-    private boolean visible;
 
 
-
-
-    public MapElementGraph(MapPointGraph mapPoint, GeoPosition coord) {
-        super(coord);
+    public MapElementGraph(MapPointGraph mapPoint, GeoPosition position) {
+        super(position);
         this.mapPoint = mapPoint;
         typeElement = ElementType.POINT;
     }
 
-    //, GeoPosition coord
-    public MapElementGraph(MapRouteGraph mapRoute, GeoPosition coord) {
-        super(coord);
+
+    public MapElementGraph(MapRouteGraph mapRoute, GeoPosition position) {
+        super(position);
         this.mapRoute = mapRoute;
         typeElement = ElementType.ROUTE;
     }
@@ -69,7 +66,6 @@ public class MapElementGraph extends DefaultWaypoint implements Cloneable {
     @Override
     public MapElementGraph clone() {
         try {
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
             return (MapElementGraph) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

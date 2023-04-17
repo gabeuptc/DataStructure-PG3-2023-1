@@ -132,7 +132,7 @@ public class JDialogRouteInformation extends JDialog {
     }
 
     public void createValueTextField() {
-        speed = new JTextField("");
+        speed = new JTextField(""+route.getSpeedRoute());
         speed.setSize(70, 20);
         assignPosition(1, speed);
         UtilComponents.addKeyListenerNumber(speed, null, 65000);
@@ -148,6 +148,7 @@ public class JDialogRouteInformation extends JDialog {
 
     private void createRouteTypeComboBox() {
         typeRoute = new JComboBox<>(new String[]{"pavimento", "recebo", "adoquinado", "trocha", "Otra"});
+        typeRoute.setSelectedIndex(route.getTypeRoute().value);
         typeRoute.setSize(130, 20);
         assignPosition(1, typeRoute);
         mainPanel.add(typeRoute);
@@ -163,6 +164,7 @@ public class JDialogRouteInformation extends JDialog {
 
     private void createOrientationRoutesComboBox() {
         orientationRoutes = new JComboBox<>(new String[]{"Origen->Destino", "Destino->Origen", "Ambos"});
+        orientationRoutes.setSelectedIndex(route.getOrientationRoutes().value);
         orientationRoutes.setSize(160, 20);
         assignPosition(1, orientationRoutes);
         mainPanel.add(orientationRoutes);
@@ -173,7 +175,7 @@ public class JDialogRouteInformation extends JDialog {
         accept.setBounds(170, 10, 120, 25);
         footPanel.add(accept);
         accept.addActionListener(e -> {
-            setFields();
+                        setFields();
             panelMaps.managerElements.isComplete = true;
             setVisible(false);
         });
@@ -197,18 +199,20 @@ public class JDialogRouteInformation extends JDialog {
         }
         try {
             route.setSpeedRoute(Double.parseDouble(speed.getText()));
+            System.out.println("typeRoute.getSelectedIndex()  "+typeRoute.getSelectedIndex());
             switch (typeRoute.getSelectedIndex()) {
                 case 0 -> route.setTypeRoute(RouteType.PAVING);
                 case 1 -> route.setTypeRoute(RouteType.ROAT_RECEBO);
                 case 2 -> route.setTypeRoute(RouteType.ADOQUINATE);
                 case 3 -> route.setTypeRoute(RouteType.TRAIL);
-                case 4 -> route.setTypeRoute(RouteType.ROAD);
+                case 4 -> route.setTypeRoute(RouteType.OTHER);
             }
 
+            System.out.println("orientationRoutes.getSelectedIndex()  "+orientationRoutes.getSelectedIndex());
             switch (orientationRoutes.getSelectedIndex()) {
                 case 0 -> route.setOrientationRoutes(OrientationRoutes.ORIGIN_DESTIN);
                 case 1 -> route.setOrientationRoutes(OrientationRoutes.DESTIN_ORIGIN);
-                case 3 -> route.setOrientationRoutes(OrientationRoutes.BOTH);
+                case 2 -> route.setOrientationRoutes(OrientationRoutes.BOTH);
             }
 
         } catch (NumberFormatException e) {

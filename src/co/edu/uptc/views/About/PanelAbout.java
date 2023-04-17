@@ -15,14 +15,24 @@ public class PanelAbout extends JPanel {
     }
 
     private void addComponents(){
+        JLabel labelSoft = new JLabel("DataStructure-PG3-2023-1");
+        labelSoft.setBounds(50,50,500,30);
+        labelSoft.setFont(ValuesGlobals.FONT_H1);
+        add(labelSoft);
+
+        JLabel labelSoftversion = new JLabel("Versión: 2.0.0");
+        labelSoftversion.setBounds(50,100,500,30);
+        labelSoftversion.setFont(ValuesGlobals.FONT_H1);
+        add(labelSoftversion);
+
       JLabel label = new JLabel("Desarrolladores");
-      label.setBounds(50,50,300,30);
+      label.setBounds(50,150,300,30);
       label.setFont(ValuesGlobals.FONT_H1);
       add(label);
       addDevelopers();
     }
     private JLabel getConfigurdLabel(JLabel label,int count){
-        int y = 100 + (30*count);
+        int y = 150 + (30*count);
         label.setBounds(50,y,300,30);
         return label;
     }

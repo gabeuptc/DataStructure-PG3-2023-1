@@ -54,6 +54,24 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     }
 
     @Override
+    public MapElement getElement(int idElementPoint1, int idElementPoint2) {
+        for (MapElement mapElement: elements.values()) {
+            if (mapElement.getElementType()==ElementType.ROUTE){
+                 if ((mapElement.getMapRoute().getPoint1().getIdElement()==idElementPoint1) &&
+                         (mapElement.getMapRoute().getPoint2().getIdElement()==idElementPoint2)) {
+                     return mapElement;
+                 }
+                if ((mapElement.getMapRoute().getPoint2().getIdElement()==idElementPoint1) &&
+                        (mapElement.getMapRoute().getPoint1().getIdElement()==idElementPoint2)) {
+                    return mapElement;
+                }
+
+            }
+        }
+        return null;
+    }
+
+    @Override
     public void updateGraph() {
 
     }
@@ -146,6 +164,14 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     }
 
     @Override
+    public void modifyElement(MapElement mapElementModify) {
+        MapElement mapElement = getElement(mapElementModify.getIdElement());
+        mapElement.getMapRoute().setSpeedRoute(mapElementModify.getMapRoute().getSpeedRoute());
+        mapElement.getMapRoute().setOrientationRoutes(mapElementModify.getMapRoute().getOrientationRoutes());
+        mapElement.getMapRoute().setTypeRoute(mapElementModify.getMapRoute().getTypeRoute());
+    }
+
+    @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
         elementsResult.clear();
         // add points in the route Estos estan quemados para la prueba
@@ -184,7 +210,7 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
 
     private boolean isRelation(int id){
         for (MapElement mapElement : elements.values()) {
-            if (mapElement.getTypeElement()== ElementType.ROUTE){
+            if (mapElement.getElementType()== ElementType.ROUTE){
                 if (mapElement.getMapRoute().getPoint1().getIdElement() == id) {
                     return true;
                 }

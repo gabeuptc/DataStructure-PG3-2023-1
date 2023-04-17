@@ -47,6 +47,12 @@ public class PopUpOperationMenu{
     }
 
 
+    public void startSelectRouteToModify(){
+        selectionType = SelectionType.ROUTE_MODIFY;
+        panelMaps.showStatus();
+    }
+
+
     public void startSelectRouteShortestInDistance(){
         selectionType = SelectionType.SHORTEST_ROUTE_IN_DISTANCE;
         panelMaps.showStatus();
@@ -78,6 +84,7 @@ public class PopUpOperationMenu{
         JMenu menu = new JMenu("Rutas");
         popupMenu.add(menu);
         addItemRouteSRoute(menu);
+        addItemModifyRoute(menu);
         addItemRouteSRouteCancel(menu);
         addItemAddFindRoute(menu);
     }
@@ -86,6 +93,12 @@ public class PopUpOperationMenu{
          itemAddRoute = new JMenuItem("Adicionar Ruta");
         menu.add(itemAddRoute);
         itemAddRoute.addActionListener(e->  startSelectRoute());
+    }
+
+    private void addItemModifyRoute(JMenu menu) {
+        itemAddRoute = new JMenuItem("Modificar Ruta");
+        menu.add(itemAddRoute);
+        itemAddRoute.addActionListener(e->  startSelectRouteToModify());
     }
 
 

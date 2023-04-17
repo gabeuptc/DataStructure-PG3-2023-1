@@ -5,7 +5,7 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 public class MapElement {
 
-    private ElementType typeElement;
+    private ElementType elementType;
     private int idElement;
 
     private GeoPosition geoPosition;
@@ -15,20 +15,20 @@ public class MapElement {
 
     public MapElement(GeoPosition position) {
         setGeoPosition(position);
-        typeElement = ElementType.POINT;
+        elementType = ElementType.POINT;
     }
 
     public MapElement(MapRoute mapRoute) {
         this.mapRoute = mapRoute;
-        typeElement = ElementType.ROUTE;
+        elementType = ElementType.ROUTE;
     }
 
-    public ElementType getTypeElement() {
-        return typeElement;
+    public ElementType getElementType() {
+        return elementType;
     }
 
-    public void setTypeElement(ElementType typeElement) {
-        this.typeElement = typeElement;
+    public void setElementType(ElementType typeElement) {
+        this.elementType = typeElement;
     }
 
     public int getIdElement() {

@@ -3,6 +3,7 @@ package co.edu.uptc.views.maps;
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.views.board.DashBoard;
 import co.edu.uptc.views.maps.types.ElementType;
+import co.edu.uptc.views.maps.types.SelectionType;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.VirtualEarthTileFactoryInfo;
@@ -25,7 +26,7 @@ import java.util.Set;
 public class PanelMaps extends JPanel {
 
     protected JXMapViewer jXMapViewer;
-    protected  ManagerElements managerElements;
+    protected ManagerElements managerElements;
     protected PopUpOperationMenu popUpOperationMenu;
 
     protected PanelStatus panelStatus;
@@ -52,9 +53,9 @@ public class PanelMaps extends JPanel {
 
     private void addPanelButtons() {
         PanelButtonsModels panelButtonsModels = new PanelButtonsModels(this);
-        JScrollPane jScrollPane = new  JScrollPane(panelButtonsModels);
+        JScrollPane jScrollPane = new JScrollPane(panelButtonsModels);
         jScrollPane.setHorizontalScrollBar(null);
-        this.add(jScrollPane,BorderLayout.EAST);
+        this.add(jScrollPane, BorderLayout.EAST);
     }
 
     private void addJXMapViewer() {
@@ -81,18 +82,18 @@ public class PanelMaps extends JPanel {
     }
 
 
-    public void updateElements(){
+    public void updateElements() {
         PointRender.thickness = 1.0;
         managerElements.clear();
         jXMapViewer.removeAll();
 
         Set<MapElement> mapElements = ManagerGraphs.getInstance().getPresenterGraphs().getElements();
-        for (MapElement mapElement: mapElements) {
-            if (mapElement.getTypeElement()== ElementType.POINT)
-             managerElements.addPointG(mapElement);
+        for (MapElement mapElement : mapElements) {
+            if (mapElement.getElementType() == ElementType.POINT)
+                managerElements.addPointG(mapElement);
         }
-        for (MapElement mapElement: mapElements) {
-            if (mapElement.getTypeElement()== ElementType.ROUTE) {
+        for (MapElement mapElement : mapElements) {
+            if (mapElement.getElementType() == ElementType.ROUTE) {
                 managerElements.addPointG(mapElement);
             }
         }
@@ -101,10 +102,10 @@ public class PanelMaps extends JPanel {
     }
 
 
-
     public void addPoint(GeoPosition position) {
         MapElement mapElement = new MapElement(position);
         ManagerGraphs.getInstance().getPresenterGraphs().addElement(mapElement);
+        showStatus(PanelStatus.CREATED_POINT);
     }
 
     public void createPointsRender() {
@@ -124,12 +125,12 @@ public class PanelMaps extends JPanel {
         jXMapViewer.removeAll();
 
         Set<MapElement> mapElements = ManagerGraphs.getInstance().getPresenterGraphs().getResultElements();
-        for (MapElement mapElement: mapElements) {
-            if (mapElement.getTypeElement()== ElementType.POINT)
+        for (MapElement mapElement : mapElements) {
+            if (mapElement.getElementType() == ElementType.POINT)
                 managerElements.addPointG(mapElement);
         }
-        for (MapElement mapElement: mapElements) {
-            if (mapElement.getTypeElement()== ElementType.ROUTE)
+        for (MapElement mapElement : mapElements) {
+            if (mapElement.getElementType() == ElementType.ROUTE)
                 managerElements.addPointG(mapElement);
         }
         createPointsRender();
@@ -182,7 +183,8 @@ public class PanelMaps extends JPanel {
             JOptionPane.showMessageDialog(null, "error técnico");
         }
     }
-    public void setEnableMap(boolean value){
+
+    public void setEnableMap(boolean value) {
         this.setVisible(value);
         jXMapViewer.setFocusable(value);
     }
@@ -213,7 +215,7 @@ public class PanelMaps extends JPanel {
                 showStatus(PanelStatus.TYPE_MAP_SATELLITE);
             }
         }
-        zoom = opt != 0 && ( zoom < 2 || zoom > 17 ) ? ( zoom > 17 ? 17 : 2 ) : zoom;
+        zoom = opt != 0 && (zoom < 2 || zoom > 17) ? (zoom > 17 ? 17 : 2) : zoom;
 
         jXMapViewer.setZoom(zoom);
     }
@@ -224,18 +226,16 @@ public class PanelMaps extends JPanel {
     }
 
     public void showStatus() {
-        /*
-        if (popUpOperationMenu.isSelectRoute()) {
+        if (popUpOperationMenu.getSelectionType() == SelectionType.NONE) {
+            panelStatus.setMessageS(PanelStatus.NORMAL);
+        } else {
             panelStatus.setMessageS(PanelStatus.ORIGEN_ROUTE);
-            if (managerElements.auxRoute!= null && managerElements.auxRoute.getCountPoint() == 1) {
+            if (managerElements.auxRoute != null && managerElements.auxRoute.getCountPoint() == 1) {
                 panelStatus.setMessageS(PanelStatus.DESTINATION_ROUTE);
             }
 
-        } else {
-            panelStatus.setMessageS(PanelStatus.NORMAL);
         }
-        panelStatus.setMessageS(visiblePoints ? PanelStatus.VISIBLE_ELEMENT : PanelStatus.NOT_VISIBLE_ELEMENT);
-    */
+
     }
 
 }

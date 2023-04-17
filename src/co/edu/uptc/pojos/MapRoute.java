@@ -11,6 +11,8 @@ public class MapRoute {
     private MapElement point1;
     private MapElement point2;
 
+    private int countPoint =0;
+
 
     public RouteType getTypeRoute() {
         return typeRoute;
@@ -56,14 +58,20 @@ public class MapRoute {
     public void setPoint(MapElement element){
         if (point1==null) {
             setPoint1(element);
+            countPoint = 1;
         } else {
             if (point2 ==null) {
                 setPoint2(element);
+                countPoint = 2;
             }
         }
     }
 
     public boolean isAssigneds() {
         return point1!=null&&point2!=null?true:false;
+    }
+
+    public int getCountPoint() {
+        return countPoint;
     }
 }
