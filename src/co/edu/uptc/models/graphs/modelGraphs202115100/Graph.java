@@ -78,19 +78,14 @@ public class Graph {
                 arches.append((char) (Double.parseDouble(element.getMapRoute().getPoint2().getLatitude()) + 65)).append(" ");
             }
         }
-        return points+" \n\t\t\t\t "+arches;
+        return points + " \n\t\t\t\t " + arches;
     }
 
     private Set<MapElement> getShortestRoute(MapPoint actual, List<Double> finalValues, List<MapPoint> points, int attributeToCompare) {
         Set<MapElement> shortestRoute = new HashSet<>();
-        List<MapRoute> children = getChildren(actual);
-        for (MapRoute child : children) {
+        for (MapRoute child : getChildren(actual)) {
             int index = points.indexOf(actual.equals(child.getPoint1()) ? child.getPoint2() : child.getPoint1());
-            double value = switch (attributeToCompare) {
-                case DISTANCE -> child.getDistance();
-                case SPEED -> child.getSpeedRoute();
-                default -> throw new IllegalStateException("Unexpected value: " + attributeToCompare);
-            };
+            double value = getValueOfAttribute(child, attributeToCompare);
             if (finalValues.get(index) == (finalValues.get(points.indexOf(actual)) - value)) {
                 shortestRoute.add(searchElementByRoute(child));
                 shortestRoute.add(searchElementByPoint(actual));
@@ -134,7 +129,7 @@ public class Graph {
     }
 
     private MapPoint getMinPoint(List<MapPoint> nodes, List<Double> temporalValues, List<Double> finalValues) {
-        int minIndex = geIndexWithMinValue(temporalValues);
+        int minIndex = getIndexWithMinValue(temporalValues);
         if (finalValues.get(minIndex) != Double.MAX_VALUE) {
             temporalValues.set(minIndex, Double.MAX_VALUE);
             return getMinPoint(nodes, temporalValues, finalValues);
@@ -143,14 +138,9 @@ public class Graph {
     }
 
     private void setTemporalValues(MapPoint actual, List<MapPoint> nodes, List<Double> temporalValues, int attributeToCompare) {
-        List<MapRoute> children = getChildren(actual);
-        for (MapRoute child : children) {
+        for (MapRoute child : getChildren(actual)) {
             int index = nodes.indexOf(child.getPoint1().equals(actual) ? child.getPoint2() : child.getPoint1());
-            double temporalValue = temporalValues.get(nodes.indexOf(actual)) + switch (attributeToCompare) {
-                case DISTANCE -> child.getDistance();
-                case SPEED -> child.getSpeedRoute();
-                default -> throw new IllegalStateException("Unexpected value: " + attributeToCompare);
-            };
+            double temporalValue = temporalValues.get(nodes.indexOf(actual)) + getValueOfAttribute(child, attributeToCompare);
             if (temporalValues.get(index) == Double.MAX_VALUE) {
                 temporalValues.set(index, temporalValue);
             } else {
@@ -158,6 +148,14 @@ public class Graph {
             }
             System.out.println("Valor temporal del nodo: " + (char) (Double.parseDouble(nodes.get(index).getLatitude()) + 65) + " es: " + temporalValues.get(index));
         }
+    }
+
+    private Double getValueOfAttribute(MapRoute child, int attributeToCompare) {
+        return switch (attributeToCompare) {
+            case DISTANCE -> child.getDistance();
+            case SPEED -> child.getSpeedRoute();
+            default -> throw new IllegalStateException("Unexpected value: " + attributeToCompare);
+        };
     }
 
     private List<MapRoute> getChildren(MapPoint actual) {
@@ -170,7 +168,7 @@ public class Graph {
         return children;
     }
 
-    public int geIndexWithMinValue(List<Double> list) {
+    public int getIndexWithMinValue(List<Double> list) {
         int minIndex = 0;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) < list.get(minIndex) && list.get(i) != Double.MAX_VALUE) {
