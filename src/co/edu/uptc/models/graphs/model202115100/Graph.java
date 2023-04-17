@@ -229,6 +229,19 @@ public class Graph {
     public static void main(String[] args) {
         Graph graph = new Graph();
         addElements(graph);
+        MapPoint A = getPoint(graph, "A");
+        MapPoint G = getPoint(graph, "G");
+        graph.calculateShortestDistanceRoute(A, G);
+        graph.calculateShortestTimeRoute(A, G);
+    }
+
+    private static MapPoint getPoint(Graph graph, String point) {
+        for (MapPoint mapPoint : graph.getPoints()) {
+            if (mapPoint.getLatitude().equals(Double.toString(point.charAt(0) - 65))) {
+                return mapPoint;
+            }
+        }
+        return null;
     }
 
     private static void addElements(Graph graph) {
@@ -336,9 +349,5 @@ public class Graph {
         for (MapElement element : graph.getElements()) {
             element.setIdElement(id++);
         }
-
-        graph.calculateShortestDistanceRoute(A.getMapPoint(), I.getMapPoint());
-        System.out.println("____________________________________________________________");
-        graph.calculateShortestTimeRoute(A.getMapPoint(), I.getMapPoint());
     }
 }
