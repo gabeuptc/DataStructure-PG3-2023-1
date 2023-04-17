@@ -39,11 +39,9 @@ public class ManagerElements {
         }
         if (mapElement.getElementType() == ElementType.ROUTE) {
             mapElementGraph = createRoute(mapElement);
-
         }
         mapElementGraph.setIdElement(mapElement.getIdElement());
         elements.put(mapElementGraph.getIdElement(), mapElementGraph);
-
     }
 
     public void delPoint(MapPointGraph mapPoint, MapElementGraph element) {
