@@ -9,12 +9,15 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 import java.util.*;
 
+import static java.lang.Math.*;
+
 public class Graph {
     private Map<Integer, MapElement> elements;
     private Map<Integer, MapRoute> resultElements;
     private int count = 0;
     public static final int SPEED = 0;
     public static final int DISTANCE = 1;
+    public static final double RADIUS = 6371;
 
     public Graph() {
         elements = new HashMap<>();
@@ -42,11 +45,22 @@ public class Graph {
         return count;
     }
 
+    public Double getDistanceBetweenPoints(MapElement point1, MapElement point2) {
+        double lat1Rad = toRadians(point1.getGeoPosition().getLatitude());
+        double lat2Rad = toRadians(point2.getGeoPosition().getLatitude());
+
+        double deltaLat = lat2Rad - lat1Rad;
+        double deltaLon = toRadians(point2.getGeoPosition().getLongitude()) - toRadians(point1.getGeoPosition().getLongitude());
+
+        double a = sin(deltaLat / 2) * sin(deltaLat / 2) + cos(lat1Rad) * cos(lat2Rad) * sin(deltaLon / 2) * sin(deltaLon / 2);
+        double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+        return RADIUS * c;
+    }
     public void deleteElement(int id) {
         elements.remove(id);
     }
 
-    public Set<MapElement> calculateShortestRoute(int idPoint1, int idPoint2, int attributeToCompare, boolean theTrue) {
+    public void calculateShortestRoute(int idPoint1, int idPoint2, int attributeToCompare, boolean theTrue) {
         List<MapElement> nodes = new LinkedList<>();
         List<Double> temporalValues = new ArrayList<>(Collections.nCopies(nodes.size(), Double.MAX_VALUE));
         List<Double> finalValues = new ArrayList<>(Collections.nCopies(nodes.size(), Double.MAX_VALUE));
@@ -61,7 +75,6 @@ public class Graph {
         });
 //        System.err.println("Ruta mas corta por " + (attributeToCompare == DISTANCE ? "distancia" : "velocidad") + " : " + setToString(getShortestRoute(point2, finalValues, nodes, attributeToCompare)));
 //        return getShortestRoute(point2, finalValues, nodes, attributeToCompare);
-        return null;
     }
 
     public String setToString(Set<MapElement> shortestRoute) {
@@ -197,6 +210,7 @@ public class Graph {
 //        }
     }
 
+
     public Set<MapElement> getResultElements() {
         // Pendiente
         return null;
@@ -211,6 +225,7 @@ public class Graph {
         addElements(graph);
         // calcula la ruta mas corta entre el punto A y el punto I
         graph.calculateShortestRoute(0, 8, SPEED);
+        System.out.println(graph.getDistanceBetweenPoints(new MapElement(new GeoPosition(0, 0)), new MapElement(new GeoPosition(8, 8))));
     }
 
     private static void addElements(Graph graph) {
