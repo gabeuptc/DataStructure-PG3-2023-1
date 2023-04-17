@@ -1,12 +1,11 @@
 package co.edu.uptc.pojos;
 
-import co.edu.uptc.views.maps.MapRouteGraph;
-import co.edu.uptc.views.maps.TypeElement;
+import co.edu.uptc.views.maps.ElementType;
 import org.jxmapviewer.viewer.GeoPosition;
 
 public class MapElement {
 
-    private TypeElement typeElement;
+    private ElementType typeElement;
     private int idElement;
 
     private GeoPosition geoPosition;
@@ -16,19 +15,19 @@ public class MapElement {
 
     public MapElement(GeoPosition position) {
         setGeoPosition(position);
-        typeElement = TypeElement.POINT;
+        typeElement = ElementType.POINT;
     }
 
     public MapElement(MapRoute mapRoute) {
         this.mapRoute = mapRoute;
-        typeElement = TypeElement.ROUTE;
+        typeElement = ElementType.ROUTE;
     }
 
-    public TypeElement getTypeElement() {
+    public ElementType getTypeElement() {
         return typeElement;
     }
 
-    public void setTypeElement(TypeElement typeElement) {
+    public void setTypeElement(ElementType typeElement) {
         this.typeElement = typeElement;
     }
 

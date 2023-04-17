@@ -5,15 +5,13 @@ import co.edu.uptc.views.Globals.ValuesGlobals;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Set;
+
 
 public class ManagerGraphs extends JPanel implements ContractGraphs.View{
     private PanelMaps panelMaps;
     private static ManagerGraphs instance;
     private ContractGraphs.Presenter presenterGraphs;
 
-    private JLabel totalDistance;
-    private JLabel averageSpeed;
 
     public static ManagerGraphs getInstance(){
         if (instance==null){
@@ -63,6 +61,13 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
     @Override
     public void notifyWarning(String value) {
         JOptionPane.showMessageDialog(this, value, "", JOptionPane.WARNING_MESSAGE);
+    }
+
+    @Override
+    public void updateResultGraph() {
+        if (panelMaps!=null){
+            panelMaps.updateResultElements();
+        }
     }
 
 }

@@ -195,11 +195,11 @@ public class JDialogRouteInformation extends JDialog {
         try {
             route.setSpeedRoute(Double.parseDouble(speed.getText()));
             switch (typeRoute.getSelectedIndex()) {
-                case 0 -> route.setTypeRoute(TypeRoute.PAVING);
-                case 1 -> route.setTypeRoute(TypeRoute.ROAT_RECEBO);
-                case 2 -> route.setTypeRoute(TypeRoute.ADOQUINATE);
-                case 3 -> route.setTypeRoute(TypeRoute.TRAIL);
-                case 4 -> route.setTypeRoute(TypeRoute.ROAD);
+                case 0 -> route.setTypeRoute(RouteType.PAVING);
+                case 1 -> route.setTypeRoute(RouteType.ROAT_RECEBO);
+                case 2 -> route.setTypeRoute(RouteType.ADOQUINATE);
+                case 3 -> route.setTypeRoute(RouteType.TRAIL);
+                case 4 -> route.setTypeRoute(RouteType.ROAD);
             }
 
 

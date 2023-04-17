@@ -24,6 +24,7 @@ public class ManagerGeneral {
     private static ManagerGeneral instance;
     ContractPeople.View view;
     ContractGraphs.View viewGraphs;
+    ContractPeople.Presenter presenter;
     ContractPeople.Model modelGerman;
     ContractPeople.Model model202127061;
     ContractPeople.Model model202113059;
@@ -31,13 +32,13 @@ public class ManagerGeneral {
     ContractPeople.Model model202128778;
     ContractPeople.Model model202127343;
     ContractPeople.Model model202022012;
-    ContractPeople.Presenter presenter;
-    ContractGraphs.Presenter presenterGraphs;
     ContractPeople.Model model202127812;
     ContractPeople.Model modelSebastian;
     ContractPeople.Model model202115100;
     ContractPeople.Model model202127717;
 
+
+    ContractGraphs.Presenter presenterGraphs;
     ContractGraphs.Model modelGraphs202127812;
     ContractGraphs.Model modelGraphs202127061;
     ContractGraphs.Model modelGraphs202023577;
@@ -61,7 +62,6 @@ public class ManagerGeneral {
     ContractGraphs.Model modelGraphs202127343;
 
 
-    ContractGraphs.Model modelGraphsPrueba;
 
     private ManagerGeneral() {
     }
@@ -129,8 +129,6 @@ public class ManagerGeneral {
         //modelGraphs201912254 = new ManagerModelGraphs201912254();
         //modelGraphs202127343 = new ManagerModelGraphs202127343();
 
-
-       // modelGraphsPrueba = new ManagerModelGraphs202127812();
     }
 
 
@@ -205,15 +203,16 @@ public class ManagerGeneral {
 
     public void configModelGraphs202127812() {
         try {
-            System.out.println("config user");
             modelGraphs202127812.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202127812);
+            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
             modelGraphs202127812.loadGraphs();
-           // viewGraphs.updateGraph();
+            viewGraphs.updateGraph();
+
 
         } catch (Exception e) {
             e.printStackTrace();
-            viewGraphs.notifyError("Modelo1 sin definir");
+            viewGraphs.notifyError("Modelo sin definir");
         }
     }
 
@@ -222,6 +221,7 @@ public class ManagerGeneral {
             modelGraphs202127061.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202127061);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202127061.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -233,6 +233,7 @@ public class ManagerGeneral {
             modelGraphs202023577.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202023577);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202023577.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -244,6 +245,7 @@ public class ManagerGeneral {
             modelGraphs201612075.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs201612075);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs201612075.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -255,6 +257,7 @@ public class ManagerGeneral {
             modelGraphs202127717.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202127717);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202127717.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -266,6 +269,7 @@ public class ManagerGeneral {
             modelGraphs202128778.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202128778);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202128778.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -277,6 +281,7 @@ public class ManagerGeneral {
             modelGraphs202113049.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202113049);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202113049.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -288,6 +293,7 @@ public class ManagerGeneral {
             modelGraphs201920890.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs201920890);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs201920890.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -299,6 +305,7 @@ public class ManagerGeneral {
             modelGraphs202128687.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202128687);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202128687.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -310,6 +317,7 @@ public class ManagerGeneral {
             modelGraphs202022012.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202022012);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202022012.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -321,6 +329,7 @@ public class ManagerGeneral {
             modelGraphs201813802.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs201813802);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs201813802.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -332,6 +341,7 @@ public class ManagerGeneral {
             modelGraphs202113214.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202113214);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202113214.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -343,6 +353,7 @@ public class ManagerGeneral {
             modelGraphs202114641.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202114641);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202114641.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -354,6 +365,7 @@ public class ManagerGeneral {
             modelGraphs202115100.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202115100);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202115100.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -365,6 +377,7 @@ public class ManagerGeneral {
             modelGraphs202128710.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202128710);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202128710.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -376,6 +389,7 @@ public class ManagerGeneral {
             modelGraphs202112690.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202112690);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202112690.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -387,6 +401,7 @@ public class ManagerGeneral {
             modelGraphs202114852.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202114852);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202114852.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -398,6 +413,7 @@ public class ManagerGeneral {
             modelGraphs201721830.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs201721830);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs201721830.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -409,6 +425,7 @@ public class ManagerGeneral {
             modelGraphs201721961.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs201721961);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs201721961.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -420,6 +437,7 @@ public class ManagerGeneral {
             modelGraphs201912254.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs201912254);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs201912254.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -431,6 +449,7 @@ public class ManagerGeneral {
             modelGraphs202127343.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202127343);
             viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphs202127343.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");

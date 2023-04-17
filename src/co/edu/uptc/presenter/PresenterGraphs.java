@@ -1,10 +1,6 @@
 package co.edu.uptc.presenter;
 
 import co.edu.uptc.pojos.MapElement;
-import co.edu.uptc.views.maps.MapElementGraph;
-import co.edu.uptc.views.maps.MapPointGraph;
-import co.edu.uptc.views.maps.OrientationRoutes;
-import co.edu.uptc.views.maps.TypeRoute;
 
 import java.util.Set;
 
@@ -109,5 +105,25 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
     @Override
     public void notifyWarning(String value) {
         viewGraphs.notifyWarning(value);
+    }
+
+    @Override
+    public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
+                   modelGraphs.findSortestRouteINDisntance(idElementPoint1, idElementPoint2);
+    }
+
+    @Override
+    public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
+     modelGraphs.findShortestRouteInTime( idElementPoint1, idElementPoint2);
+    }
+
+    @Override
+    public void updateResultGraph() {
+       viewGraphs.updateResultGraph();
+    }
+
+    @Override
+    public Set<MapElement> getResultElements() {
+        return modelGraphs.getResultElements();
     }
 }

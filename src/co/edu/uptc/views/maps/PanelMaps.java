@@ -25,17 +25,13 @@ public class PanelMaps extends JPanel {
 
     protected JXMapViewer jXMapViewer;
     protected  ManagerElements managerElements;
-
     protected PopUpOperationMenu popUpOperationMenu;
-
 
     protected PanelStatus panelStatus;
     protected PanelUser panelUser;
     private int zoom = 2;
-    private boolean visiblePoints = true;
-    private boolean visibleRoutes = true;
 
-    private DashBoard dashBoard;
+    private final DashBoard dashBoard;
 
     public PanelMaps(DashBoard dashBoard) {
         this.dashBoard = dashBoard;
@@ -83,22 +79,21 @@ public class PanelMaps extends JPanel {
         popUpOperationMenu = new PopUpOperationMenu(this);
     }
 
-    public void showMessageError(String value){
-        dashBoard.notifyError(value);
-    }
 
     public void updateElements(){
+        PointRender.thickness = 1.0;
         managerElements.clear();
         jXMapViewer.removeAll();
 
         Set<MapElement> mapElements = ManagerGraphs.getInstance().getPresenterGraphs().getElements();
         for (MapElement mapElement: mapElements) {
-            if (mapElement.getTypeElement()==TypeElement.POINT)
+            if (mapElement.getTypeElement()== ElementType.POINT)
              managerElements.addPointG(mapElement);
         }
         for (MapElement mapElement: mapElements) {
-            if (mapElement.getTypeElement()==TypeElement.ROUTE)
-            managerElements.addPointG(mapElement);
+            if (mapElement.getTypeElement()== ElementType.ROUTE) {
+                managerElements.addPointG(mapElement);
+            }
         }
         createPointsRender();
 
@@ -115,10 +110,28 @@ public class PanelMaps extends JPanel {
         WaypointPainter<MapElementGraph> render = new PointRender();
         Set<MapElementGraph> ss = new HashSet<>(managerElements.getElements().values());
         render.setWaypoints(ss);
-        jXMapViewer.setOverlayPainter(render);
         for (MapElementGraph element : ss) {
             jXMapViewer.add(element.getComponent());
         }
+        jXMapViewer.setOverlayPainter(render);
+
+    }
+
+    public void updateResultElements() {
+        PointRender.thickness = 3.0;
+        managerElements.clear();
+        jXMapViewer.removeAll();
+
+        Set<MapElement> mapElements = ManagerGraphs.getInstance().getPresenterGraphs().getResultElements();
+        for (MapElement mapElement: mapElements) {
+            if (mapElement.getTypeElement()== ElementType.POINT)
+                managerElements.addPointG(mapElement);
+        }
+        for (MapElement mapElement: mapElements) {
+            if (mapElement.getTypeElement()== ElementType.ROUTE)
+                managerElements.addPointG(mapElement);
+        }
+        createPointsRender();
     }
 
 
@@ -173,32 +186,11 @@ public class PanelMaps extends JPanel {
         jXMapViewer.setFocusable(value);
     }
 
-    private JPanel getInstance() {
-        return this;
-    }
-
 
     public void setZoom(int zoom) {
         this.zoom = zoom;
     }
 
-
-    public boolean isVisiblePoints() {
-        return visiblePoints;
-    }
-
-    public void setVisiblePoints(boolean visiblePoints) {
-        this.visiblePoints = visiblePoints;
-    }
-
-
-    public boolean isVisibleRoutes() {
-        return visibleRoutes;
-    }
-
-    public void setVisibleRoutes(boolean visibleRoutes) {
-        this.visibleRoutes = visibleRoutes;
-    }
 
     protected void comboMapTypeActionPerformed(int opt) {
 
@@ -231,16 +223,18 @@ public class PanelMaps extends JPanel {
     }
 
     public void showStatus() {
+        /*
         if (popUpOperationMenu.isSelectRoute()) {
             panelStatus.setMessageS(PanelStatus.ORIGEN_ROUTE);
-          /*  if (managerElements.auxRoute!= null && managerElements.auxRoute.getCountPoint() == 1) {
+            if (managerElements.auxRoute!= null && managerElements.auxRoute.getCountPoint() == 1) {
                 panelStatus.setMessageS(PanelStatus.DESTINATION_ROUTE);
             }
-           */
+
         } else {
             panelStatus.setMessageS(PanelStatus.NORMAL);
         }
         panelStatus.setMessageS(visiblePoints ? PanelStatus.VISIBLE_ELEMENT : PanelStatus.NOT_VISIBLE_ELEMENT);
+    */
     }
 
 }

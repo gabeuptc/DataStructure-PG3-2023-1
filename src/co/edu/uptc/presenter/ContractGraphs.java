@@ -1,13 +1,7 @@
 package co.edu.uptc.presenter;
 
 import co.edu.uptc.pojos.MapElement;
-import co.edu.uptc.views.maps.MapElementGraph;
-import co.edu.uptc.views.maps.MapPointGraph;
-import co.edu.uptc.views.maps.OrientationRoutes;
-import co.edu.uptc.views.maps.TypeRoute;
-import org.jxmapviewer.viewer.GeoPosition;
 
-import java.util.Map;
 import java.util.Set;
 
 public interface ContractGraphs {
@@ -18,6 +12,8 @@ public interface ContractGraphs {
         void setUser(String user);
 
         void notifyWarning(String value);
+
+        void updateResultGraph();
     }
     public interface Presenter{
         void setView(ContractGraphs.View view);
@@ -37,6 +33,14 @@ public interface ContractGraphs {
         void deletePoint(int idElement);
 
         void notifyWarning(String s);
+
+        void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2);
+
+        void findShortestRouteInTime(int idElementPoint1, int idElementPoint2);
+
+        void updateResultGraph();
+
+        Set<MapElement> getResultElements();
     }
     public interface Model{
         void setPresenter(ContractGraphs.Presenter presenter);
@@ -50,5 +54,11 @@ public interface ContractGraphs {
         void loadGraphs();
 
         void deletePoint(int idElement);
+
+        void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2);
+
+        void findShortestRouteInTime(int idElementPoint1, int idElementPoint2);
+
+        Set<MapElement> getResultElements();
     }
 }

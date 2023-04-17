@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class MapElementGraph extends DefaultWaypoint implements Cloneable {
 
-    private TypeElement typeElement;
+    private ElementType typeElement;
 
     private int idElement;
 
@@ -17,30 +17,28 @@ public class MapElementGraph extends DefaultWaypoint implements Cloneable {
 
     private boolean visible;
 
-    /*public MapElementGraph(GeoPosition coord) {
-        super(coord);
-    }*/
+
 
 
     public MapElementGraph(MapPointGraph mapPoint, GeoPosition coord) {
         super(coord);
         this.mapPoint = mapPoint;
-        typeElement = TypeElement.POINT;
+        typeElement = ElementType.POINT;
     }
 
     //, GeoPosition coord
     public MapElementGraph(MapRouteGraph mapRoute, GeoPosition coord) {
         super(coord);
         this.mapRoute = mapRoute;
-        typeElement = TypeElement.ROUTE;
+        typeElement = ElementType.ROUTE;
     }
 
 
     public Component getComponent() {
-        if (typeElement == TypeElement.POINT) {
+        if (typeElement == ElementType.POINT) {
             return mapPoint.getButtonPoint();
         }
-        if (typeElement == TypeElement.ROUTE) {
+        if (typeElement == ElementType.ROUTE) {
             return mapRoute.getComponent();
         }
         return null;
@@ -54,7 +52,7 @@ public class MapElementGraph extends DefaultWaypoint implements Cloneable {
         this.idElement = idElement;
     }
 
-    public TypeElement getTypeElement() {
+    public ElementType getTypeElement() {
         return typeElement;
     }
 

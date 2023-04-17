@@ -5,7 +5,7 @@ import java.awt.*;
 public class MapRouteGraph {
 
     private Component component;
-    private TypeRoute typeRoute;
+    private RouteType typeRoute;
     private double speedRoute;
     private double distance;
     private OrientationRoutes orientationRoutes;
@@ -42,7 +42,7 @@ public class MapRouteGraph {
         this.distance = distance;
     }
 
-    public void setTypeRoute(TypeRoute typeRoute) {
+    public void setTypeRoute(RouteType typeRoute) {
         this.typeRoute = typeRoute;
     }
 
@@ -50,7 +50,7 @@ public class MapRouteGraph {
         this.speedRoute = speedRoute;
     }
 
-    public TypeRoute getTypeRoute() {
+    public RouteType getTypeRoute() {
         return typeRoute;
     }
 

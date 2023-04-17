@@ -1,5 +1,5 @@
 package co.edu.uptc.views.maps;
 
-public enum TypeElement {
+public enum ElementType {
     POINT,ROUTE
 }

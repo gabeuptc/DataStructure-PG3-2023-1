@@ -15,11 +15,14 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     private ContractGraphs.Presenter presenter;
     private Map<Integer,MapElement> elements;
 
+    private Map<Integer,MapElement> elementsResult;
+
     private int count=0;
 
 
     public ManagerModelGraphs202127812() {
         elements = new HashMap<>();
+        elementsResult= new HashMap<>();
     }
 
     @Override
@@ -108,6 +111,7 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         addRouteBurned(2,3);
         addRouteBurned(3,4);
         addRouteBurned(4,6);
+        addRouteBurned(5,4);
         addRouteBurned(6,7);
         addRouteBurned(5,7);
         addRouteBurned(5,11);
@@ -117,11 +121,12 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         addRouteBurned(7,8);
         addRouteBurned(12,8);
         addRouteBurned(12,13);
+        addRouteBurned(13,14);
         addRouteBurned(14,15);
         addRouteBurned(15,16);
         addRouteBurned(16,17);
 
-        presenter.updateGraph();
+
     }
 
     @Override
@@ -134,10 +139,51 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         }
     }
 
+    @Override
+    public Set<MapElement> getResultElements() {
+        return  new HashSet<> (elementsResult.values());
+    }
+
+    @Override
+    public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
+        elementsResult.clear();
+        // add points in the route Estos estan quemados para la prueba
+        elementsResult.put(4,elements.get(4));
+        elementsResult.put(5,elements.get(5));
+        elementsResult.put(7,elements.get(7));
+        elementsResult.put(8,elements.get(8));
+
+        // este es el resultado de la busqueda  Estos estan quemados para la prueba
+        elementsResult.put(23,elements.get(23));
+        elementsResult.put(25,elements.get(25));
+        elementsResult.put(30,elements.get(30));
+        presenter.updateResultGraph();
+    }
+
+    @Override
+    public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
+        // add points in the route Estos estan quemados para la prueba
+        elementsResult.clear();
+        elementsResult.put(4,elements.get(4));
+        elementsResult.put(5,elements.get(5));
+        elementsResult.put(11,elements.get(11));
+        elementsResult.put(10,elements.get(10));
+        elementsResult.put(9,elements.get(9));
+        elementsResult.put(8,elements.get(8));
+
+        // este es el resultado de la busqueda  Estos estan quemados para la prueba
+        elementsResult.put(23,elements.get(23));
+        elementsResult.put(26,elements.get(26));
+        elementsResult.put(27,elements.get(27));
+        elementsResult.put(28,elements.get(28));
+        elementsResult.put(29,elements.get(29));
+        presenter.updateResultGraph();
+    }
+
 
     private boolean isRelation(int id){
         for (MapElement mapElement : elements.values()) {
-            if (mapElement.getTypeElement()==TypeElement.ROUTE){
+            if (mapElement.getTypeElement()== ElementType.ROUTE){
                 if (mapElement.getMapRoute().getPoint1().getIdElement() == id) {
                     return true;
                 }
@@ -155,12 +201,13 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     private void addRouteBurned(int p1, int p2){
         MapRoute mapRoute = new MapRoute();
         mapRoute.setOrientationRoutes(OrientationRoutes.DESTIN_ORIGIN);
-        mapRoute.setTypeRoute(TypeRoute.PAVING);
+        mapRoute.setTypeRoute(RouteType.PAVING);
         mapRoute.setSpeedRoute(2);
         mapRoute.setPoint1(getElement(p1));
         mapRoute.setPoint2(getElement(p2));
         MapElement mapElement = new MapElement(mapRoute);
         addElementOnly(mapElement);
+        //System.out.println(mapElement.getIdElement()+"  "+mapElement.getMapRoute().getPoint1().getIdElement()+"   "+mapElement.getMapRoute().getPoint2().getIdElement());
     }
 
 }

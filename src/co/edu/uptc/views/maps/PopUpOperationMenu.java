@@ -9,16 +9,10 @@ public class PopUpOperationMenu{
     private JMenuItem itemShowPoint;
     private JMenuItem itemAddPoint;
     private JMenuItem itemAddRoute;
-    private JMenuItem itemShowRoutes;
-
     GeoPosition position;
-
-    private boolean selectRoute=false;
+    private SelectionType selectionType = SelectionType.NONE;
     PanelMaps panelMaps;
     final JPopupMenu popupMenu = new JPopupMenu("popup");
-    private ManagerGraphs managerGraphs;
-    private boolean isSelectCalculeDistance=false;
-    private boolean isSelectCalculeTime=false;
 
     public PopUpOperationMenu(PanelMaps panelMaps) {
         this.panelMaps = panelMaps;
@@ -28,28 +22,37 @@ public class PopUpOperationMenu{
         makeMenuItemAddOther();
     }
 
-    public boolean isSelectRoute() {
-        return selectRoute;
+    public SelectionType getSelectionType() {
+        return selectionType;
     }
 
-
     public void finishSelectRoute(){
-        selectRoute = false;
+        selectionType = SelectionType.NONE;
         panelMaps.managerElements.finish();
     }
 
     public void CancelSelectRoute(){
-        selectRoute = false;
+        selectionType = SelectionType.NONE;
         panelMaps.managerElements.cancel();
     }
 
     public void cancelSelectRoute(){
-        selectRoute = false;
+        selectionType = SelectionType.NONE;
        panelMaps.managerElements.cancel();
     }
 
     public void startSelectRoute(){
-        selectRoute = true;
+        selectionType = SelectionType.NEW_ROUTE;
+        panelMaps.showStatus();
+    }
+
+
+    public void startSelectRouteShortestInDistance(){
+        selectionType = SelectionType.SHORTEST_ROUTE_IN_DISTANCE;
+        panelMaps.showStatus();
+    }
+    public void startSelectRouteShortestInTime(){
+        selectionType = SelectionType.SHORTEST_ROUTE_IN_TIME;
         panelMaps.showStatus();
     }
 
@@ -73,16 +76,36 @@ public class PopUpOperationMenu{
 
     private void addItemAddRoutes() {
         JMenu menu = new JMenu("Rutas");
-        menu.setActionCommand("ItemRoutes");
         popupMenu.add(menu);
         addItemRouteSRoute(menu);
         addItemRouteSRouteCancel(menu);
+        addItemAddFindRoute(menu);
     }
 
     private void addItemRouteSRoute(JMenu menu) {
          itemAddRoute = new JMenuItem("Adicionar Ruta");
         menu.add(itemAddRoute);
         itemAddRoute.addActionListener(e->  startSelectRoute());
+    }
+
+
+    private void addItemAddFindRoute(JMenu menu) {
+        JMenu itemMenu = new JMenu("Buscar Rutas más corta");
+        menu.add(itemMenu);
+        addItemFindShortestRouteInDistance(itemMenu);
+        addItemFindShortestRouteInTime(itemMenu);
+    }
+
+    private void addItemFindShortestRouteInDistance(JMenu menu) {
+        itemAddRoute = new JMenuItem("En distancia");
+        menu.add(itemAddRoute);
+        itemAddRoute.addActionListener(e->  startSelectRouteShortestInDistance());
+    }
+
+    private void addItemFindShortestRouteInTime(JMenu menu) {
+        itemAddRoute = new JMenuItem("En tiempo");
+        menu.add(itemAddRoute);
+        itemAddRoute.addActionListener(e->  startSelectRouteShortestInTime());
     }
 
 

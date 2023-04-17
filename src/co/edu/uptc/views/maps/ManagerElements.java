@@ -2,6 +2,7 @@ package co.edu.uptc.views.maps;
 
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
+import co.edu.uptc.views.Globals.ValuesGlobals;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.swing.*;
@@ -9,9 +10,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class ManagerElements {
     private Map<Integer,MapElementGraph> elements;
@@ -33,10 +32,10 @@ public class ManagerElements {
 
     public void addPointG(MapElement mapElement) {
         MapElementGraph mapElementGraph=null;
-        if (mapElement.getTypeElement()==TypeElement.POINT) {
+        if (mapElement.getTypeElement()== ElementType.POINT) {
             mapElementGraph = createPoint(mapElement.getGeoPosition().getLatitude(), mapElement.getGeoPosition().getLongitude());
         }
-        if (mapElement.getTypeElement()==TypeElement.ROUTE){
+        if (mapElement.getTypeElement()== ElementType.ROUTE){
             mapElementGraph = createRoute(mapElement);
 
         }
@@ -73,30 +72,29 @@ public class ManagerElements {
 
 
     public JButton getButtonPoint(MapPointGraph point, MapElementGraph element) {
-        JButton buttonPoint = new JButton(new ImageIcon("assets/punto21.png"));
+        JButton buttonPoint = new JButton(ValuesGlobals.COLOR_RED_POINT);
         buttonPoint.setName("Point");
         buttonPoint.setContentAreaFilled(false);
         buttonPoint.setBorder(null);
         buttonPoint.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        buttonPoint.setSize(new Dimension(10, 10));
+        buttonPoint.setSize(new Dimension(12, 12));
 
 
         buttonPoint.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
-                if (panelMaps.popUpOperationMenu.isSelectRoute()) {
-                    panelMaps.showStatus(PanelStatus.SELECTED_POINT);
-                    addElementInRoute(element);
-                    //TODO  gabe
-                }else {
+                if (panelMaps.popUpOperationMenu.getSelectionType()==SelectionType.NONE) {
                     int opt = JOptionPane.showConfirmDialog(buttonPoint, "Latitud: " + element.getMapPoint().geoPosition.getLatitude() +
                             " \nLongitud: " + element.getMapPoint().geoPosition.getLatitude() +
                             " \nId del elemento: " + element.getIdElement() +
                             " \n\nDesea Borrar el Punto?", "aaa", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
                     if (opt == 0) {
-                        delPoint(point,element);
+                        delPoint(point, element);
                     }
+                } else {
+                    panelMaps.showStatus(PanelStatus.SELECTED_POINT);
+                    addElementInRoute(element,buttonPoint);
                 }
             }
         });
@@ -104,17 +102,31 @@ public class ManagerElements {
     }
 
 
-    public void addElementInRoute(MapElementGraph element){
+    public void addElementInRoute(MapElementGraph element,JButton buttonPoint){
+        assingColorButtom(buttonPoint);
         if (auxRoute==null){
             auxRoute = new MapRoute();
         }
         MapElement mapElement = ManagerGraphs.getInstance().getPresenterGraphs().getElement(element.getIdElement());
         auxRoute.setPoint(mapElement);
         if (auxRoute.isAssigneds()){
-            new JDialogRouteInformation(auxRoute,panelMaps,elementNumber).setVisible(true);
-            if (isComplete){
-                MapElement auxMapElement = new MapElement(auxRoute);
-                ManagerGraphs.getInstance().getPresenterGraphs().addElement(auxMapElement);
+            if (panelMaps.popUpOperationMenu.getSelectionType()==SelectionType.NEW_ROUTE) {
+                new JDialogRouteInformation(auxRoute, panelMaps, elementNumber).setVisible(true);
+                if (isComplete) {
+                    MapElement auxMapElement = new MapElement(auxRoute);
+                    ManagerGraphs.getInstance().getPresenterGraphs().addElement(auxMapElement);
+                    panelMaps.popUpOperationMenu.finishSelectRoute();
+                }
+            }
+            System.out.println(panelMaps.popUpOperationMenu.getSelectionType());
+            if (panelMaps.popUpOperationMenu.getSelectionType()==SelectionType.SHORTEST_ROUTE_IN_DISTANCE) {
+                System.out.println("managerElements:  SHORTEST_ROUTE_IN_DISTANCE");
+                ManagerGraphs.getInstance().getPresenterGraphs().findSortestRouteINDisntance(auxRoute.getPoint1().getIdElement(),auxRoute.getPoint2().getIdElement());
+                panelMaps.popUpOperationMenu.finishSelectRoute();
+            }
+            if (panelMaps.popUpOperationMenu.getSelectionType()==SelectionType.SHORTEST_ROUTE_IN_TIME) {
+                System.out.println("managerElements:  SHORTEST_ROUTE_IN_TIME");
+                ManagerGraphs.getInstance().getPresenterGraphs().findShortestRouteInTime(auxRoute.getPoint1().getIdElement(),auxRoute.getPoint2().getIdElement());
                 panelMaps.popUpOperationMenu.finishSelectRoute();
             }
         }
@@ -125,10 +137,19 @@ public class ManagerElements {
         return elements;
     }
 
+    private void assingColorButtom(JButton button){
+        if (panelMaps.popUpOperationMenu.getSelectionType()==SelectionType.NONE) {
+            button.setIcon(ValuesGlobals.COLOR_RED_POINT);
+        } else {
+            button.setIcon(ValuesGlobals.COLOR_PURPLE_POINT);
+        }
+    }
 
     public void cancel(){
         auxRoute = null;
         panelMaps.showStatus(PanelStatus.CANCELED_ROUTE);
+        ManagerGraphs.getInstance().updateGraph();
+
     }
 
     public void finish(){

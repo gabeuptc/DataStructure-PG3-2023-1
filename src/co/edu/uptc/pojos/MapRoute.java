@@ -1,24 +1,22 @@
 package co.edu.uptc.pojos;
 
-import co.edu.uptc.views.maps.MapPointGraph;
 import co.edu.uptc.views.maps.OrientationRoutes;
-import co.edu.uptc.views.maps.TypeRoute;
-import org.jxmapviewer.viewer.GeoPosition;
+import co.edu.uptc.views.maps.RouteType;
 
 public class MapRoute {
 
-    private TypeRoute typeRoute;
+    private RouteType typeRoute;
     private double speedRoute;
     private OrientationRoutes orientationRoutes;
     private MapElement point1;
     private MapElement point2;
 
 
-    public TypeRoute getTypeRoute() {
+    public RouteType getTypeRoute() {
         return typeRoute;
     }
 
-    public void setTypeRoute(TypeRoute typeRoute) {
+    public void setTypeRoute(RouteType typeRoute) {
         this.typeRoute = typeRoute;
     }
 
