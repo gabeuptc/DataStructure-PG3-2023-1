@@ -10,54 +10,47 @@ import org.jxmapviewer.viewer.GeoPosition;
 import java.util.*;
 
 public class Graph {
-    private Set<MapRoute> routes;
-    private Set<MapElement> points;
-    private Set<MapElement> elements;
+    private Map<Integer, MapElement> elements;
+    private Map<Integer, MapRoute> resultElements;
+    private int count = 0;
     public static final int SPEED = 0;
     public static final int DISTANCE = 1;
 
     public Graph() {
-        elements = new HashSet<>();
-        routes = new HashSet<>();
-        points = new HashSet<>();
+        elements = new HashMap<>();
+        resultElements = new HashMap<>();
     }
 
     public void addElement(MapElement element) {
-        elements.add(element);
-        if (element.getElementType() != ElementType.POINT) {
-            routes.add(element.getMapRoute());
-            points.add(element.getMapRoute().getPoint1());
-            points.add(element.getMapRoute().getPoint2());
-        }
+        element.setIdElement(count++);
+        elements.put(element.getIdElement(), element);
     }
 
     public Set<MapElement> getElements() {
-        return elements;
+        return new HashSet<>(elements.values());
     }
 
-    public void setElements(Set<MapElement> elements) {
-        for (MapElement element : elements) {
-            addElement(element);
-        }
+    public void setElements(Map<Integer, MapElement> elements) {
+        this.elements = elements;
     }
 
-    public void deleteElement(MapElement element) {
-        elements.remove(element);
+    public void setResultElements(Map<Integer, MapRoute> resultElements) {
+        this.resultElements = resultElements;
     }
 
-    public Set<MapRoute> getRoutes() {
-        return routes;
+    public int getCount() {
+        return count;
     }
 
-    public Set<MapElement> getPoints() {
-        return points;
+    public void deleteElement(int id) {
+        elements.remove(id);
     }
 
-    public Set<MapElement> calculateShortestRoute(MapElement point1, MapElement point2, int attributeToCompare) {
-        List<MapElement> nodes = new LinkedList<>(points);
+    public Set<MapElement> calculateShortestRoute(int idPoint1, int idPoint2, int attributeToCompare, boolean theTrue) {
+        List<MapElement> nodes = new LinkedList<>();
         List<Double> temporalValues = new ArrayList<>(Collections.nCopies(nodes.size(), Double.MAX_VALUE));
         List<Double> finalValues = new ArrayList<>(Collections.nCopies(nodes.size(), Double.MAX_VALUE));
-        temporalValues.set(nodes.indexOf(point1), 0.0);
+//        temporalValues.set(nodes.indexOf(point1), 0.0);
         dijkstra(nodes, temporalValues, finalValues, attributeToCompare);
         System.out.println("Temporal values: " + temporalValues);
         System.out.println("Final values: " + finalValues);
@@ -66,9 +59,9 @@ public class Graph {
             int index = nodes.indexOf(node);
 //            System.out.println("Valor final del nodo: " + (char) (Double.parseDouble(node.getLatitude()) + 65) + " es: " + finalValues.get(index));
         });
-        System.err.println("Ruta mas corta por " + (attributeToCompare == DISTANCE ? "distancia" : "velocidad") + " : " + setToString(getShortestRoute(point2, finalValues, nodes, attributeToCompare)));
-        return getShortestRoute(point2, finalValues, nodes, attributeToCompare);
-
+//        System.err.println("Ruta mas corta por " + (attributeToCompare == DISTANCE ? "distancia" : "velocidad") + " : " + setToString(getShortestRoute(point2, finalValues, nodes, attributeToCompare)));
+//        return getShortestRoute(point2, finalValues, nodes, attributeToCompare);
+        return null;
     }
 
     public String setToString(Set<MapElement> shortestRoute) {
@@ -102,7 +95,7 @@ public class Graph {
     }
 
     private MapElement searchElementByPoint(MapElement actual) {
-        for (MapElement element : elements) {
+        for (MapElement element : elements.values()) {
             if (element.getElementType() == ElementType.POINT) {
 //                if (element.getMapElement().equals(actual)) {
                 return element;
@@ -113,11 +106,20 @@ public class Graph {
     }
 
     private MapElement searchElementByRoute(MapRoute child) {
-        for (MapElement element : elements) {
+        for (MapElement element : elements.values()) {
             if (element.getElementType() == ElementType.ROUTE) {
                 if (element.getMapRoute().equals(child)) {
                     return element;
                 }
+            }
+        }
+        return null;
+    }
+
+    private MapElement searchElementById(int id) {
+        for (MapElement element : elements.values()) {
+            if (element.getIdElement() == id) {
+                return element;
             }
         }
         return null;
@@ -164,11 +166,11 @@ public class Graph {
 
     private List<MapRoute> getChildren(MapElement actual) {
         List<MapRoute> children = new ArrayList<>();
-        for (MapRoute route : routes) {
-            if (route.getPoint1().equals(actual) || route.getPoint2().equals(actual)) {
-                children.add(route);
-            }
-        }
+//        for (MapRoute route : elements.values()) {
+//            if (route.getPoint1().equals(actual) || route.getPoint2().equals(actual)) {
+//                children.add(route);
+//            }
+//        }
         return children;
     }
 
@@ -183,7 +185,7 @@ public class Graph {
     }
 
     public MapElement getElement(int id) {
-        for (MapElement element : elements) {
+        for (MapElement element : elements.values()) {
             if (element.getIdElement() == id) {
                 return element;
             }
@@ -221,15 +223,15 @@ public class Graph {
     }
 
     private static void addElements(Graph graph) {
-        MapElement A = getPoint(0,0);
-        MapElement B = getPoint(1,1);
-        MapElement C = getPoint(2,2);
-        MapElement D = getPoint(3,3);
-        MapElement E = getPoint(4,4);
-        MapElement F = getPoint(5,5);
-        MapElement G = getPoint(6,6);
-        MapElement H = getPoint(7,7);
-        MapElement I = getPoint(8,8);
+        MapElement A = getPoint(0, 0);
+        MapElement B = getPoint(1, 1);
+        MapElement C = getPoint(2, 2);
+        MapElement D = getPoint(3, 3);
+        MapElement E = getPoint(4, 4);
+        MapElement F = getPoint(5, 5);
+        MapElement G = getPoint(6, 6);
+        MapElement H = getPoint(7, 7);
+        MapElement I = getPoint(8, 8);
 
         MapElement AB = getRoute(A, B, 1);
         MapElement BC = getRoute(B, C, 4);
@@ -267,9 +269,6 @@ public class Graph {
         graph.addElement(FG);
         graph.addElement(DF);
         graph.addElement(FI);
-
-        int id = 0;
-        for (MapElement element : graph.getElements()) element.setIdElement(id++);
     }
 
     private static MapElement getRoute(MapElement point1, MapElement point2, int speed) {

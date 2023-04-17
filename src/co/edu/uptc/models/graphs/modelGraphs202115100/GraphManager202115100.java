@@ -2,7 +2,7 @@ package co.edu.uptc.models.graphs.modelGraphs202115100;
 
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
-import co.edu.uptc.views.maps.*;
+import co.edu.uptc.views.maps.types.ElementType;
 
 import java.util.Set;
 
@@ -57,8 +57,23 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public void deletePoint(int idElement) {
-        //Pendiente- Eliminar un punto del grafo
-//        graph.deleteElement(idElement);
+        if (!pointHasRelation(idElement)) {
+            graph.deleteElement(idElement);
+        }
+    }
+
+    private boolean pointHasRelation(int id) {
+        for (MapElement mapElement : graph.getElements()) {
+            if (mapElement.getElementType() == ElementType.ROUTE) {
+                if (mapElement.getMapRoute().getPoint1().getIdElement() == id) {
+                    return true;
+                }
+                if (mapElement.getMapRoute().getPoint2().getIdElement() == id) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
