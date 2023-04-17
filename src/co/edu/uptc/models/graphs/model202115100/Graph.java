@@ -12,6 +12,8 @@ public class Graph {
     private Set<MapRouteA> routes;
     private Set<MapPoint> points;
     private Set<MapElement> elements;
+    private final int SPEED = 0;
+    private final int DISTANCE = 1;
 
     public Graph() {
         elements = new HashSet<>();
@@ -59,7 +61,7 @@ public class Graph {
             finalValues.add(Double.MAX_VALUE);
         }
         temporalValues.set(points.indexOf(point1), 0.0);
-        dijkstra(points, temporalValues, finalValues, "DISTANCE");
+        dijkstra(points, temporalValues, finalValues, DISTANCE);
         System.out.println("Temporal values: " + temporalValues);
         System.out.println("Final values: " + finalValues);
 
@@ -69,7 +71,7 @@ public class Graph {
         return null;
     }
 
-    private void dijkstra(List<MapPoint> nodes, List<Double> temporalValues, List<Double> finalValues, String attributeToCompare) {
+    private void dijkstra(List<MapPoint> nodes, List<Double> temporalValues, List<Double> finalValues, int attributeToCompare) {
         MapPoint minPoint = getMinPoint((List<MapPoint>) ((ArrayList<MapPoint>) nodes).clone(), (List<Double>) ((ArrayList<Double>) temporalValues).clone(), (List<Double>) ((ArrayList<Double>) finalValues).clone());
         finalValues.set(nodes.indexOf(minPoint), temporalValues.get(nodes.indexOf(minPoint)));
         setTemporalValues(minPoint, nodes, temporalValues, attributeToCompare);
@@ -78,13 +80,13 @@ public class Graph {
         }
     }
 
-    private void setTemporalValues(MapPoint actual, List<MapPoint> nodes, List<Double> temporalValues, String attributeToCompare) {
+    private void setTemporalValues(MapPoint actual, List<MapPoint> nodes, List<Double> temporalValues, int attributeToCompare) {
         List<MapRouteA> children = getChildren(actual);
         for (MapRouteA child : children) {
             int index = nodes.indexOf(child.getPoint1().equals(actual) ? child.getPoint2() : child.getPoint1());
             double temporalValue = temporalValues.get(nodes.indexOf(actual)) + switch (attributeToCompare) {
-                case "DISTANCE" -> child.getDistance();
-                case "SPEED" -> child.getSpeedRoute();
+                case DISTANCE -> child.getDistance();
+                case SPEED -> child.getSpeedRoute();
                 default -> throw new IllegalStateException("Unexpected value: " + attributeToCompare);
             };
             if (temporalValues.get(index) == Double.MAX_VALUE) {
@@ -134,7 +136,7 @@ public class Graph {
             finalValues.add(Double.MAX_VALUE);
         }
         temporalValues.set(points.indexOf(point1), 0.0);
-        dijkstra(points, temporalValues, finalValues, "SPEED");
+        dijkstra(points, temporalValues, finalValues, SPEED);
         System.out.println("Temporal values: " + temporalValues);
         System.out.println("Final values: " + finalValues);
 
