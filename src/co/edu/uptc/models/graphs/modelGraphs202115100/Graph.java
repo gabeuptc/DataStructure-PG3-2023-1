@@ -9,8 +9,8 @@ public class Graph {
     private Set<MapRoute> routes;
     private Set<MapPoint> points;
     private Set<MapElement> elements;
-    private final int SPEED = 0;
-    private final int DISTANCE = 1;
+    public final int SPEED = 0;
+    public final int DISTANCE = 1;
 
     public Graph() {
         elements = new HashSet<>();
@@ -49,7 +49,7 @@ public class Graph {
         return points;
     }
 
-    public Set<MapElement> calculateShortestDistanceRoute(MapPoint point1, MapPoint point2) {
+    public Set<MapElement> calculateShortestRoute(MapPoint point1, MapPoint point2, int attributeToCompare) {
         List<MapPoint> points = new ArrayList<>(this.points);
         List<Double> temporalValues = new ArrayList<>();
         List<Double> finalValues = new ArrayList<>();
@@ -58,15 +58,16 @@ public class Graph {
             finalValues.add(Double.MAX_VALUE);
         }
         temporalValues.set(points.indexOf(point1), 0.0);
-        dijkstra(points, temporalValues, finalValues, DISTANCE);
+        dijkstra(points, temporalValues, finalValues, attributeToCompare);
         System.out.println("Temporal values: " + temporalValues);
         System.out.println("Final values: " + finalValues);
 
         for (Double finalValue : finalValues) {
             System.out.println("Valor final del nodo: " + (char) (Double.parseDouble(points.get(finalValues.indexOf(finalValue)).getLatitude()) + 65) + " es: " + finalValue);
         }
-        System.err.println("Ruta mas corta por distancia: " + setToString(getShortestRoute(point2, finalValues, points, DISTANCE)));
-        return getShortestRoute(point2, finalValues, points, DISTANCE);
+        System.err.println("Ruta mas corta por " + (attributeToCompare == DISTANCE ? "distancia" : "velocidad") + " : " + setToString(getShortestRoute(point2, finalValues, points, attributeToCompare)));
+        return getShortestRoute(point2, finalValues, points, attributeToCompare);
+
     }
 
     private String setToString(Set<MapElement> shortestRoute) {
@@ -181,27 +182,6 @@ public class Graph {
         return minIndex;
     }
 
-    public Set<MapElement> calculateShortestTimeRoute(MapPoint point1, MapPoint point2) {
-        List<MapPoint> points = new ArrayList<>(this.points);
-        List<Double> temporalValues = new ArrayList<>();
-        List<Double> finalValues = new ArrayList<>();
-        for (MapPoint ignored : points) {
-            temporalValues.add(Double.MAX_VALUE);
-            finalValues.add(Double.MAX_VALUE);
-        }
-        temporalValues.set(points.indexOf(point1), 0.0);
-        dijkstra(points, temporalValues, finalValues, SPEED);
-        System.out.println("Temporal values: " + temporalValues);
-        System.out.println("Final values: " + finalValues);
-
-        for (Double finalValue : finalValues) {
-            System.out.println("Valor final del nodo: " + (char) (Double.parseDouble(points.get(finalValues.indexOf(finalValue)).getLatitude()) + 65) + " es: " + finalValue);
-        }
-        System.err.println("Ruta mas corta por velocidad" +" : " + setToString(getShortestRoute(point2, finalValues, points, SPEED)));
-        return getShortestRoute(point2, finalValues, points, SPEED);
-
-    }
-
     public MapElement getElement(int id) {
         for (MapElement element : elements) {
             if (element.getIdElement() == id) {
@@ -228,8 +208,8 @@ public class Graph {
         addElements(graph);
         MapPoint A = getPoint(graph, "A");
         MapPoint G = getPoint(graph, "G");
-        graph.calculateShortestDistanceRoute(A, G);
-        graph.calculateShortestTimeRoute(A, G);
+        graph.calculateShortestRoute(A, G, graph.DISTANCE);
+//        graph.calculateShortestRoute(A, G, graph.SPEED);
     }
 
     private static MapPoint getPoint(Graph graph, String point) {

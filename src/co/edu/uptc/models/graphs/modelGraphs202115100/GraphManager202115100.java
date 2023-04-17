@@ -21,12 +21,12 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> calculateShortestDistanceRoute(MapPoint point1, MapPoint point2) {
-        return graph.calculateShortestDistanceRoute(point1, point2);
+        return graph.calculateShortestRoute(point1, point2, graph.DISTANCE);
     }
 
     @Override
     public Set<MapElement> calculateShortestTimeRoute(MapPoint point1, MapPoint point2) {
-        return graph.calculateShortestTimeRoute(point1, point2);
+        return graph.calculateShortestRoute(point1, point2, graph.SPEED);
     }
 
     @Override
