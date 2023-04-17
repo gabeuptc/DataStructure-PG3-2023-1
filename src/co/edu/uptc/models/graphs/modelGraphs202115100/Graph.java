@@ -13,7 +13,7 @@ import static java.lang.Math.*;
 
 public class Graph {
     private Map<Integer, MapElement> elements;
-    private Map<Integer, MapRoute> resultElements;
+    private Map<Integer, MapElement> resultElements;
     private int count = 0;
     public static final int SPEED = 0;
     public static final int DISTANCE = 1;
@@ -37,7 +37,7 @@ public class Graph {
         this.elements = elements;
     }
 
-    public void setResultElements(Map<Integer, MapRoute> resultElements) {
+    public void setResultElements(Map<Integer, MapElement> resultElements) {
         this.resultElements = resultElements;
     }
 
@@ -45,36 +45,133 @@ public class Graph {
         return count;
     }
 
+//    public Double getDistanceBetweenPoints(MapElement point1, MapElement point2) {
+//        double lat1Rad = toRadians(point1.getGeoPosition().getLatitude());
+//        double lat2Rad = toRadians(point2.getGeoPosition().getLatitude());
+//
+//        double deltaLat = lat2Rad - lat1Rad;
+//        double deltaLon = toRadians(point2.getGeoPosition().getLongitude()) - toRadians(point1.getGeoPosition().getLongitude());
+//
+//        double a = sin(deltaLat / 2) * sin(deltaLat / 2) + cos(lat1Rad) * cos(lat2Rad) * sin(deltaLon / 2) * sin(deltaLon / 2);
+//        double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+//        return RADIUS * c;
+
+    //    }
     public Double getDistanceBetweenPoints(MapElement point1, MapElement point2) {
-        double lat1Rad = toRadians(point1.getGeoPosition().getLatitude());
-        double lat2Rad = toRadians(point2.getGeoPosition().getLatitude());
-
-        double deltaLat = lat2Rad - lat1Rad;
-        double deltaLon = toRadians(point2.getGeoPosition().getLongitude()) - toRadians(point1.getGeoPosition().getLongitude());
-
-        double a = sin(deltaLat / 2) * sin(deltaLat / 2) + cos(lat1Rad) * cos(lat2Rad) * sin(deltaLon / 2) * sin(deltaLon / 2);
-        double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-        return RADIUS * c;
+        for (MapElement element : elements.values()) {
+            if (element.getElementType() == ElementType.ROUTE) {
+                if (((element.getMapRoute().getPoint1().getIdElement() == point1.getIdElement()) &&
+                        (element.getMapRoute().getPoint2().getIdElement() == point2.getIdElement())) ||
+                        ((element.getMapRoute().getPoint1().getIdElement() == point2.getIdElement()) &&
+                                (element.getMapRoute().getPoint2().getIdElement() == point1.getIdElement()))) {
+                    return element.getGeoPosition().getLatitude();
+                }
+            }
+        }
+        return Double.MAX_VALUE;
     }
+
     public void deleteElement(int id) {
         elements.remove(id);
     }
 
     public void calculateShortestRoute(int idPoint1, int idPoint2, int attributeToCompare, boolean theTrue) {
-        List<MapElement> nodes = new LinkedList<>();
-        List<Double> temporalValues = new ArrayList<>(Collections.nCopies(nodes.size(), Double.MAX_VALUE));
-        List<Double> finalValues = new ArrayList<>(Collections.nCopies(nodes.size(), Double.MAX_VALUE));
-//        temporalValues.set(nodes.indexOf(point1), 0.0);
-        dijkstra(nodes, temporalValues, finalValues, attributeToCompare);
+        Map<MapElement, Double> temporalValues = new HashMap<>();
+
+        for (MapElement point : elements.values().stream().filter(element -> element.getElementType() == ElementType.POINT).toList()) {
+            temporalValues.put(point, Double.MAX_VALUE);
+        }
+        Map<MapElement, Double> finalValues = new HashMap<>(temporalValues);
+        temporalValues.put(getElement(idPoint1), 0.0);
+//        dijkstra(nodes, temporalValues, finalValues, attributeToCompare);
         System.out.println("Temporal values: " + temporalValues);
         System.out.println("Final values: " + finalValues);
+        dijkstra(temporalValues, finalValues, attributeToCompare);
 
-        nodes.forEach(node -> {
-            int index = nodes.indexOf(node);
+        MapElement point2 = getElement(idPoint2);
+        //Estos 3 metodos estaban funcionando
+        //MapElement minPoint = getMinPoint(new HashMap<>(temporalValues), new HashMap<>(finalValues));
+//        finalValues.put(minPoint, temporalValues.get(minPoint));
+//        setTemporalValues(minPoint,getChildren(minPoint),temporalValues,attributeToCompare);
+
+//        nodes.forEach(node -> {
+//            int index = nodes.indexOf(node);
 //            System.out.println("Valor final del nodo: " + (char) (Double.parseDouble(node.getLatitude()) + 65) + " es: " + finalValues.get(index));
-        });
+//        });
 //        System.err.println("Ruta mas corta por " + (attributeToCompare == DISTANCE ? "distancia" : "velocidad") + " : " + setToString(getShortestRoute(point2, finalValues, nodes, attributeToCompare)));
 //        return getShortestRoute(point2, finalValues, nodes, attributeToCompare);
+    }
+
+    private void dijkstra(Map<MapElement, Double> temporalValues, Map<MapElement, Double> finalValues, int attributeToCompare) {
+        MapElement minPoint = getMinPoint(new HashMap<>(temporalValues), new HashMap<>(finalValues));
+        finalValues.put(minPoint, temporalValues.get(minPoint));
+        setTemporalValues(minPoint, getChildren(minPoint), temporalValues, attributeToCompare);
+        if (finalValues.containsValue(Double.MAX_VALUE)) {
+            dijkstra(temporalValues, finalValues, attributeToCompare);
+        }
+    }
+
+    private void dijkstra(List<MapElement> nodes, List<Double> temporalValues, List<Double> finalValues, int attributeToCompare) {
+        MapElement minPoint = getMinPoint(new LinkedList<>(nodes), new LinkedList<>(temporalValues), new LinkedList<>(finalValues));
+        finalValues.set(nodes.indexOf(minPoint), temporalValues.get(nodes.indexOf(minPoint)));
+        setTemporalValues(minPoint, nodes, temporalValues, attributeToCompare);
+        if (finalValues.contains(Double.MAX_VALUE)) {
+            dijkstra(nodes, temporalValues, finalValues, attributeToCompare);
+        }
+    }
+
+    private MapElement getMinPoint(Map<MapElement, Double> temporalValues, Map<MapElement, Double> finalValues) {
+        MapElement minKey = null;
+        Double minValue = null;
+        for (Map.Entry<MapElement, Double> entry : temporalValues.entrySet()) {
+            if (minValue == null || entry.getValue() < minValue) {
+                minValue = entry.getValue();
+                minKey = entry.getKey();
+            }
+        }
+        if (finalValues.get(minKey) != Double.MAX_VALUE) {
+            temporalValues.remove(minKey);
+            return getMinPoint(temporalValues, finalValues);
+        }
+        return minKey;
+    }
+
+    private void setTemporalValues(MapElement minPoint, List<MapRoute> children, Map<MapElement, Double> temporalValues, int attributeToCompare) {
+        for (MapRoute child : children) {
+            MapElement point = child.getPoint1().equals(minPoint) ? child.getPoint2() : child.getPoint1();
+            double temporalValue = temporalValues.get(minPoint) + getValueOfAttribute(child, attributeToCompare);
+            if (temporalValues.get(point) == Double.MAX_VALUE) {
+                temporalValues.put(point, temporalValue);
+            } else {
+                temporalValues.put(point, Math.min(temporalValues.get(point), temporalValue));
+            }
+        }
+    }
+
+    private void setTemporalValues(MapElement actual, List<MapElement> nodes, List<Double> temporalValues,
+                                   int attributeToCompare) {
+        for (MapRoute child : getChildren(actual)) {
+            int index = nodes.indexOf(child.getPoint1().equals(actual) ? child.getPoint2() : child.getPoint1());
+            double temporalValue = temporalValues.get(nodes.indexOf(actual)) + getValueOfAttribute(child, attributeToCompare);
+            if (temporalValues.get(index) == Double.MAX_VALUE) {
+                temporalValues.set(index, temporalValue);
+            } else {
+                temporalValues.set(index, Math.min(temporalValues.get(index), temporalValue));
+            }
+//            System.out.println("Valor temporal del nodo: " + (char) (Double.parseDouble(nodes.get(index).getLatitude()) + 65) + " es: " + temporalValues.get(index));
+        }
+    }
+
+    private List<MapRoute> getChildren(MapElement actual) {
+        List<MapRoute> children = new ArrayList<>();
+        for (MapElement route : elements.values()) {
+            if (route.getElementType() == ElementType.ROUTE) {
+                if (route.getMapRoute().getPoint1().equals(actual) || route.getMapRoute().getPoint2().equals(actual)) {
+                    children.add(route.getMapRoute());
+                }
+            }
+        }
+        return children;
     }
 
     public String setToString(Set<MapElement> shortestRoute) {
@@ -91,7 +188,8 @@ public class Graph {
         return points + " \n\t\t\t\t " + arches;
     }
 
-    private Set<MapElement> getShortestRoute(MapElement actual, List<Double> finalValues, List<MapElement> points, int attributeToCompare) {
+    private Set<MapElement> getShortestRoute(MapElement
+                                                     actual, List<Double> finalValues, List<MapElement> points, int attributeToCompare) {
         Set<MapElement> shortestRoute = new HashSet<>();
         for (MapRoute child : getChildren(actual)) {
             int index = points.indexOf(actual.equals(child.getPoint1()) ? child.getPoint2() : child.getPoint1());
@@ -129,63 +227,12 @@ public class Graph {
         return null;
     }
 
-    private void dijkstra(List<MapElement> nodes, List<Double> temporalValues, List<Double> finalValues, int attributeToCompare) {
-        MapElement minPoint = getMinPoint(new LinkedList<>(nodes), new LinkedList<>(temporalValues), new LinkedList<>(finalValues));
-        finalValues.set(nodes.indexOf(minPoint), temporalValues.get(nodes.indexOf(minPoint)));
-        setTemporalValues(minPoint, nodes, temporalValues, attributeToCompare);
-        if (finalValues.contains(Double.MAX_VALUE)) {
-            dijkstra(nodes, temporalValues, finalValues, attributeToCompare);
-        }
-    }
-
-    private MapElement getMinPoint(List<MapElement> nodes, List<Double> temporalValues, List<Double> finalValues) {
-        int minIndex = getIndexWithMinValue(temporalValues);
-        if (finalValues.get(minIndex) != Double.MAX_VALUE) {
-            temporalValues.set(minIndex, Double.MAX_VALUE);
-            return getMinPoint(nodes, temporalValues, finalValues);
-        }
-        return nodes.get(minIndex);
-    }
-
-    private void setTemporalValues(MapElement actual, List<MapElement> nodes, List<Double> temporalValues, int attributeToCompare) {
-        for (MapRoute child : getChildren(actual)) {
-            int index = nodes.indexOf(child.getPoint1().equals(actual) ? child.getPoint2() : child.getPoint1());
-            double temporalValue = temporalValues.get(nodes.indexOf(actual)) + getValueOfAttribute(child, attributeToCompare);
-            if (temporalValues.get(index) == Double.MAX_VALUE) {
-                temporalValues.set(index, temporalValue);
-            } else {
-                temporalValues.set(index, Math.min(temporalValues.get(index), temporalValue));
-            }
-//            System.out.println("Valor temporal del nodo: " + (char) (Double.parseDouble(nodes.get(index).getLatitude()) + 65) + " es: " + temporalValues.get(index));
-        }
-    }
-
     private Double getValueOfAttribute(MapRoute child, int attributeToCompare) {
         return switch (attributeToCompare) {
 //            case DISTANCE -> child.getDistance();
             case SPEED -> child.getSpeedRoute();
             default -> throw new IllegalStateException("Unexpected value: " + attributeToCompare);
         };
-    }
-
-    private List<MapRoute> getChildren(MapElement actual) {
-        List<MapRoute> children = new ArrayList<>();
-//        for (MapRoute route : elements.values()) {
-//            if (route.getPoint1().equals(actual) || route.getPoint2().equals(actual)) {
-//                children.add(route);
-//            }
-//        }
-        return children;
-    }
-
-    public int getIndexWithMinValue(List<Double> list) {
-        int minIndex = 0;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) < list.get(minIndex) && list.get(i) != Double.MAX_VALUE) {
-                minIndex = i;
-            }
-        }
-        return minIndex;
     }
 
     public MapElement getElement(int id) {
@@ -224,8 +271,8 @@ public class Graph {
         Graph graph = new Graph();
         addElements(graph);
         // calcula la ruta mas corta entre el punto A y el punto I
-        graph.calculateShortestRoute(0, 8, SPEED);
-        System.out.println(graph.getDistanceBetweenPoints(new MapElement(new GeoPosition(0, 0)), new MapElement(new GeoPosition(8, 8))));
+        graph.calculateShortestRoute(0, 8, SPEED, true);
+        System.out.println(graph.getDistanceBetweenPoints(new MapElement(new GeoPosition(0, 0)), new MapElement(new GeoPosition(0, 8))));
     }
 
     private static void addElements(Graph graph) {
@@ -239,19 +286,19 @@ public class Graph {
         MapElement H = getPoint(7, 7);
         MapElement I = getPoint(8, 8);
 
-        MapElement AB = getRoute(A, B, 1);
-        MapElement BC = getRoute(B, C, 4);
-        MapElement CI = getRoute(C, I, 6);
-        MapElement IH = getRoute(I, H, 1);
-        MapElement HG = getRoute(H, G, 9);
-        MapElement GE = getRoute(G, E, 3);
-        MapElement ED = getRoute(E, D, 7);
-        MapElement DA = getRoute(D, A, 7);
-        MapElement DC = getRoute(D, C, 9);
-        MapElement CF = getRoute(C, F, 1);
-        MapElement FG = getRoute(F, G, 8);
-        MapElement DF = getRoute(D, F, 5);
-        MapElement FI = getRoute(F, I, 4);
+        MapElement AB = getRoute(A, B, 1, 2);
+        MapElement BC = getRoute(B, C, 4, 4);
+        MapElement CI = getRoute(C, I, 6, 6);
+        MapElement IH = getRoute(I, H, 1, 1);
+        MapElement HG = getRoute(H, G, 9, 9);
+        MapElement GE = getRoute(G, E, 3, 3);
+        MapElement ED = getRoute(E, D, 7, 7);
+        MapElement DA = getRoute(D, A, 7, 7);
+        MapElement DC = getRoute(D, C, 9, 9);
+        MapElement CF = getRoute(C, F, 1, 1);
+        MapElement FG = getRoute(F, G, 8, 8);
+        MapElement DF = getRoute(D, F, 5, 5);
+        MapElement FI = getRoute(F, I, 4, 4);
 
         graph.addElement(A);
         graph.addElement(B);
@@ -277,18 +324,38 @@ public class Graph {
         graph.addElement(FI);
     }
 
-    private static MapElement getRoute(MapElement point1, MapElement point2, int speed) {
+    private static MapElement getRoute(MapElement point1, MapElement point2, int speed, int distance) {
         MapElement element = new MapElement(new MapRoute());
         element.getMapRoute().setTypeRoute(RouteType.PAVING);
         element.getMapRoute().setOrientationRoutes(OrientationRoutes.BOTH);
         element.getMapRoute().setPoint(point1);
         element.getMapRoute().setPoint(point2);
         element.getMapRoute().setSpeedRoute(speed);
+        element.setGeoPosition(new GeoPosition(distance, distance));
         return element;
     }
 
     private static MapElement getPoint(int longitude, int latitude) {
         return new MapElement(new GeoPosition(longitude, latitude));
+    }
+
+    private MapElement getMinPoint(List<MapElement> nodes, List<Double> temporalValues, List<Double> finalValues) {
+        int minIndex = getIndexWithMinValue(temporalValues);
+        if (finalValues.get(minIndex) != Double.MAX_VALUE) {
+            temporalValues.set(minIndex, Double.MAX_VALUE);
+            return getMinPoint(nodes, temporalValues, finalValues);
+        }
+        return nodes.get(minIndex);
+    }
+
+    public int getIndexWithMinValue(List<Double> list) {
+        int minIndex = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) < list.get(minIndex) && list.get(i) != Double.MAX_VALUE) {
+                minIndex = i;
+            }
+        }
+        return minIndex;
     }
 }
 
