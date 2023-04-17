@@ -21,11 +21,9 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
     }
 
     public ManagerGraphs() {
-      //  addComponents();
         setPreferredSize(new Dimension(200,30));
         setBackground(ValuesGlobals.COLOR_BACK_PANEL_WORK);
     }
-
 
     public void setPanelMaps(PanelMaps panelMaps) {
         this.panelMaps = panelMaps;

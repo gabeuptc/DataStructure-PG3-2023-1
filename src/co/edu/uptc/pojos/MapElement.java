@@ -1,6 +1,6 @@
 package co.edu.uptc.pojos;
 
-import co.edu.uptc.views.maps.ElementType;
+import co.edu.uptc.views.maps.types.ElementType;
 import org.jxmapviewer.viewer.GeoPosition;
 
 public class MapElement {

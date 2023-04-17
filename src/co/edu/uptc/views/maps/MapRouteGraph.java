@@ -1,5 +1,7 @@
 package co.edu.uptc.views.maps;
 
+import co.edu.uptc.views.maps.types.RouteType;
+
 import java.awt.*;
 
 public class MapRouteGraph {

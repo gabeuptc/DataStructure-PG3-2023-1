@@ -1,7 +1,7 @@
 package co.edu.uptc.pojos;
 
 import co.edu.uptc.views.maps.OrientationRoutes;
-import co.edu.uptc.views.maps.RouteType;
+import co.edu.uptc.views.maps.types.RouteType;
 
 public class MapRoute {
 

@@ -2,6 +2,7 @@ package co.edu.uptc.views.maps;
 
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.views.board.DashBoard;
+import co.edu.uptc.views.maps.types.ElementType;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.VirtualEarthTileFactoryInfo;

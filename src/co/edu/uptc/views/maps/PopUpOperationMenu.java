@@ -1,9 +1,9 @@
 package co.edu.uptc.views.maps;
 
+import co.edu.uptc.views.maps.types.SelectionType;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.swing.*;
-import java.awt.event.*;
 
 public class PopUpOperationMenu{
     private JMenuItem itemShowPoint;

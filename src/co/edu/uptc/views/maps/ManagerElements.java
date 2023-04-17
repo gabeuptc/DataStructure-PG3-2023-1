@@ -3,6 +3,8 @@ package co.edu.uptc.views.maps;
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.views.Globals.ValuesGlobals;
+import co.edu.uptc.views.maps.types.ElementType;
+import co.edu.uptc.views.maps.types.SelectionType;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.swing.*;
@@ -84,7 +86,7 @@ public class ManagerElements {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
-                if (panelMaps.popUpOperationMenu.getSelectionType()==SelectionType.NONE) {
+                if (panelMaps.popUpOperationMenu.getSelectionType()== SelectionType.NONE) {
                     int opt = JOptionPane.showConfirmDialog(buttonPoint, "Latitud: " + element.getMapPoint().geoPosition.getLatitude() +
                             " \nLongitud: " + element.getMapPoint().geoPosition.getLatitude() +
                             " \nId del elemento: " + element.getIdElement() +

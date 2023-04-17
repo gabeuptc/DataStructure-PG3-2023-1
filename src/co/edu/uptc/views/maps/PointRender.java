@@ -1,6 +1,7 @@
 package co.edu.uptc.views.maps;
 
 import co.edu.uptc.views.Globals.ValuesGlobals;
+import co.edu.uptc.views.maps.types.ElementType;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.WaypointPainter;
 

@@ -4,6 +4,8 @@ import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.*;
+import co.edu.uptc.views.maps.types.ElementType;
+import co.edu.uptc.views.maps.types.RouteType;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import java.util.HashMap;
@@ -44,7 +46,6 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     @Override
     public Set<MapElement> getElements() {
         return  new HashSet<> (elements.values());
-
     }
 
     @Override
