@@ -1,9 +1,13 @@
 package co.edu.uptc.models.graphs.modelGraphs202115100;
 
 import co.edu.uptc.views.maps.*;
+import org.junit.Assert;
+import org.junit.Test;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import java.util.*;
+
+import static org.junit.Assert.assertArrayEquals;
 
 public class Graph {
     private Set<MapRoute> routes;
@@ -198,16 +202,6 @@ public class Graph {
             }
         }
     }
-
-    public static void main(String[] args) {
-        Graph graph = new Graph();
-        addElements(graph);
-        MapPoint A = getPoint(graph, "A");
-        MapPoint I = getPoint(graph, "I");
-        graph.calculateShortestRoute(A, I, graph.DISTANCE);
-        graph.calculateShortestRoute(A, I, graph.SPEED);
-    }
-
     private static MapPoint getPoint(Graph graph, String point) {
         for (MapPoint mapPoint : graph.getPoints()) {
             if (mapPoint.getLatitude().equals(Double.toString(point.charAt(0) - 65))) {
@@ -323,4 +317,20 @@ public class Graph {
             element.setIdElement(id++);
         }
     }
+    @Test
+    public void test() {
+        Graph graph = new Graph();
+        addElements(graph);
+        MapPoint A = getPoint(graph, "A");
+        MapPoint I = getPoint(graph, "I");
+
+        String[] result = graph.setToString(graph.calculateShortestRoute(A, I, graph.SPEED)).replace("\n", "").replace("\t", "").split(" ");
+        String expected = "C B A F I  \n" + "\t\t\t\t AB CF BC FI";
+        String[] expectedArray = expected.replace("\n", "").replace("\t", "").split(" ");
+        Arrays.sort(result);
+        Arrays.sort(expectedArray);
+        assertArrayEquals(expectedArray, result);
+
+    }
 }
+
