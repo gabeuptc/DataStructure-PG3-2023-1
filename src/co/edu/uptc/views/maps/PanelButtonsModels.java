@@ -45,7 +45,6 @@ public class PanelButtonsModels extends JPanel {
         addButtonSelectModel201912254();
         addButtonSelectModel202127343();
 
-        //addButtonSelectModelPrueba();
     }
 
 
@@ -195,9 +194,6 @@ public class PanelButtonsModels extends JPanel {
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(e -> ManagerGeneral.getInstance().configModelGraphs202127343());
     }
-
-
-
 
 
     private void addLabels() {

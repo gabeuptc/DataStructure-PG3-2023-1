@@ -42,6 +42,7 @@ public class DashBoard extends JFrame implements ContractPeople.View {
     private void initializeComponents() {
         addMenu();
         addHeader();
+        showPanelAbout();
     }
 
     private void addMenu() {
@@ -163,7 +164,6 @@ public class DashBoard extends JFrame implements ContractPeople.View {
     @Override
     public void notifyError(String value) {
         JOptionPane.showMessageDialog(this, value, "", JOptionPane.ERROR_MESSAGE);
-
     }
 
     @Override
