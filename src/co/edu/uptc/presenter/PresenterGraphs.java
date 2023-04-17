@@ -1,9 +1,6 @@
 package co.edu.uptc.presenter;
 
-import co.edu.uptc.views.maps.MapElement;
-import co.edu.uptc.views.maps.MapPoint;
-import co.edu.uptc.views.maps.OrientationRoutes;
-import co.edu.uptc.views.maps.TypeRoute;
+import co.edu.uptc.pojos.MapElement;
 
 import java.util.Set;
 
@@ -25,13 +22,14 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
         return modelGraphs;
     }
 
+    /*
     @Override
-    public Set<MapElement> calculateShortestDistanceRoute(MapPoint point1, MapPoint point2) {
+    public Set<MapElementGraph> calculateShortestDistanceRoute(MapPointGraph point1, MapPointGraph point2) {
         return modelGraphs.calculateShortestDistanceRoute(point1, point2);
     }
 
     @Override
-    public Set<MapElement> calculateShortestTimeRoute(MapPoint point1, MapPoint point2) {
+    public Set<MapElementGraph> calculateShortestTimeRoute(MapPointGraph point1, MapPointGraph point2) {
         return modelGraphs.calculateShortestTimeRoute(point1, point2);
     }
 
@@ -61,14 +59,18 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
     }
 
     @Override
-    public void addElement(MapElement element) {
-        modelGraphs.addElement(element);
+    public void addElement(MapElementGraph element) {
+        if (modelGraphs!=null) {
+            modelGraphs.addElement(element);
+        } else viewGraphs.notifyError("No hay modelo seleccionado");
     }
 
     @Override
-    public Set<MapElement> getElements() {
+    public Set<MapElementGraph> getElements() {
         return modelGraphs.getElements();
     }
+
+     */
 
     @Override
     public void updateGraph() {
@@ -78,5 +80,60 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
     @Override
     public String getUser() {
         return modelGraphs.getUser();
+    }
+
+    @Override
+    public void addElement(MapElement mapElement) {
+        modelGraphs.addElement(mapElement);
+    }
+
+    @Override
+    public Set<MapElement> getElements() {
+        return modelGraphs.getElements();
+    }
+
+    @Override
+    public MapElement getElement(int id) {
+        return modelGraphs.getElement(id);
+    }
+
+    @Override
+    public MapElement getElement(int idElementPoint1, int idElementPoint2) {
+        return modelGraphs.getElement(idElementPoint1, idElementPoint2);
+    }
+
+    @Override
+    public void deletePoint(int idElement) {
+          modelGraphs.deletePoint(idElement);
+    }
+
+    @Override
+    public void notifyWarning(String value) {
+        viewGraphs.notifyWarning(value);
+    }
+
+    @Override
+    public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
+                   modelGraphs.findSortestRouteINDisntance(idElementPoint1, idElementPoint2);
+    }
+
+    @Override
+    public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
+     modelGraphs.findShortestRouteInTime( idElementPoint1, idElementPoint2);
+    }
+
+    @Override
+    public void updateResultGraph() {
+       viewGraphs.updateResultGraph();
+    }
+
+    @Override
+    public Set<MapElement> getResultElements() {
+        return modelGraphs.getResultElements();
+    }
+
+    @Override
+    public void modifyElement(MapElement mapElementModify) {
+          modelGraphs.modifyElement(mapElementModify);
     }
 }
