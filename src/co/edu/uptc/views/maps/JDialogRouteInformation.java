@@ -148,6 +148,8 @@ public class JDialogRouteInformation extends JDialog {
 
     private void createRouteTypeComboBox() {
         typeRoute = new JComboBox<>(new String[]{"pavimento", "recebo", "adoquinado", "trocha", "Otra"});
+        route.setTypeRoute(RouteType.PAVING);
+        route.setOrientationRoutes(OrientationRoutes.ORIGIN_DESTIN);
         typeRoute.setSelectedIndex(route.getTypeRoute().value);
         typeRoute.setSize(130, 20);
         assignPosition(1, typeRoute);
@@ -199,7 +201,7 @@ public class JDialogRouteInformation extends JDialog {
         }
         try {
             route.setSpeedRoute(Double.parseDouble(speed.getText()));
-            System.out.println("typeRoute.getSelectedIndex()  "+typeRoute.getSelectedIndex());
+           // System.out.println("typeRoute.getSelectedIndex()  "+typeRoute.getSelectedIndex());
             switch (typeRoute.getSelectedIndex()) {
                 case 0 -> route.setTypeRoute(RouteType.PAVING);
                 case 1 -> route.setTypeRoute(RouteType.ROAT_RECEBO);
@@ -208,7 +210,7 @@ public class JDialogRouteInformation extends JDialog {
                 case 4 -> route.setTypeRoute(RouteType.OTHER);
             }
 
-            System.out.println("orientationRoutes.getSelectedIndex()  "+orientationRoutes.getSelectedIndex());
+           // System.out.println("orientationRoutes.getSelectedIndex()  "+orientationRoutes.getSelectedIndex());
             switch (orientationRoutes.getSelectedIndex()) {
                 case 0 -> route.setOrientationRoutes(OrientationRoutes.ORIGIN_DESTIN);
                 case 1 -> route.setOrientationRoutes(OrientationRoutes.DESTIN_ORIGIN);
