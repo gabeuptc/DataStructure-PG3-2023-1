@@ -68,16 +68,17 @@ public class Graph {
     }
 
     private String setToString(Set<MapElement> shortestRoute) {
-        StringBuilder result = new StringBuilder();
+        StringBuilder points = new StringBuilder();
+        StringBuilder arches = new StringBuilder();
         for (MapElement element : shortestRoute) {
             if (element.getTypeElement() == TypeElement.POINT) {
-                result.append((char) (Double.parseDouble(element.getMapPoint().getLatitude()) + 65)).append(" ");
+                points.append((char) (Double.parseDouble(element.getMapPoint().getLatitude()) + 65)).append(" ");
             } else {
-                result.append((char) (Double.parseDouble(element.getMapRoute().getPoint1().getLatitude()) + 65));
-                result.append((char) (Double.parseDouble(element.getMapRoute().getPoint2().getLatitude()) + 65)).append(" ");
+                arches.append((char) (Double.parseDouble(element.getMapRoute().getPoint1().getLatitude()) + 65));
+                arches.append((char) (Double.parseDouble(element.getMapRoute().getPoint2().getLatitude()) + 65)).append(" ");
             }
         }
-        return result.toString();
+        return points+" \n\t\t\t\t "+arches;
     }
 
     private Set<MapElement> getShortestRoute(MapPoint actual, List<Double> finalValues, List<MapPoint> points, int attributeToCompare) {
@@ -124,7 +125,7 @@ public class Graph {
     }
 
     private void dijkstra(List<MapPoint> nodes, List<Double> temporalValues, List<Double> finalValues, int attributeToCompare) {
-        MapPoint minPoint = getMinPoint((List<MapPoint>) ((ArrayList<MapPoint>) nodes).clone(), (List<Double>) ((ArrayList<Double>) temporalValues).clone(), (List<Double>) ((ArrayList<Double>) finalValues).clone());
+        MapPoint minPoint = getMinPoint(new LinkedList<>(nodes), new LinkedList<>(temporalValues), new LinkedList<>(finalValues));
         finalValues.set(nodes.indexOf(minPoint), temporalValues.get(nodes.indexOf(minPoint)));
         setTemporalValues(minPoint, nodes, temporalValues, attributeToCompare);
         if (finalValues.contains(Double.MAX_VALUE)) {
@@ -204,9 +205,9 @@ public class Graph {
         Graph graph = new Graph();
         addElements(graph);
         MapPoint A = getPoint(graph, "A");
-        MapPoint G = getPoint(graph, "G");
-        graph.calculateShortestRoute(A, G, graph.DISTANCE);
-        graph.calculateShortestRoute(A, G, graph.SPEED);
+        MapPoint I = getPoint(graph, "I");
+        graph.calculateShortestRoute(A, I, graph.DISTANCE);
+        graph.calculateShortestRoute(A, I, graph.SPEED);
     }
 
     private static MapPoint getPoint(Graph graph, String point) {
