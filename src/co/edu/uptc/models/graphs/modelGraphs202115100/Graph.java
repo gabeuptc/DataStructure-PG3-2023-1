@@ -4,6 +4,8 @@ import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.views.maps.*;
 import co.edu.uptc.views.maps.types.ElementType;
+import co.edu.uptc.views.maps.types.RouteType;
+import org.jxmapviewer.viewer.GeoPosition;
 
 import java.util.*;
 
@@ -103,9 +105,9 @@ public class Graph {
         for (MapElement element : elements) {
             if (element.getElementType() == ElementType.POINT) {
 //                if (element.getMapPointGraph().equals(actual)) {
-                    return element;
-                }
+                return element;
             }
+        }
 //        }
         return null;
     }
@@ -208,6 +210,69 @@ public class Graph {
 
     public void calculateShortestRoute(int idElementPoint1, int idElementPoint2, int distance) {
         // Pendiente
+    }
+
+    public static void main(String[] args) {
+        Graph graph = new Graph();
+        MapElement A = getPoint(0,0);
+        MapElement B = getPoint(1,1);
+        MapElement C = getPoint(2,2);
+        MapElement D = getPoint(3,3);
+        MapElement E = getPoint(4,4);
+        MapElement F = getPoint(5,5);
+        MapElement G = getPoint(6,6);
+        MapElement H = getPoint(7,7);
+        MapElement I = getPoint(8,8);
+
+        MapElement AB = getRoute(A, B, 1);
+        MapElement BC = getRoute(B, C, 4);
+        MapElement CI = getRoute(C, I, 6);
+        MapElement IH = getRoute(I, H, 1);
+        MapElement HG = getRoute(H, G, 9);
+        MapElement GE = getRoute(G, E, 3);
+        MapElement ED = getRoute(E, D, 7);
+        MapElement DA = getRoute(D, A, 7);
+        MapElement DC = getRoute(D, C, 9);
+        MapElement CF = getRoute(C, F, 1);
+        MapElement FG = getRoute(F, G, 8);
+        MapElement DF = getRoute(D, F, 5);
+        MapElement FI = getRoute(F, I, 4);
+
+        graph.addElement(A);
+        graph.addElement(B);
+        graph.addElement(C);
+        graph.addElement(D);
+        graph.addElement(E);
+        graph.addElement(F);
+        graph.addElement(G);
+        graph.addElement(H);
+        graph.addElement(I);
+        graph.addElement(AB);
+        graph.addElement(BC);
+        graph.addElement(CI);
+        graph.addElement(IH);
+        graph.addElement(HG);
+        graph.addElement(GE);
+        graph.addElement(ED);
+        graph.addElement(DA);
+        graph.addElement(DC);
+        graph.addElement(CF);
+        graph.addElement(FG);
+        graph.addElement(DF);
+    }
+
+    private static MapElement getRoute(MapElement point1, MapElement point2, int speed) {
+        MapElement element = new MapElement(new MapRoute());
+        element.getMapRoute().setTypeRoute(RouteType.PAVING);
+        element.getMapRoute().setOrientationRoutes(OrientationRoutes.BOTH);
+        element.getMapRoute().setPoint1(point1);
+        element.getMapRoute().setPoint2(point2);
+        element.getMapRoute().setSpeedRoute(speed);
+        return element;
+    }
+
+    private static MapElement getPoint(int longitude, int latitude) {
+        return new MapElement(new GeoPosition(longitude, latitude));
     }
 }
 
