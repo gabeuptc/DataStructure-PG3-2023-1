@@ -208,12 +208,17 @@ public class Graph {
         return null;
     }
 
-    public void calculateShortestRoute(int idElementPoint1, int idElementPoint2, int distance) {
+    public void calculateShortestRoute(int idElementPoint1, int idElementPoint2, int attributeToCompare) {
         // Pendiente
     }
 
     public static void main(String[] args) {
         Graph graph = new Graph();
+        addElements(graph);
+        graph.calculateShortestRoute(0, 8, 0);
+    }
+
+    private static void addElements(Graph graph) {
         MapElement A = getPoint(0,0);
         MapElement B = getPoint(1,1);
         MapElement C = getPoint(2,2);
@@ -259,6 +264,10 @@ public class Graph {
         graph.addElement(CF);
         graph.addElement(FG);
         graph.addElement(DF);
+        graph.addElement(FI);
+
+        int id = 0;
+        for (MapElement element : graph.getElements()) element.setIdElement(id++);
     }
 
     private static MapElement getRoute(MapElement point1, MapElement point2, int speed) {
