@@ -1,19 +1,26 @@
 package co.edu.uptc.models.graphs.modelGraphs202022012;
 
+import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.*;
+import co.edu.uptc.views.maps.types.ElementType;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
 
     private ContractGraphs.Presenter presenter;
-    private Set<MapElement> elements;
+    private Map<Integer,MapElement> elements;
+    private Map<Integer,MapElement> elementsResult;
     private Graph graph;
+    private int count = 0;
 
     public ManagerModelGraphs202022012(){
-        elements = new HashSet<>();
+        elements = new HashMap<>();
+        elementsResult = new HashMap<>();
         graph = new Graph();
     }
 
@@ -23,69 +30,73 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
     }
 
     @Override
-    public Set<MapElement> calculateShortestDistanceRoute(MapPoint point1, MapPoint point2) {
-        return null;
+    public void addElement(MapElement mapElement) {
+        addElementOnly(mapElement);
+        presenter.updateGraph();
     }
 
-    @Override
-    public Set<MapElement> calculateShortestTimeRoute(MapPoint point1, MapPoint point2) {
-        return null;
-    }
-
-    @Override
-    public void setArcType(int elementID, TypeRoute typeRoute) {
-        for (MapElement mapElements: elements) {
-            if (mapElements.getIdElement() == elementID && mapElements.getTypeElement() == TypeElement.ROUTE) {
-                mapElements.getMapRoute().setTypeRoute(typeRoute);
-                graph.getEdge(mapElements.getMapRoute()).getMapRoute().setTypeRoute(typeRoute);
-            }
-        }
-    }
-
-    @Override
-    public void setArcSpeed(int elementID, double speed) {
-        for (MapElement mapElements: elements) {
-            if (mapElements.getIdElement() == elementID && mapElements.getTypeElement() == TypeElement.ROUTE) {
-                mapElements.getMapRoute().setSpeedRoute(speed);
-                graph.getEdge(mapElements.getMapRoute()).getMapRoute().setSpeedRoute(speed);
-            }
-        }
-    }
-
-    @Override
-    public void setArcsOrientation(OrientationRoutes orientation) {
-        // TODO: 16/04/2023 orientacion para todos los arcos? 
-    }
-
-    @Override
-    public OrientationRoutes getOrientation() {
-        return null;
+    public void addElementOnly(MapElement mapElement) {
+        mapElement.setIdElement(count++);
+        elements.put(mapElement.getIdElement(), mapElement);
     }
 
     @Override
     public void deletePoint(int idPoint) {
-        for (MapElement mapElements: elements) {
-            if(mapElements.getIdElement() == idPoint){
-                elements.remove(mapElements);
-                graph.deletePoint(mapElements.getMapPoint());
+        if(elements.containsKey(idPoint)){
+            if(elements.get(idPoint).getMapRoute() == null) {
+                graph.deletePoint(elements.get(idPoint));
+                elements.remove(idPoint);
+                presenter.updateGraph();
             }
         }
     }
 
     @Override
-    public void addElement(MapElement element) {
-        elements.add(element);
-        if (element.getTypeElement()==TypeElement.POINT){
-            graph.addNode(new Node(element.getMapPoint()));
-        }else {
-            graph.calculateDistance(element.getMapRoute());
-            graph.addEdge(new Edge(element.getMapRoute()));
-        }
+    public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
+
+    }
+
+    @Override
+    public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
+
+    }
+
+    @Override
+    public Set<MapElement> getResultElements() {
+        return null;
+    }
+
+    @Override
+    public void modifyElement(MapElement mapElementModify) {
+
     }
 
     @Override
     public Set<MapElement> getElements() {
-        return cloneSet(elements);
+        return new HashSet<>(elements.values());
+    }
+
+    @Override
+    public MapElement getElement(int id) {
+        return elements.get(id);
+    }
+
+    @Override
+    public MapElement getElement(int idElementPoint1, int idElementPoint2) {
+        for (MapElement mapElement: elements.values()) {
+            if (mapElement.getElementType()== ElementType.ROUTE){
+                if ((mapElement.getMapRoute().getPoint1().getIdElement()==idElementPoint1) &&
+                        (mapElement.getMapRoute().getPoint2().getIdElement()==idElementPoint2)) {
+                    return mapElement;
+                }
+                if ((mapElement.getMapRoute().getPoint2().getIdElement()==idElementPoint1) &&
+                        (mapElement.getMapRoute().getPoint1().getIdElement()==idElementPoint2)) {
+                    return mapElement;
+                }
+
+            }
+        }
+        return null;
     }
 
     @Override
@@ -98,11 +109,16 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
         return "202022012 Bryan Lopez";
     }
 
-    private Set<MapElement> cloneSet(Set<MapElement> set){
-        Set<MapElement> auxList = new HashSet<>();
-        for (MapElement element:set) {
-            auxList.add(element.clone());
-        }
-        return auxList;
+    @Override
+    public void loadGraphs() {
+
     }
+
+//    private Set<MapElement> cloneSet(Set<MapElement> set){
+//        Set<MapElement> auxList = new HashSet<>();
+//        for (MapElement element:set) {
+//            auxList.add(element.clone());
+//        }
+//        return auxList;
+//    }
 }

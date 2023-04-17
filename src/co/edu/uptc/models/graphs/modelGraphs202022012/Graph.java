@@ -1,43 +1,44 @@
 package co.edu.uptc.models.graphs.modelGraphs202022012;
 
 
-import co.edu.uptc.views.maps.MapElement;
-import co.edu.uptc.views.maps.MapPoint;
-import co.edu.uptc.views.maps.MapRoute;
-import co.edu.uptc.models.graphs.modelGraphs202022012.UtilGraphs;
 
-import java.security.interfaces.EdECKey;
+import co.edu.uptc.models.graphs.modelGraphs202022012.UtilGraphs;
+import co.edu.uptc.pojos.MapElement;
+import co.edu.uptc.pojos.MapRoute;
+import co.edu.uptc.views.maps.MapPointGraph;
+import co.edu.uptc.views.maps.MapRouteGraph;
+
 import java.util.*;
 
 
 public class Graph{
 
-    private List<Node> nodes;
+    private List<Node> elements;
     private List<Edge> edges;
     private UtilGraphs utilGraphs;
 
     // TODO: 16/04/2023 Donde dejar el Orientation routes
 
     public Graph() {
-        nodes = new ArrayList<>();
+        elements = new ArrayList<>();
         edges = new ArrayList<>();
         utilGraphs = new UtilGraphs();
     }
 
     public void addNode(Node node){
-        nodes.add(node);
+        elements.add(node);
     }
 
     public void addEdge(Edge edge){
         edges.add(edge);
     }
 
-    public void deletePoint(MapPoint mapPoint){
+    public void deletePoint(MapElement mapElement){
         for (int i = 0; i < edges.size(); i++) {
-            if(!edges.get(i).isPointConnected(mapPoint)){
-                for (int j = 0; j < nodes.size(); j++) {
-                    if(nodes.get(i).getMapPoint().equals(mapPoint)) {
-                        nodes.remove(nodes.get(i));
+            if(!edges.get(i).isPointConnected(mapElement)){
+                for (int j = 0; j < elements.size(); j++) {
+                    if(elements.get(i).getMapElement().equals(mapElement)) {
+                        elements.remove(elements.get(i));
                     }
                 }
             }
@@ -45,12 +46,11 @@ public class Graph{
 
     }
 
-    public void calculateDistance(MapRoute mapRoute){
-        System.out.println("111: " +utilGraphs.calculateDistance(mapRoute.getPoint1(),mapRoute.getPoint2()));
-        mapRoute.setDistance(utilGraphs.calculateDistance(mapRoute.getPoint1(),mapRoute.getPoint2()));
+    public void calculateDistance(MapRouteGraph mapRoute){
+        utilGraphs.calculateDistance(mapRoute.getPoint1(),mapRoute.getPoint2());
     }
 
-    public Set<MapElement> calculateFastestRout(MapPoint point1, MapPoint point2){
+    public Set<MapElement> calculateFastestRout(MapPointGraph point1, MapPointGraph point2){
         Set<MapElement> mapElements = new HashSet<>();
         return mapElements;
 
@@ -106,32 +106,19 @@ public class Graph{
 //    }
 
     public List<Node> getNodes() {
-        return nodes;
+        return elements;
     }
 
     public List<Edge> getEdges() {
         return edges;
     }
 
-    public Edge getEdge(MapRoute mapRoute){
-        for (Edge edge: edges) {
-            if(edge.getMapRoute().equals(mapRoute)){
-                return edge;
-            }
-        }
-        return null;
-    }
-
-    public void setNodes(List<Node> nodes) {
-        this.nodes = nodes;
+    public void setNodes(List<Node> elements) {
+        this.elements = elements;
     }
 
     public void setEdges(List<Edge> edges) {
         this.edges = edges;
     }
 
-    @Override
-    public String toString() {
-        return nodes.toString() + edges.toString();
-    }
 }

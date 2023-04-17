@@ -2,30 +2,28 @@ package co.edu.uptc.models.graphs.modelGraphs202022012;
 
 
 
-import co.edu.uptc.views.maps.MapPoint;
+import co.edu.uptc.pojos.MapElement;
+import co.edu.uptc.views.maps.MapPointGraph;
+
 
 
 public class Node{
 
-    private MapPoint mapPoint;
+    private MapElement mapElement;
 
-    public Node(MapPoint mapPoint){
-        this.mapPoint = mapPoint;
+    public Node(MapElement mapElement){
+        this.mapElement = mapElement;
     }
 
     public Node() {
     }
 
-    public MapPoint getMapPoint() {
-        return mapPoint;
+    public MapElement getMapElement() {
+        return mapElement;
     }
 
-    public void setMapPoint(MapPoint mapPoint) {
-        this.mapPoint = mapPoint;
+    public void setMapElement(MapElement mapElement) {
+        this.mapElement = mapElement;
     }
 
-    @Override
-    public String toString() {
-        return "Longitud: " + mapPoint.getLongitude() + " Latitud: " + mapPoint.getLatitude();
-    }
 }
