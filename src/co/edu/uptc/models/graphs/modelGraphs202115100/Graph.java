@@ -1,15 +1,12 @@
-package co.edu.uptc.models.graphs.model202115100;
+package co.edu.uptc.models.graphs.modelGraphs202115100;
 
-import co.edu.uptc.views.maps.MapElement;
-import co.edu.uptc.views.maps.MapPoint;
-import co.edu.uptc.views.maps.MapRouteA;
-import co.edu.uptc.views.maps.TypeElement;
+import co.edu.uptc.views.maps.*;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import java.util.*;
 
 public class Graph {
-    private Set<MapRouteA> routes;
+    private Set<MapRoute> routes;
     private Set<MapPoint> points;
     private Set<MapElement> elements;
     private final int SPEED = 0;
@@ -44,7 +41,7 @@ public class Graph {
         elements.remove(element);
     }
 
-    public Set<MapRouteA> getRoutes() {
+    public Set<MapRoute> getRoutes() {
         return routes;
     }
 
@@ -87,8 +84,8 @@ public class Graph {
 
     private Set<MapElement> getShortestRoute(MapPoint actual, List<Double> finalValues, List<MapPoint> points, int attributeToCompare) {
         Set<MapElement> shortestRoute = new HashSet<>();
-        List<MapRouteA> children = getChildren(actual);
-        for (MapRouteA child : children) {
+        List<MapRoute> children = getChildren(actual);
+        for (MapRoute child : children) {
             int index = points.indexOf(actual.equals(child.getPoint1()) ? child.getPoint2() : child.getPoint1());
             double value = switch (attributeToCompare) {
                 case DISTANCE -> child.getDistance();
@@ -117,7 +114,7 @@ public class Graph {
         return null;
     }
 
-    private MapElement searchElementByRoute(MapRouteA child) {
+    private MapElement searchElementByRoute(MapRoute child) {
         for (MapElement element : elements) {
             if (element.getTypeElement() == TypeElement.ROUTE) {
                 if (element.getMapRoute().equals(child)) {
@@ -138,8 +135,8 @@ public class Graph {
     }
 
     private void setTemporalValues(MapPoint actual, List<MapPoint> nodes, List<Double> temporalValues, int attributeToCompare) {
-        List<MapRouteA> children = getChildren(actual);
-        for (MapRouteA child : children) {
+        List<MapRoute> children = getChildren(actual);
+        for (MapRoute child : children) {
             int index = nodes.indexOf(child.getPoint1().equals(actual) ? child.getPoint2() : child.getPoint1());
             double temporalValue = temporalValues.get(nodes.indexOf(actual)) + switch (attributeToCompare) {
                 case DISTANCE -> child.getDistance();
@@ -155,9 +152,9 @@ public class Graph {
         }
     }
 
-    private List<MapRouteA> getChildren(MapPoint actual) {
-        List<MapRouteA> children = new ArrayList<>();
-        for (MapRouteA route : routes) {
+    private List<MapRoute> getChildren(MapPoint actual) {
+        List<MapRoute> children = new ArrayList<>();
+        for (MapRoute route : routes) {
             if (route.getPoint1().equals(actual) || route.getPoint2().equals(actual)) {
                 children.add(route);
             }
@@ -255,67 +252,67 @@ public class Graph {
         MapElement H = new MapElement(new MapPoint(new GeoPosition(7, 7)), new GeoPosition(7, 7));
         MapElement I = new MapElement(new MapPoint(new GeoPosition(8, 8)), new GeoPosition(8, 8));
         //Rutas
-        MapRouteA AB = new MapRouteA();
+        MapRoute AB = new MapRoute();
         AB.setPoint1(A.getMapPoint());
         AB.setPoint2(B.getMapPoint());
         AB.setDistance(2);
         AB.setSpeedRoute(1);
-        MapRouteA BC = new MapRouteA();
+        MapRoute BC = new MapRoute();
         BC.setPoint1(B.getMapPoint());
         BC.setPoint2(C.getMapPoint());
         BC.setDistance(4);
         BC.setSpeedRoute(4);
-        MapRouteA CI = new MapRouteA();
+        MapRoute CI = new MapRoute();
         CI.setPoint1(C.getMapPoint());
         CI.setPoint2(I.getMapPoint());
         CI.setDistance(6);
         CI.setSpeedRoute(6);
-        MapRouteA IH = new MapRouteA();
+        MapRoute IH = new MapRoute();
         IH.setPoint1(I.getMapPoint());
         IH.setPoint2(H.getMapPoint());
         IH.setDistance(1);
         IH.setSpeedRoute(1);
-        MapRouteA HG = new MapRouteA();
+        MapRoute HG = new MapRoute();
         HG.setPoint1(H.getMapPoint());
         HG.setPoint2(G.getMapPoint());
         HG.setDistance(9);
         HG.setSpeedRoute(9);
-        MapRouteA GE = new MapRouteA();
+        MapRoute GE = new MapRoute();
         GE.setPoint1(G.getMapPoint());
         GE.setPoint2(E.getMapPoint());
         GE.setDistance(3);
         GE.setSpeedRoute(3);
-        MapRouteA ED = new MapRouteA();
+        MapRoute ED = new MapRoute();
         ED.setPoint1(E.getMapPoint());
         ED.setPoint2(D.getMapPoint());
         ED.setDistance(7);
         ED.setSpeedRoute(7);
-        MapRouteA DA = new MapRouteA();
+        MapRoute DA = new MapRoute();
         DA.setPoint1(D.getMapPoint());
         DA.setPoint2(A.getMapPoint());
         DA.setDistance(7);
         DA.setSpeedRoute(7);
-        MapRouteA DC = new MapRouteA();
+        MapRoute DC = new MapRoute();
         DC.setPoint1(D.getMapPoint());
         DC.setPoint2(C.getMapPoint());
         DC.setDistance(9);
         DC.setSpeedRoute(9);
-        MapRouteA CF = new MapRouteA();
+        MapRoute CF = new MapRoute();
         CF.setPoint1(C.getMapPoint());
         CF.setPoint2(F.getMapPoint());
         CF.setDistance(1);
         CF.setSpeedRoute(1);
-        MapRouteA FD = new MapRouteA();
+        MapRoute FD = new MapRoute();
         FD.setPoint1(F.getMapPoint());
         FD.setPoint2(D.getMapPoint());
         FD.setDistance(5);
         FD.setSpeedRoute(5);
-        MapRouteA FG = new MapRouteA();
+        MapRoute FG = new MapRoute();
         FG.setPoint1(F.getMapPoint());
         FG.setPoint2(G.getMapPoint());
         FG.setDistance(8);
         FG.setSpeedRoute(8);
-        MapRouteA FI = new MapRouteA();
+        MapRoute FI = new MapRoute();
         FI.setPoint1(F.getMapPoint());
         FI.setPoint2(I.getMapPoint());
         FI.setDistance(4);
