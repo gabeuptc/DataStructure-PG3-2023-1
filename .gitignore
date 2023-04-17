@@ -35,5 +35,3 @@ Example01MVP.iml
 .DS_Store
 Thumbs.db
 
-#myLibs
-lib/*.jar
