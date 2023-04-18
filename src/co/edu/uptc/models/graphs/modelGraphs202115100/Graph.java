@@ -8,7 +8,7 @@ import java.util.*;
 
 import static java.lang.Math.*;
 
-public class Graph {
+public class Graph {//Pendiente - hacer los casos para la penalizacion en la velocidad por el tipo de ruta y la direccion de la ruta, Tambien falta hacer un test nuevo que funcione
     private Map<Integer, MapElement> elements;
     private Map<Integer, MapElement> resultElements;
     private int count = 0;
