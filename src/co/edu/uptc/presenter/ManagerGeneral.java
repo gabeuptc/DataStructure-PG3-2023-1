@@ -117,7 +117,7 @@ public class ManagerGeneral {
         //modelGraphs202113049 = new ManagerModelGraphs202113049();
         //modelGraphs201920890 = new ManagerModelGraphs201920890();
         //modelGraphs202128687 = new ManagerModelGraphs202128687();
-        modelGraphs202022012 = new ManagerModelGraphs202022012();
+        modelGraphs202022012 = new ManagerModelGraphs202022012(); //test
         //modelGraphs201813802 = new ManagerModelGraphs201813802();
         //modelGraphs202113214 = new ManagerModelGraphs02113214();
         //modelGraphs202114641 = new ManagerModelGraphs202114641();
