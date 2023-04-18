@@ -7,12 +7,12 @@ import co.edu.uptc.views.maps.types.ElementType;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GraphManager202115100 implements ContractGraphs.Model {
+public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
 
     private ContractGraphs.Presenter presenter;
     private Graph graph;
 
-    public GraphManager202115100() {
+    public ManagerModelGraphs202115100() {
         graph = new Graph();
     }
 
@@ -24,6 +24,7 @@ public class GraphManager202115100 implements ContractGraphs.Model {
     @Override
     public void addElement(MapElement mapElement) {
         graph.addElement(mapElement);
+        updateGraph();
     }
 
     @Override
@@ -58,7 +59,7 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public String getUser() {
-        return "Santiago Andr\u00e9s G\u00f3mez";
+        return "Santiago Andr\u00e9s Orjuela L\u00f3pez";
     }
 
     @Override
@@ -72,6 +73,7 @@ public class GraphManager202115100 implements ContractGraphs.Model {
         if (!pointHasRelation(idElement)) {
             graph.deleteElement(idElement);
         }
+        updateGraph();
     }
 
     private boolean pointHasRelation(int id) {
