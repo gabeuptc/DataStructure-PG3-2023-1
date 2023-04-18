@@ -89,12 +89,12 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
-        graph.calculateShortestRoute(idElementPoint1,idElementPoint2, Graph.DISTANCE);
+        graph.calculateShortestRoute(idElementPoint1, idElementPoint2, Graph.DISTANCE);
     }
 
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
-        graph.calculateShortestRoute(idElementPoint1,idElementPoint2, Graph.SPEED);
+        graph.calculateShortestRoute(idElementPoint1, idElementPoint2, Graph.TIME);
     }
 
     @Override

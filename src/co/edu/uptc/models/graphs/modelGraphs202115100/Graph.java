@@ -12,7 +12,7 @@ public class Graph {
     private Map<Integer, MapElement> elements;
     private Map<Integer, MapElement> resultElements;
     private int count = 0;
-    public static final int SPEED = 0;
+    public static final int TIME = 0;
     public static final int DISTANCE = 1;
     public static final double RADIUS = 6371;
 
@@ -85,11 +85,10 @@ public class Graph {
     }
 
     private double getValueOfAttribute(MapRoute point, int attributeToCompare) {
-        double value = getDistanceBetweenPoints(point.getPoint1(), point.getPoint2());
+        double distance = getDistanceBetweenPoints(point.getPoint1(), point.getPoint2());
         return switch (attributeToCompare) {
-            case SPEED ->//Pendiente - Usar el tiempo y la distancia para hallar la velocidad
-                    point.getSpeedRoute();
-            case DISTANCE -> value;
+            case TIME -> distance / point.getSpeedRoute();
+            case DISTANCE -> distance;
             default -> 0;
         };
     }

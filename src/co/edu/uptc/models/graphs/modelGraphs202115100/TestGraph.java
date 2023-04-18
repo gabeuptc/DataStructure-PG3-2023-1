@@ -15,7 +15,7 @@ public class TestGraph {
         Graph graph = new Graph();
         addElements(graph);
         // calcula la ruta mas corta entre el punto A y el punto I
-        graph.calculateShortestRoute(userWriteData("Punto de origen (A,B,C... etc): "), userWriteData("Punto de destino (A,B,C... etc): "),graph.SPEED);
+        graph.calculateShortestRoute(userWriteData("Punto de origen (A,B,C... etc): "), userWriteData("Punto de destino (A,B,C... etc): "), graph.TIME);
         System.out.println(mapToString(graph.getResultElements()));
     }
 
