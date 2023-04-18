@@ -21,7 +21,6 @@
 *.launch
 .settings/
 *.sublime-workspace
-Example01MVP.iml
 
 # Visual Studio Code
 .vscode/*
@@ -34,3 +33,4 @@ Example01MVP.iml
 # System files
 .DS_Store
 Thumbs.db
+
