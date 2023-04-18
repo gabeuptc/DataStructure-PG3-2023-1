@@ -58,36 +58,36 @@ public class Graph {
         elements.remove(id);
     }
 
-    public void calculateShortestRoute(int idPoint1, int idPoint2, int attributeToCompare) {
+    public void calculateShortestRoute(int origin, int destine, int attributeToCompare) {
         Map<MapElement, Double> temporalValues = new HashMap<>();
         for (MapElement point : elements.values().stream().filter(element -> element.getElementType() == ElementType.POINT).toList()) {
             temporalValues.put(point, Double.MAX_VALUE);
         }
         Map<MapElement, Double> finalValues = new HashMap<>(temporalValues);
-        temporalValues.put(getElement(idPoint1), 0.0);
+        temporalValues.put(getElement(origin), 0.0);
         dijkstra(temporalValues, finalValues, attributeToCompare);
-        getShortestRoute(finalValues, idPoint2, attributeToCompare);
+        getShortestRoute(finalValues, destine, attributeToCompare);
     }
 
-    private void getShortestRoute(Map<MapElement, Double> finalValues, int idPoint2, int attributeToCompare) {
-        for (MapRoute element : getChildren(getElement(idPoint2))) {
-            MapElement definitivePoint = (getElement(idPoint2) == element.getPoint1()) ? element.getPoint2() : element.getPoint1();
-            double value = getValueOfAttribute(element, attributeToCompare);
-            if (finalValues.get(definitivePoint) == (finalValues.get(getElement(idPoint2)) - value)) {//Pendiente - El set deberia contener rutas y puntos?
-                resultElements.put(element.getPoint1().getIdElement(), element.getPoint1());
-                resultElements.put(element.getPoint2().getIdElement(), element.getPoint2());
-                resultElements.put(searchElementByRoute(element).getIdElement(), searchElementByRoute(element));
-                getShortestRoute(finalValues, element.getPoint1().getIdElement(), attributeToCompare);
+    private void getShortestRoute(Map<MapElement, Double> finalValues, int actualPoint, int attributeToCompare) {
+        for (MapRoute child : getChildren(getElement(actualPoint))) {
+            MapElement routePoint = (getElement(actualPoint) == child.getPoint1()) ? child.getPoint2() : child.getPoint1();
+            double value = getValueOfAttribute(child, attributeToCompare);
+            if (finalValues.get(routePoint) == (finalValues.get(getElement(actualPoint)) - value)) {//Pendiente - El set deberia contener rutas y puntos?
+                resultElements.put(child.getPoint1().getIdElement(), child.getPoint1());
+                resultElements.put(child.getPoint2().getIdElement(), child.getPoint2());
+                resultElements.put(searchElementByRoute(child).getIdElement(), searchElementByRoute(child));
+                getShortestRoute(finalValues, child.getPoint1().getIdElement(), attributeToCompare);
             } else {
-                resultElements.put(getElement(idPoint2).getIdElement(), getElement(idPoint2));
+                resultElements.put(getElement(actualPoint).getIdElement(), getElement(actualPoint));
             }
         }
     }
 
-    private double getValueOfAttribute(MapRoute point, int attributeToCompare) {
-        double distance = getDistanceBetweenPoints(point.getPoint1(), point.getPoint2());
+    private double getValueOfAttribute(MapRoute route, int attributeToCompare) {
+        double distance = getDistanceBetweenPoints(route.getPoint1(), route.getPoint2());
         return switch (attributeToCompare) {
-            case TIME -> distance / point.getSpeedRoute();
+            case TIME -> distance / route.getSpeedRoute();
             case DISTANCE -> distance;
             default -> 0;
         };
@@ -103,14 +103,7 @@ public class Graph {
     }
 
     private MapElement getMinPoint(Map<MapElement, Double> temporalValues, Map<MapElement, Double> finalValues) {
-        MapElement minKey = null;
-        Double minValue = null;
-        for (Map.Entry<MapElement, Double> entry : temporalValues.entrySet()) {
-            if (minValue == null || entry.getValue() < minValue) {
-                minValue = entry.getValue();
-                minKey = entry.getKey();
-            }
-        }
+        MapElement minKey = temporalValues.keySet().stream().min(Comparator.comparingDouble(temporalValues::get)).orElse(null);
         if (finalValues.get(minKey) != Double.MAX_VALUE) {
             temporalValues.remove(minKey);
             return getMinPoint(temporalValues, finalValues);
