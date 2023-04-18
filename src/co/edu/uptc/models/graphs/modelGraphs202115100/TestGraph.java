@@ -2,107 +2,67 @@ package co.edu.uptc.models.graphs.modelGraphs202115100;
 
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
-import co.edu.uptc.views.maps.OrientationRoutes;
-import co.edu.uptc.views.maps.types.ElementType;
-import co.edu.uptc.views.maps.types.RouteType;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import java.util.Map;
-import java.util.Scanner;
 
-public class TestGraph {
-    public static void main(String[] args) {
-        Graph graph = new Graph();
-        addElements(graph);
-        // calcula la ruta mas corta entre el punto A y el punto I
-        graph.calculateShortestRoute(userWriteData("Punto de origen (A,B,C... etc): "), userWriteData("Punto de destino (A,B,C... etc): "), graph.TIME);
-        System.out.println(mapToString(graph.getResultElements()));
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+class GraphTest {
+    private Graph graph;
+
+    @BeforeEach
+    void setUp() {
+        graph = new Graph();
+        MapElement pointA = new MapElement(new GeoPosition(4.710989, -74.072092));
+        MapElement pointB = new MapElement(new GeoPosition(4.710965, -74.071821));
+        MapElement pointC = new MapElement(new GeoPosition(4.710981, -74.071751));
+        MapRoute route1 = mapRoute(pointA, pointB, 0.05, 20);
+        MapRoute route2 = new MapRoute(pointB, pointC, 0.07, 30);
+        graph.addElement(pointA);
+        graph.addElement(pointB);
+        graph.addElement(pointC);
+        graph.addElement(route1);
+        graph.addElement(route2);
     }
 
-    private static int userWriteData(String message) {
-        try {
-            System.out.println(message);
-            Scanner c = new Scanner(System.in);
-            return (c.nextLine()).toUpperCase().charAt(0) - 65;
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return 0;
+    private MapRoute mapRoute(MapElement pointA, MapElement pointB, double speed, int i) {
+        MapRoute route = new MapRoute();
+        route.setPoint1(pointA);
+        route.setPoint2(pointB);
+        route.setSpeedRoute(speed);
+        route
     }
 
-    private static StringBuilder mapToString(Map<Integer, MapElement> resultElements) {
-        StringBuilder result = new StringBuilder();
-        for (MapElement element : resultElements.values()) {
-            if (element.getElementType() == ElementType.POINT) {
-                result.append("(").append((char) (element.getIdElement() + 65)).append(") ");
-            } else {
-                result.append("[").append((char) (element.getMapRoute().getPoint1().getIdElement() + 65)).append("->").append((char) (element.getMapRoute().getPoint2().getIdElement() + 65)).append("] ");
-            }
-        }
-        return result;
+    @Test
+    void testGetDistanceBetweenPoints() {
+        MapElement pointA = new MapElement(new GeoPosition(4.710989, -74.072092));
+        MapElement pointB = new MapElement(new GeoPosition(4.710965, -74.071821));
+        double expectedDistance = 0.026;
+        double actualDistance = graph.getDistanceBetweenPoints(pointA, pointB);
+        assertEquals(expectedDistance, actualDistance, 0.001);
     }
 
-    private static void addElements(Graph graph) {
-        MapElement A = getPoint(0, 0);
-        MapElement B = getPoint(1, 1);
-        MapElement C = getPoint(2, 2);
-        MapElement D = getPoint(3, 3);
-        MapElement E = getPoint(4, 4);
-        MapElement F = getPoint(5, 5);
-        MapElement G = getPoint(6, 6);
-        MapElement H = getPoint(7, 7);
-        MapElement I = getPoint(8, 8);
-
-        MapElement AB = getRoute(A, B, 2, 2);
-        MapElement BC = getRoute(B, C, 4, 4);
-        MapElement CI = getRoute(C, I, 6, 6);
-        MapElement IH = getRoute(I, H, 1, 1);
-        MapElement HG = getRoute(H, G, 9, 9);
-        MapElement GE = getRoute(G, E, 3, 3);
-        MapElement ED = getRoute(E, D, 7, 7);
-        MapElement DA = getRoute(D, A, 7, 7);
-        MapElement DC = getRoute(D, C, 9, 9);
-        MapElement CF = getRoute(C, F, 1, 1);
-        MapElement FG = getRoute(F, G, 8, 8);
-        MapElement DF = getRoute(D, F, 5, 5);
-        MapElement FI = getRoute(F, I, 4, 4);
-
-        graph.addElement(A);
-        graph.addElement(B);
-        graph.addElement(C);
-        graph.addElement(D);
-        graph.addElement(E);
-        graph.addElement(F);
-        graph.addElement(G);
-        graph.addElement(H);
-        graph.addElement(I);
-        graph.addElement(AB);
-        graph.addElement(BC);
-        graph.addElement(CI);
-        graph.addElement(IH);
-        graph.addElement(HG);
-        graph.addElement(GE);
-        graph.addElement(ED);
-        graph.addElement(DA);
-        graph.addElement(DC);
-        graph.addElement(CF);
-        graph.addElement(FG);
-        graph.addElement(DF);
-        graph.addElement(FI);
+    @Test
+    void testDeleteElement() {
+        int expectedCount = 3;
+        graph.deleteElement(0);
+        int actualCount = graph.getCount();
+        assertEquals(expectedCount, actualCount);
+        assertNull(graph.getElements().get(0));
     }
 
-    private static MapElement getRoute(MapElement point1, MapElement point2, int speed, int distance) {
-        MapElement element = new MapElement(new MapRoute());
-        element.getMapRoute().setTypeRoute(RouteType.PAVING);
-        element.getMapRoute().setOrientationRoutes(OrientationRoutes.BOTH);
-        element.getMapRoute().setPoint(point1);
-        element.getMapRoute().setPoint(point2);
-        element.getMapRoute().setSpeedRoute(speed);
-        element.setGeoPosition(new GeoPosition(distance, distance));
-        return element;
-    }
-
-    private static MapElement getPoint(int longitude, int latitude) {
-        return new MapElement(new GeoPosition(longitude, latitude));
+    @Test
+    void testCalculateShortestRoute() {
+        graph.calculateShortestRoute(0, 2, Graph.TIME);
+        Map<Integer, MapElement> resultElements = graph.getResultElements();
+        assertTrue(resultElements.containsKey(0));
+        assertTrue(resultElements.containsKey(1));
+        assertTrue(resultElements.containsKey(2));
+        assertEquals(3, resultElements.size());
     }
 }
