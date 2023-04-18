@@ -36,7 +36,7 @@ public class Persistence {
         Graph graph = null;
         try {
             Gson gson = new Gson();
-            BufferedReader br = new BufferedReader(new FileReader("data/graphsData.json"));
+            BufferedReader br = new BufferedReader(new FileReader("data/graphsData202022012.json"));
             Type type = new TypeToken<Graph>(){}.getType();
             graph = gson.fromJson(br, type);
         }catch (FileNotFoundException e){
