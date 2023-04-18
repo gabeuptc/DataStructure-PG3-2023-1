@@ -1,14 +1,13 @@
 package co.edu.uptc.models.graphs.modelGraphs202128687;
-
-import co.edu.uptc.views.maps.MapPoint;
+import org.jxmapviewer.viewer.GeoPosition;
 
 public class Node {
 
-    private MapPoint point;
-    public Node(MapPoint mapPoint) {
+    private GeoPosition point;
+    public Node(GeoPosition GeoPosition) {
     }
 
-    public MapPoint getPoint() {
+    public GeoPosition getPoint() {
         return point;
     }
 }

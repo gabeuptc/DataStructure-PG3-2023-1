@@ -1,11 +1,15 @@
 package co.edu.uptc.models.graphs.modelGraphs202128687;
 
+import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.*;
+import co.edu.uptc.views.maps.types.ElementType;
+import co.edu.uptc.views.maps.types.RouteType;
+import org.jxmapviewer.viewer.GeoPosition;
 
-import javax.lang.model.element.Element;
 import java.util.HashSet;
 import java.util.Set;
+
 
 public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     private ContractGraphs.Presenter presenter;
@@ -22,18 +26,17 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
         this.presenter = presenter;
     }
 
-    @Override
-    public Set<MapElement> calculateShortestDistanceRoute(MapPoint point1, MapPoint point2) {
+
+    public Set<MapElement> calculateShortestDistanceRoute(GeoPosition point1, GeoPosition point2) {
         return graph.calculateShortDistanceRoute(point1, point2);
     }
 
-    @Override
-    public Set<MapElement> calculateShortestTimeRoute(MapPoint point1, MapPoint point2) {
+    public Set<MapElement> calculateShortestTimeRoute(GeoPosition point1, GeoPosition point2) {
         return graph.calculateShortTimeRoute(point1, point2);
     }
 
-    @Override
-    public void setArcType(int elementID, TypeRoute typeRoute) {
+
+    public void setArcType(int elementID, RouteType typeRoute) {
         MapElement element = getElement(elementID);
         if (isRoute(element)) {
             element.getMapRoute().setTypeRoute(typeRoute);
@@ -41,7 +44,6 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
         }
     }
 
-    @Override
     public void setArcSpeed(int elementID, double speed) {
          MapElement element = getElement(elementID);
          if (isRoute(element)) {
@@ -50,15 +52,11 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
          }
     }
 
-    @Override
+
     public void setArcsOrientation(OrientationRoutes orientation) {
          graph.setOrientation(orientation);
     }
 
-    @Override
-    public OrientationRoutes getOrientation() {
-        return null;
-    }
 
     @Override
     public void deletePoint(int idPoint) {
@@ -66,10 +64,30 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     }
 
     @Override
+    public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
+
+    }
+
+    @Override
+    public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
+
+    }
+
+    @Override
+    public Set<MapElement> getResultElements() {
+        return null;
+    }
+
+    @Override
+    public void modifyElement(MapElement mapElementModify) {
+
+    }
+
+    @Override
     public void addElement(MapElement element) {
         elements.add(element);
-        if (element.getTypeElement() == TypeElement.POINT) {
-            graph.addNode(new Node(element.getMapPoint()));
+        if (element.getElementType() == ElementType.POINT) {
+            graph.addNode(new Node(element.getGeoPosition()));
         }
     }
 
@@ -81,9 +99,19 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     private Set<MapElement> cloneSet(Set<MapElement> elements) {
         Set<MapElement> clone = new HashSet<>();
         for (MapElement element : elements) {
-            clone.add(element.clone());
+            clone.add(cloneElement(element));
         }
         return clone;
+    }
+
+    private MapElement cloneElement(MapElement element) {
+        MapElement elementClonable = new MapElement(element.getMapRoute());
+        elementClonable.setElementType(element.getElementType());
+        elementClonable.setIdElement(element.getIdElement());
+        elementClonable.setMapRoute(element.getMapRoute());
+        elementClonable.setGeoPosition(element.getGeoPosition());
+
+        return elementClonable;
     }
 
     @Override
@@ -96,15 +124,25 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
         return "202128687 HERNANDEZ BUITRAGO ALEX DUVAN";
     }
 
-    private MapElement getElement(int elementId) {
+    @Override
+    public void loadGraphs() {
+
+    }
+
+    public MapElement getElement(int elementId) {
         return graph.getElement(elementId);
     }
 
+    @Override
+    public MapElement getElement(int idElementPoint1, int idElementPoint2) {
+        return null;
+    }
+
     private boolean isRoute(MapElement element) {
-        return element.getTypeElement() == TypeElement.ROUTE;
+        return element.getElementType() == ElementType.ROUTE;
     }
 
     private boolean isPoint(MapElement element) {
-        return element.getTypeElement() == TypeElement.POINT;
+        return element.getElementType() == ElementType.POINT;
     }
 }

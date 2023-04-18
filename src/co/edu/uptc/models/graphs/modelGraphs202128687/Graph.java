@@ -1,7 +1,9 @@
 package co.edu.uptc.models.graphs.modelGraphs202128687;
 
-import co.edu.uptc.models.graphs.modelGraphs202127812.Arc;
+import co.edu.uptc.pojos.MapElement;
+import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.views.maps.*;
+import org.jxmapviewer.viewer.GeoPosition;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,7 +29,7 @@ public class Graph {
         arcs.add(arc);
     }
 
-    public void removeNode(MapPoint point) {
+    public void removeNode(GeoPosition point) {
         Node toRemove = null;
         for (Node node1 : nodes) {
             if (node1.getPoint().equals(point)) {
@@ -46,7 +48,7 @@ public class Graph {
         return null;
     }
 
-    public Set<MapElement> calculateShortDistanceRoute(MapPoint point1, MapPoint point2) {
+    public Set<MapElement> calculateShortDistanceRoute(GeoPosition point1, GeoPosition point2) {
         Set<MapElement> elements = new HashSet<>();
         // dijsktra
         return cloneSet(elements);
@@ -55,12 +57,22 @@ public class Graph {
     private Set<MapElement> cloneSet(Set<MapElement> set) {
         Set<MapElement> setClonabled = new HashSet<>();
         for (MapElement element : set) {
-            setClonabled.add(element.clone());
+            setClonabled.add(cloneElement(element));
         }
         return setClonabled;
     }
 
-    public Set<MapElement> calculateShortTimeRoute(MapPoint point1, MapPoint point2) {
+    private MapElement cloneElement(MapElement element) {
+        MapElement elementClonable = new MapElement(element.getMapRoute());
+        elementClonable.setElementType(element.getElementType());
+        elementClonable.setIdElement(element.getIdElement());
+        elementClonable.setMapRoute(element.getMapRoute());
+        elementClonable.setGeoPosition(element.getGeoPosition());
+
+        return elementClonable;
+    }
+
+    public Set<MapElement> calculateShortTimeRoute(GeoPosition point1, GeoPosition point2) {
         return null;
     }
 
