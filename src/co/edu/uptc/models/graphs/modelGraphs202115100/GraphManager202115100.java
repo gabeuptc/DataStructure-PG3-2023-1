@@ -1,7 +1,6 @@
 package co.edu.uptc.models.graphs.modelGraphs202115100;
 
 import co.edu.uptc.pojos.MapElement;
-import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.types.ElementType;
 
@@ -68,6 +67,7 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public void deletePoint(int idElement) {
+        //Pendiente - Eliminar el punto
         if (!pointHasRelation(idElement)) {
             graph.deleteElement(idElement);
         }
@@ -89,17 +89,19 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
-        graph.calculateShortestRoute(idElementPoint1, idElementPoint2, Graph.DISTANCE);
+        graph.calculateShortestRoute(idElementPoint1,idElementPoint2, Graph.DISTANCE);
     }
 
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
-        graph.calculateShortestRoute(idElementPoint1, idElementPoint2, Graph.SPEED);
+        graph.calculateShortestRoute(idElementPoint1,idElementPoint2, Graph.SPEED);
     }
 
     @Override
     public Set<MapElement> getResultElements() {
-        return graph.getResultElements();
+        //Pendiente - Retornar los elementos del resultado
+//        return graph.getResultElements();
+        return null;
     }
 
     @Override
