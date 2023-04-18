@@ -5,7 +5,6 @@ import co.edu.uptc.views.maps.MapPointGraph;
 public class UtilGraphs {
 
     private static final double EARTH_RADIUS_KM = 6371000.0;
-
     public double calculateDistance(MapPointGraph mapPoint1, MapPointGraph mapPoint2){
         double deltaLat = Math.toRadians(mapPoint2.getGeoPosition().getLatitude() - mapPoint1.getGeoPosition().getLatitude());
         double deltaLon = Math.toRadians((mapPoint2.getGeoPosition().getLongitude()) - (mapPoint1.getGeoPosition().getLongitude()));
