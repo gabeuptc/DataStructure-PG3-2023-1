@@ -54,6 +54,12 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
 
     @Override
     public void updateGraph() {
+        try {
+            new Persistence().saveGraph(graph.getElements());
+        } catch (Exception e) {
+            System.out.println("No se encontr\u00f3 el archivo");
+            System.out.println(e.getMessage());
+        }
         presenter.updateGraph();
     }
 
@@ -64,6 +70,13 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
 
     @Override
     public void loadGraphs() {
+        try {
+            graph.setElements(new Persistence().getGraphs());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        updateGraph();
         //Pendiente- Cargar los grafos desde un archivo
     }
 
