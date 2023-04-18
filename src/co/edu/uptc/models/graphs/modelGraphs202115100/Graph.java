@@ -147,12 +147,7 @@ public class Graph {
     }
 
     public MapElement getElement(int id) {
-        for (MapElement element : elements.values()) {
-            if (element.getIdElement() == id) {
-                return element;
-            }
-        }
-        return null;
+       return elements.getOrDefault(id, null);
     }
 
     public Map<Integer, MapElement> getResultElements() {
