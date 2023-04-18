@@ -1,50 +1,64 @@
 package co.edu.uptc.views.maps;
 
+import co.edu.uptc.views.maps.types.SelectionType;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.swing.*;
-import java.awt.event.*;
 
-public class PopUpOperationMenu implements  ActionListener{
+public class PopUpOperationMenu{
     private JMenuItem itemShowPoint;
     private JMenuItem itemAddPoint;
     private JMenuItem itemAddRoute;
-    private JMenuItem itemShowRoutes;
-
     GeoPosition position;
-
-    private boolean selectRoute=false;
+    private SelectionType selectionType = SelectionType.NONE;
     PanelMaps panelMaps;
     final JPopupMenu popupMenu = new JPopupMenu("popup");
-    private ManagerGraphs managerGraphs;
 
     public PopUpOperationMenu(PanelMaps panelMaps) {
         this.panelMaps = panelMaps;
-        this.managerGraphs = ManagerGraphs.getInstance();
         makeMenuPoint();
         addItemAddRoutes();
         makeMenuItemLayers();
-        calculateRoutes();
-        makeMenuItemChangeOrientation();
         makeMenuItemAddOther();
     }
 
-    public boolean isSelectRoute() {
-        return selectRoute;
+    public SelectionType getSelectionType() {
+        return selectionType;
     }
 
     public void finishSelectRoute(){
-        selectRoute = false;
+        selectionType = SelectionType.NONE;
         panelMaps.managerElements.finish();
     }
 
+    public void CancelSelectRoute(){
+        selectionType = SelectionType.NONE;
+        panelMaps.managerElements.cancel();
+    }
+
     public void cancelSelectRoute(){
-        selectRoute = false;
+        selectionType = SelectionType.NONE;
        panelMaps.managerElements.cancel();
     }
 
     public void startSelectRoute(){
-        selectRoute = true;
+        selectionType = SelectionType.NEW_ROUTE;
+        panelMaps.showStatus();
+    }
+
+
+    public void startSelectRouteToModify(){
+        selectionType = SelectionType.ROUTE_MODIFY;
+        panelMaps.showStatus();
+    }
+
+
+    public void startSelectRouteShortestInDistance(){
+        selectionType = SelectionType.SHORTEST_ROUTE_IN_DISTANCE;
+        panelMaps.showStatus();
+    }
+    public void startSelectRouteShortestInTime(){
+        selectionType = SelectionType.SHORTEST_ROUTE_IN_TIME;
         panelMaps.showStatus();
     }
 
@@ -56,7 +70,6 @@ public class PopUpOperationMenu implements  ActionListener{
     private void makeMenuPoint() {
         JMenu menu = new JMenu("Punto");
         addItemAddPoint(menu);
-     //   addItemShowPoints(menu);
         popupMenu.add(menu);
     }
 
@@ -64,46 +77,55 @@ public class PopUpOperationMenu implements  ActionListener{
         itemAddPoint = new JMenuItem("Adicionar Punto");
         itemAddPoint.setActionCommand("ItemAddPoint");
         menu.add(itemAddPoint);
-        itemAddPoint.addActionListener(this);
+        itemAddPoint.addActionListener(e-> panelMaps.addPoint(position));
     }
 
     private void addItemAddRoutes() {
         JMenu menu = new JMenu("Rutas");
-        menu.setActionCommand("ItemRoutes");
         popupMenu.add(menu);
         addItemRouteSRoute(menu);
-      //  addItemShowRoutes(menu);
+        addItemModifyRoute(menu);
         addItemRouteSRouteCancel(menu);
+        addItemAddFindRoute(menu);
     }
 
     private void addItemRouteSRoute(JMenu menu) {
          itemAddRoute = new JMenuItem("Adicionar Ruta");
-        itemAddRoute.setActionCommand("addItemRouteSRoute");
         menu.add(itemAddRoute);
-        itemAddRoute.addActionListener(this);
+        itemAddRoute.addActionListener(e->  startSelectRoute());
+    }
+
+    private void addItemModifyRoute(JMenu menu) {
+        itemAddRoute = new JMenuItem("Modificar Ruta");
+        menu.add(itemAddRoute);
+        itemAddRoute.addActionListener(e->  startSelectRouteToModify());
     }
 
 
-    private void addItemShowRoutes(JMenu menu) {
-         itemShowRoutes = new JMenuItem("Ocultar Rutas");
-        itemShowRoutes.setActionCommand("addItemShowRoutes");
-        menu.add(itemShowRoutes);
-        itemShowRoutes.addActionListener(this);
+    private void addItemAddFindRoute(JMenu menu) {
+        JMenu itemMenu = new JMenu("Buscar Rutas más corta");
+        menu.add(itemMenu);
+        addItemFindShortestRouteInDistance(itemMenu);
+        addItemFindShortestRouteInTime(itemMenu);
     }
+
+    private void addItemFindShortestRouteInDistance(JMenu menu) {
+        itemAddRoute = new JMenuItem("En distancia");
+        menu.add(itemAddRoute);
+        itemAddRoute.addActionListener(e->  startSelectRouteShortestInDistance());
+    }
+
+    private void addItemFindShortestRouteInTime(JMenu menu) {
+        itemAddRoute = new JMenuItem("En tiempo");
+        menu.add(itemAddRoute);
+        itemAddRoute.addActionListener(e->  startSelectRouteShortestInTime());
+    }
+
 
     private void addItemRouteSRouteCancel(JMenu menu) {
         JMenuItem itemLayer = new JMenuItem("Cancelar Ruta");
-        itemLayer.setActionCommand("addItemRouteSRouteCancel");
         menu.add(itemLayer);
-        itemLayer.addActionListener(this);
-    }
-
-
-    private void addItemShowPoints(JMenu menu) {
-        itemShowPoint = new JMenuItem("Ocultar puntos");
-        itemShowPoint.setActionCommand("ItemShowPoints");
-        menu.add(itemShowPoint);
-        itemShowPoint.addActionListener(this);
+        itemLayer.addActionListener(e->  cancelSelectRoute());
     }
 
 
@@ -120,151 +142,35 @@ public class PopUpOperationMenu implements  ActionListener{
         JMenuItem itemLayer = new JMenuItem("Predeterminado");
         itemLayer.setActionCommand("ItemDefault");
         menu.add(itemLayer);
-        itemLayer.addActionListener(this);
+        itemLayer.addActionListener(e-> { panelMaps.setZoom(panelMaps.jXMapViewer.getZoom());
+            panelMaps.comboMapTypeActionPerformed(0);});
     }
 
     private void addItemMap(JMenu menu) {
         JMenuItem itemLayer = new JMenuItem("Mapa");
-        itemLayer.setActionCommand("ItemMap");
         menu.add(itemLayer);
-        itemLayer.addActionListener(this);
+        itemLayer.addActionListener(e-> {panelMaps.setZoom(panelMaps.jXMapViewer.getZoom());
+            panelMaps.comboMapTypeActionPerformed(1);});
     }
 
     private void addItemHybrid(JMenu menu) {
         JMenuItem itemLayer = new JMenuItem("Hibrido");
-        itemLayer.setActionCommand("ItemHybrid");
         menu.add(itemLayer);
-        itemLayer.addActionListener(this);
+        itemLayer.addActionListener(e->  {panelMaps.setZoom(panelMaps.jXMapViewer.getZoom());
+        panelMaps.comboMapTypeActionPerformed(2);});
 
     }
 
     private void addItemSatellite(JMenu menu) {
         JMenuItem itemLayer = new JMenuItem("Satelital");
-        itemLayer.setActionCommand("ItemSatellite");
         menu.add(itemLayer);
-        itemLayer.addActionListener(this);
-    }
-    private void calculateRoutes(){
-        JMenu menu = new JMenu("calcular rutas");
-        calculateShortestDistanceRoute(menu);
-        calculateShortestTimeRoute(menu);
-        popupMenu.add(menu);
-    }
-    private void calculateShortestDistanceRoute(JMenu menu){
-        JMenuItem item = new JMenuItem("ruta con menor distancia");
-        item.setActionCommand("ShortestDistance");
-        menu.add(item);
-        item.addActionListener(this);
-    }
-    private void calculateShortestTimeRoute(JMenu menu){
-        JMenuItem item = new JMenuItem("ruta con menor tiempo");
-        item.setActionCommand("ShortestTime");
-        menu.add(item);
-        item.addActionListener(this);
+        itemLayer.addActionListener(e->     {panelMaps.setZoom(panelMaps.jXMapViewer.getZoom());
+        panelMaps.comboMapTypeActionPerformed(3);});
     }
 
     private void makeMenuItemAddOther() {
         JMenuItem item = new JMenuItem("Adicionar Other");
         popupMenu.add(item);
-    }
-    private void makeMenuItemChangeOrientation() {
-        JMenuItem item = new JMenuItem("Cambiar orientacion de rutas");
-        item.setActionCommand("ChangeOrientation");
-        popupMenu.add(item);
-    }
-
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        switch (e.getActionCommand()){
-            case "ItemDefault": {
-                panelMaps.setZoom(panelMaps.jXMapViewer.getZoom());
-                panelMaps.comboMapTypeActionPerformed(0);
-                break;
-            }
-            case "ItemMap": {
-                panelMaps.setZoom(panelMaps.jXMapViewer.getZoom());
-                panelMaps.comboMapTypeActionPerformed(1);
-                break;
-            }
-            case "ItemHybrid": {
-                panelMaps.setZoom(panelMaps.jXMapViewer.getZoom());
-                panelMaps.comboMapTypeActionPerformed(2);
-                break;
-            }
-            case "ItemSatellite": {
-                panelMaps.setZoom(panelMaps.jXMapViewer.getZoom());
-                panelMaps.comboMapTypeActionPerformed(3);
-                break;
-            }
-
-            case "ItemAddPoint": {
-                if (!selectRoute) {
-                    panelMaps.managerElements.addPoint(position);
-                }
-                break;
-            }
-
-            case "addItemRouteSRoute": {
-                startSelectRoute();
-                break;
-            }
-
-            case "addItemRouteSRouteCancel": {
-                finishSelectRoute();
-                break;
-            }
-
-            case "ItemShowPoints": {
-                if (panelMaps.isVisiblePoints()) {
-                    itemShowPoint.setText("Mostrar Puntos");
-                    panelMaps.setVisiblePoints(false);
-                    panelMaps.showPoints();
-                    itemAddPoint.setEnabled(false);
-                } else {
-                    itemShowPoint.setText("Ocultar Puntos");
-                    panelMaps.setVisiblePoints(true);
-                    panelMaps.showPoints();
-                    itemAddPoint.setEnabled(true);
-                }
-                panelMaps.showStatus();
-                break;
-            }
-
-            case "addItemShowRoutes": {
-                if (panelMaps.isVisibleRoutes()) {
-                    itemShowRoutes.setText("Mostrar Rutas");
-                    panelMaps.setVisibleRoutes(false);
-                    panelMaps.showRoutes();
-                    itemAddRoute.setEnabled(false);
-                } else {
-                    itemShowRoutes.setText("Ocultar Rutas");
-                    panelMaps.setVisibleRoutes(true);
-                    panelMaps.showRoutes();
-                    itemAddRoute.setEnabled(true);
-                }
-                panelMaps.showStatus();
-                break;
-            }
-
-            case "ShortestDistance": {//seleccionar los puntos como se seleccionan las rutas, poner cabios en la barra
-                panelMaps.renderRouteCalculated(managerGraphs.calculateShortestDistanceRoute(null,null));
-                managerGraphs.showDetails();
-                break;
-            }
-
-            case "ShortestTime": {//seleccionar los puntos como se seleccionan las rutas, poner cabios en la barra
-                panelMaps.renderRouteCalculated(managerGraphs.calculateShortestTimeRoute(null,null));
-                managerGraphs.showDetails();
-                break;
-            }
-            case "ChangeOrientation":{//elegir el cambio, poner cabios en la barra
-                managerGraphs.setOrientationRoutes(OrientationRoutes.BOTH);
-                break;
-            }
-        }
-
     }
 
 }
