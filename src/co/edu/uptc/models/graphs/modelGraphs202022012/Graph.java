@@ -16,6 +16,7 @@ public class Graph{
 
     private List<Node> elements;
     private List<Edge> edges;
+    private int[][] dijkstraMatrix;
     private UtilGraphs utilGraphs;
 
     // TODO: 16/04/2023 Donde dejar el Orientation routes
@@ -54,6 +55,56 @@ public class Graph{
     public void calculateDistance(MapRouteGraph mapRoute){
         utilGraphs.calculateDistance(mapRoute.getPoint1(),mapRoute.getPoint2());
     }
+
+
+
+        public static int[] dijkstra(Node origin, Map<Integer, MapElement> graph) {
+        int n = graph.size();
+        int[] distancias = new int[n];
+        Arrays.fill(distancias, Integer.MAX_VALUE);
+        distancias[origin.getMapElement().getIdElement()] = 0;
+
+        PriorityQueue<Node> cola = new PriorityQueue<>(Comparator.comparingInt(node -> distancias[origin.getMapElement().getIdElement()]));
+        cola.add(origin);
+
+        while (!cola.isEmpty()) {
+            Node node = cola.poll();
+            for (Edge arco : graph.get(node.getMapElement().getIdElement()).getMapRoute()) {
+                Nodo vecino = arco.getDestino();
+                int nuevaDistancia = distancias[nodo.getId()] + arco.getPeso();
+                if (nuevaDistancia < distancias[vecino.getId()]) {
+                    distancias[vecino.getId()] = nuevaDistancia;
+                    cola.add(vecino);
+                }
+            }
+        }
+
+        return distancias;
+    }
+
+//    public ArrayList<Integer> dijkstra(int origen, int destino) {
+//        ArrayList<Integer> camino= new ArrayList<Integer>();
+//        int distancia=Grafo.INFINITO;
+//        int nodo=origen;
+//        boolean fin=true;
+//        camino.add(nodo);
+//        while(fin)
+//
+//
+//            if(this.floydC[nodo][destino]<distancia) {
+//			      /*El metodo siguiente(nodo, destino), nos devuelve
+//			      el siguiente nodo a visitar*/
+//                nodo=this.siguiente(nodo, destino);
+//                camino.add(nodo);
+//            }
+//
+//        if(nodo==destino) {
+//            fin=false;
+//        }
+//    }
+//
+//		  return camino;
+//}
 
     public Set<MapElement> calculateFastestRout(MapPointGraph point1, MapPointGraph point2){
         Set<MapElement> mapElements = new HashSet<>();

@@ -11,6 +11,8 @@ public class Edge{
 
 
     private MapRoute mapRoute;
+    private double distance;
+    private double time;
 
     public Edge(MapRoute mapRoute) {
         this.mapRoute = mapRoute;
