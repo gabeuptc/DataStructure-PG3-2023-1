@@ -1,9 +1,12 @@
 package co.edu.uptc.models.graphs.modelGraphs202115100;
 
+import co.edu.uptc.models.graphs.modelGraphs202115100.persistence202115100.Persistence;
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.types.ElementType;
 
+import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,7 +14,6 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
 
     private ContractGraphs.Presenter presenter;
     private Graph graph;
-
     public ManagerModelGraphs202115100() {
         graph = new Graph();
     }
@@ -54,6 +56,7 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
 
     @Override
     public void updateGraph() {
+        new Persistence().saveGraph(graph.getElements());
         presenter.updateGraph();
     }
 
@@ -64,6 +67,12 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
 
     @Override
     public void loadGraphs() {
+        try {
+            graph.setElements(new Persistence().getGraphs());
+        } catch (FileNotFoundException e) {
+            System.out.println("No se encontr\u00f3 el archivo");
+            System.out.println(e.getMessage());
+        }
         //Pendiente- Cargar los grafos desde un archivo
     }
 
@@ -93,11 +102,13 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
         graph.calculateShortestRoute(idElementPoint1, idElementPoint2, Graph.DISTANCE);
+        presenter.updateResultGraph();
     }
 
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
         graph.calculateShortestRoute(idElementPoint1, idElementPoint2, Graph.TIME);
+        presenter.updateResultGraph();
     }
 
     @Override
@@ -108,5 +119,10 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
     @Override
     public void modifyElement(MapElement mapElementModify) {
         //Pendiente - Modificar el elemento
+    }
+
+    public static void main(String[] args) {
+        ManagerModelGraphs202115100 managerModelGraphs202115100 = new ManagerModelGraphs202115100();
+        managerModelGraphs202115100.loadGraphs();
     }
 }
