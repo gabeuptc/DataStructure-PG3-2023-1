@@ -8,6 +8,7 @@ import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.views.maps.MapPointGraph;
 import co.edu.uptc.views.maps.MapRouteGraph;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 
@@ -34,18 +35,22 @@ public class Graph{
     }
 
     public void deletePoint(MapElement mapElement){
-        for (int i = 0; i < edges.size(); i++) {
-            if(!edges.get(i).isPointConnected(mapElement)){
-                for (int j = 0; j < elements.size(); j++) {
-                    if(elements.get(i).getMapElement().equals(mapElement)) {
-                        elements.remove(elements.get(i));
-                    }
+        for (int i = 0; i < elements.size(); i++) {
+            if(elements.get(i).getMapElement().getIdElement() == mapElement.getIdElement()){
+                if(elements.get(i).isConnected()){
+                    elements.remove(elements.get(i));
                 }
             }
         }
-
     }
 
+    public void saveData(Graph graph) {
+        Persistence.getInstance().saveData(graph);
+    }
+
+    public Graph loadData(){
+        return Persistence.getInstance().loadData();
+    }
     public void calculateDistance(MapRouteGraph mapRoute){
         utilGraphs.calculateDistance(mapRoute.getPoint1(),mapRoute.getPoint2());
     }
@@ -55,55 +60,6 @@ public class Graph{
         return mapElements;
 
     }
-
-//    public static int[] dijkstra(Node inicio, Map<Node, List<Edge>> grafo) {
-//        int n = grafo.size();
-//        int[] distancias = new int[n];
-//        Arrays.fill(distancias, Integer.MAX_VALUE);
-//        distancias[inicio.getId()] = 0;
-//
-//        PriorityQueue<Nodo> cola = new PriorityQueue<>(Comparator.comparingInt(nodo -> distancias[nodo.getId()]));
-//        cola.add(inicio);
-//
-//        while (!cola.isEmpty()) {
-//            Nodo nodo = cola.poll();
-//            for (Arco arco : grafo.get(nodo)) {
-//                Nodo vecino = arco.getDestino();
-//                int nuevaDistancia = distancias[nodo.getId()] + arco.getPeso();
-//                if (nuevaDistancia < distancias[vecino.getId()]) {
-//                    distancias[vecino.getId()] = nuevaDistancia;
-//                    cola.add(vecino);
-//                }
-//            }
-//        }
-//
-//        return distancias;
-//    }
-
-//    public static double[] dijkstra(Nodo inicio, List<Arco> arcos, int n) {
-//        double[] distancias = new double[n];
-//        Arrays.fill(distancias, Double.MAX_VALUE);
-//        distancias[inicio.getId()] = 0;
-//
-//        PriorityQueue<Nodo> cola = new PriorityQueue<>(Comparator.comparingDouble(nodo -> distancias[nodo.getId()]));
-//        cola.add(inicio);
-//
-//        while (!cola.isEmpty()) {
-//            Nodo nodo = cola.poll();
-//            for (Arco arco : arcos) {
-//                if (arco.getOrigen().equals(nodo)) {
-//                    Nodo vecino = arco.getDestino();
-//                    double nuevaDistancia = distancias[nodo.getId()] + arco.getPeso();
-//                    if (nuevaDistancia < distancias[vecino.getId()]) {
-//                        distancias[vecino.getId()] = nuevaDistancia;
-//                        cola.add(vecino);
-//                    }
-//                }
-//            }
-//        }
-//
-//        return distancias;
-//    }
 
     public List<Node> getNodes() {
         return elements;
@@ -121,4 +77,8 @@ public class Graph{
         this.edges = edges;
     }
 
+    @Override
+    public String toString() {
+        return "Nodo: " + elements.toString() + " Edge: " + edges.toString();
+    }
 }

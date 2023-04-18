@@ -1,14 +1,13 @@
 package co.edu.uptc.models.graphs.modelGraphs202022012;
 
 import co.edu.uptc.pojos.MapElement;
+import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.*;
 import co.edu.uptc.views.maps.types.ElementType;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
 
@@ -16,6 +15,7 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
     private Map<Integer,MapElement> elements;
     private Map<Integer,MapElement> elementsResult;
     private Graph graph;
+
     private int count = 0;
 
     public ManagerModelGraphs202022012(){
@@ -32,23 +32,51 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
     @Override
     public void addElement(MapElement mapElement) {
         addElementOnly(mapElement);
+        saveData();
         presenter.updateGraph();
     }
 
-    public void addElementOnly(MapElement mapElement) {
+    public void addElementOnly(MapElement mapElement){
         mapElement.setIdElement(count++);
         elements.put(mapElement.getIdElement(), mapElement);
+        addElementsToGraph(mapElement);
+    }
+
+    private void addElementsToGraph(MapElement mapElement){
+        if(mapElement.getElementType() == ElementType.POINT){
+            graph.addNode(new Node(mapElement));
+        }else{
+            graph.addEdge(new Edge(mapElement.getMapRoute()));
+        }
+    }
+
+    private void saveData() {
+       graph.saveData(graph);
     }
 
     @Override
     public void deletePoint(int idPoint) {
         if(elements.containsKey(idPoint)){
-            if(elements.get(idPoint).getMapRoute() == null) {
+            if(!isRelation(idPoint)) {
                 graph.deletePoint(elements.get(idPoint));
                 elements.remove(idPoint);
                 presenter.updateGraph();
+            }else{
+                presenter.notifyWarning("No se puede borrar, el punto esta conectado");
             }
         }
+    }
+
+    private boolean isRelation(int id){
+        for (MapElement mapElement : elements.values()) {
+            if (mapElement.getElementType()== ElementType.ROUTE){
+                if (mapElement.getMapRoute().getPoint1().getIdElement() == id
+                    || mapElement.getMapRoute().getPoint2().getIdElement() == id) {
+                    return true;
+                }
+            }
+        }
+        return  false;
     }
 
     @Override
@@ -68,7 +96,10 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
 
     @Override
     public void modifyElement(MapElement mapElementModify) {
-
+        MapElement mapElement = getElement(mapElementModify.getIdElement());
+        mapElement.getMapRoute().setSpeedRoute(mapElementModify.getMapRoute().getSpeedRoute());
+        mapElement.getMapRoute().setOrientationRoutes(mapElementModify.getMapRoute().getOrientationRoutes());
+        mapElement.getMapRoute().setTypeRoute(mapElementModify.getMapRoute().getTypeRoute());
     }
 
     @Override
@@ -111,14 +142,13 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
 
     @Override
     public void loadGraphs() {
-
+        Graph graph1 = graph.loadData();
+        for (int i = 0; i < graph1.getNodes().size(); i++) {
+            System.out.println(graph1.getNodes().size());
+            addElementOnly(graph1.getNodes().get(i).getMapElement());
+        }
     }
 
-//    private Set<MapElement> cloneSet(Set<MapElement> set){
-//        Set<MapElement> auxList = new HashSet<>();
-//        for (MapElement element:set) {
-//            auxList.add(element.clone());
-//        }
-//        return auxList;
-//    }
+
+
 }

@@ -26,4 +26,12 @@ public class Node{
         this.mapElement = mapElement;
     }
 
+    public boolean isConnected(){
+        return mapElement.getMapRoute() == null;
+    }
+
+    @Override
+    public String toString() {
+        return "Coordenadas: " + mapElement.getGeoPosition();
+    }
 }
