@@ -36,4 +36,4 @@ Example01MVP.iml
 Thumbs.db
 
 # Test 202115100
-co/edu/uptc/models/graphs/modelGraphs202115100/TestGraph.java
+src/co/edu/uptc/models/graphs/modelGraphs202115100/TestGraph.java
