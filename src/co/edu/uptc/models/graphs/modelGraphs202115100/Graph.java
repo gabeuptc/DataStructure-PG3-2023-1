@@ -26,8 +26,8 @@ public class Graph {
         elements.put(element.getIdElement(), element);
     }
 
-    public Set<MapElement> getElements() {
-        return new HashSet<>(elements.values());
+    public Map<Integer, MapElement> getElements() {
+        return elements;
     }
 
     public void setElements(Map<Integer, MapElement> elements) {

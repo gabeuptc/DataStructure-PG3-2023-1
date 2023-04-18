@@ -4,6 +4,7 @@ import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.types.ElementType;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class GraphManager202115100 implements ContractGraphs.Model {
@@ -27,7 +28,7 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> getElements() {
-        return graph.getElements();
+        return new HashSet<>(graph.getElements().values());
     }
 
     @Override
@@ -37,7 +38,7 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public MapElement getElement(int idElementPoint1, int idElementPoint2) {
-        for (MapElement mapElement : graph.getElements()) {
+        for (MapElement mapElement : graph.getElements().values()) {
             if (mapElement.getElementType() == ElementType.ROUTE) {
                 MapElement point1 = mapElement.getMapRoute().getPoint1();
                 MapElement point2 = mapElement.getMapRoute().getPoint2();
@@ -74,7 +75,7 @@ public class GraphManager202115100 implements ContractGraphs.Model {
     }
 
     private boolean pointHasRelation(int id) {
-        for (MapElement mapElement : graph.getElements()) {
+        for (MapElement mapElement : graph.getElements().values()) {
             if (mapElement.getElementType() == ElementType.ROUTE) {
                 if (mapElement.getMapRoute().getPoint1().getIdElement() == id) {
                     return true;
@@ -99,9 +100,7 @@ public class GraphManager202115100 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> getResultElements() {
-        //Pendiente - Retornar los elementos del resultado
-//        return graph.getResultElements();
-        return null;
+        return new HashSet<>(graph.getResultElements().values());
     }
 
     @Override
