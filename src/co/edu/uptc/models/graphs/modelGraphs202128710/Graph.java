@@ -20,7 +20,6 @@ public class Graph {
 
     public void add(MapElement mapElement) throws FileNotFoundException {
         elementList.add(mapElement);
-        storeGraphs();
     }
     
     public MapElement searchElementId(int id){
@@ -40,10 +39,6 @@ public class Graph {
         this.elementList = elementList;
     }
 
-    public void storeGraphs() throws FileNotFoundException {
-        String store = new Gson().toJson(managerModelGraphs202128710);
-        persistence.store(store);
-    }
 
     public void loadGraphs() throws FileNotFoundException {
         managerModelGraphs202128710 = new Gson().fromJson(persistence.load(),ManagerModelGraphs202128710.class);

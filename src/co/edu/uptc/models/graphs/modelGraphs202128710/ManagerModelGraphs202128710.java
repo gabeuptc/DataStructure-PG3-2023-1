@@ -3,6 +3,7 @@ package co.edu.uptc.models.graphs.modelGraphs202128710;
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
 import com.google.gson.Gson;
+import com.sun.source.tree.NewArrayTree;
 
 import java.io.FileNotFoundException;
 import java.util.HashSet;
@@ -14,9 +15,11 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
     private Graph graph;
     private int idMapElement=0;
     private ContractGraphs.Presenter presenter;
+    private Persistence persistence;
 
     public ManagerModelGraphs202128710() {
         graph = new Graph();
+        persistence = new Persistence();
     }
 
     @Override
@@ -26,12 +29,10 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
 
     @Override
     public void addElement(MapElement mapElement) {
-
-        System.out.println("Id"+mapElement.getIdElement());
-        System.out.println("latitud"+mapElement.getGeoPosition());
         try {
             mapElement.setIdElement(idMapElement++);
             graph.add(mapElement);
+            persistence.store(graph);
         }catch (FileNotFoundException e){
         }
 
@@ -61,11 +62,6 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
     public String getUser() {
         return "202128710 RODRIGUEZ MATEUS JUAN SEBASTIAN";
     }
-
-    public void storeGraphs() throws FileNotFoundException {
-        graph.storeGraphs();
-    }
-
 
     @Override
     public void loadGraphs(){
