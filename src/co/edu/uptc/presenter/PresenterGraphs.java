@@ -22,56 +22,6 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
         return modelGraphs;
     }
 
-    /*
-    @Override
-    public Set<MapElementGraph> calculateShortestDistanceRoute(MapPointGraph point1, MapPointGraph point2) {
-        return modelGraphs.calculateShortestDistanceRoute(point1, point2);
-    }
-
-    @Override
-    public Set<MapElementGraph> calculateShortestTimeRoute(MapPointGraph point1, MapPointGraph point2) {
-        return modelGraphs.calculateShortestTimeRoute(point1, point2);
-    }
-
-    @Override
-    public void setArcType(int elementID, TypeRoute typeRoute) {
-        modelGraphs.setArcType(elementID, typeRoute);
-    }
-
-    @Override
-    public void setArcSpeed(int elementID, double speed) {
-        modelGraphs.setArcSpeed(elementID, speed);
-    }
-
-    @Override
-    public void setArcsOrientation(OrientationRoutes orientation) {
-        modelGraphs.setArcsOrientation(orientation);
-    }
-
-    @Override
-    public OrientationRoutes getOrientation() {
-        return modelGraphs.getOrientation();
-    }
-
-    @Override
-    public void deletePoint(int idPoint) {
-        modelGraphs.deletePoint(idPoint);
-    }
-
-    @Override
-    public void addElement(MapElementGraph element) {
-        if (modelGraphs!=null) {
-            modelGraphs.addElement(element);
-        } else viewGraphs.notifyError("No hay modelo seleccionado");
-    }
-
-    @Override
-    public Set<MapElementGraph> getElements() {
-        return modelGraphs.getElements();
-    }
-
-     */
-
     @Override
     public void updateGraph() {
         viewGraphs.updateGraph();
