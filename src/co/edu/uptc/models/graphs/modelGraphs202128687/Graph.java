@@ -72,6 +72,10 @@ public class Graph {
         return elementClonable;
     }
 
+    public void loadGraphs() {
+        // que cargue los grafos de la persistencia
+    }
+
     public Set<MapElement> calculateShortTimeRoute(GeoPosition point1, GeoPosition point2) {
         return null;
     }

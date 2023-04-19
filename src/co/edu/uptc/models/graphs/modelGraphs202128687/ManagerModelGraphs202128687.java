@@ -126,7 +126,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     @Override
     public void loadGraphs() {
-
+         graph.loadGraphs();
     }
 
     public MapElement getElement(int elementId) {
