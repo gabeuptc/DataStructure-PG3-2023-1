@@ -15,10 +15,12 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     private ContractGraphs.Presenter presenter;
     private Set<MapElement> elements;
     private Graph graph;
+    private Persistence persistence;
 
     public ManagerModelGraphs202128687() {
         elements = new HashSet<>();
         graph = new Graph();
+        persistence = new Persistence();
     }
 
     @Override
@@ -26,6 +28,11 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
         this.presenter = presenter;
     }
 
+    @Override
+    public void loadGraphs() {
+        Graph graphToReturn = persistence.loadGraph();
+
+    }
 
     public Set<MapElement> calculateShortestDistanceRoute(GeoPosition point1, GeoPosition point2) {
         return graph.calculateShortDistanceRoute(point1, point2);
@@ -34,7 +41,6 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     public Set<MapElement> calculateShortestTimeRoute(GeoPosition point1, GeoPosition point2) {
         return graph.calculateShortTimeRoute(point1, point2);
     }
-
 
     public void setArcType(int elementID, RouteType typeRoute) {
         MapElement element = getElement(elementID);
@@ -122,11 +128,6 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     @Override
     public String getUser() {
         return "202128687 HERNANDEZ BUITRAGO ALEX DUVAN";
-    }
-
-    @Override
-    public void loadGraphs() {
-         graph.loadGraphs();
     }
 
     public MapElement getElement(int elementId) {

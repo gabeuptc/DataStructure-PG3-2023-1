@@ -14,6 +14,7 @@ public class Graph {
     private List<Node> nodes;
     private List<Arc> arcs;
     private OrientationRoutes orientation;
+    private Persistence persistence;
 
     public Graph() {
         nodes = new ArrayList<>();
@@ -72,8 +73,9 @@ public class Graph {
         return elementClonable;
     }
 
-    public void loadGraphs() {
+    public Graph loadGraph() {
         // que cargue los grafos de la persistencia
+        return persistence.loadGraph();
     }
 
     public Set<MapElement> calculateShortTimeRoute(GeoPosition point1, GeoPosition point2) {
