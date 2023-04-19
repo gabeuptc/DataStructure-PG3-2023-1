@@ -33,4 +33,9 @@ public class ValuesGlobals {
 
     public static final ImageIcon COLOR_RED_POINT = new ImageIcon("assets/redPoint.png");
     public static final ImageIcon COLOR_PURPLE_POINT = new ImageIcon("assets/purplePoint.png");
+    public static final Color COLOR_DIALOG_SIGNIN_LOGIN = new Color(248, 182, 58);
+    public static final Color COLOR_TEXT_FIELS = new Color(0, 0, 0);
+
+    public static final Color COLOR_LABELS_FIELDS = new Color(255, 255, 255);
+    public static final Color COLOR_LABELS_FIELDS_ENTERED = new Color(231, 24, 24);
 }

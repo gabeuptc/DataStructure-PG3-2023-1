@@ -1,5 +1,6 @@
 package co.edu.uptc.views.users;
 
+import co.edu.uptc.views.Globals.ValuesGlobals;
 import co.edu.uptc.views.board.DashBoard;
 
 import javax.swing.*;
@@ -21,14 +22,13 @@ public class Login extends JDialog {
         managerEncoding = ManagerEncoding.getInstance();
         managerUsers = ManagerUsers.getInstance();
         setTitle("Registro");
-        setSize(400, 360);
+        setSize(400, 450);
         setLocationRelativeTo(dashBoard);
-        //como cerrar todas las ventanas desde aqui?
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setModal(true);
         setResizable(false);
         setLayout(null);
-        getContentPane().setBackground(Color.orange);
+        getContentPane().setBackground(ValuesGlobals.COLOR_DIALOG_SIGNIN_LOGIN);
         createComponents();
         singIn = new SingIn(this);
     }
@@ -42,35 +42,22 @@ public class Login extends JDialog {
     }
 
     private void addTitle(){
-        JLabel loginLabel = getConfiguratedLabel(new JLabel("Iniciar sesión"),36);
-        loginLabel.setBounds(70, 0, 300, 50);
-        add(loginLabel);
+        add(getConfiguratedLabel(new JLabel("Iniciar sesión"),36,0,50));
     }
 
     private void addUserField(){
-        JLabel userLabel = getConfiguratedLabel(new JLabel("Usuario"),12);
-        userLabel.setBounds(70, 50, 100, 30);
-        JLabel iconUser = new JLabel(createIconMode("assets/usuario.png"));
-        iconUser.setBounds(20,70,50,50);
-        userText = (JTextField) getConfiguratedText(new JTextField(),14);
-        userText.setBounds(70,80,270,30);
-        add(userLabel);
-        add(iconUser);
+        add(getConfiguratedLabel(new JLabel("Usuario"),12,1,30));
+        add(createIconMode("assets/usuario.png",1));
+        userText = (JTextField) getConfiguratedText(new JTextField(),14,1,270);
         add(userText);
     }
 
     private void addPasswordField(){
-        JLabel passwordLabel = getConfiguratedLabel(new JLabel("Contraseña"),12);
-        passwordLabel.setBounds(70,140,100,30);
-        JLabel passwordIcon = new JLabel(createIconMode("assets/candado.png"));
-        passwordIcon.setBounds(20,160,50,50);
-        passwordText = (JPasswordField) getConfiguratedText(new JPasswordField(),14);
-        passwordText.setBounds(70,170,230,30);
-        JLabel iconSee = new JLabel(createIconModeSmaller("assets/ver.png"));
-        iconSee.setBounds(310,170,30,30);
-        add(passwordLabel);
-        add(passwordIcon);
+        add(getConfiguratedLabel(new JLabel("Contraseña"),12,2,30));
+        add(createIconMode("assets/candado.png",2));
+        passwordText = (JPasswordField) getConfiguratedText(new JPasswordField(),14,2,230);
         add(passwordText);
+        JLabel iconSee = createIconModeSmaller("assets/ver.png",2);
         add(iconSee);
         iconSee.addMouseListener(new MouseAdapter() {
             @Override
@@ -78,11 +65,11 @@ public class Login extends JDialog {
                 super.mouseClicked(e);
                 if (isOculted){
                     passwordText.setEchoChar((char) 0);
-                    iconSee.setIcon(createIconModeSmaller("assets/ocultar.png"));
+                    iconSee.setIcon(getIconSmaller("assets/ocultar.png"));
                     isOculted = false;
                 } else {
                     passwordText.setEchoChar('•');
-                    iconSee.setIcon(createIconModeSmaller("assets/ver.png"));
+                    iconSee.setIcon(getIconSmaller("assets/ver.png"));
                     isOculted = true;
                 }
             }
@@ -90,8 +77,8 @@ public class Login extends JDialog {
     }
 
     private void addButton(){
-        JLabel login = new JLabel(createIconModeButton("assets/enter.png"));
-        login.setBounds(70,220,285,50);
+        JLabel login = new JLabel(createIconModeButton());
+        login.setBounds(70,90*3,285,50);
         add(login);
         login.addMouseListener(new MouseAdapter() {
             @Override
@@ -114,8 +101,7 @@ public class Login extends JDialog {
     }
 
     private void addRegister(){
-        JLabel registerLabel = getConfiguratedLabel(new JLabel("Registrarse"),12);
-        registerLabel.setBounds(70,280,100,30);
+        JLabel registerLabel = getConfiguratedLabel(new JLabel("Registrarse"),12,4,30);
         registerLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -127,48 +113,61 @@ public class Login extends JDialog {
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-                registerLabel.setForeground(Color.RED);
+                setComponentForegroundColor(registerLabel,ValuesGlobals.COLOR_LABELS_FIELDS_ENTERED);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-                registerLabel.setForeground(Color.WHITE);
+                setComponentForegroundColor(registerLabel,ValuesGlobals.COLOR_LABELS_FIELDS);
             }
         });
         add(registerLabel);
+    }
+    public void setComponentForegroundColor(Component component,Color color){
+        component.setForeground(color);
     }
 
     private Login getInstance(){
         return this;
     }
-    private JLabel getConfiguratedLabel(JLabel comp, int size){
+    public JLabel getConfiguratedLabel(JLabel comp, int size, int line, int heigth){
         comp.setFont(new Font("Tahoma", Font.BOLD, size));
-        comp.setForeground(Color.white);
+        comp.setBounds(70,line*90,300,heigth);
+        comp.setForeground(ValuesGlobals.COLOR_LABELS_FIELDS);
         return comp;
     }
-    private Component getConfiguratedText(Component comp, int size){
+    public Component getConfiguratedText(Component comp, int size,int line,int width){
         comp.setFont(new Font("Tahoma", Font.BOLD, size));
-        comp.setForeground(Color.black);
+        comp.setBounds(70,line * 90 + 30,width,30);
+        comp.setForeground(ValuesGlobals.COLOR_TEXT_FIELS);
         return comp;
     }
-    private ImageIcon createIconMode(String fileName){
+    public JLabel createIconMode(String fileName, int line){
         ImageIcon icon = new ImageIcon(fileName);
         Image image = icon.getImage();
         Image scaledInstance = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledInstance);
-        return  icon;
+        JLabel label = new JLabel(icon);
+        label.setBounds(20,90*line + 20,50,50);
+        return  label;
     }
 
-    private ImageIcon createIconModeSmaller(String fileName){
+    public JLabel createIconModeSmaller(String fileName, int line){
+        ImageIcon icon = getIconSmaller(fileName);
+        JLabel label = new JLabel(icon);
+        label.setBounds(310,90*line + 30,30,30);
+        return  label;
+    }
+    public ImageIcon getIconSmaller(String fileName){
         ImageIcon icon = new ImageIcon(fileName);
         Image image = icon.getImage();
         Image scaledInstance = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledInstance);
-        return  icon;
+        return icon;
     }
-    private ImageIcon createIconModeButton(String fileName){
-        ImageIcon icon = new ImageIcon(fileName);
+    private ImageIcon createIconModeButton(){
+        ImageIcon icon = new ImageIcon("assets/enter.png");
         Image image = icon.getImage();
         Image scaledInstance = image.getScaledInstance(285, 50, Image.SCALE_SMOOTH);
         icon = new ImageIcon(scaledInstance);

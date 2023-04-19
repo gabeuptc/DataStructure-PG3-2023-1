@@ -1,7 +1,8 @@
 package co.edu.uptc.views.users;
 
+import co.edu.uptc.views.Globals.ValuesGlobals;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -21,13 +22,13 @@ public class SingIn extends JDialog {
         managerUsers = ManagerUsers.getInstance();
         this.login = login;
         setTitle("Registro");
-        setSize(400, 550);
+        setSize(400, 650);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setModal(true);
         setResizable(false);
         setLayout(null);
-        getContentPane().setBackground(Color.orange);
+        getContentPane().setBackground(ValuesGlobals.COLOR_DIALOG_SIGNIN_LOGIN);
         createComponents();
 
     }
@@ -43,46 +44,28 @@ public class SingIn extends JDialog {
     }
 
     private void addTitle(){
-        JLabel registerLabel = getConfiguratedLabel(new JLabel("Registro"),36);
-        registerLabel.setBounds(70, 0, 300, 50);
-        add(registerLabel);
+        add(login.getConfiguratedLabel(new JLabel("Registro"),36,0,50));
     }
     private void addUserField(){
-        JLabel userLabel = getConfiguratedLabel(new JLabel("Usuario"),12);
-        userLabel.setBounds(70, 50, 100, 30);
-        JLabel iconUser = new JLabel(createIconMode("assets/usuario.png"));
-        iconUser.setBounds(20,70,50,50);
-        userText = (JTextField) getConfiguratedText(new JTextField(),14);
-        userText.setBounds(70,80,270,30);
-        add(userLabel);
-        add(iconUser);
+        add(login.getConfiguratedLabel(new JLabel("Usuario"),12,1,30));
+        add(login.createIconMode("assets/usuario.png",1));
+        userText = (JTextField) login.getConfiguratedText(new JTextField(),14,1,270);
         add(userText);
     }
     private void addEmailField(){
-        JLabel emailLabel = getConfiguratedLabel(new JLabel("Correo"),12);
-        emailLabel.setBounds(70, 140, 100, 30);
-        JLabel iconEmail = new JLabel(createIconMode("assets/correo.png"));
-        iconEmail.setBounds(20,160,50,50);
-        email = (JTextField) getConfiguratedText(new JTextField(),14);
-        email.setBounds(70,170,175,30);
-        JLabel ext = getConfiguratedLabel(new JLabel("@uptc.edu.co"),12);
-        ext.setBounds(245,170,100,30);
-        add(emailLabel);
-        add(iconEmail);
+        add(login.getConfiguratedLabel(new JLabel("Correo"),12,2,30));
+        add(login.createIconMode("assets/correo.png",2));
+        email = (JTextField) login.getConfiguratedText(new JTextField(),14,2,175);
+        JLabel ext = new JLabel("@uptc.edu.co");
+        ext.setBounds(245,90*2+30,100,30);
         add(email);
         add(ext);
     }
     private void addPasswordField(){
-        JLabel passwordLabel = getConfiguratedLabel(new JLabel("Contraseña"),12);
-        passwordLabel.setBounds(70,230,100,30);
-        JLabel passwordIcon = new JLabel(createIconMode("assets/candado.png"));
-        passwordIcon.setBounds(20,250,50,50);
-        passwordText = (JPasswordField) getConfiguratedText(new JPasswordField(),14);
-        passwordText.setBounds(70,260,230,30);
-        JLabel iconSee = new JLabel(createIconModeSmaller("assets/ver.png"));
-        iconSee.setBounds(310,260,30,30);
-        add(passwordLabel);
-        add(passwordIcon);
+        add(login.getConfiguratedLabel(new JLabel("Contraseña"),12,3,30));
+        add(login.createIconMode("assets/candado.png",3));
+        passwordText = (JPasswordField) login.getConfiguratedText(new JPasswordField(),14,3,230);
+        JLabel iconSee = login.createIconModeSmaller("assets/ver.png",3);
         add(passwordText);
         add(iconSee);
         iconSee.addMouseListener(new MouseAdapter() {
@@ -91,27 +74,21 @@ public class SingIn extends JDialog {
                 super.mouseClicked(e);
                 if (isOcultedFirst){
                     passwordText.setEchoChar((char) 0);
-                    iconSee.setIcon(createIconModeSmaller("assets/ocultar.png"));
+                    iconSee.setIcon(login.getIconSmaller("assets/ocultar.png"));
                     isOcultedFirst = false;
                 } else {
                     passwordText.setEchoChar('•');
-                    iconSee.setIcon(createIconModeSmaller("assets/ver.png"));
+                    iconSee.setIcon(login.getIconSmaller("assets/ver.png"));
                     isOcultedFirst = true;
                 }
             }
         });
     }
     private void addPasswordConfirmField(){
-        JLabel passwordConfLabel = getConfiguratedLabel(new JLabel("Confirmar contraseña"),12);
-        passwordConfLabel.setBounds(70,320,200,30);
-        JLabel passwordConfIcon = new JLabel(createIconMode("assets/candado.png"));
-        passwordConfIcon.setBounds(20,340,50,50);
-        passwordConfirm = (JPasswordField) getConfiguratedText(new JPasswordField(),14);
-        passwordConfirm.setBounds(70,350,230,30);
-        JLabel iconSeeConfirm = new JLabel(createIconModeSmaller("assets/ver.png"));
-        iconSeeConfirm.setBounds(310,350,30,30);
-        add(passwordConfLabel);
-        add(passwordConfIcon);
+        add(login.getConfiguratedLabel(new JLabel("Confirmar contraseña"),12,4,30));
+        add(login.createIconMode("assets/candado.png",4));
+        passwordConfirm = (JPasswordField) login.getConfiguratedText(new JPasswordField(),14,4,230);
+        JLabel iconSeeConfirm = login.createIconModeSmaller("assets/ver.png",4);
         add(passwordConfirm);
         add(iconSeeConfirm);
         iconSeeConfirm.addMouseListener(new MouseAdapter() {
@@ -120,19 +97,19 @@ public class SingIn extends JDialog {
                 super.mouseClicked(e);
                 if (isOcultedConfirm){
                     passwordConfirm.setEchoChar((char) 0);
-                    iconSeeConfirm.setIcon(createIconModeSmaller("assets/ocultar.png"));
+                    iconSeeConfirm.setIcon(login.getIconSmaller("assets/ocultar.png"));
                     isOcultedConfirm = false;
                 } else {
                     passwordConfirm.setEchoChar('•');
-                    iconSeeConfirm.setIcon(createIconModeSmaller("assets/ver.png"));
+                    iconSeeConfirm.setIcon(login.getIconSmaller("assets/ver.png"));
                     isOcultedConfirm = true;
                 }
             }
         });
     }
     private void addRegister(){
-        JLabel register = getConfiguratedLabel(new JLabel("Registrarse"),12);
-        register.setBounds(70,400,100,50);register.addMouseListener(new MouseAdapter() {
+        JLabel register = login.getConfiguratedLabel(new JLabel("Registrarse"),12,5,30);
+        register.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
@@ -157,20 +134,19 @@ public class SingIn extends JDialog {
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-                register.setForeground(Color.RED);
+                login.setComponentForegroundColor(register,ValuesGlobals.COLOR_LABELS_FIELDS_ENTERED);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-                register.setForeground(Color.WHITE);
+                login.setComponentForegroundColor(register,ValuesGlobals.COLOR_LABELS_FIELDS);
             }
         });
         add(register);
     }
     private void addBack(){
-        JLabel back = getConfiguratedLabel(new JLabel("volver a Inicio de sesión"),12);
-        back.setBounds(70,460,200,30);
+        JLabel back = login.getConfiguratedLabel(new JLabel("volver a Inicio de sesión"),12,6,30);
         back.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -182,13 +158,13 @@ public class SingIn extends JDialog {
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-                back.setForeground(Color.RED);
+                login.setComponentForegroundColor(back,ValuesGlobals.COLOR_LABELS_FIELDS_ENTERED);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-                back.setForeground(Color.WHITE);
+                login.setComponentForegroundColor(back,ValuesGlobals.COLOR_LABELS_FIELDS);
             }
         });
         add(back);
@@ -196,31 +172,7 @@ public class SingIn extends JDialog {
     private JDialog getInstance(){
         return this;
     }
-    private JLabel getConfiguratedLabel(JLabel comp, int size){
-        comp.setFont(new Font("Tahoma", Font.BOLD, size));
-        comp.setForeground(Color.white);
-        return comp;
-    }
-    private Component getConfiguratedText(Component comp, int size){
-        comp.setFont(new Font("Tahoma", Font.BOLD, size));
-        comp.setForeground(Color.black);
-        return comp;
-    }
-    private ImageIcon createIconMode(String fileName){
-        ImageIcon icon = new ImageIcon(fileName);
-        Image image = icon.getImage();
-        Image scaledInstance = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        icon = new ImageIcon(scaledInstance);
-        return  icon;
-    }
 
-    private ImageIcon createIconModeSmaller(String fileName){
-        ImageIcon icon = new ImageIcon(fileName);
-        Image image = icon.getImage();
-        Image scaledInstance = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-        icon = new ImageIcon(scaledInstance);
-        return  icon;
-    }
     public void clearContent(){
         userText.setText("");
         email.setText("");
