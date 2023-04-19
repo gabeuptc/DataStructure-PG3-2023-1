@@ -2,6 +2,7 @@ package co.edu.uptc.models.graphs.modelGraphs202115100;
 
 import co.edu.uptc.pojos.MapElement;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -17,15 +18,15 @@ public class Persistence {
         try {
             prop.load(new FileInputStream("resources/config.properties"));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("No se encontr\u00f3 el archivo");
         }
     }
 
-    public Map<Integer, MapElement> getGraphs()throws IOException {
-        Gson gson = new Gson();
+    public Map<Integer, MapElement> getGraphs() throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileReader reader = new FileReader(prop.getProperty("DATA_FILE_202115100"));
-        System.out.println((Arrays.toString(gson.fromJson(reader, MapElement[].class))));
-        return fillGraph(gson.fromJson(reader, MapElement[].class),reader);
+        Class<MapElement[]> mapElementClass = MapElement[].class;
+        return fillGraph(gson.fromJson(reader, mapElementClass), reader);
     }
 
     private Map<Integer, MapElement> fillGraph(MapElement[] mapElements, FileReader reader) throws IOException {

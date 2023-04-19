@@ -74,10 +74,8 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
             graph.setElements(new Persistence().getGraphs());
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
         }
         updateGraph();
-        //Pendiente- Cargar los grafos desde un archivo
     }
 
     @Override

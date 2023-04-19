@@ -11,7 +11,7 @@ import static java.lang.Math.*;
 public class Graph {//Pendiente - hacer los casos para la penalizacion en la velocidad por el tipo de ruta y la direccion de la ruta, Tambien falta hacer un test nuevo que funcione
     private Map<Integer, MapElement> elements;
     private Map<Integer, MapElement> resultElements;
-    private int count = 0;
+    private List<Integer> existingIDs;
     public static final int TIME = 0;
     public static final int DISTANCE = 1;
     public static final double RADIUS = 6371;
@@ -19,15 +19,33 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
     public Graph() {
         elements = new HashMap<>();
         resultElements = new HashMap<>();
+        existingIDs = new ArrayList<>();
     }
 
     public void addElement(MapElement element) {
-        element.setIdElement(count++);
+        element.setIdElement(getUniqueID());
         elements.put(element.getIdElement(), element);
+    }
+
+    private int getUniqueID() {
+        int id = 0;
+        while (existingIDs.contains(id)) {
+            id++;
+        }
+        existingIDs.add(id);
+        return id;
     }
 
     public Map<Integer, MapElement> getElements() {
         return elements;
+    }
+
+    public List<Integer> getExistingIDs() {
+        return existingIDs;
+    }
+
+    public void setExistingIDs(List<Integer> existingIDs) {
+        this.existingIDs = existingIDs;
     }
 
     public void setElements(Map<Integer, MapElement> elements) {
@@ -37,11 +55,6 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
     public void setResultElements(Map<Integer, MapElement> resultElements) {
         this.resultElements = resultElements;
     }
-
-    public int getCount() {
-        return count;
-    }
-
     public Double getDistanceBetweenPoints(MapElement point1, MapElement point2) {
         double lat1Rad = toRadians(point1.getGeoPosition().getLatitude());
         double lat2Rad = toRadians(point2.getGeoPosition().getLatitude());
@@ -147,7 +160,7 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
     }
 
     public MapElement getElement(int id) {
-       return elements.getOrDefault(id, null);
+        return elements.getOrDefault(id, null);
     }
 
     public Map<Integer, MapElement> getResultElements() {
