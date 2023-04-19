@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 public class Persistence {
 
     public void store(String storeJson) throws FileNotFoundException {
-        PrintWriter print = new PrintWriter("graphsData202128710.json");
+        PrintWriter print = new PrintWriter("data/graphsData202128710.json");
         print.write(storeJson);
         print.close();
     }

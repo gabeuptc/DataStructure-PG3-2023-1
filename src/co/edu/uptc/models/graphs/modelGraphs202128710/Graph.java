@@ -4,20 +4,39 @@ import co.edu.uptc.pojos.MapElement;
 import com.google.gson.Gson;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
 
     private Persistence persistence;
     private ManagerModelGraphs202128710 managerModelGraphs202128710;
-    private List<MapElement> element;
+    private List<MapElement> elementList;
 
-    public List<MapElement> getElement() {
-        return element;
+    public Graph(){
+        elementList = new ArrayList<>();
+        persistence = new Persistence();
     }
 
-    public void setElement(List<MapElement> element) {
-        this.element = element;
+    public void add(MapElement mapElement){
+        elementList.add(mapElement);
+    }
+    
+    public MapElement searchElementId(int id){
+        for (MapElement aux:elementList) {
+            if (aux.getIdElement()==id){
+                return aux;
+            }
+        }
+        return null;
+    }
+
+    public List<MapElement> getElementList() {
+        return elementList;
+    }
+
+    public void setElementList(List<MapElement> elementList) {
+        this.elementList = elementList;
     }
 
     public void storeGraphs() throws FileNotFoundException {

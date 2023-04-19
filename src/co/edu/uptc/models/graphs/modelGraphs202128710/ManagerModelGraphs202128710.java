@@ -27,16 +27,19 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
     @Override
     public void addElement(MapElement mapElement) {
         mapElement.setIdElement(idMapElement++);
+        System.out.println("Id"+mapElement.getIdElement());
+        System.out.println("latitud"+mapElement.getGeoPosition());
+        graph.add(mapElement);
     }
 
     @Override
     public Set<MapElement> getElements() {
-        return new HashSet<>(graph.getElement());
+        return new HashSet<>(graph.getElementList());
     }
 
     @Override
     public MapElement getElement(int id) {
-        return null;
+        return graph.searchElementId(id);
     }
 
     @Override
