@@ -22,11 +22,10 @@ public class Persistence {
         }
     }
 
-    public Map<Integer, MapElement> getGraphs() throws IOException {
+    public Map<Integer,MapElement> getGraphs() throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileReader reader = new FileReader(prop.getProperty("DATA_FILE_202115100"));
-        Class<MapElement[]> mapElementClass = MapElement[].class;
-        return fillGraph(gson.fromJson(reader, mapElementClass), reader);
+        return fillGraph(gson.fromJson(reader, MapElement[].class), reader);
     }
 
     private Map<Integer, MapElement> fillGraph(MapElement[] mapElements, FileReader reader) throws IOException {

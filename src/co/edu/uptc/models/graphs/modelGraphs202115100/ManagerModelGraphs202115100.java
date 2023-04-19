@@ -26,6 +26,7 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
     public void addElement(MapElement mapElement) {
         graph.addElement(mapElement);
         updateGraph();
+        saveGraph();
     }
 
     @Override
@@ -55,7 +56,6 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
 
     @Override
     public void updateGraph() {
-        saveGraph();
         presenter.updateGraph();
     }
 
