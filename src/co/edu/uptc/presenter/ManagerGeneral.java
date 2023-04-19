@@ -1,6 +1,7 @@
 package co.edu.uptc.presenter;
 
 import co.edu.uptc.models.graphs.modelGraphs202022012.ManagerModelGraphs202022012;
+import co.edu.uptc.models.graphs.modelGraphs202114641.ManagerModelGraphs202114641;
 import co.edu.uptc.models.graphs.modelGraphs202127812.ManagerModelGraphs202127812;
 import co.edu.uptc.models.graphs.modelGraphs202128687.ManagerModelGraphs202128687;
 import co.edu.uptc.models.people.model202128687.ManagerModel202128687;
@@ -121,7 +122,7 @@ public class ManagerGeneral {
         modelGraphs202022012 = new ManagerModelGraphs202022012();
         //modelGraphs201813802 = new ManagerModelGraphs201813802();
         //modelGraphs202113214 = new ManagerModelGraphs02113214();
-        //modelGraphs202114641 = new ManagerModelGraphs202114641();
+        modelGraphs202114641 = new ManagerModelGraphs202114641();
         //modelGraphs202115100 = new ManagerModelGraphs202115100();
         //modelGraphs202128710 = new ManagerModelGraphs202128710();
         //modelGraphs202112690 = new ManagerModelGraphs202112690();
