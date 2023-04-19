@@ -1,6 +1,5 @@
 package co.edu.uptc.models.graphs.modelGraphs202127061;
 
-//import co.edu.uptc.models.graphs.modelGraphs202127061.persistence202127061.Persistence;
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.types.ElementType;
@@ -54,8 +53,7 @@ public class ManagerModelGraphs202127061 implements ContractGraphs.Model {
 
     @Override
     public void updateGraph() {
-        /*new Persistence().saveGraph(graph.getElements());
-        presenter.updateGraph();*/
+
     }
 
     @Override
@@ -65,13 +63,7 @@ public class ManagerModelGraphs202127061 implements ContractGraphs.Model {
 
     @Override
     public void loadGraphs() {
-        /*try {
-            graph.setElements(new Persistence().getGraphs());
-        } catch (FileNotFoundException e) {
-            System.out.println("No se encontr\u00f3 el archivo");
-            System.out.println(e.getMessage());
-        }
-        //Pendiente- Cargar los grafos desde un archivo*/
+
     }
 
     @Override
@@ -100,14 +92,12 @@ public class ManagerModelGraphs202127061 implements ContractGraphs.Model {
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
-        graph.calculateShortestRoute(idElementPoint1, idElementPoint2, Graph.DISTANCE);
-        presenter.updateResultGraph();
+
     }
 
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
-        graph.calculateShortestRoute(idElementPoint1, idElementPoint2, Graph.TIME);
-        presenter.updateResultGraph();
+
     }
 
     @Override
