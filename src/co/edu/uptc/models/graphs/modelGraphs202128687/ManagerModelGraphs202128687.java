@@ -14,17 +14,14 @@ import java.util.Set;
 
 public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     private ContractGraphs.Presenter presenter;
-    private Set<MapElement> elements;
-    private Graph graph;
     private Persistence persistence;
+    private Graph graph;
+    private Set<MapElement> elements;
+    private int numberElements = 0;
 
     public ManagerModelGraphs202128687() {
-        elements = new HashSet<>();
         persistence = new Persistence();
         graph = persistence.loadGraph();
-        elements = graph.getElements();
-        graph.addAllElements(elements);
-        graph.showGraph();
     }
 
     @Override
@@ -34,12 +31,9 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     @Override
     public void loadGraphs() {
-        Graph graph1 = graph.loadGraph(persistence);
-        graph1.addAllElements(elements);
-        elements = graph1.getElements();
-        System.out.println("elementos: " + elements.size());
+        //graph.addAllElements();
+        Graph graph1 = graph;
         for (int i = 0; i < graph1.getNodes().size(); i++) {
-            System.out.println(graph1.getNodes().size());
             addElementOnly(graph1.getNodes().get(i).getMapElement());
         }
         /*
@@ -57,17 +51,10 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
          */
     }
 
-    public Set<MapElement> addElementOnly(MapElement element) {
-        element.setIdElement(elements.size() + 1);
-        if (element != null) {
-            elements.add(element);
-            if (isPoint(element)) {
-                graph.addNode(new Node(element));
-            } else if (isRoute(element)) {
-                graph.addArc(new Arc(element.getMapRoute()));
-            }
-        }
-        return elements;
+    public void addElementOnly(MapElement element) {
+        element.setIdElement(numberElements++);
+        elements.add(element);
+        addElement(element);
     }
 
     public Set<MapElement> calculateShortestDistanceRoute(GeoPosition point1, GeoPosition point2) {
@@ -87,16 +74,16 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     }
 
     public void setArcSpeed(int elementID, double speed) {
-         MapElement element = getElement(elementID);
-         if (isRoute(element)) {
-               element.getMapRoute().setSpeedRoute(speed);
-               graph.getArc(element.getMapRoute()).getMapRoute().setSpeedRoute(speed);
-         }
+        MapElement element = getElement(elementID);
+        if (isRoute(element)) {
+            element.getMapRoute().setSpeedRoute(speed);
+            graph.getArc(element.getMapRoute()).getMapRoute().setSpeedRoute(speed);
+        }
     }
 
 
     public void setArcsOrientation(OrientationRoutes orientation) {
-         graph.setOrientation(orientation);
+        graph.setOrientation(orientation);
     }
 
 
@@ -127,10 +114,9 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     @Override
     public void addElement(MapElement element) {
-        elements.add(element);
         if (element.getElementType() == ElementType.POINT) {
             graph.addNode(new Node(element));
-        }else{
+        } else {
             graph.addArc(new Arc(element.getMapRoute()));
         }
         graph.savePersistence(persistence);

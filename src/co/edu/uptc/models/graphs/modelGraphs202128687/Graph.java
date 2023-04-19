@@ -54,10 +54,12 @@ public class Graph {
     }
 
     public Set<MapElement> getElements() {
-        for (Node node : nodes) {
-            System.out.println("node: " + node.getMapElement().getGeoPosition());
-        }
+        System.out.println("elementos: " + elements.size());
         return elements;
+    }
+
+    public int getElementsSize() {
+        return elements.size();
     }
 
 
@@ -125,7 +127,7 @@ public class Graph {
         persistence.saveGraph(this);
     }
 
-    public void addAllElements(Set<MapElement> elements) {
+    public void addAllElements() {
         for (MapElement element : elements) {
             if (element.getElementType() == (ElementType.POINT)) {
                 addNode(new Node(element));
@@ -138,5 +140,9 @@ public class Graph {
     public void showGraph() {
 
 
+    }
+
+    public void addElement(MapElement element) {
+        elements.add(element);
     }
 }
