@@ -13,12 +13,10 @@ import java.util.Set;
 public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
 
     private Graph graph;
-    private int idMapElement=0;
     private ContractGraphs.Presenter presenter;
     private Persistence persistence;
 
     public ManagerModelGraphs202128710() {
-        graph = new Graph();
         persistence = new Persistence();
     }
 
@@ -30,7 +28,6 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
     @Override
     public void addElement(MapElement mapElement) {
         try {
-            System.out.println(graph.getElementList().size());
             mapElement.setIdElement(graph.getElementList().size());
             graph.add(mapElement);
             presenter.updateGraph();
