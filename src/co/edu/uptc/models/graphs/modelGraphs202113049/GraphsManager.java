@@ -28,6 +28,10 @@ public class GraphsManager {
         return  new HashSet<>(elements.values());
     }
 
+    public MapElement getElement(int id) {
+        return elements.get(id);
+    }
+
 
 
 

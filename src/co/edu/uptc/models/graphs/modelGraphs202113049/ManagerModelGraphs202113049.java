@@ -42,7 +42,7 @@ public class ManagerModelGraphs202113049 implements ContractGraphs.Model {
 
     @Override
     public MapElement getElement(int id) {
-        return null;
+        return graphsManager.getElement(id);
     }
 
     @Override
