@@ -28,7 +28,7 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
     }
 
     private int getUniqueID() {
-        int id = 0;
+        int id = existingIDs.contains(existingIDs.size() - 1) ? existingIDs.size() : 0;
         while (existingIDs.contains(id)) {
             id++;
         }
@@ -55,6 +55,7 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
     public void setResultElements(Map<Integer, MapElement> resultElements) {
         this.resultElements = resultElements;
     }
+
     public Double getDistanceBetweenPoints(MapElement point1, MapElement point2) {
         double lat1Rad = toRadians(point1.getGeoPosition().getLatitude());
         double lat2Rad = toRadians(point2.getGeoPosition().getLatitude());

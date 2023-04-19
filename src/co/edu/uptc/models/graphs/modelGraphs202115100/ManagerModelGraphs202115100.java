@@ -4,6 +4,7 @@ import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.types.ElementType;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,12 +55,7 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
 
     @Override
     public void updateGraph() {
-        try {
-            new Persistence().saveGraph(graph.getElements());
-        } catch (Exception e) {
-            System.out.println("No se encontr\u00f3 el archivo");
-            System.out.println(e.getMessage());
-        }
+        saveGraph();
         presenter.updateGraph();
     }
 
@@ -72,7 +68,9 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
     public void loadGraphs() {
         try {
             graph.setElements(new Persistence().getGraphs());
+            graph.setExistingIDs(new ArrayList<>(graph.getElements().keySet()));
         } catch (Exception e) {
+            presenter.notifyWarning("Error al cargar el grafo");
             e.printStackTrace();
         }
         updateGraph();
@@ -83,8 +81,20 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
         //Pendiente - Eliminar el punto
         if (!pointHasRelation(idElement)) {
             graph.deleteElement(idElement);
+            saveGraph();
+            presenter.updateGraph();
+        } else {
+            presenter.notifyWarning("El punto esta relacionado, por lo tanto no se puede borrar");
         }
-        updateGraph();
+    }
+
+    private void saveGraph() {
+        try {
+            new Persistence().saveGraph(graph.getElements());
+        } catch (Exception e){
+            presenter.notifyWarning("Error al guardar el grafo");
+            e.printStackTrace();
+        }
     }
 
     private boolean pointHasRelation(int id) {
