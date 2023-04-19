@@ -9,13 +9,11 @@ import java.util.List;
 
 public class Graph {
 
-    private Persistence persistence;
     private ManagerModelGraphs202128710 managerModelGraphs202128710;
     private List<MapElement> elementList;
 
     public Graph(){
         elementList = new ArrayList<>();
-        persistence = new Persistence();
     }
 
     public void add(MapElement mapElement) throws FileNotFoundException {
@@ -39,10 +37,6 @@ public class Graph {
         this.elementList = elementList;
     }
 
-
-    public void loadGraphs() throws FileNotFoundException {
-        managerModelGraphs202128710 = new Gson().fromJson(persistence.load(),ManagerModelGraphs202128710.class);
-    }
 
 
 }

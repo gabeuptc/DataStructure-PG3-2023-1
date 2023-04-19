@@ -30,7 +30,8 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
     @Override
     public void addElement(MapElement mapElement) {
         try {
-            mapElement.setIdElement(idMapElement++);
+            System.out.println(graph.getElementList().size());
+            mapElement.setIdElement(graph.getElementList().size());
             graph.add(mapElement);
             presenter.updateGraph();
             persistence.store(graph);
@@ -67,7 +68,7 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
     @Override
     public void loadGraphs(){
         try {
-            graph.loadGraphs();
+            graph = new Gson().fromJson(persistence.load(),Graph.class);
             presenter.updateGraph();
         }catch (FileNotFoundException e){
         }
