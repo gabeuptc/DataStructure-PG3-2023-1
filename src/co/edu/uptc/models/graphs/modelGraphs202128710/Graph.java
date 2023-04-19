@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Graph {
 
-    private ManagerModelGraphs202128710 managerModelGraphs202128710;
+    private int idElement;
     private List<MapElement> elementList;
 
     public Graph(){
@@ -17,6 +17,7 @@ public class Graph {
     }
 
     public void add(MapElement mapElement) throws FileNotFoundException {
+        mapElement.setIdElement(idElement++);
         elementList.add(mapElement);
     }
     
@@ -27,6 +28,21 @@ public class Graph {
             }
         }
         return null;
+    }
+
+    public void removePoint(int id){
+        MapElement aux = searchElementId(id);
+        if (aux.getMapRoute()==null){
+            elementList.remove(aux);
+        }
+    }
+
+    public int getIdElement() {
+        return idElement;
+    }
+
+    public void setIdElement(int idElement) {
+        this.idElement = idElement;
     }
 
     public List<MapElement> getElementList() {

@@ -3,11 +3,9 @@ package co.edu.uptc.models.graphs.modelGraphs202128710;
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
 import com.google.gson.Gson;
-import com.sun.source.tree.NewArrayTree;
 
 import java.io.FileNotFoundException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
@@ -28,7 +26,6 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
     @Override
     public void addElement(MapElement mapElement) {
         try {
-            mapElement.setIdElement(graph.getElementList().size());
             graph.add(mapElement);
             presenter.updateGraph();
             persistence.store(graph);
@@ -68,13 +65,15 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
             graph = new Gson().fromJson(persistence.load(),Graph.class);
             presenter.updateGraph();
         }catch (FileNotFoundException e){
+            graph = new Graph();
+            graph.setIdElement(0);
         }
 
     }
 
     @Override
     public void deletePoint(int idElement) {
-
+        graph.removePoint(idElement);
     }
 
     @Override
