@@ -20,8 +20,11 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     public ManagerModelGraphs202128687() {
         elements = new HashSet<>();
-        graph = new Graph();
         persistence = new Persistence();
+        graph = persistence.loadGraph();
+        elements = graph.getElements();
+        graph.addAllElements(elements);
+        graph.showGraph();
     }
 
     @Override
@@ -32,27 +35,30 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     @Override
     public void loadGraphs() {
         Graph graph1 = graph.loadGraph(persistence);
-        if(graph1 != null) {
-            for (int i = 0; i < graph1.getNodes().size(); i++) {
-                System.out.println(graph1.getNodes().size());
-                addElementOnly(graph1.getNodes().get(i).getMapElement());
-            }
-            System.out.println("size: " + graph1.getArcs().size());
-            for (int i = 0; i < graph1.getArcs().size(); i++) {
-                MapRoute mapRoute = new MapRoute();
-                mapRoute.setOrientationRoutes(graph1.getArcs().get(i).getMapRoute().getOrientationRoutes());
-                mapRoute.setPoint1(graph1.getArcs().get(i).getMapRoute().getPoint1());
-                mapRoute.setPoint2(graph1.getArcs().get(i).getMapRoute().getPoint2());
-                mapRoute.setSpeedRoute((graph1.getArcs().get(i).getMapRoute().getSpeedRoute()));
-                mapRoute.setTypeRoute(graph1.getArcs().get(i).getMapRoute().getTypeRoute());
-                MapElement mapElement = new MapElement(mapRoute);
-                System.out.println("entraaa");
-                addElementOnly(mapElement);
-            }
+        graph1.addAllElements(elements);
+        elements = graph1.getElements();
+        System.out.println("elementos: " + elements.size());
+        for (int i = 0; i < graph1.getNodes().size(); i++) {
+            System.out.println(graph1.getNodes().size());
+            addElementOnly(graph1.getNodes().get(i).getMapElement());
         }
+        /*
+        for (int i = 0; i < graph1.getArcs().size(); i++) {
+            MapRoute mapRoute = new MapRoute();
+            mapRoute.setOrientationRoutes(graph1.getArcs().get(i).getMapRoute().getOrientationRoutes());
+            mapRoute.setPoint1(graph1.getArcs().get(i).getMapRoute().getPoint1());
+            mapRoute.setPoint2(graph1.getArcs().get(i).getMapRoute().getPoint2());
+            mapRoute.setSpeedRoute((graph1.getArcs().get(i).getMapRoute().getSpeedRoute()));
+            mapRoute.setTypeRoute(graph1.getArcs().get(i).getMapRoute().getTypeRoute());
+            MapElement mapElement = new MapElement(mapRoute);
+            System.out.println("entraaa");
+            addElementOnly(mapElement);
+        }
+         */
     }
 
     public Set<MapElement> addElementOnly(MapElement element) {
+        element.setIdElement(elements.size() + 1);
         if (element != null) {
             elements.add(element);
             if (isPoint(element)) {

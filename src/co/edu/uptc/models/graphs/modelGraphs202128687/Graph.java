@@ -3,6 +3,7 @@ package co.edu.uptc.models.graphs.modelGraphs202128687;
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.views.maps.*;
+import co.edu.uptc.views.maps.types.ElementType;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import java.util.ArrayList;
@@ -14,9 +15,11 @@ public class Graph {
     private List<Node> nodes;
     private List<Arc> arcs;
     private OrientationRoutes orientation;
+    private Set<MapElement> elements;
     private OperationMaps operationMaps;
 
     public Graph() {
+        elements = new HashSet<>();
         nodes = new ArrayList<>();
         arcs = new ArrayList<>();
         OperationMaps operationMaps = new OperationMaps();
@@ -49,6 +52,14 @@ public class Graph {
         }
         return null;
     }
+
+    public Set<MapElement> getElements() {
+        for (Node node : nodes) {
+            System.out.println("node: " + node.getMapElement().getGeoPosition());
+        }
+        return elements;
+    }
+
 
     public Set<MapElement> calculateShortDistanceRoute(GeoPosition point1, GeoPosition point2) {
         Set<MapElement> elements = new HashSet<>();
@@ -112,5 +123,20 @@ public class Graph {
 
     public void savePersistence(Persistence persistence) {
         persistence.saveGraph(this);
+    }
+
+    public void addAllElements(Set<MapElement> elements) {
+        for (MapElement element : elements) {
+            if (element.getElementType() == (ElementType.POINT)) {
+                addNode(new Node(element));
+            } else {
+                addArc(new Arc(element.getMapRoute()));
+            }
+        }
+    }
+
+    public void showGraph() {
+
+
     }
 }

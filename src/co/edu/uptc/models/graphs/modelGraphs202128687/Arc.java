@@ -12,4 +12,9 @@ public class Arc {
     public MapRoute getMapRoute() {
         return route;
     }
+
+    @Override
+    public String toString(){
+        return "arco" + route.getPoint1().getGeoPosition().getLatitude()+ route.getPoint1().getGeoPosition().getLongitude();
+    }
 }
