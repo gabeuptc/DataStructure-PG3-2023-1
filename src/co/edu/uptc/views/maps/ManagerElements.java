@@ -111,6 +111,7 @@ public class ManagerElements {
         MapElement mapElement = ManagerGraphs.getInstance().getPresenterGraphs().getElement(element.getIdElement());
         auxRoute.setPoint(mapElement);
         if (auxRoute.isAssigneds()) {
+            System.out.println("222:  "+panelMaps.popUpOperationMenu.getSelectionType());
             if (panelMaps.popUpOperationMenu.getSelectionType() == SelectionType.NEW_ROUTE) {
                 elementNumber = 0;
                 new JDialogRouteInformation(auxRoute, panelMaps, elementNumber).setVisible(true);
