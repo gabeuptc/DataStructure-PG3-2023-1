@@ -1,13 +1,17 @@
 package co.edu.uptc.models.graphs.modelGraphs202128687;
+import co.edu.uptc.pojos.MapElement;
 import org.jxmapviewer.viewer.GeoPosition;
+
+import java.lang.reflect.MalformedParameterizedTypeException;
 
 public class Node {
 
-    private GeoPosition point;
-    public Node(GeoPosition GeoPosition) {
+    private MapElement point;
+    public Node(MapElement point) {
+         this.point = point;
     }
 
-    public GeoPosition getPoint() {
+    public MapElement getMapElement() {
         return point;
     }
 }

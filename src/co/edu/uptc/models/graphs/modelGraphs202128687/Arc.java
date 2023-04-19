@@ -9,7 +9,7 @@ public class Arc {
         this.route = route;
     }
 
-    public MapRoute getRoute() {
+    public MapRoute getMapRoute() {
         return route;
     }
 }

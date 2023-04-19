@@ -1,6 +1,7 @@
 package co.edu.uptc.models.graphs.modelGraphs202128687;
 
 import co.edu.uptc.pojos.MapElement;
+import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.*;
 import co.edu.uptc.views.maps.types.ElementType;
@@ -30,8 +31,37 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     @Override
     public void loadGraphs() {
-        Graph graphToReturn = persistence.loadGraph();
+        Graph graph1 = graph.loadGraph(persistence);
+        if(graph1 != null) {
+            for (int i = 0; i < graph1.getNodes().size(); i++) {
+                System.out.println(graph1.getNodes().size());
+                addElementOnly(graph1.getNodes().get(i).getMapElement());
+            }
+            System.out.println("size: " + graph1.getArcs().size());
+            for (int i = 0; i < graph1.getArcs().size(); i++) {
+                MapRoute mapRoute = new MapRoute();
+                mapRoute.setOrientationRoutes(graph1.getArcs().get(i).getMapRoute().getOrientationRoutes());
+                mapRoute.setPoint1(graph1.getArcs().get(i).getMapRoute().getPoint1());
+                mapRoute.setPoint2(graph1.getArcs().get(i).getMapRoute().getPoint2());
+                mapRoute.setSpeedRoute((graph1.getArcs().get(i).getMapRoute().getSpeedRoute()));
+                mapRoute.setTypeRoute(graph1.getArcs().get(i).getMapRoute().getTypeRoute());
+                MapElement mapElement = new MapElement(mapRoute);
+                System.out.println("entraaa");
+                addElementOnly(mapElement);
+            }
+        }
+    }
 
+    public Set<MapElement> addElementOnly(MapElement element) {
+        if (element != null) {
+            elements.add(element);
+            if (isPoint(element)) {
+                graph.addNode(new Node(element));
+            } else if (isRoute(element)) {
+                graph.addArc(new Arc(element.getMapRoute()));
+            }
+        }
+        return elements;
     }
 
     public Set<MapElement> calculateShortestDistanceRoute(GeoPosition point1, GeoPosition point2) {
@@ -46,7 +76,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
         MapElement element = getElement(elementID);
         if (isRoute(element)) {
             element.getMapRoute().setTypeRoute(typeRoute);
-            graph.getArc(element.getMapRoute()).getRoute().setTypeRoute(typeRoute);
+            graph.getArc(element.getMapRoute()).getMapRoute().setTypeRoute(typeRoute);
         }
     }
 
@@ -54,7 +84,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
          MapElement element = getElement(elementID);
          if (isRoute(element)) {
                element.getMapRoute().setSpeedRoute(speed);
-               graph.getArc(element.getMapRoute()).getRoute().setSpeedRoute(speed);
+               graph.getArc(element.getMapRoute()).getMapRoute().setSpeedRoute(speed);
          }
     }
 
@@ -93,8 +123,12 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     public void addElement(MapElement element) {
         elements.add(element);
         if (element.getElementType() == ElementType.POINT) {
-            graph.addNode(new Node(element.getGeoPosition()));
+            graph.addNode(new Node(element));
+        }else{
+            graph.addArc(new Arc(element.getMapRoute()));
         }
+        graph.savePersistence(persistence);
+        presenter.updateGraph();
     }
 
     @Override

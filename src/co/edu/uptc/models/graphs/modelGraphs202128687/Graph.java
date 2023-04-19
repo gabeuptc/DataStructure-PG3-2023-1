@@ -14,11 +14,12 @@ public class Graph {
     private List<Node> nodes;
     private List<Arc> arcs;
     private OrientationRoutes orientation;
-    private Persistence persistence;
+    private OperationMaps operationMaps;
 
     public Graph() {
         nodes = new ArrayList<>();
         arcs = new ArrayList<>();
+        OperationMaps operationMaps = new OperationMaps();
         this.orientation = OrientationRoutes.ORIGIN_DESTIN;
     }
 
@@ -30,10 +31,10 @@ public class Graph {
         arcs.add(arc);
     }
 
-    public void removeNode(GeoPosition point) {
+    public void removeNode(MapElement point) {
         Node toRemove = null;
         for (Node node1 : nodes) {
-            if (node1.getPoint().equals(point)) {
+            if (node1.getMapElement().equals(point)) {
                 toRemove = node1;
             }
         }
@@ -42,7 +43,7 @@ public class Graph {
 
     public Arc getArc(MapRoute route) {
         for (Arc arc : arcs) {
-            if (arc.getRoute().equals(route)) {
+            if (arc.getMapRoute().equals(route)) {
                 return arc;
             }
         }
@@ -73,8 +74,7 @@ public class Graph {
         return elementClonable;
     }
 
-    public Graph loadGraph() {
-        // que cargue los grafos de la persistencia
+    public Graph loadGraph(Persistence persistence) {
         return persistence.loadGraph();
     }
 
@@ -108,5 +108,9 @@ public class Graph {
 
     public OrientationRoutes getOrientation() {
         return orientation;
+    }
+
+    public void savePersistence(Persistence persistence) {
+        persistence.saveGraph(this);
     }
 }
