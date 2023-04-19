@@ -18,8 +18,9 @@ public class Graph {
         persistence = new Persistence();
     }
 
-    public void add(MapElement mapElement){
+    public void add(MapElement mapElement) throws FileNotFoundException {
         elementList.add(mapElement);
+        storeGraphs();
     }
     
     public MapElement searchElementId(int id){
