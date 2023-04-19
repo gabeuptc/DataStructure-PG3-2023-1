@@ -32,6 +32,7 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
         try {
             mapElement.setIdElement(idMapElement++);
             graph.add(mapElement);
+            presenter.updateGraph();
             persistence.store(graph);
         }catch (FileNotFoundException e){
         }
@@ -67,6 +68,7 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
     public void loadGraphs(){
         try {
             graph.loadGraphs();
+            presenter.updateGraph();
         }catch (FileNotFoundException e){
         }
 
