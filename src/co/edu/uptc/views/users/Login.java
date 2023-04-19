@@ -5,6 +5,8 @@ import co.edu.uptc.views.board.DashBoard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -24,13 +26,23 @@ public class Login extends JDialog {
         setTitle("Registro");
         setSize(400, 450);
         setLocationRelativeTo(dashBoard);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
+        addComponentListener();
         setModal(true);
         setResizable(false);
         setLayout(null);
-        getContentPane().setBackground(ValuesGlobals.COLOR_DIALOG_SIGNIN_LOGIN);
+        getContentPane().setBackground(ValuesGlobals.COLOR_DIALOG_LOGIN);
         createComponents();
         singIn = new SingIn(this);
+    }
+    private void addComponentListener(){
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentHidden(ComponentEvent e) {
+                super.componentHidden(e);
+                System.exit(0);
+            }
+        });
     }
 
     private void createComponents() {
@@ -88,7 +100,8 @@ public class Login extends JDialog {
                 if (user!=null){
                     if (managerEncoding.decode(user.getPassword()).equals(new String(passwordText.getPassword()))){
                         getInstance().setVisible(false);
-                        dashBoard.setVisible(true);
+                        getInstance().dispose();
+                        singIn.dispose();
                         clearContent();
                     }else {
                         JOptionPane.showMessageDialog(null,"Contraseña incorrecta");
@@ -140,7 +153,7 @@ public class Login extends JDialog {
     public Component getConfiguratedText(Component comp, int size,int line,int width){
         comp.setFont(new Font("Tahoma", Font.BOLD, size));
         comp.setBounds(70,line * 90 + 30,width,30);
-        comp.setForeground(ValuesGlobals.COLOR_TEXT_FIELS);
+        comp.setForeground(ValuesGlobals.COLOR_TEXT_FIELDS);
         return comp;
     }
     public JLabel createIconMode(String fileName, int line){

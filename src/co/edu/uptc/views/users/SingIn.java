@@ -28,7 +28,7 @@ public class SingIn extends JDialog {
         setModal(true);
         setResizable(false);
         setLayout(null);
-        getContentPane().setBackground(ValuesGlobals.COLOR_DIALOG_SIGNIN_LOGIN);
+        getContentPane().setBackground(ValuesGlobals.COLOR_DIALOG_LOGIN);
         createComponents();
 
     }
