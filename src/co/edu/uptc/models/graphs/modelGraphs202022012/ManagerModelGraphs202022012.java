@@ -144,10 +144,8 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
         Graph graph1 = graph.loadData();
         if(graph1 != null) {
             for (int i = 0; i < graph1.getNodes().size(); i++) {
-                System.out.println(graph1.getNodes().size());
                 addElementOnly(graph1.getNodes().get(i).getMapElement());
             }
-            System.out.println("size: " + graph1.getEdges().size());
             for (int i = 0; i < graph1.getEdges().size(); i++) {
                 MapRoute mapRoute = new MapRoute();
                 mapRoute.setOrientationRoutes(graph1.getEdges().get(i).getMapRoute().getOrientationRoutes());
@@ -156,7 +154,6 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
                 mapRoute.setSpeedRoute((graph1.getEdges().get(i).getMapRoute().getSpeedRoute()));
                 mapRoute.setTypeRoute(graph1.getEdges().get(i).getMapRoute().getTypeRoute());
                 MapElement mapElement = new MapElement(mapRoute);
-                System.out.println("entraaa");
                 addElementOnly(mapElement);
             }
         }
