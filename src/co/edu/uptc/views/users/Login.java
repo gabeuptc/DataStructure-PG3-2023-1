@@ -24,7 +24,7 @@ public class Login extends JDialog {
         managerEncoding = ManagerEncoding.getInstance();
         managerUsers = ManagerUsers.getInstance();
         setTitle("Registro");
-        setSize(400, 450);
+        setSize(400, 550);
         setLocationRelativeTo(dashBoard);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         addComponentListener();
@@ -51,6 +51,7 @@ public class Login extends JDialog {
         addPasswordField();
         addButton();
         addRegister();
+        addCancelOption();
     }
 
     private void addTitle(){
@@ -136,6 +137,29 @@ public class Login extends JDialog {
             }
         });
         add(registerLabel);
+    }
+    private void addCancelOption(){
+        JLabel cancel = getConfiguratedLabel(new JLabel("Cancelar Ingreso"),12,5,30);
+        cancel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                getInstance().setVisible(false);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                setComponentForegroundColor(cancel,ValuesGlobals.COLOR_LABELS_FIELDS_ENTERED);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                setComponentForegroundColor(cancel,ValuesGlobals.COLOR_LABELS_FIELDS);
+            }
+        });
+        add(cancel);
     }
     public void setComponentForegroundColor(Component component,Color color){
         component.setForeground(color);
