@@ -5,14 +5,13 @@ import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.views.maps.types.ElementType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 public class Graph202114641 {
         private List<MapElement> points;
         private Arch202114641[][] matriz;
         private Map<Integer, MapElement> elements;
-        public Graph202114641(HashMap mapElements) {
+        public Graph202114641(Map<Integer, MapElement> mapElements) {
             this.elements= mapElements;
             readPoints();
             generateMatriz();
