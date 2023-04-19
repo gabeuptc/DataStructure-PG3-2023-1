@@ -2,6 +2,7 @@ package co.edu.uptc.presenter;
 
 import co.edu.uptc.pojos.MapElement;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class PresenterGraphs implements ContractGraphs.Presenter{
@@ -34,12 +35,21 @@ public class PresenterGraphs implements ContractGraphs.Presenter{
 
     @Override
     public void addElement(MapElement mapElement) {
-        modelGraphs.addElement(mapElement);
+        if (modelGraphs!=null) {
+            modelGraphs.addElement(mapElement);
+        }else {
+            viewGraphs.notifyWarning("No hay modelo seleccionado");
+        }
+
     }
 
     @Override
     public Set<MapElement> getElements() {
-        return modelGraphs.getElements();
+        if (modelGraphs==null){
+            return new HashSet<>();
+        } else {
+            return modelGraphs.getElements();
+        }
     }
 
     @Override
