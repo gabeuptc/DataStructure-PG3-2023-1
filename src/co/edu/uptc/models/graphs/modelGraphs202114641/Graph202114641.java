@@ -62,6 +62,18 @@ public class Graph202114641 {
             return 0;
         }
 
-
+        public boolean isRelacionaded(int id){
+            for (int i = 0; i < matriz.length; i++) {
+                if (matriz[i][id]!=null){
+                    return true;
+                }
+            }
+            for (int i = 0; i < matriz[id].length; i++) {
+                if (matriz[id][i]!=null){
+                    return true;
+                }
+            }
+            return false;
+        }
 
 }
