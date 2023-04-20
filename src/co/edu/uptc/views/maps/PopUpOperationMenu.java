@@ -1,5 +1,6 @@
 package co.edu.uptc.views.maps;
 
+import co.edu.uptc.views.email.ManagerEmail;
 import co.edu.uptc.views.maps.types.SelectionType;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -20,6 +21,7 @@ public class PopUpOperationMenu{
         addItemAddRoutes();
         makeMenuItemLayers();
         makeMenuItemAddOther();
+        //makeMenuItemSendEmail();
     }
 
     public SelectionType getSelectionType() {
@@ -171,6 +173,11 @@ public class PopUpOperationMenu{
     private void makeMenuItemAddOther() {
         JMenuItem item = new JMenuItem("Adicionar Other");
         popupMenu.add(item);
+    }
+    private void makeMenuItemSendEmail() {
+        JMenuItem item = new JMenuItem("Enviar grafo");
+        popupMenu.add(item);
+        item.addActionListener(e -> panelMaps.sendGraph());
     }
 
 }
