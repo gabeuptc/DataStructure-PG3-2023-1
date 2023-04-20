@@ -75,43 +75,7 @@ public class Graph202114641 {
             }
             return false;
         }
-    private List<MapElement> findShortestPathFewerStops(MapElement start, MapElement end) {
-        int startIdx = searchPointForIndex(start);
-        int endIdx = searchPointForIndex(end);
-
-        LinkedList<Integer> queue = new LinkedList<>();
-        boolean[] visited = new boolean[points.size()];
-        int[] prev = new int[points.size()];
-
-        queue.offer(startIdx);
-        visited[startIdx] = true;
-
-        while (!queue.isEmpty()) {
-            int u = queue.poll();
-
-            if (u == endIdx) {
-                break;
-            }
-
-            for (int v = 0; v < points.size(); v++) {
-                if (matriz[u][v] != null && !visited[v]) {
-                    queue.offer(v);
-                    visited[v] = true;
-                    prev[v] = u;
-                }
-            }
-        }
-
-        LinkedList<MapElement> path = new LinkedList<>();
-        int curr = endIdx;
-        while (curr != startIdx) {
-            path.addFirst(points.get(curr));
-            curr = prev[curr];
-        }
-        path.addFirst(points.get(startIdx));
-        return path;
-    }
-    private List<MapElement> findShortestPath(MapElement start, MapElement end) {
+    private List<MapElement> findShortestPathDistance(MapElement start, MapElement end) {
         int startIdx = searchPointForIndex(start);
         int endIdx = searchPointForIndex(end);
 
@@ -155,14 +119,84 @@ public class Graph202114641 {
         path.addFirst(points.get(startIdx));
         return path;
     }
+    private List<MapElement> findShortestPathTime(MapElement start, MapElement end) {
+        int startIdx = searchPointForIndex(start);
+        int endIdx = searchPointForIndex(end);
+
+        double[] dist = new double[points.size()];
+        int[] prev = new int[points.size()];
+        boolean[] visited = new boolean[points.size()];
+
+        for (int i = 0; i < dist.length; i++) {
+            dist[i] = Double.MAX_VALUE;
+        }
+        dist[startIdx] = 0;
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> Double.compare(dist[a], dist[b]));
+        pq.offer(startIdx);
+
+        while (!pq.isEmpty()) {
+            int u = pq.poll();
+            if (visited[u]) {
+                continue;
+            }
+            visited[u] = true;
+
+            for (int v = 0; v < points.size(); v++) {
+                if (matriz[u][v] != null) {
+                    double alt = dist[u] + matriz[u][v].getTime();
+                    if (alt < dist[v]) {
+                        dist[v] = alt;
+                        prev[v] = u;
+                        pq.offer(v);
+                    }
+                }
+            }
+        }
+
+        LinkedList<MapElement> path = new LinkedList<>();
+        int curr = endIdx;
+        while (curr != startIdx) {
+            path.addFirst(points.get(curr));
+            curr = prev[curr];
+        }
+        path.addFirst(points.get(startIdx));
+        return path;
+    }
     public List<MapElement> getShortestForNodes(MapElement start, MapElement end){
-        return findShortestPathFewerStops(start,end);
+            List<MapElement> pointsElements= findShortestPathDistance(start,end);
+            List<MapElement> mapElements= new ArrayList<>(pointsElements);
+
+        for (int i = 0; i < pointsElements.size()-1; i++) {
+            int first=searchPointForIndex(pointsElements.get(i));
+            int second=searchPointForIndex(pointsElements.get(i+1));
+            if (matriz[first][second]!=null){
+                MapElement mp= new MapElement(matriz[first][second].getMapRoute());
+                mapElements.add(mp);
+            }
+
+        }
+
+        return mapElements;
 
     }
     public List<MapElement> getShortestForTime(MapElement start, MapElement end){
+        List<MapElement> pointsElements= findShortestPathTime(start,end);
+        List<MapElement> mapElements= new ArrayList<>(pointsElements);
+
+        for (int i = 0; i < pointsElements.size()-1; i++) {
+            int first=searchPointForIndex(pointsElements.get(i));
+            int second=searchPointForIndex(pointsElements.get(i+1));
+            if (matriz[first][second]!=null){
+                MapElement mp= new MapElement(matriz[first][second].getMapRoute());
+                mapElements.add(mp);
+            }
+
+        }
+
+        return mapElements;
 
 
-        return findShortestPath(start,end);
     }
     public void deletePoint(MapElement point){
 

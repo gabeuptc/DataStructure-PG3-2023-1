@@ -8,6 +8,10 @@ public class Arch202114641 {
     private double time;
     private double distance;
 
+    public MapRoute getMapRoute() {
+        return mapRoute;
+    }
+
     public Arch202114641(MapRoute mapRoute) {
         this.mapRoute = mapRoute;
         asignateDistance();

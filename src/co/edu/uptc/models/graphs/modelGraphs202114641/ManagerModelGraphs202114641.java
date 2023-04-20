@@ -94,6 +94,7 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
+        elementsResult.clear();
         actualizateGraph();
         List<MapElement> list= graph.getShortestForNodes(getElement(idElementPoint1),getElement(idElementPoint2));
         elementsResult= new HashMap<>();
@@ -101,11 +102,13 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
         for (int i = 0; i < list.size(); i++) {
             elementsResult.put(i, list.get(i));
         }
+        presenter.updateGraph();
 
     }
 
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
+        elementsResult.clear();
         actualizateGraph();
         List<MapElement> list= graph.getShortestForTime(getElement(idElementPoint1),getElement(idElementPoint2));
         elementsResult= new HashMap<>();
@@ -113,6 +116,7 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
         for (int i = 0; i < list.size(); i++) {
             elementsResult.put(i, list.get(i));
         }
+        presenter.updateResultGraph();
 
     }
 
