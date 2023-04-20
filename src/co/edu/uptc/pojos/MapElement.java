@@ -6,6 +6,7 @@ import org.jxmapviewer.viewer.GeoPosition;
 public class MapElement {
 
     private ElementType elementType;
+
     private int idElement;
 
     private GeoPosition geoPosition;
