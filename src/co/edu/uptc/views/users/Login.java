@@ -102,7 +102,6 @@ public class Login extends JDialog {
                     if (managerEncoding.decode(user.getPassword()).equals(new String(passwordText.getPassword()))){
                         getInstance().dispose();
                         singIn.dispose();
-                        dashBoard.setVisible(true);
                     }else {
                         JOptionPane.showMessageDialog(null,"Contraseña incorrecta");
                     }
