@@ -51,7 +51,6 @@ public class DashBoard extends JFrame implements ContractPeople.View {
     private void addUsersComponents() {
         login = new Login(this);
         login.setVisible(true);
-        this.setVisible(false);
     }
 
     private void addMenu() {
