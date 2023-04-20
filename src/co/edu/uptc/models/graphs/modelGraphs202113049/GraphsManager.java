@@ -28,9 +28,18 @@ public class GraphsManager {
         return  new HashSet<>(elements.values());
     }
 
+    public Set<MapElement> getElementsResult() {
+        return  new HashSet<>(elementsResult.values());
+    }
+
+    public Map<Integer, MapElement> getElements1() {
+        return elements;
+    }
+
     public MapElement getElement(int id) {
         return elements.get(id);
     }
+
 
 
 
