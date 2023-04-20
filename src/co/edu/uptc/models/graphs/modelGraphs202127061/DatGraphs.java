@@ -1,7 +1,6 @@
 package co.edu.uptc.models.graphs.modelGraphs202127061;
 
 import co.edu.uptc.pojos.MapElement;
-import co.edu.uptc.views.maps.MapPointGraph;
 
 public class DatGraphs {
 
