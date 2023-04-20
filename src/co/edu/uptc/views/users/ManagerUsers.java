@@ -11,7 +11,6 @@ import java.util.List;
 
 public class ManagerUsers {
     private List<User> users;
-    private int idUser=1;
     private static ManagerUsers instance;
 
     private ManagerUsers() {
@@ -24,7 +23,7 @@ public class ManagerUsers {
         }
         return instance;
     }
-    public void loadUsers(){
+    private void loadUsers(){
         try {
             File file = new File("data/users.json");
             if (file.exists()){
@@ -37,11 +36,34 @@ public class ManagerUsers {
                 bufferedReader.close();
                 Type userListType = new TypeToken<ArrayList<User>>(){}.getType();
                 users = new Gson().fromJson(json.toString(),userListType);
+                verificateIndexes();
             }
         }catch (IOException e){
             JOptionPane.showMessageDialog(null,"Error técnico");
         }
     }
+
+    private void verificateIndexes() {
+        boolean isOk = true;
+        int count = 1;
+        for (User user:users) {
+            if (count != user.getId()){
+                isOk = false;
+                break;
+            }
+            count++;
+        }
+        if (!isOk){
+            List<User> usersOk = new ArrayList<>();
+            for (User user:users) {
+                usersOk.add(new User(user,usersOk.size()+1));
+            }
+            users.clear();
+            users.addAll(usersOk);
+            updateUsers();
+        }
+    }
+
     private void updateUsers(){
         try {
             StringBuilder json = new StringBuilder();
@@ -64,18 +86,35 @@ public class ManagerUsers {
         }
     }
     public void addUser(User user){
-        users.add(new User(user,idUser));
-        idUser++;
+        users.add(new User(user, users.size()+1));
         updateUsers();
     }
     public void deleteUser(User user){
-        users.remove(user);
+        User toRemove=null;
+        for (User user1:users) {
+            if (user.getId()==user1.getId()){
+                toRemove = user1;
+                break;
+            }
+        }
+        users.remove(toRemove);
         updateUsers();
     }
     public boolean isExist(User user){
         for (User user1:users) {
             if (user1.getNameUser().equals(user.getNameUser()) ||
                 user1.getEmail().equals(user.getEmail())){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean isExist(String value, int id){
+        for (User user1:users) {
+            if (user1.getNameUser().equals(value) && id != user1.getId()){
+                return true;
+            }
+            if (user1.getEmail().equals(value) && id != user1.getId()){
                 return true;
             }
         }
