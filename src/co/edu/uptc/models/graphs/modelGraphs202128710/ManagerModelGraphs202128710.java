@@ -41,7 +41,7 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
 
     @Override
     public MapElement getElement(int id) {
-        return graph.searchElementId(id);
+        return graph.searchElementPointId(id);
     }
 
     @Override
@@ -73,7 +73,16 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
 
     @Override
     public void deletePoint(int idElement) {
-        graph.removePoint(idElement);
+        try {
+            if (graph.removePoint(idElement)){
+                graph.removePoint(idElement);
+                presenter.updateGraph();
+                persistence.store(graph);
+            }else{
+                presenter.notifyWarning("El punto esta relacionado, por lo tanto no se puede borrar");
+            }
+        }catch (FileNotFoundException e){
+        }
     }
 
     @Override
@@ -93,6 +102,6 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
 
     @Override
     public void modifyElement(MapElement mapElementModify) {
-
+        graph.modifyRoute(mapElementModify);
     }
 }
