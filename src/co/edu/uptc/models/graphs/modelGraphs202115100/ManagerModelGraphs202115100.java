@@ -5,6 +5,7 @@ import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.types.ElementType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -91,7 +92,7 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
     private void saveGraph() {
         try {
             new Persistence().saveGraph(graph.getElements());
-        } catch (Exception e){
+        } catch (Exception e) {
             presenter.notifyWarning("Error al guardar el grafo");
             e.printStackTrace();
         }
@@ -113,21 +114,21 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
+        graph.clearResultElements();
         graph.calculateShortestRoute(idElementPoint1, idElementPoint2, Graph.DISTANCE);
-        Set<MapElement> elements = new HashSet<>(graph.getElements().values());
-        Set<MapElement> resultElements = new HashSet<>(graph.getResultElements().values());
-        for (MapElement mapElement : resultElements) {
-            System.out.println(mapElement);
-        }
+        presenter.updateResultGraph();
     }
 
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
+        graph.clearResultElements();
         graph.calculateShortestRoute(idElementPoint1, idElementPoint2, Graph.TIME);
+        presenter.updateResultGraph();
     }
 
     @Override
     public Set<MapElement> getResultElements() {
+        System.out.println("Tamaño lista de puntos finales: " + graph.getResultElements().values().size());
         return new HashSet<>(graph.getResultElements().values());
     }
 
