@@ -7,6 +7,7 @@ import co.edu.uptc.views.About.PanelAbout;
 import co.edu.uptc.views.Globals.ValuesGlobals;
 import co.edu.uptc.views.maps.PanelMaps;
 import co.edu.uptc.views.people.PanelPeople;
+import co.edu.uptc.views.users.Login;
 
 
 import javax.swing.*;
@@ -25,6 +26,7 @@ public class DashBoard extends JFrame implements ContractPeople.View {
 
     private PanelMenu panelMenu;
     private JPanel panelCenter;
+    private Login login;
 
 
     public DashBoard() {
@@ -43,6 +45,12 @@ public class DashBoard extends JFrame implements ContractPeople.View {
         addMenu();
         addHeader();
         showPanelAbout();
+        addUsersComponents();
+    }
+
+    private void addUsersComponents() {
+        login = new Login(this);
+        login.setVisible(true);
     }
 
     private void addMenu() {
