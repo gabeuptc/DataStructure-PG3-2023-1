@@ -90,7 +90,7 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
 //        printAllResultNodesAndArches();
         dijkstra(temporalValues, finalValues, attributeToCompare);
         getShortestRoute(finalValues, destine, attributeToCompare, new ArrayList<>());
-
+        System.out.println("Punto de origen: " + origin + " Punto de destino: " + destine);
 //        printAllResultNodesAndArches();
     }
 
@@ -116,16 +116,22 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
 
     private void getShortestRoute(Map<Integer, Double> finalValues, int actualPoint, int attributeToCompare, List<Integer> parents) {
         parents.add(actualPoint);
+        int sizeResultElements = resultElements.size();
         double valordelpuntoactual = finalValues.get(actualPoint);
         List<MapElement> hijosdelpuntoactual = getChildren(actualPoint);
         for (MapElement hijo : hijosdelpuntoactual) {
-            if (!parents.contains(hijo.getIdElement())) {
-                MapElement rutaentrepadreehijo = getRouteBetween(actualPoint, hijo.getIdElement());
-                if (finalValues.get(hijo.getIdElement()) == valordelpuntoactual - getValueOfAttribute(rutaentrepadreehijo, attributeToCompare)) {
-                    resultElements.put(hijo.getIdElement(), elements.get(hijo.getIdElement()));
+            int idhijo = hijo.getIdElement();
+            if (!parents.contains(idhijo)) {
+                MapElement rutaentrepadreehijo = getRouteBetween(actualPoint, idhijo);
+                double valordelarco = getValueOfAttribute(rutaentrepadreehijo, attributeToCompare);
+                double valordelHijobuscando = finalValues.get(idhijo) +valordelarco;
+                System.out.println(valordelHijobuscando + "\n" + valordelpuntoactual);
+                if (valordelHijobuscando == valordelpuntoactual) {
+                    resultElements.put(idhijo, elements.get(idhijo));
                     resultElements.put(actualPoint, elements.get(actualPoint));
                     resultElements.put(rutaentrepadreehijo.getIdElement(), elements.get(rutaentrepadreehijo.getIdElement()));
-                    getShortestRoute(finalValues, hijo.getIdElement(), attributeToCompare, parents);
+                    System.out.println(sizeResultElements);
+                    getShortestRoute(finalValues, idhijo, attributeToCompare, parents);
                 }
             }
         }
