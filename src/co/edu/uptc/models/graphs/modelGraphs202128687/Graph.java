@@ -118,7 +118,7 @@ public class Graph {
     }
 
     public void savePersistence(Persistence persistence) {
-        persistence.saveGraph(this);
+        persistence.saveGraph(elements);
     }
 
     public void showGraph() {
@@ -128,5 +128,9 @@ public class Graph {
 
     public void addElement(int position, MapElement element) {
         elements.put(position, element);
+    }
+
+    public void setElementes(Map<Integer, MapElement> elements) {
+         this.elements = elements;
     }
 }

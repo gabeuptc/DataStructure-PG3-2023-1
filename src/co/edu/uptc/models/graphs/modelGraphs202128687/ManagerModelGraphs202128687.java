@@ -22,6 +22,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     public ManagerModelGraphs202128687() {
         elements = new HashSet<>();
         persistence = new Persistence();
+        graph = new Graph();
     }
 
     @Override
@@ -33,10 +34,15 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     public void loadGraphs() {
         //graph.addAllElements();
         System.out.println(" desde loadgraphs");
-        graph = persistence.loadGraph();
-        for (int i = 0; i < graph.getElements().size(); i++) {
-            System.out.println("entraaa");
-            addElementOnly(graph.getElement(i));
+        try {
+            graph.setElementes(persistence.loadGraph());
+            for (int i = 0; i < graph.getElements().size(); i++) {
+                System.out.println("entraaa");
+                addElementOnly(graph.getElement(i));
+            }
+        } catch (Exception e) {
+            System.out.println("error");
+            e.printStackTrace();
         }
         /*
         for (int i = 0; i < graph1.getArcs().size(); i++) {
