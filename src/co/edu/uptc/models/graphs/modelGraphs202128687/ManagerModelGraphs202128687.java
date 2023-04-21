@@ -20,8 +20,8 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     private int numberElements = 0;
 
     public ManagerModelGraphs202128687() {
+        elements = new HashSet<>();
         persistence = new Persistence();
-        graph = persistence.loadGraph();
     }
 
     @Override
@@ -32,9 +32,11 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     @Override
     public void loadGraphs() {
         //graph.addAllElements();
-        Graph graph1 = graph;
-        for (int i = 0; i < graph1.getNodes().size(); i++) {
-            addElementOnly(graph1.getNodes().get(i).getMapElement());
+        System.out.println(" desde loadgraphs");
+        graph = persistence.loadGraph();
+        for (int i = 0; i < graph.getElements().size(); i++) {
+            System.out.println("entraaa");
+            addElementOnly(graph.getElement(i));
         }
         /*
         for (int i = 0; i < graph1.getArcs().size(); i++) {
@@ -54,7 +56,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     public void addElementOnly(MapElement element) {
         element.setIdElement(numberElements++);
         elements.add(element);
-        addElement(element);
+        //addElement(element);
     }
 
     public Set<MapElement> calculateShortestDistanceRoute(GeoPosition point1, GeoPosition point2) {

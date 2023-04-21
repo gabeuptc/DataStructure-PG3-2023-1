@@ -6,20 +6,17 @@ import co.edu.uptc.views.maps.*;
 import co.edu.uptc.views.maps.types.ElementType;
 import org.jxmapviewer.viewer.GeoPosition;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Graph {
     private List<Node> nodes;
     private List<Arc> arcs;
     private OrientationRoutes orientation;
-    private Set<MapElement> elements;
+    private Map<Integer,MapElement> elements;
     private OperationMaps operationMaps;
 
     public Graph() {
-        elements = new HashSet<>();
+        elements = new HashMap<>();
         nodes = new ArrayList<>();
         arcs = new ArrayList<>();
         OperationMaps operationMaps = new OperationMaps();
@@ -27,6 +24,7 @@ public class Graph {
     }
 
     public void addNode(Node node) {
+        System.out.println("entra a addNode" + node);
         nodes.add(node);
     }
 
@@ -53,7 +51,7 @@ public class Graph {
         return null;
     }
 
-    public Set<MapElement> getElements() {
+    public Map<Integer, MapElement> getElements() {
         System.out.println("elementos: " + elements.size());
         return elements;
     }
@@ -87,16 +85,12 @@ public class Graph {
         return elementClonable;
     }
 
-    public Graph loadGraph(Persistence persistence) {
-        return persistence.loadGraph();
-    }
-
     public Set<MapElement> calculateShortTimeRoute(GeoPosition point1, GeoPosition point2) {
         return null;
     }
 
     public MapElement getElement(int elementID) {
-        return null;
+        return elements.get(elementID);
     }
 
     public void setOrientation(OrientationRoutes orientation) {
@@ -127,22 +121,12 @@ public class Graph {
         persistence.saveGraph(this);
     }
 
-    public void addAllElements() {
-        for (MapElement element : elements) {
-            if (element.getElementType() == (ElementType.POINT)) {
-                addNode(new Node(element));
-            } else {
-                addArc(new Arc(element.getMapRoute()));
-            }
-        }
-    }
-
     public void showGraph() {
 
 
     }
 
-    public void addElement(MapElement element) {
-        elements.add(element);
+    public void addElement(int position, MapElement element) {
+        elements.put(position, element);
     }
 }
