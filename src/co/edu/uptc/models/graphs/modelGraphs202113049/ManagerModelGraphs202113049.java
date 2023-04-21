@@ -116,6 +116,7 @@ public class ManagerModelGraphs202113049 implements ContractGraphs.Model {
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
 
+        graphsManager.searchRoutes(idElementPoint1,idElementPoint2);
     }
 
     @Override
