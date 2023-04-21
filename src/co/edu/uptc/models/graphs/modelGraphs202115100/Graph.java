@@ -79,25 +79,26 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
     public void calculateShortestRoute(int origin, int destine, int attributeToCompare) {
         Map<Integer, Double> temporalValues = new HashMap<>();
         for (MapElement point : elements.values().stream().filter(element -> element.getElementType() == ElementType.POINT).toList()) {
-            if (!getChildren(point.getIdElement()).isEmpty())temporalValues.put(point.getIdElement(), Double.MAX_VALUE);
+            if (!getChildren(point.getIdElement()).isEmpty())
+                temporalValues.put(point.getIdElement(), Double.MAX_VALUE);
         }
         Map<Integer, Double> finalValues = new HashMap<>(temporalValues);
         temporalValues.put(origin, 0.0);
         System.out.println(temporalValues.values() + " " + temporalValues.size());
         System.out.println(finalValues.values() + " " + finalValues.size());
 
-        printAllResultNodesAndArches();
+//        printAllResultNodesAndArches();
         dijkstra(temporalValues, finalValues, attributeToCompare);
-        getShortestRoute(finalValues, destine, attributeToCompare);
+        getShortestRoute(finalValues, destine, attributeToCompare, new ArrayList<>());
 
-        printAllResultNodesAndArches();
+//        printAllResultNodesAndArches();
     }
 
     private void printAllResultNodesAndArches() {
         System.out.println("Elementos resultantes: ");
         for (MapElement point : resultElements.values()) {
             if (point.getElementType() == ElementType.POINT) {
-                System.out.println("Punto: " + point.getIdElement() + " Rutas: [" + toStringRoute(getChildren(point.getIdElement())) + "]");
+//                System.out.println("Punto: " + point.getIdElement() + " Rutas: [" + toStringRoute(getChildren(point.getIdElement())) + "]");
             }
             if (point.getElementType() == ElementType.ROUTE) {
                 System.out.println("Ruta: " + point.getIdElement() + " Puntos: [" + point.getMapRoute().getPoint1().getIdElement() + " " + point.getMapRoute().getPoint2().getIdElement() + "]");
@@ -113,22 +114,27 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
         return result;
     }
 
-    private void getShortestRoute(Map<Integer, Double> finalValues, int actualPoint, int attributeToCompare) {//Pendiente - El metodo no esta funcionando
-        for (MapRoute child : getChildren((actualPoint))) {
-            int routePoint = child.getPoint1().getIdElement() == actualPoint ? child.getPoint2().getIdElement() : child.getPoint1().getIdElement();
-            double value = getValueOfAttribute(child, attributeToCompare);
-            if (finalValues.get(routePoint) == (finalValues.get(actualPoint) - value)) {
-                resultElements.put(child.getPoint1().getIdElement(), elements.get(child.getPoint1().getIdElement()));
-                resultElements.put(child.getPoint2().getIdElement(), elements.get(child.getPoint2().getIdElement()));
-                resultElements.put(searchElementByRoute(child).getIdElement(), elements.get(searchElementByRoute(child).getIdElement()));
-                getShortestRoute(finalValues, routePoint, attributeToCompare);
-            } else {
-                resultElements.put(child.getPoint1().getIdElement(), elements.get(child.getPoint1().getIdElement()));
+    private void getShortestRoute(Map<Integer, Double> finalValues, int actualPoint, int attributeToCompare, List<Integer> parents) {
+        parents.add(actualPoint);
+        double valordelpuntoactual = finalValues.get(actualPoint);
+        List<MapElement> hijosdelpuntoactual = getChildren(actualPoint);
+        for (MapElement hijo : hijosdelpuntoactual) {
+            if (!parents.contains(hijo.getIdElement())) {
+                MapElement rutaentrepadreehijo = getRouteBetween(actualPoint, hijo.getIdElement());
+                if (finalValues.get(hijo.getIdElement()) == valordelpuntoactual - getValueOfAttribute(rutaentrepadreehijo, attributeToCompare)) {
+                    resultElements.put(hijo.getIdElement(), elements.get(hijo.getIdElement()));
+                    resultElements.put(actualPoint, elements.get(actualPoint));
+                    resultElements.put(rutaentrepadreehijo.getIdElement(), elements.get(rutaentrepadreehijo.getIdElement()));
+                    getShortestRoute(finalValues, hijo.getIdElement(), attributeToCompare, parents);
+                }
             }
         }
+
     }
 
-    private double getValueOfAttribute(MapRoute route, int attributeToCompare) {
+    private double getValueOfAttribute(MapElement element, int attributeToCompare) {
+        MapRoute route = element.getMapRoute();
+        if (route == null) throw new RuntimeException("La ruta no existe entre los puntos seleccionados");
         double distance = getDistanceBetweenPoints(route.getPoint1(), route.getPoint2());
         return switch (attributeToCompare) {
             case TIME -> distance / route.getSpeedRoute();
@@ -156,25 +162,40 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
         return minKey;
     }
 
-    private void setTemporalValues(int idMinPoint, List<MapRoute> children, Map<Integer, Double> temporalValues, int attributeToCompare) {
-        for (MapRoute child : children) {
-            int idCorrectPoint = child.getPoint1().getIdElement() == idMinPoint ? child.getPoint2().getIdElement() : child.getPoint1().getIdElement();
-            double temporalValue = temporalValues.get(idMinPoint) + getValueOfAttribute(child, attributeToCompare);
-            if (temporalValues.get(idCorrectPoint) == Double.MAX_VALUE) {
-                temporalValues.put(idCorrectPoint, temporalValue);
-            } else {
-                temporalValues.put(idCorrectPoint, Math.min(temporalValues.get(idCorrectPoint), temporalValue));
+    private void setTemporalValues(int idMinPoint, List<MapElement> children, Map<Integer, Double> temporalValues, int attributeToCompare) {
+        for (MapElement child : children) {
+            int idChildPoint = child.getIdElement();
+            double temporalValue = temporalValues.get(idMinPoint) + getValueOfAttribute(getRouteBetween(idChildPoint, idMinPoint), attributeToCompare);
+            if (temporalValues.get(idChildPoint) == Double.MAX_VALUE) {
+                temporalValues.put(idChildPoint, temporalValue);
+            } else if (temporalValue < temporalValues.get(idChildPoint)) {
+                temporalValues.put(idChildPoint, temporalValue);
             }
         }
     }
 
-    private List<MapRoute> getChildren(int idPoint) {
-        List<MapRoute> children = new ArrayList<>();
-        for (MapElement mapElement : elements.values()) {
-            if (mapElement.getElementType() == ElementType.ROUTE) {
-                MapRoute child = mapElement.getMapRoute();
-                if (child.getPoint1().getIdElement() == idPoint || child.getPoint2().getIdElement() == idPoint) {
-                    children.add(child);
+    private MapElement getRouteBetween(int point1, int point2) {
+        for (MapElement element : elements.values()) {
+            if (element.getElementType() == ElementType.ROUTE) {
+                MapRoute route = element.getMapRoute();
+                if (route.getPoint1().getIdElement() == point1 && route.getPoint2().getIdElement() == point2
+                        || route.getPoint1().getIdElement() == point2 && route.getPoint2().getIdElement() == point1) {
+                    return element;
+                }
+            }
+        }
+        return null;
+    }
+
+    private List<MapElement> getChildren(int idPoint) {
+        List<MapElement> children = new ArrayList<>();
+        for (MapElement element : elements.values()) {
+            if (element.getElementType() == ElementType.ROUTE) {
+                MapRoute route = element.getMapRoute();
+                if (route.getPoint1().getIdElement() == idPoint) {
+                    children.add(route.getPoint2());
+                } else if (route.getPoint2().getIdElement() == idPoint) {
+                    children.add(route.getPoint1());
                 }
             }
         }
@@ -199,6 +220,10 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
 
     public Map<Integer, MapElement> getResultElements() {
         return resultElements;
+    }
+
+    public void clearResultElements() {
+        resultElements.clear();
     }
 }
 
