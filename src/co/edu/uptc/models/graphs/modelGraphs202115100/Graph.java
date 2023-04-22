@@ -79,12 +79,14 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
     public void calculateShortestRoute(int origin, int destine, int attributeToCompare) {
         Map<Integer, Double> temporalValues = getAllTheChildren(origin, new ArrayList<>());
         Map<Integer, Double> finalValues = new HashMap<>(temporalValues);
-        temporalValues.put(origin, 0.0);
         System.out.println("Valores temporales: " + temporalValues.keySet() + "\nTamaño: " + temporalValues.size());
+        if (temporalValues.containsKey(origin) && temporalValues.containsKey(destine)) {
+            temporalValues.put(origin, 0.0);
+            dijkstra(temporalValues, finalValues, attributeToCompare);
+            getShortestRoute(finalValues, destine, attributeToCompare, new ArrayList<>());
 
+        }
 //        printAllResultNodesAndArches();
-        dijkstra(temporalValues, finalValues, attributeToCompare);
-        getShortestRoute(finalValues, destine, attributeToCompare, new ArrayList<>());
         System.out.println("Punto de origen: " + origin + " Punto de destino: " + destine);
 //        printAllResultNodesAndArches();
     }
@@ -131,7 +133,7 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
         List<MapElement> hijosdelpuntoactual = getNonOrientationChildren(actualPoint);
         for (MapElement hijo : hijosdelpuntoactual) {
             int idhijo = hijo.getIdElement();
-            if (!parents.contains(idhijo)&&finalValues.containsKey(idhijo)) {
+            if (!parents.contains(idhijo) && finalValues.containsKey(idhijo)) {
                 MapElement rutaentrepadreehijo = getRouteBetween(actualPoint, idhijo);
                 double valordelarco = getValueOfAttribute(rutaentrepadreehijo, attributeToCompare);
                 double valordelHijobuscando = finalValues.get(idhijo) + valordelarco;
@@ -170,7 +172,7 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
 
     private int getMinPoint(Map<Integer, Double> temporalValues, Map<Integer, Double> finalValues) {
         int minKey = temporalValues.keySet().stream().min(Comparator.comparingDouble(temporalValues::get)).orElse(-1);
-        System.out.println("Valor en la minima llave(" + minKey + "): " + temporalValues.get(minKey));
+//        System.out.println("Valor en la minima llave(" + minKey + "): " + temporalValues.get(minKey));
         if (finalValues.get(minKey) != Double.MAX_VALUE) {
             temporalValues.remove(minKey);
             return getMinPoint(temporalValues, finalValues);
@@ -194,8 +196,7 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
         for (MapElement element : elements.values()) {
             if (element.getElementType() == ElementType.ROUTE) {
                 MapRoute route = element.getMapRoute();
-                if (route.getPoint1().getIdElement() == point1 && route.getPoint2().getIdElement() == point2
-                        || route.getPoint1().getIdElement() == point2 && route.getPoint2().getIdElement() == point1) {
+                if (route.getPoint1().getIdElement() == point1 && route.getPoint2().getIdElement() == point2 || route.getPoint1().getIdElement() == point2 && route.getPoint2().getIdElement() == point1) {
                     return element;
                 }
             }
@@ -259,19 +260,5 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
 
     public void clearResultElements() {
         resultElements.clear();
-    }
-
-
-    private boolean pointIsReachable(int origin, int idElement) {
-        for (MapElement element : elements.values()) {
-            if (element.getElementType() == ElementType.ROUTE) {
-                MapRoute route = element.getMapRoute();
-                if (route.getPoint1().getIdElement() == origin && route.getPoint2().getIdElement() == idElement
-                        || route.getPoint1().getIdElement() == idElement && route.getPoint2().getIdElement() == origin) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }

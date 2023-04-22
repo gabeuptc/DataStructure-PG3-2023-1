@@ -119,14 +119,22 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
         graph.clearResultElements();
         graph.calculateShortestRoute(idElementPoint1, idElementPoint2, Graph.DISTANCE);
-        presenter.updateResultGraph();
+        verifyResult();
+    }
+
+    private void verifyResult() {
+        if (graph.getResultElements().size() == 0) {
+            presenter.notifyWarning("No se encontraron rutas");
+        } else {
+            presenter.updateResultGraph();
+        }
     }
 
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
         graph.clearResultElements();
         graph.calculateShortestRoute(idElementPoint1, idElementPoint2, Graph.TIME);
-        presenter.updateResultGraph();
+        verifyResult();
     }
 
     @Override
