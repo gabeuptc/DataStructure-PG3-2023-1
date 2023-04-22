@@ -2,7 +2,6 @@ package co.edu.uptc.models.graphs.modelGraphs202115100;
 
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
-import co.edu.uptc.views.maps.types.ElementType;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -69,7 +68,7 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
 
     @Override
     public void deletePoint(int idElement) {
-        if (!pointHasRelation(idElement)) {
+        if (graph.getNonOrientationChildren(idElement).size() == 0) {
             graph.deleteElement(idElement);
             saveGraph();
             presenter.updateGraph();
@@ -85,20 +84,6 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
             presenter.notifyWarning("Error al guardar el grafo");
             e.printStackTrace();
         }
-    }
-
-    private boolean pointHasRelation(int id) {
-        for (MapElement mapElement : graph.getElements().values()) {
-            if (mapElement.getElementType() == ElementType.ROUTE) {
-                if (mapElement.getMapRoute().getPoint1().getIdElement() == id) {
-                    return true;
-                }
-                if (mapElement.getMapRoute().getPoint2().getIdElement() == id) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     @Override

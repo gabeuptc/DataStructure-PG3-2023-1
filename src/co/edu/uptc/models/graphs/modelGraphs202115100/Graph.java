@@ -189,7 +189,7 @@ public class Graph {
         return null;
     }
 
-    private List<MapElement> getNonOrientationChildren(int actualPoint) {
+    public List<MapElement> getNonOrientationChildren(int actualPoint) {
         List<MapElement> children = new ArrayList<>();
         for (MapElement element : elements.values()) {
             if (element.getElementType() == ElementType.ROUTE) {
