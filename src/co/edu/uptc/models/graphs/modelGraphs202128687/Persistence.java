@@ -3,16 +3,13 @@ package co.edu.uptc.models.graphs.modelGraphs202128687;
 import co.edu.uptc.pojos.MapElement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Persistence {
     public Map<Integer, MapElement> loadGraph() {
-        Map<Integer, MapElement> graphList = new HashMap<>();
         MapElement[] elements = new MapElement[0];
         try {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -33,7 +30,6 @@ public class Persistence {
     }
 
     public void saveGraph(Map<Integer, MapElement> graph) {
-        System.out.println("Saving data...");
         try {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             FileWriter fileWriter = new FileWriter("data/202128687Graph.json");

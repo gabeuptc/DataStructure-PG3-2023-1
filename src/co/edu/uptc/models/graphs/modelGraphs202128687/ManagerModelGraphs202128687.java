@@ -29,7 +29,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     @Override
     public void loadGraphs() {
         try {
-            graph.setElementes(persistence.loadGraph());
+            graph.setElements(persistence.loadGraph());
             for (int i = 0; i < graph.getElementsSize(); i++) {
                 //System.out.println("elemento numero " + i + " con id " + graph.getElement(i).getIdElement());
                 elementsManager.add(graph.getElement(i));
@@ -102,9 +102,5 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     @Override
     public MapElement getElement(int idElementPoint1, int idElementPoint2) {
         return null;
-    }
-
-    private boolean isRoute(MapElement element) {
-        return element.getElementType() == ElementType.ROUTE;
     }
 }
