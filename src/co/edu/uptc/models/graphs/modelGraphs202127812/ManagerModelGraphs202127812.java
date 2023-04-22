@@ -6,12 +6,14 @@ import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.*;
 import co.edu.uptc.views.maps.types.ElementType;
 import co.edu.uptc.views.maps.types.RouteType;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.jxmapviewer.viewer.GeoPosition;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import javax.swing.*;
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.*;
 
 public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     private ContractGraphs.Presenter presenter;
@@ -36,10 +38,11 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     public void addElement(MapElement mapElement) {
         if (validateRoute(mapElement)) {
             addElementOnly(mapElement);
+            updateGraph();
             presenter.updateGraph();
         }   else {
             presenter.updateGraph();
-        presenter.notifyWarning("No se puede crear la ruta, El origen debe ser diferente al destivo");
+        presenter.notifyWarning("No se puede crear la ruta, El origen debe ser diferente al destino");
 
         }
     }
@@ -87,7 +90,25 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
 
     @Override
     public void updateGraph() {
-
+        try {
+            StringBuilder json = new StringBuilder();
+            json.append("[");
+            int count = 1;
+            for (MapElement element:elements.values()) {
+                String toWrite = new Gson().toJson(element);
+                json.append(toWrite);
+                if (count!=elements.size()){
+                    json.append(",\n");
+                }
+                count++;
+            }
+            json.append("]");
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("data/graphsData202127812.json")));
+            writer.write(String.valueOf(json));
+            writer.close();
+        }catch (IOException e){
+            JOptionPane.showMessageDialog(null,"Error técnico");
+        }
     }
 
     @Override
@@ -98,7 +119,7 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     @Override
     public void loadGraphs() {
 //   Estos datos estan quemadas, deberian leersen del archivo
-        MapElement mapElement = new MapElement(new GeoPosition(5.551979677339931, -73.35750192403793));
+        /*MapElement mapElement = new MapElement(new GeoPosition(5.551979677339931, -73.35750192403793));
         addElementOnly(mapElement);
         mapElement = new MapElement(new GeoPosition(5.552508263116695, -73.3560374379158));
         addElementOnly(mapElement);
@@ -157,8 +178,27 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         addRouteBurned(13,14);
         addRouteBurned(14,15);
         addRouteBurned(15,16);
-        addRouteBurned(16,17);
+        addRouteBurned(16,17);*/
 
+        try {
+            File file = new File("data/graphsData202127812.json");
+            if (file.exists()){
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+                StringBuilder json = new StringBuilder();
+                String cad;
+                while((cad = bufferedReader.readLine())!=null) {
+                    json.append(cad);
+                }
+                bufferedReader.close();
+                Type userListType = new TypeToken<ArrayList<MapElement>>(){}.getType();
+                List<MapElement> list = new Gson().fromJson(json.toString(),userListType);
+                for (MapElement element:list) {
+                    elements.put(element.getIdElement(), element);
+                }
+            }
+        }catch (IOException e){
+            JOptionPane.showMessageDialog(null,"Error técnico");
+        }
 
     }
 
@@ -166,6 +206,7 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     public void deletePoint(int idElement) {
         if (!isRelation(idElement)) {
             elements.remove(idElement);
+            updateGraph();
             presenter.updateGraph();
         } else {
             presenter.notifyWarning("El punto esta relacionado, por lo tanto no se puede borrar");
@@ -183,6 +224,7 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         mapElement.getMapRoute().setSpeedRoute(mapElementModify.getMapRoute().getSpeedRoute());
         mapElement.getMapRoute().setOrientationRoutes(mapElementModify.getMapRoute().getOrientationRoutes());
         mapElement.getMapRoute().setTypeRoute(mapElementModify.getMapRoute().getTypeRoute());
+        updateGraph();
     }
 
     @Override
