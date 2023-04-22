@@ -6,6 +6,7 @@ import co.edu.uptc.models.graphs.modelGraphs202127061.ManagerModelGraphs20212706
 import co.edu.uptc.models.graphs.modelGraphs202127812.ManagerModelGraphs202127812;
 import co.edu.uptc.models.graphs.modelGraphs202128710.ManagerModelGraphs202128710;
 import co.edu.uptc.models.graphs.modelGraphs202128687.ManagerModelGraphs202128687;
+import co.edu.uptc.models.graphs.modelGraphs202127343.ManagerModelGraphs202127343;
 import co.edu.uptc.models.people.model202128687.ManagerModel202128687;
 import co.edu.uptc.models.people.model202114641.ManagerModel202114641;
 import co.edu.uptc.models.people.model202127343.ManagerModel202127343;
@@ -132,7 +133,7 @@ public class ManagerGeneral {
         //modelGraphs201721830 = new ManagerModelGraphs201721830();
         //modelGraphs201721961 = new ManagerModelGraphs201721961();
         //modelGraphs201912254 = new ManagerModelGraphs201912254();
-        //modelGraphs202127343 = new ManagerModelGraphs202127343();
+        modelGraphs202127343 = new ManagerModelGraphs202127343();
 
     }
 
