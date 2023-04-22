@@ -8,7 +8,7 @@ import java.util.*;
 
 import static java.lang.Math.*;
 
-public class Graph {//Pendiente - hacer los casos para la penalizacion en la velocidad por el tipo de ruta
+public class Graph {
     private Map<Integer, MapElement> elements;
     private Map<Integer, MapElement> resultElements;
     private List<Integer> existingIDs;
@@ -91,7 +91,7 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
 
         double a = sinDeltaLatSquared + cos(lat1Rad) * cos(lat2Rad) * sinDeltaLonSquared;
         double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-        return RADIUS * c;
+        return RADIUS * c * 1000;
     }
 
     public void deleteElement(int id) {
@@ -112,33 +112,34 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
         return temporalValues;
     }
 
-    private void addElementsToShortestRoute(Map<Integer, Double> finalValues, int actualPoint, int attributeToCompare, List<Integer> parents) {
-        parents.add(actualPoint);
-        double valordelpuntoactual = finalValues.get(actualPoint);
-        List<MapElement> hijosdelpuntoactual = getNonOrientationChildren(actualPoint);
-        for (MapElement hijo : hijosdelpuntoactual) {
-            int idhijo = hijo.getIdElement();
-            if (!parents.contains(idhijo) && finalValues.containsKey(idhijo)) {
-                MapElement rutaentrepadreehijo = getRouteBetween(actualPoint, idhijo);
-                double valordelarco = getValueOfAttribute(rutaentrepadreehijo, attributeToCompare);
-                double valordelHijobuscando = finalValues.get(idhijo) + valordelarco;
-                if (valordelHijobuscando == valordelpuntoactual) {
-                    resultElements.put(idhijo, elements.get(idhijo));
-                    resultElements.put(actualPoint, elements.get(actualPoint));
-                    resultElements.put(rutaentrepadreehijo.getIdElement(), elements.get(rutaentrepadreehijo.getIdElement()));
-                    addElementsToShortestRoute(finalValues, idhijo, attributeToCompare, parents);
+    private void addElementsToShortestRoute(Map<Integer, Double> finalValues, int currentId, int attributeToCompare, List<Integer> parents) {
+        parents.add(currentId);
+        for (MapElement child : getNonOrientationChildren(currentId)) {
+            int childId = child.getIdElement();
+            if (!parents.contains(childId) && finalValues.containsKey(childId)) {
+                MapElement route = getRouteBetween(currentId, childId);
+                double childValue = finalValues.get(childId) + getValueOfAttribute(route, attributeToCompare);
+                if (childValue == finalValues.get(currentId)) {
+                    resultElements.put(childId, elements.get(childId));
+                    resultElements.put(currentId, elements.get(currentId));
+                    resultElements.put(route.getIdElement(), elements.get(route.getIdElement()));
+                    addElementsToShortestRoute(finalValues, childId, attributeToCompare, parents);
                 }
             }
         }
-
     }
 
     private double getValueOfAttribute(MapElement element, int attributeToCompare) {
         MapRoute route = element.getMapRoute();
         if (route == null) throw new RuntimeException("La ruta no existe entre los puntos seleccionados");
         double distance = getDistanceBetweenPoints(route.getPoint1(), route.getPoint2());
+        double speed = route.getSpeedRoute();
         return switch (attributeToCompare) {
-            case TIME -> distance / route.getSpeedRoute();
+            case TIME -> distance / switch (route.getTypeRoute()) {//Pendiente - hacer los casos para la penalizacion en la velocidad por el tipo de ruta
+                case PAVING -> speed;
+                case ADOQUINATE -> speed * 0.8;
+                default -> speed;//Para pavimentada
+            };
             case DISTANCE -> distance;
             default -> 0;
         };
