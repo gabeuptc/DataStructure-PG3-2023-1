@@ -79,7 +79,7 @@ public class Graph {
         }
     }
 
-    public Double getDistanceBetweenPoints(MapElement point1, MapElement point2) {
+    private Double getDistanceBetweenPoints(MapElement point1, MapElement point2) {
         double lat1Rad = toRadians(point1.getGeoPosition().getLatitude());
         double lat2Rad = toRadians(point2.getGeoPosition().getLatitude());
 
@@ -135,10 +135,12 @@ public class Graph {
         double distance = getDistanceBetweenPoints(route.getPoint1(), route.getPoint2());
         double speed = route.getSpeedRoute();
         return switch (attributeToCompare) {
-            case TIME -> distance / switch (route.getTypeRoute()) {//Pendiente - hacer los casos para la penalizacion en la velocidad por el tipo de ruta
+            case TIME -> distance / switch (route.getTypeRoute()) {
                 case PAVING -> speed;
+                case ROAT_RECEBO -> speed * 0.9;
                 case ADOQUINATE -> speed * 0.8;
-                default -> speed;//Para pavimentada
+                case TRAIL -> speed * 0.7;
+                case OTHER -> speed * 0.6;
             };
             case DISTANCE -> distance;
             default -> 0;
@@ -175,7 +177,7 @@ public class Graph {
         }
     }
 
-    private MapElement getRouteBetween(int point1, int point2) {
+    public MapElement getRouteBetween(int point1, int point2) {
         for (MapElement element : elements.values()) {
             if (element.getElementType() == ElementType.ROUTE) {
                 MapRoute route = element.getMapRoute();
