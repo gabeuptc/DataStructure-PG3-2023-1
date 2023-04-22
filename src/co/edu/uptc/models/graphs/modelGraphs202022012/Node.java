@@ -1,7 +1,5 @@
 package co.edu.uptc.models.graphs.modelGraphs202022012;
 
-
-
 import co.edu.uptc.pojos.MapElement;
 
 public class Node{

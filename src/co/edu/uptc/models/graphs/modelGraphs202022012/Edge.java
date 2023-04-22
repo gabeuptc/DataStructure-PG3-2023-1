@@ -23,6 +23,22 @@ public class Edge{
         return mapRoute;
     }
 
+    public double getDistance() {
+        return distance;
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
+    }
+
     public boolean isPointConnected(MapElement mapPoint){
         return mapRoute.getPoint1().equals(mapPoint.getMapRoute().getPoint1())
                 || mapRoute.getPoint2().equals(mapPoint.getMapRoute().getPoint2());
