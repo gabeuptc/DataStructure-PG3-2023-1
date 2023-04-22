@@ -139,7 +139,6 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> getResultElements() {
-        System.out.println("Tamaño lista de puntos finales: " + graph.getResultElements().values().size());
         return new HashSet<>(graph.getResultElements().values());
     }
 

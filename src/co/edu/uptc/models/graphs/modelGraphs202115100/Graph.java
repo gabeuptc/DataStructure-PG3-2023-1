@@ -8,7 +8,7 @@ import java.util.*;
 
 import static java.lang.Math.*;
 
-public class Graph {//Pendiente - hacer los casos para la penalizacion en la velocidad por el tipo de ruta y la direccion de la ruta, Tambien falta hacer un test nuevo que funcione
+public class Graph {//Pendiente - hacer los casos para la penalizacion en la velocidad por el tipo de ruta
     private Map<Integer, MapElement> elements;
     private Map<Integer, MapElement> resultElements;
     private List<Integer> existingIDs;
@@ -40,6 +40,18 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
         return elements;
     }
 
+    public MapElement getElement(int id) {
+        return elements.getOrDefault(id, null);
+    }
+
+    public Map<Integer, MapElement> getResultElements() {
+        return resultElements;
+    }
+
+    public void clearResultElements() {
+        resultElements.clear();
+    }
+
     public List<Integer> getExistingIDs() {
         return existingIDs;
     }
@@ -50,11 +62,21 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
 
     public void setElements(Map<Integer, MapElement> elements) {
         this.elements = elements;
-        System.out.println(elements.keySet());
     }
 
     public void setResultElements(Map<Integer, MapElement> resultElements) {
         this.resultElements = resultElements;
+    }
+
+    public void calculateShortestRoute(int origin, int destine, int attributeToCompare) {
+        Map<Integer, Double> temporalValues = getAllTheChildren(origin, new ArrayList<>());
+        Map<Integer, Double> finalValues = new HashMap<>(temporalValues);
+        if (temporalValues.containsKey(origin) && temporalValues.containsKey(destine)) {
+            temporalValues.put(origin, 0.0);
+            dijkstra(temporalValues, finalValues, attributeToCompare);
+            addElementsToShortestRoute(finalValues, destine, attributeToCompare, new ArrayList<>());
+
+        }
     }
 
     public Double getDistanceBetweenPoints(MapElement point1, MapElement point2) {
@@ -76,21 +98,6 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
         elements.remove(id);
     }
 
-    public void calculateShortestRoute(int origin, int destine, int attributeToCompare) {
-        Map<Integer, Double> temporalValues = getAllTheChildren(origin, new ArrayList<>());
-        Map<Integer, Double> finalValues = new HashMap<>(temporalValues);
-        System.out.println("Valores temporales: " + temporalValues.keySet() + "\nTamaño: " + temporalValues.size());
-        if (temporalValues.containsKey(origin) && temporalValues.containsKey(destine)) {
-            temporalValues.put(origin, 0.0);
-            dijkstra(temporalValues, finalValues, attributeToCompare);
-            getShortestRoute(finalValues, destine, attributeToCompare, new ArrayList<>());
-
-        }
-//        printAllResultNodesAndArches();
-        System.out.println("Punto de origen: " + origin + " Punto de destino: " + destine);
-//        printAllResultNodesAndArches();
-    }
-
     private Map<Integer, Double> getAllTheChildren(int origin, List<Integer> parents) {
         Map<Integer, Double> temporalValues = new HashMap<>();
         temporalValues.put(origin, Double.MAX_VALUE);
@@ -105,30 +112,8 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
         return temporalValues;
     }
 
-
-    private void printAllResultNodesAndArches() {
-        System.out.println("Elementos resultantes: ");
-        for (MapElement point : resultElements.values()) {
-            if (point.getElementType() == ElementType.POINT) {
-//                System.out.println("Punto: " + point.getIdElement() + " Rutas: [" + toStringRoute(getChildren(point.getIdElement())) + "]");
-            }
-            if (point.getElementType() == ElementType.ROUTE) {
-                System.out.println("Ruta: " + point.getIdElement() + " Puntos: [" + point.getMapRoute().getPoint1().getIdElement() + " " + point.getMapRoute().getPoint2().getIdElement() + "]");
-            }
-        }
-    }
-
-    private StringBuilder toStringRoute(List<MapRoute> children) {
-        StringBuilder result = new StringBuilder();
-        for (MapRoute child : children) {
-            result.append(child.getPoint1().getIdElement()).append(" ").append(child.getPoint2().getIdElement()).append(" ");
-        }
-        return result;
-    }
-
-    private void getShortestRoute(Map<Integer, Double> finalValues, int actualPoint, int attributeToCompare, List<Integer> parents) {
+    private void addElementsToShortestRoute(Map<Integer, Double> finalValues, int actualPoint, int attributeToCompare, List<Integer> parents) {
         parents.add(actualPoint);
-        int sizeResultElements = resultElements.size();
         double valordelpuntoactual = finalValues.get(actualPoint);
         List<MapElement> hijosdelpuntoactual = getNonOrientationChildren(actualPoint);
         for (MapElement hijo : hijosdelpuntoactual) {
@@ -137,13 +122,11 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
                 MapElement rutaentrepadreehijo = getRouteBetween(actualPoint, idhijo);
                 double valordelarco = getValueOfAttribute(rutaentrepadreehijo, attributeToCompare);
                 double valordelHijobuscando = finalValues.get(idhijo) + valordelarco;
-                System.out.println(valordelHijobuscando + "\n" + valordelpuntoactual);
                 if (valordelHijobuscando == valordelpuntoactual) {
                     resultElements.put(idhijo, elements.get(idhijo));
                     resultElements.put(actualPoint, elements.get(actualPoint));
                     resultElements.put(rutaentrepadreehijo.getIdElement(), elements.get(rutaentrepadreehijo.getIdElement()));
-                    System.out.println(sizeResultElements);
-                    getShortestRoute(finalValues, idhijo, attributeToCompare, parents);
+                    addElementsToShortestRoute(finalValues, idhijo, attributeToCompare, parents);
                 }
             }
         }
@@ -172,7 +155,6 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
 
     private int getMinPoint(Map<Integer, Double> temporalValues, Map<Integer, Double> finalValues) {
         int minKey = temporalValues.keySet().stream().min(Comparator.comparingDouble(temporalValues::get)).orElse(-1);
-//        System.out.println("Valor en la minima llave(" + minKey + "): " + temporalValues.get(minKey));
         if (finalValues.get(minKey) != Double.MAX_VALUE) {
             temporalValues.remove(minKey);
             return getMinPoint(temporalValues, finalValues);
@@ -248,17 +230,5 @@ public class Graph {//Pendiente - hacer los casos para la penalizacion en la vel
         if (route.getPoint2().getIdElement() == idPoint) {
             children.add(route.getPoint1());
         }
-    }
-
-    public MapElement getElement(int id) {
-        return elements.getOrDefault(id, null);
-    }
-
-    public Map<Integer, MapElement> getResultElements() {
-        return resultElements;
-    }
-
-    public void clearResultElements() {
-        resultElements.clear();
     }
 }
