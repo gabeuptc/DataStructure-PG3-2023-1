@@ -6,12 +6,13 @@ import co.edu.uptc.views.maps.*;
 import co.edu.uptc.views.maps.types.ElementType;
 import org.jxmapviewer.viewer.GeoPosition;
 
+import javax.lang.model.element.Element;
 import java.util.*;
 
 public class Graph {
     private List<Node> nodes;
     private List<Arc> arcs;
-    private Map<Integer,MapElement> elements;
+    private Map<Integer, MapElement> elements;
     private OperationMaps operationMaps;
 
     public Graph() {
@@ -50,8 +51,19 @@ public class Graph {
     }
 
     public void setElements(Map<Integer, MapElement> elements) {
-         this.elements = elements;
+        this.elements = elements;
     }
 
+    public void deleteElement(int position) {
+        System.out.println("eliminando elemento con id " + position);
+        elements.remove(position,elements.get(position));
+    }
 
+    private Node getNode(int idNode) {
+        for (Node node : nodes) {
+            if (node.getMapElement().getIdElement() == idNode)
+                return node;
+        }
+        return null;
+    }
 }

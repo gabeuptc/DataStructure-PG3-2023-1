@@ -10,4 +10,8 @@ public class Node {
     public MapElement getMapElement() {
         return point;
     }
+
+    public boolean isConnected(){
+        return point.getMapRoute() == null;
+    }
 }

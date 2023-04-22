@@ -54,9 +54,29 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
         loadGraphs();
         presenter.updateGraph();
     }
+
     @Override
     public void deletePoint(int idPoint) {
+        if (!isConected(idPoint)) {
+            graph.deleteElement(idPoint);
+            elementsManager.remove(getElement(idPoint));
+            graph.savePersistence(persistence);
+            loadGraphs();
+            presenter.updateGraph();
+        }else{
+            presenter.notifyWarning("No se puede eliminar el punto porque esta conectado a una ruta");
+        }
+    }
 
+    private boolean isConected(int id) {
+        for (MapElement el : elementsManager) {
+            if (el.getElementType() == ElementType.ROUTE) {
+                if (el.getMapRoute().getPoint1().getIdElement() == id || el.getMapRoute().getPoint2().getIdElement() == id) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
@@ -87,8 +107,14 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     @Override
     public MapElement getElement(int id) {
-         return graph.getElement(id);
+        for (MapElement el : elementsManager) {
+            if (el.getIdElement() == id) {
+                return el;
+            }
+        }
+        return null;
     }
+
     @Override
     public void updateGraph() {
         presenter.updateGraph();

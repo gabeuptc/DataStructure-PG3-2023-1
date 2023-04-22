@@ -3,50 +3,50 @@
     "elementType": "POINT",
     "idElement": 0,
     "geoPosition": {
-      "latitude": 5.552569664464084,
-      "longitude": -73.35384607315063
+      "latitude": 5.55197433808723,
+      "longitude": -73.35749387741089
     }
   },
   {
-    "elementType": "ROUTE",
+    "elementType": "POINT",
     "idElement": 1,
-    "mapRoute": {
-      "typeRoute": "PAVING",
-      "speedRoute": 5.0,
-      "orientationRoutes": "ORIGIN_DESTIN",
-      "point1": {
-        "elementType": "POINT",
-        "idElement": 0,
-        "geoPosition": {
-          "latitude": 5.55221727403561,
-          "longitude": -73.35507988929749
-        }
-      },
-      "point2": {
-        "elementType": "POINT",
-        "idElement": 2,
-        "geoPosition": {
-          "latitude": 5.552569664464084,
-          "longitude": -73.35384607315063
-        }
-      },
-      "countPoint": 2
+    "geoPosition": {
+      "latitude": 5.552500254244837,
+      "longitude": -73.35606426000595
     }
   },
   {
     "elementType": "POINT",
     "idElement": 2,
     "geoPosition": {
-      "latitude": 5.55221727403561,
-      "longitude": -73.35507988929749
+      "latitude": 5.552358764157215,
+      "longitude": -73.35581749677658
     }
   },
   {
-    "elementType": "POINT",
+    "elementType": "ROUTE",
     "idElement": 3,
-    "geoPosition": {
-      "latitude": 5.551459099975257,
-      "longitude": -73.35345983505249
+    "mapRoute": {
+      "typeRoute": "PAVING",
+      "speedRoute": 0.0,
+      "orientationRoutes": "BOTH",
+      "point1": {
+        "elementType": "POINT",
+        "idElement": 1,
+        "geoPosition": {
+          "latitude": 5.552500254244837,
+          "longitude": -73.35606426000595
+        }
+      },
+      "point2": {
+        "elementType": "POINT",
+        "idElement": 2,
+        "geoPosition": {
+          "latitude": 5.552358764157215,
+          "longitude": -73.35581749677658
+        }
+      },
+      "countPoint": 2
     }
   },
   {
@@ -54,22 +54,22 @@
     "idElement": 4,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 5.0,
+      "speedRoute": 0.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
-        "idElement": 2,
+        "idElement": 0,
         "geoPosition": {
-          "latitude": 5.55221727403561,
-          "longitude": -73.35507988929749
+          "latitude": 5.55197433808723,
+          "longitude": -73.35749387741089
         }
       },
       "point2": {
         "elementType": "POINT",
-        "idElement": 3,
+        "idElement": 1,
         "geoPosition": {
-          "latitude": 5.551459099975257,
-          "longitude": -73.35345983505249
+          "latitude": 5.552500254244837,
+          "longitude": -73.35606426000595
         }
       },
       "countPoint": 2
@@ -79,50 +79,50 @@
     "elementType": "POINT",
     "idElement": 5,
     "geoPosition": {
-      "latitude": 5.551266886678245,
-      "longitude": -73.35500478744507
-    }
-  },
-  {
-    "elementType": "POINT",
-    "idElement": 6,
-    "geoPosition": {
-      "latitude": 5.552825948279705,
-      "longitude": -73.35397481918335
-    }
-  },
-  {
-    "elementType": "POINT",
-    "idElement": 7,
-    "geoPosition": {
-      "latitude": 5.552676449400794,
-      "longitude": -73.35513353347778
+      "latitude": 5.552382790778246,
+      "longitude": -73.35598915815353
     }
   },
   {
     "elementType": "ROUTE",
-    "idElement": 8,
+    "idElement": 6,
     "mapRoute": {
       "typeRoute": "PAVING",
       "speedRoute": 0.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
-        "idElement": 6,
+        "idElement": 5,
         "geoPosition": {
-          "latitude": 5.552825948279705,
-          "longitude": -73.35397481918335
+          "latitude": 5.552382790778246,
+          "longitude": -73.35598915815353
         }
       },
       "point2": {
         "elementType": "POINT",
-        "idElement": 7,
+        "idElement": 1,
         "geoPosition": {
-          "latitude": 5.552676449400794,
-          "longitude": -73.35513353347778
+          "latitude": 5.552500254244837,
+          "longitude": -73.35606426000595
         }
       },
       "countPoint": 2
+    }
+  },
+  {
+    "elementType": "POINT",
+    "idElement": 7,
+    "geoPosition": {
+      "latitude": 5.551702036135985,
+      "longitude": -73.3557316660881
+    }
+  },
+  {
+    "elementType": "POINT",
+    "idElement": 8,
+    "geoPosition": {
+      "latitude": 5.5517821249582395,
+      "longitude": -73.35541248321533
     }
   },
   {
@@ -136,87 +136,87 @@
         "elementType": "POINT",
         "idElement": 5,
         "geoPosition": {
-          "latitude": 5.551266886678245,
-          "longitude": -73.35500478744507
+          "latitude": 5.552382790778246,
+          "longitude": -73.35598915815353
         }
       },
       "point2": {
         "elementType": "POINT",
         "idElement": 7,
         "geoPosition": {
-          "latitude": 5.552676449400794,
-          "longitude": -73.35513353347778
+          "latitude": 5.551702036135985,
+          "longitude": -73.3557316660881
         }
       },
       "countPoint": 2
     }
   },
   {
-    "elementType": "POINT",
+    "elementType": "ROUTE",
     "idElement": 10,
-    "geoPosition": {
-      "latitude": 5.552259988038154,
-      "longitude": -73.35752606391907
+    "mapRoute": {
+      "typeRoute": "PAVING",
+      "speedRoute": 0.0,
+      "orientationRoutes": "ORIGIN_DESTIN",
+      "point1": {
+        "elementType": "POINT",
+        "idElement": 7,
+        "geoPosition": {
+          "latitude": 5.551702036135985,
+          "longitude": -73.3557316660881
+        }
+      },
+      "point2": {
+        "elementType": "POINT",
+        "idElement": 8,
+        "geoPosition": {
+          "latitude": 5.5517821249582395,
+          "longitude": -73.35541248321533
+        }
+      },
+      "countPoint": 2
+    }
+  },
+  {
+    "elementType": "ROUTE",
+    "idElement": 11,
+    "mapRoute": {
+      "typeRoute": "PAVING",
+      "speedRoute": 0.0,
+      "orientationRoutes": "BOTH",
+      "point1": {
+        "elementType": "POINT",
+        "idElement": 7,
+        "geoPosition": {
+          "latitude": 5.551702036135985,
+          "longitude": -73.3557316660881
+        }
+      },
+      "point2": {
+        "elementType": "POINT",
+        "idElement": 2,
+        "geoPosition": {
+          "latitude": 5.552358764157215,
+          "longitude": -73.35581749677658
+        }
+      },
+      "countPoint": 2
     }
   },
   {
     "elementType": "POINT",
-    "idElement": 11,
-    "geoPosition": {
-      "latitude": 5.551822169365276,
-      "longitude": -73.3567214012146
-    }
-  },
-  {
-    "elementType": "ROUTE",
     "idElement": 12,
-    "mapRoute": {
-      "typeRoute": "PAVING",
-      "speedRoute": 0.0,
-      "orientationRoutes": "ORIGIN_DESTIN",
-      "point1": {
-        "elementType": "POINT",
-        "idElement": 10,
-        "geoPosition": {
-          "latitude": 5.552259988038154,
-          "longitude": -73.35752606391907
-        }
-      },
-      "point2": {
-        "elementType": "POINT",
-        "idElement": 11,
-        "geoPosition": {
-          "latitude": 5.551822169365276,
-          "longitude": -73.3567214012146
-        }
-      },
-      "countPoint": 2
+    "geoPosition": {
+      "latitude": 5.552321389411406,
+      "longitude": -73.35562437772751
     }
   },
   {
-    "elementType": "ROUTE",
+    "elementType": "POINT",
     "idElement": 13,
-    "mapRoute": {
-      "typeRoute": "PAVING",
-      "speedRoute": 0.0,
-      "orientationRoutes": "ORIGIN_DESTIN",
-      "point1": {
-        "elementType": "POINT",
-        "idElement": 11,
-        "geoPosition": {
-          "latitude": 5.551822169365276,
-          "longitude": -73.3567214012146
-        }
-      },
-      "point2": {
-        "elementType": "POINT",
-        "idElement": 11,
-        "geoPosition": {
-          "latitude": 5.551822169365276,
-          "longitude": -73.3567214012146
-        }
-      },
-      "countPoint": 2
+    "geoPosition": {
+      "latitude": 5.5523133805370035,
+      "longitude": -73.35554659366608
     }
   },
   {
@@ -228,29 +228,47 @@
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
-        "idElement": 11,
+        "idElement": 2,
         "geoPosition": {
-          "latitude": 5.551822169365276,
-          "longitude": -73.3567214012146
+          "latitude": 5.552358764157215,
+          "longitude": -73.35581749677658
         }
       },
       "point2": {
         "elementType": "POINT",
-        "idElement": 15,
+        "idElement": 12,
         "geoPosition": {
-          "latitude": 5.551256208159915,
-          "longitude": -73.35612058639526
+          "latitude": 5.552321389411406,
+          "longitude": -73.35562437772751
         }
       },
       "countPoint": 2
     }
   },
   {
-    "elementType": "POINT",
+    "elementType": "ROUTE",
     "idElement": 15,
-    "geoPosition": {
-      "latitude": 5.551256208159915,
-      "longitude": -73.35612058639526
+    "mapRoute": {
+      "typeRoute": "PAVING",
+      "speedRoute": 0.0,
+      "orientationRoutes": "ORIGIN_DESTIN",
+      "point1": {
+        "elementType": "POINT",
+        "idElement": 12,
+        "geoPosition": {
+          "latitude": 5.552321389411406,
+          "longitude": -73.35562437772751
+        }
+      },
+      "point2": {
+        "elementType": "POINT",
+        "idElement": 8,
+        "geoPosition": {
+          "latitude": 5.5517821249582395,
+          "longitude": -73.35541248321533
+        }
+      },
+      "countPoint": 2
     }
   },
   {
@@ -262,146 +280,52 @@
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
-        "idElement": 15,
+        "idElement": 12,
         "geoPosition": {
-          "latitude": 5.551256208159915,
-          "longitude": -73.35612058639526
+          "latitude": 5.552321389411406,
+          "longitude": -73.35562437772751
         }
       },
       "point2": {
         "elementType": "POINT",
-        "idElement": 5,
+        "idElement": 13,
         "geoPosition": {
-          "latitude": 5.551266886678245,
-          "longitude": -73.35500478744507
+          "latitude": 5.5523133805370035,
+          "longitude": -73.35554659366608
         }
       },
       "countPoint": 2
     }
   },
   {
-    "elementType": "ROUTE",
+    "elementType": "POINT",
     "idElement": 17,
-    "mapRoute": {
-      "typeRoute": "PAVING",
-      "speedRoute": 0.0,
-      "orientationRoutes": "ORIGIN_DESTIN",
-      "point1": {
-        "elementType": "POINT",
-        "idElement": 6,
-        "geoPosition": {
-          "latitude": 5.552825948279705,
-          "longitude": -73.35397481918335
-        }
-      },
-      "point2": {
-        "elementType": "POINT",
-        "idElement": 2,
-        "geoPosition": {
-          "latitude": 5.55221727403561,
-          "longitude": -73.35507988929749
-        }
-      },
-      "countPoint": 2
+    "geoPosition": {
+      "latitude": 5.55198234696625,
+      "longitude": -73.35687696933746
     }
   },
   {
-    "elementType": "POINT",
+    "elementType": "ROUTE",
     "idElement": 18,
-    "geoPosition": {
-      "latitude": 5.553488014287585,
-      "longitude": -73.35814833641052
-    }
-  },
-  {
-    "elementType": "POINT",
-    "idElement": 19,
-    "geoPosition": {
-      "latitude": 5.553274444688902,
-      "longitude": -73.35720419883728
-    }
-  },
-  {
-    "elementType": "ROUTE",
-    "idElement": 20,
     "mapRoute": {
       "typeRoute": "PAVING",
       "speedRoute": 0.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
-        "idElement": 18,
+        "idElement": 0,
         "geoPosition": {
-          "latitude": 5.553488014287585,
-          "longitude": -73.35814833641052
+          "latitude": 5.55197433808723,
+          "longitude": -73.35749387741089
         }
       },
       "point2": {
         "elementType": "POINT",
-        "idElement": 19,
+        "idElement": 17,
         "geoPosition": {
-          "latitude": 5.553274444688902,
-          "longitude": -73.35720419883728
-        }
-      },
-      "countPoint": 2
-    }
-  },
-  {
-    "elementType": "POINT",
-    "idElement": 21,
-    "geoPosition": {
-      "latitude": 5.552505593492755,
-      "longitude": -73.35679650306702
-    }
-  },
-  {
-    "elementType": "ROUTE",
-    "idElement": 22,
-    "mapRoute": {
-      "typeRoute": "PAVING",
-      "speedRoute": 0.0,
-      "orientationRoutes": "ORIGIN_DESTIN",
-      "point1": {
-        "elementType": "POINT",
-        "idElement": 10,
-        "geoPosition": {
-          "latitude": 5.552259988038154,
-          "longitude": -73.35752606391907
-        }
-      },
-      "point2": {
-        "elementType": "POINT",
-        "idElement": 21,
-        "geoPosition": {
-          "latitude": 5.552505593492755,
-          "longitude": -73.35679650306702
-        }
-      },
-      "countPoint": 2
-    }
-  },
-  {
-    "elementType": "ROUTE",
-    "idElement": 23,
-    "mapRoute": {
-      "typeRoute": "PAVING",
-      "speedRoute": 0.0,
-      "orientationRoutes": "ORIGIN_DESTIN",
-      "point1": {
-        "elementType": "POINT",
-        "idElement": 19,
-        "geoPosition": {
-          "latitude": 5.553274444688902,
-          "longitude": -73.35720419883728
-        }
-      },
-      "point2": {
-        "elementType": "POINT",
-        "idElement": 21,
-        "geoPosition": {
-          "latitude": 5.552505593492755,
-          "longitude": -73.35679650306702
+          "latitude": 5.55198234696625,
+          "longitude": -73.35687696933746
         }
       },
       "countPoint": 2
