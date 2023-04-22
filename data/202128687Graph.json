@@ -304,5 +304,107 @@
       },
       "countPoint": 2
     }
+  },
+  {
+    "elementType": "POINT",
+    "idElement": 18,
+    "geoPosition": {
+      "latitude": 5.553488014287585,
+      "longitude": -73.35814833641052
+    }
+  },
+  {
+    "elementType": "POINT",
+    "idElement": 19,
+    "geoPosition": {
+      "latitude": 5.553274444688902,
+      "longitude": -73.35720419883728
+    }
+  },
+  {
+    "elementType": "ROUTE",
+    "idElement": 20,
+    "mapRoute": {
+      "typeRoute": "PAVING",
+      "speedRoute": 0.0,
+      "orientationRoutes": "ORIGIN_DESTIN",
+      "point1": {
+        "elementType": "POINT",
+        "idElement": 18,
+        "geoPosition": {
+          "latitude": 5.553488014287585,
+          "longitude": -73.35814833641052
+        }
+      },
+      "point2": {
+        "elementType": "POINT",
+        "idElement": 19,
+        "geoPosition": {
+          "latitude": 5.553274444688902,
+          "longitude": -73.35720419883728
+        }
+      },
+      "countPoint": 2
+    }
+  },
+  {
+    "elementType": "POINT",
+    "idElement": 21,
+    "geoPosition": {
+      "latitude": 5.552505593492755,
+      "longitude": -73.35679650306702
+    }
+  },
+  {
+    "elementType": "ROUTE",
+    "idElement": 22,
+    "mapRoute": {
+      "typeRoute": "PAVING",
+      "speedRoute": 0.0,
+      "orientationRoutes": "ORIGIN_DESTIN",
+      "point1": {
+        "elementType": "POINT",
+        "idElement": 10,
+        "geoPosition": {
+          "latitude": 5.552259988038154,
+          "longitude": -73.35752606391907
+        }
+      },
+      "point2": {
+        "elementType": "POINT",
+        "idElement": 21,
+        "geoPosition": {
+          "latitude": 5.552505593492755,
+          "longitude": -73.35679650306702
+        }
+      },
+      "countPoint": 2
+    }
+  },
+  {
+    "elementType": "ROUTE",
+    "idElement": 23,
+    "mapRoute": {
+      "typeRoute": "PAVING",
+      "speedRoute": 0.0,
+      "orientationRoutes": "ORIGIN_DESTIN",
+      "point1": {
+        "elementType": "POINT",
+        "idElement": 19,
+        "geoPosition": {
+          "latitude": 5.553274444688902,
+          "longitude": -73.35720419883728
+        }
+      },
+      "point2": {
+        "elementType": "POINT",
+        "idElement": 21,
+        "geoPosition": {
+          "latitude": 5.552505593492755,
+          "longitude": -73.35679650306702
+        }
+      },
+      "countPoint": 2
+    }
   }
 ]

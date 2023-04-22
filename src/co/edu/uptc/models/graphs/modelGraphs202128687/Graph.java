@@ -24,7 +24,6 @@ public class Graph {
     }
 
     public void addNode(Node node) {
-        System.out.println("entra a addNode" + node);
         nodes.add(node);
     }
 
@@ -52,7 +51,6 @@ public class Graph {
     }
 
     public Map<Integer, MapElement> getElements() {
-        System.out.println("elementos: " + elements.size());
         return elements;
     }
 

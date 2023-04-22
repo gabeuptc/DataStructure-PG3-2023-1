@@ -2,12 +2,10 @@ package co.edu.uptc.models.graphs.modelGraphs202128687;
 
 import co.edu.uptc.pojos.MapElement;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,10 +15,9 @@ public class Persistence {
         Map<Integer, MapElement> graphList = new HashMap<>();
         MapElement[] elements = new MapElement[0];
         try {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             FileReader fileReader = new FileReader("data/202128687Graph.json");
-            BufferedReader bReader = new BufferedReader(fileReader);
-            elements = gson.fromJson(bReader, MapElement[].class);
+            elements = gson.fromJson(fileReader, MapElement[].class);
         } catch (FileNotFoundException e) {
             System.err.println("File not found: " + e.getMessage());
         }
@@ -36,13 +33,16 @@ public class Persistence {
     }
 
     public void saveGraph(Map<Integer, MapElement> graph) {
+        System.out.println("Saving data...");
         try {
-            String json = new Gson().toJson(graph);
-            PrintWriter print = new PrintWriter("data/202128687Graph.json");
-            print.write(json);
-            print.close();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            FileWriter fileWriter = new FileWriter("data/202128687Graph.json");
+            fileWriter.write(gson.toJson(graph.values()));
+            fileWriter.close();
         } catch (FileNotFoundException e) {
             System.err.println("File not found: " + e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
