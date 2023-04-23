@@ -30,7 +30,6 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
         try {
             graph.setElements(persistence.loadGraph());
             for (int i = 0; i < graph.getElementsSize(); i++) {
-                //System.out.println("elemento numero " + i + " con id " + graph.getElement(i).getIdElement());
                 elementsManager.add(graph.getElement(i));
                 fillGraph(graph.getElement(i));
             }
@@ -48,6 +47,12 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
         }
     }
 
+    private void saveAndLoadGraphs() {
+        graph.savePersistence(persistence);
+        loadGraphs();
+        updateGraph();
+    }
+
     @Override
     public void addElement(MapElement element) {
         element.setIdElement(numberElements);
@@ -58,9 +63,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
             graph.addArc(new Arc(element));
         }
         graph.addElement(element.getIdElement(), element);
-        graph.savePersistence(persistence);
-        loadGraphs();
-        updateGraph();
+        saveAndLoadGraphs();
     }
 
     @Override
@@ -68,9 +71,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
         if (!isConected(idPoint)) {
             graph.deleteElement(idPoint);
             elementsManager.remove(getElement(idPoint));
-            graph.savePersistence(persistence);
-            loadGraphs();
-            updateGraph();
+            saveAndLoadGraphs();
         } else {
             presenter.notifyWarning("No se puede eliminar el punto porque esta conectado a una ruta");
         }
@@ -88,28 +89,10 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     }
 
     @Override
-    public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
-
-    }
-
-    @Override
-    public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
-
-    }
-
-    @Override
-    public Set<MapElement> getResultElements() {
-        // para las rutas resultantes
-        return null;
-    }
-
-    @Override
     public void modifyElement(MapElement mapElementModify) {
         elementsManager.add(mapElementModify);
         graph.modifyElement(mapElementModify);
-        graph.savePersistence(persistence);
-        loadGraphs();
-        updateGraph();
+        saveAndLoadGraphs();
     }
 
     @Override
@@ -139,8 +122,23 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     @Override
     public MapElement getElement(int idElementPoint1, int idElementPoint2) {
-        // para que retorne la ruta entre dos puntos
         return graph.getRoute(idElementPoint1, idElementPoint2);
+    }
+
+    @Override
+    public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
+
+    }
+
+    @Override
+    public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
+
+    }
+
+    @Override
+    public Set<MapElement> getResultElements() {
+        // para las rutas resultantes
+        return null;
     }
 }
 
