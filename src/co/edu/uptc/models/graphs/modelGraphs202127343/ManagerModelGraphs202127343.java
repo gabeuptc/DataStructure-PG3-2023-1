@@ -4,10 +4,7 @@ import co.edu.uptc.models.graphs.modelGraphs202127343.persistence.GsonMapper;
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.presenter.ContractGraphs;
-import co.edu.uptc.views.maps.OrientationRoutes;
 import co.edu.uptc.views.maps.types.ElementType;
-import co.edu.uptc.views.maps.types.RouteType;
-import org.jxmapviewer.viewer.GeoPosition;
 
 import java.io.IOException;
 import java.util.*;
@@ -15,11 +12,16 @@ import java.util.*;
 public class ManagerModelGraphs202127343 implements ContractGraphs.Model {
 
     private ContractGraphs.Presenter presenter;
+    private Map<Integer,MapElement> elementsResult;
     private Map<Integer,MapElement> elementsPoint;
+    private GraphPoint graphPoints;
     private int idElementPoint=0;
 
     public ManagerModelGraphs202127343() {
+        elementsResult = new HashMap<>();
+        graphPoints = new GraphPoint();
         elementsPoint = new HashMap<>();
+
     }
 
     @Override
@@ -74,7 +76,7 @@ public class ManagerModelGraphs202127343 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> getElements() {
-        return null;
+        return new HashSet<>(elementsPoint.values());
     }
 
     @Override
@@ -94,7 +96,15 @@ public class ManagerModelGraphs202127343 implements ContractGraphs.Model {
 
     @Override
     public void deletePoint(int idElement) {
-
+        if(elementsPoint.containsKey(idElement)){
+            if(!hasARout(idElement)) {
+                graphPoints.removePoint(elementsPoint.get(idElement));
+                elementsPoint.remove(idElement);
+                presenter.updateGraph();
+            }else{
+                presenter.notifyWarning("Contiene una ruta, no se puede borrar");
+            }
+        }
     }
 
     @Override
@@ -109,12 +119,25 @@ public class ManagerModelGraphs202127343 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> getResultElements() {
-        return null;
+        return new HashSet<>(elementsPoint.values());
     }
 
     @Override
     public void modifyElement(MapElement mapElementModify) {
 
+    }
+
+    private boolean hasARout(int idElement){
+        for (MapElement mapElement : elementsPoint.values()) {
+            if (mapElement.getElementType()== ElementType.ROUTE){
+                boolean pointOne = mapElement.getMapRoute().getPoint1().getIdElement() == idElement;
+                boolean pointTwo = mapElement.getMapRoute().getPoint2().getIdElement() == idElement;
+                if (pointOne || pointTwo) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void loadInformation() throws IOException {

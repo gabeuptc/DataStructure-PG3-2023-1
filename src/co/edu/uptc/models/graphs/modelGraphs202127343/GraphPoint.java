@@ -1,12 +1,11 @@
 package co.edu.uptc.models.graphs.modelGraphs202127343;
 
 
+import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.views.maps.OrientationRoutes;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GraphPoint {
 
@@ -32,6 +31,17 @@ public class GraphPoint {
             }
         }
         return null;
+    }
+
+    public void removePoint(MapElement mapPoint){
+        int tmpPoint = mapPoint.getIdElement();
+        for (int i = 0; i < nodes.size(); i++) {
+            if(nodes.get(i).getElementPoint().getIdElement() == tmpPoint){
+                if(nodes.get(i).haveARout()){
+                    nodes.remove(nodes.get(i));
+                }
+            }
+        }
     }
 
     public void addNode(Node node){
