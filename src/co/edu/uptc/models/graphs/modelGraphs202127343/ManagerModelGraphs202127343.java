@@ -12,13 +12,11 @@ import java.util.*;
 public class ManagerModelGraphs202127343 implements ContractGraphs.Model {
 
     private ContractGraphs.Presenter presenter;
-    private Map<Integer,MapElement> elementsResult;
     private Map<Integer,MapElement> elementsPoint;
     private GraphPoint graphPoints;
     private int idElementPoint=0;
 
     public ManagerModelGraphs202127343() {
-        elementsResult = new HashMap<>();
         graphPoints = new GraphPoint();
         elementsPoint = new HashMap<>();
 
@@ -109,7 +107,9 @@ public class ManagerModelGraphs202127343 implements ContractGraphs.Model {
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
-
+        //graph.clearResultElements();
+        //graph.calculateShortestRoute(idElementPoint1, idElementPoint2, Graph.DISTANCE);
+        presenter.updateResultGraph();
     }
 
     @Override

@@ -6,31 +6,18 @@ import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.views.maps.OrientationRoutes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GraphPoint {
 
-    private List<Arc> arcs;
+    private Map<Integer, MapElement> resultElements;
     private List<Node> nodes;
     private OrientationRoutes orientation;
 
 
     public GraphPoint() {
-        arcs = new ArrayList<>();
         nodes = new ArrayList<>();
         this.orientation = OrientationRoutes.ORIGIN_DESTIN;
-    }
-
-    public void addArc(Arc arc){
-        arcs.add(arc);
-    }
-
-    public Arc getArc(MapRoute route){
-        for (Arc arc:arcs) {
-            if (arc.getRoute().equals(route)){
-                return arc;
-            }
-        }
-        return null;
     }
 
     public void removePoint(MapElement mapPoint){
@@ -44,19 +31,22 @@ public class GraphPoint {
         }
     }
 
-    public void addNode(Node node){
-        nodes.add(node);
+    private List<MapElement> getChildren(int idPoint) {
+        List<MapElement> children = new ArrayList<>();
+        /*for (MapElement element : resultElements.values()) {
+            if (element.getElementType() == ElementType.ROUTE) {
+                MapRoute route = element.getMapRoute();
+                if (route.getPoint1().getIdElement() == idPoint) {
+                    children.add(route.getPoint2());
+                } else if (route.getPoint2().getIdElement() == idPoint) {
+                    children.add(route.getPoint1());
+                }
+            }
+        }*/
+        return children;
     }
 
-   /* public void removeNode(MapPoint point){
-        Node toRemove = null;
-        for (Node node1:nodes) {
-            if (node1.getPoint().equals(point)){
-                toRemove = node1;
-            }
-        }
-        nodes.remove(toRemove);
-    }*/
+
 
     public OrientationRoutes getOrientation() {
         return orientation;
