@@ -7,7 +7,6 @@ import co.edu.uptc.views.maps.types.ElementType;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     private ContractGraphs.Presenter presenter;
     private Persistence persistence;
@@ -33,10 +32,19 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
             for (int i = 0; i < graph.getElementsSize(); i++) {
                 //System.out.println("elemento numero " + i + " con id " + graph.getElement(i).getIdElement());
                 elementsManager.add(graph.getElement(i));
+                fillGraph(graph.getElement(i));
             }
             numberElements = graph.getElementsSize();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void fillGraph(MapElement element) {
+        if(element.getElementType() == ElementType.POINT){
+            graph.addNode(new Node(element));
+         }else{
+            graph.addArc(new Arc(element));
         }
     }
 
@@ -128,7 +136,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     @Override
     public MapElement getElement(int idElementPoint1, int idElementPoint2) {
         // para que retorne la ruta entre dos puntos
-        graph.getRoute(idElementPoint1, idElementPoint2);
-        return null;
+        return graph.getRoute(idElementPoint1, idElementPoint2);
     }
 }
+

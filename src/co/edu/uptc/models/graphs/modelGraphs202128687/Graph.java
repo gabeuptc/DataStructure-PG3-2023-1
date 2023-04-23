@@ -59,17 +59,11 @@ public class Graph {
         elements.remove(position,elements.get(position));
     }
 
-    private Node getNode(int idNode) {
-        for (Node node : nodes) {
-            if (node.getMapElement().getIdElement() == idNode)
-                return node;
-        }
-        return null;
-    }
-
     public MapElement getRoute(int idElementPoint1, int idElementPoint2) {
+        System.out.println("tamaño de arcs " + arcs.size());
         for (Arc arc : arcs) {
-            if (arc.getIdElementPoint1() == idElementPoint1 && arc.getIdElementPoint2() == idElementPoint2) {
+            if (arc.getIdElementPoint1() == idElementPoint1 && arc.getIdElementPoint2() == idElementPoint2 ||
+                    arc.getIdElementPoint1() == idElementPoint2 && arc.getIdElementPoint2() == idElementPoint1) {
                 return arc.getMapElement();
             }
         }
