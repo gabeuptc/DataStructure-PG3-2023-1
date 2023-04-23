@@ -4,9 +4,8 @@ package co.edu.uptc.models.graphs.modelGraphs202127343;
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.views.maps.OrientationRoutes;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 public class GraphPoint {
 
@@ -55,12 +54,4 @@ public class GraphPoint {
     public void setOrientation(OrientationRoutes orientation) {
         this.orientation = orientation;
     }
-
-    /*private Set<MapElement> cloneSet(Set<MapElement> set){
-        Set<MapElement> setClonabled = new HashSet<>();
-        for (MapElement element:set) {
-            setClonabled.add(element.clone());
-        }
-        return setClonabled;
-    }*/
 }
