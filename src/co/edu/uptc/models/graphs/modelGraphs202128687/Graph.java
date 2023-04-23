@@ -52,11 +52,13 @@ public class Graph {
 
     public void setElements(Map<Integer, MapElement> elements) {
         this.elements = elements;
+        nodes.clear();
+        arcs.clear();
     }
 
     public void deleteElement(int position) {
         System.out.println("eliminando elemento con id " + position);
-        elements.remove(position,elements.get(position));
+        elements.remove(position, elements.get(position));
     }
 
     public MapElement getRoute(int idElementPoint1, int idElementPoint2) {
@@ -67,6 +69,10 @@ public class Graph {
                 return arc.getMapElement();
             }
         }
-         return null;
+        return null;
+    }
+
+    public void modifyElement(MapElement mapElementModify) {
+        elements.get(mapElementModify.getIdElement()).setMapRoute(mapElementModify.getMapRoute());
     }
 }
