@@ -47,12 +47,12 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
         if (element.getElementType() == ElementType.POINT) {
             graph.addNode(new Node(element));
         } else {
-            graph.addArc(new Arc(element.getMapRoute()));
+            graph.addArc(new Arc(element));
         }
         graph.addElement(element.getIdElement(), element);
         graph.savePersistence(persistence);
         loadGraphs();
-        presenter.updateGraph();
+        updateGraph();
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
             elementsManager.remove(getElement(idPoint));
             graph.savePersistence(persistence);
             loadGraphs();
-            presenter.updateGraph();
+            updateGraph();
         }else{
             presenter.notifyWarning("No se puede eliminar el punto porque esta conectado a una ruta");
         }
@@ -97,7 +97,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     @Override
     public void modifyElement(MapElement mapElementModify) {
-
+        // para modificar las rutas (o los puntos)
     }
 
     @Override
@@ -127,6 +127,8 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     @Override
     public MapElement getElement(int idElementPoint1, int idElementPoint2) {
+        // para que retorne la ruta entre dos puntos
+        graph.getRoute(idElementPoint1, idElementPoint2);
         return null;
     }
 }

@@ -66,4 +66,13 @@ public class Graph {
         }
         return null;
     }
+
+    public MapElement getRoute(int idElementPoint1, int idElementPoint2) {
+        for (Arc arc : arcs) {
+            if (arc.getIdElementPoint1() == idElementPoint1 && arc.getIdElementPoint2() == idElementPoint2) {
+                return arc.getMapElement();
+            }
+        }
+         return null;
+    }
 }
