@@ -129,7 +129,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
         graph.getElementsResult().clear();
-        graph.calculateShortestRouteInDistance(idElementPoint1, idElementPoint2);
+        graph.setElementsResult(graph.calculateShortestRouteInDistance(idElementPoint1, idElementPoint2));
         verifyResult();
     }
 

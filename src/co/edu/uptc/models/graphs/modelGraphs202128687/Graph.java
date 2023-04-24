@@ -9,6 +9,7 @@ public class Graph {
     private List<Arc> arcs;
     private Map<Integer, MapElement> elements;
     private Map<Integer, MapElement> elementsResult;
+    private Set<Integer> visited;
     private OperationMaps operationMaps;
 
     public Graph() {
@@ -76,52 +77,70 @@ public class Graph {
         return elementsResult;
     }
 
-    public void calculateShortestRouteInDistance(int idElementPoint1, int idElementPoint2) {
-        // Crear un mapa para almacenar las distancias mínimas desde el nodo de inicio a cada nodo
-        Map<Integer, Double> distances = new HashMap<>();
+    public Map<Integer, MapElement> calculateShortestRouteInDistance(int startNodeId, int endNodeId) {
+        // Inicializar las distancias y los predecesores de los nodos
+        Map<Integer, Double> nodeDistances = new HashMap<>();
+        Map<Integer, Integer> nodePredecessors = new HashMap<>();
         for (Node node : nodes) {
-            distances.put(node.getMapElement().getIdElement(), Double.MAX_VALUE);
+            nodeDistances.put(node.getMapElement().getIdElement(), Double.POSITIVE_INFINITY);
         }
-        distances.put(idElementPoint1, 0.0);
+        nodeDistances.put(startNodeId, 0.0);
 
-        // Crear un conjunto para almacenar los nodos visitados
-        Set<Integer> visited = new HashSet<>();
-
-        // Crear una cola de prioridad para almacenar los nodos a visitar
-        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparing(distances::get));
-        queue.offer(getNodeById(idElementPoint1));
-
-        while (!queue.isEmpty()) {
-            Node currentNode = queue.poll();
-            if (visited.contains(currentNode.getMapElement().getIdElement())) {
-                continue;
+        // Visitar todos los nodos en orden de distancia ascendente
+        Set<Integer> visitedNodes = new HashSet<>();
+        while (visitedNodes.size() < nodes.size()) {
+            // Encontrar el nodo más cercano que aún no se haya visitado
+            Node currentNode = null;
+            double minDistance = Double.POSITIVE_INFINITY;
+            for (Node node : nodes) {
+                if (!visitedNodes.contains(node.getMapElement().getIdElement())
+                        && nodeDistances.get(node.getMapElement().getIdElement()) < minDistance) {
+                    currentNode = node;
+                    minDistance = nodeDistances.get(node.getMapElement().getIdElement());
+                }
             }
-            visited.add(currentNode.getMapElement().getIdElement());
 
+            if (currentNode == null) {
+                break;
+            }
+
+            visitedNodes.add(currentNode.getMapElement().getIdElement());
+
+            // Actualizar las distancias y predecesores de los vecinos del nodo actual
             for (Arc arc : currentNode.getArcs()) {
-                Node neighbor = getNodeById(arc.getOtherEnd(currentNode.getMapElement().getIdElement()));
-                if (visited.contains(neighbor.getMapElement().getIdElement())) {
+                int neighborNodeId = arc.getOtherEnd(currentNode.getMapElement().getIdElement());
+                if (visitedNodes.contains(neighborNodeId)) {
                     continue;
                 }
-                if (currentNode.getMapElement().getIdElement() == idElementPoint2) {
-                    break;
-                }
-                double newDistance = distances.get(currentNode.getMapElement().getIdElement()) + arc.getDistance();
-                if (newDistance < distances.get(neighbor.getMapElement().getIdElement())) {
-                    distances.put(neighbor.getMapElement().getIdElement(), newDistance);
-                    queue.offer(neighbor);
+                double newDistance = nodeDistances.get(currentNode.getMapElement().getIdElement()) + arc.getDistance();
+                if (newDistance < nodeDistances.get(neighborNodeId)) {
+                    nodeDistances.put(neighborNodeId, newDistance);
+                    nodePredecessors.put(neighborNodeId, currentNode.getMapElement().getIdElement());
                 }
             }
         }
-        // La distancia más corta desde idElementPoint1 a idElementPoint2 se encuentra en distances.get(idElementPoint2)
+
+        // Reconstruir la ruta más corta a partir de los predecesores
+        Map<Integer, MapElement> shortestRoute = new LinkedHashMap<>();
+        Integer currentNodeId = endNodeId;
+        while (currentNodeId != null) {
+            shortestRoute.put(currentNodeId, getNodeById(currentNodeId).getMapElement());
+            currentNodeId = nodePredecessors.get(currentNodeId);
+        }
+
+        return shortestRoute;
     }
 
     private Node getNodeById(int id) {
         for (Node node : nodes) {
-            if (node.getMapElement().getIdElement() == id) {
+            if (node.getIdElement() == id) {
                 return node;
             }
         }
         return null;
+    }
+
+    public void setElementsResult(Map<Integer, MapElement> integerMapElementMap) {
+         this.elementsResult = integerMapElementMap;
     }
 }

@@ -26,6 +26,10 @@ public class Node {
         arcs.add(arc);
     }
 
+    public int getIdElement(){
+        return point.getIdElement();
+    }
+
     public List<Arc> getArcs() {
         return arcs;
     }
