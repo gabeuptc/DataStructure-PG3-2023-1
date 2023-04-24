@@ -2,7 +2,11 @@ package co.edu.uptc.presenter;
 
 import co.edu.uptc.models.graphs.modelGraphs202022012.ManagerModelGraphs202022012;
 import co.edu.uptc.models.graphs.modelGraphs202114641.ManagerModelGraphs202114641;
+import co.edu.uptc.models.graphs.modelGraphs202113049.ManagerModelGraphs202113049;
+import co.edu.uptc.models.graphs.modelGraphs202115100.ManagerModelGraphs202115100;
+import co.edu.uptc.models.graphs.modelGraphs202127061.ManagerModelGraphs202127061;
 import co.edu.uptc.models.graphs.modelGraphs202127812.ManagerModelGraphs202127812;
+import co.edu.uptc.models.graphs.modelGraphs202128710.ManagerModelGraphs202128710;
 import co.edu.uptc.models.graphs.modelGraphs202128687.ManagerModelGraphs202128687;
 import co.edu.uptc.models.people.model202128687.ManagerModel202128687;
 import co.edu.uptc.models.people.model202114641.ManagerModel202114641;
@@ -116,7 +120,7 @@ public class ManagerGeneral {
         //modelGraphs201612075 = new ManagerModelGraphs201612075();
         //modelGraphs202127717 = new ManagerModelGraphs202127717();
         //modelGraphs202128778 = new ManagerModelGraphs202128778();
-        //modelGraphs202113049 = new ManagerModelGraphs202113049();
+        modelGraphs202113049 = new ManagerModelGraphs202113049();
         //modelGraphs201920890 = new ManagerModelGraphs201920890();
         modelGraphs202128687 = new ManagerModelGraphs202128687();
         modelGraphs202022012 = new ManagerModelGraphs202022012();
@@ -125,6 +129,9 @@ public class ManagerGeneral {
         modelGraphs202114641 = new ManagerModelGraphs202114641();
         //modelGraphs202115100 = new ManagerModelGraphs202115100();
         //modelGraphs202128710 = new ManagerModelGraphs202128710();
+        //modelGraphs202114641 = new ManagerModelGraphs202114641();
+        modelGraphs202115100 = new ManagerModelGraphs202115100();
+        modelGraphs202128710 = new ManagerModelGraphs202128710();
         //modelGraphs202112690 = new ManagerModelGraphs202112690();
         //modelGraphs202114852 = new ManagerModelGraphs202114852();
         //modelGraphs201721830 = new ManagerModelGraphs201721830();

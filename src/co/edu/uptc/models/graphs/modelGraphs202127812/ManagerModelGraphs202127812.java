@@ -34,10 +34,24 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
 
     @Override
     public void addElement(MapElement mapElement) {
-        addElementOnly(mapElement);
-        presenter.updateGraph();
+        if (validateRoute(mapElement)) {
+            addElementOnly(mapElement);
+            presenter.updateGraph();
+        }   else {
+            presenter.updateGraph();
+        presenter.notifyWarning("No se puede crear la ruta, El origen debe ser diferente al destivo");
+
+        }
     }
 
+    private boolean validateRoute(MapElement mapElement){
+        if (mapElement.getElementType()== ElementType.ROUTE){
+            return mapElement.getMapRoute().getPoint1()!=mapElement.getMapRoute().getPoint2()?
+                    true:false;
+        } else {
+            return true;
+        }
+    }
 
     public void addElementOnly(MapElement mapElement) {
         mapElement.setIdElement(count++);

@@ -139,7 +139,7 @@ public class ManagerElements {
                         panelMaps.showStatus(PanelStatus.MODIFIED_ROUTE);
                     }
                 } else {
-                     ManagerGraphs.getInstance().notifyError("NO existe la ruta entre los puntos");
+                    ManagerGraphs.getInstance().notifyError("NO existe la ruta entre los puntos");
                     panelMaps.popUpOperationMenu.finishSelectRoute();
                     panelMaps.updateElements();
                     panelMaps.showStatus(PanelStatus.NORMAL);
