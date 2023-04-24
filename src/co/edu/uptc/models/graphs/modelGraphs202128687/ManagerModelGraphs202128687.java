@@ -35,6 +35,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
             }
             numberElements = graph.getElementsSize();
         } catch (Exception e) {
+            presenter.notifyWarning("No se pudo cargar el grafo");
             e.printStackTrace();
         }
     }
