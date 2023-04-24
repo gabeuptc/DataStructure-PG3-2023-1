@@ -113,10 +113,7 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
         List<MapElement> list= graph.getShortestForTime(getElement(idElementPoint1),getElement(idElementPoint2));
         elementsResult= new HashMap<>();
 
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).getIdElement()+" ID element");
-            elementsResult.put(i, list.get(i));
-        }
+
         presenter.updateResultGraph();
 
     }
