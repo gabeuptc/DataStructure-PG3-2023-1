@@ -1,25 +1,26 @@
 package co.edu.uptc.models.graphs.modelGraphs202114641;
 
+import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
 import org.jxmapviewer.viewer.GeoPosition;
 
 public class Arch202114641 {
-    private MapRoute mapRoute;
+    private MapElement mapRouteElement;
     private double time;
     private double distance;
 
-    public MapRoute getMapRoute() {
-        return mapRoute;
+    public MapElement getMapRouteElement() {
+        return mapRouteElement;
     }
 
-    public Arch202114641(MapRoute mapRoute) {
-        this.mapRoute = mapRoute;
+    public Arch202114641(MapElement mapRoute) {
+        this.mapRouteElement = mapRoute;
         asignateDistance();
         asignateTime();
     }
     public void asignateDistance(){
-        GeoPosition geoPosition1= mapRoute.getPoint1().getGeoPosition();
-        GeoPosition geoPosition2= mapRoute.getPoint2().getGeoPosition();
+        GeoPosition geoPosition1= mapRouteElement.getMapRoute().getPoint1().getGeoPosition();
+        GeoPosition geoPosition2= mapRouteElement.getMapRoute().getPoint2().getGeoPosition();
         distance=calculateDistance(geoPosition1.getLatitude(),geoPosition1.getLongitude()
         ,geoPosition2.getLatitude(),geoPosition2.getLongitude());
     }
@@ -35,7 +36,7 @@ public class Arch202114641 {
         return distance;
     }
     public void asignateTime(){
-        time=calculateTime(mapRoute.getSpeedRoute());
+        time=calculateTime(mapRouteElement.getMapRoute().getSpeedRoute());
     }
 
     public double getTime() {

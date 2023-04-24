@@ -34,15 +34,15 @@ public class Graph202114641 {
                         MapRoute rute= mapElement.getMapRoute();
                         if (rute.getOrientationRoutes().value==0){
                             matriz[searchPointForIndex(rute.getPoint1())][searchPointForIndex(rute.getPoint2())]=
-                                    new Arch202114641(rute);
+                                    new Arch202114641(mapElement);
                         } else if (rute.getOrientationRoutes().value==1) {
                             matriz[searchPointForIndex(rute.getPoint2())][searchPointForIndex(rute.getPoint1())]=
-                                    new Arch202114641(rute);
+                                    new Arch202114641(mapElement);
                         }else {
                             matriz[searchPointForIndex(rute.getPoint2())][searchPointForIndex(rute.getPoint1())]=
-                                    new Arch202114641(rute);
+                                    new Arch202114641(mapElement);
                             matriz[searchPointForIndex(rute.getPoint1())][searchPointForIndex(rute.getPoint2())]=
-                                    new Arch202114641(rute);
+                                    new Arch202114641(mapElement);
                         }
                     }
                 }
@@ -171,7 +171,7 @@ public class Graph202114641 {
             int first=searchPointForIndex(pointsElements.get(i));
             int second=searchPointForIndex(pointsElements.get(i+1));
             if (matriz[first][second]!=null){
-                MapElement mp= new MapElement(matriz[first][second].getMapRoute());
+                MapElement mp=(matriz[first][second].getMapRouteElement());
                 mapElements.add(mp);
             }
 
@@ -188,7 +188,7 @@ public class Graph202114641 {
             int first=searchPointForIndex(pointsElements.get(i));
             int second=searchPointForIndex(pointsElements.get(i+1));
             if (matriz[first][second]!=null){
-                MapElement mp= new MapElement(matriz[first][second].getMapRoute());
+                MapElement mp= matriz[first][second].getMapRouteElement();
                 mapElements.add(mp);
             }
 

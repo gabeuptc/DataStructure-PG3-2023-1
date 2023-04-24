@@ -9,7 +9,7 @@ import java.util.*;
 
 public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
     private ContractGraphs.Presenter presenter;
-    int count=0;
+    int count=1;
     private Map<Integer,MapElement> elements;
     private Map<Integer,MapElement> elementsResult;
     private Graph202114641 graph;
@@ -96,13 +96,13 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
         elementsResult.clear();
         actualizateGraph();
-        List<MapElement> list= graph.getShortestForNodes(getElement(idElementPoint1),getElement(idElementPoint2));
+        List<MapElement> list= graph.getShortestForTime(getElement(idElementPoint1),getElement(idElementPoint2));
         elementsResult= new HashMap<>();
 
         for (int i = 0; i < list.size(); i++) {
             elementsResult.put(i, list.get(i));
         }
-        presenter.updateGraph();
+        presenter.updateResultGraph();
 
     }
 
@@ -114,6 +114,7 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
         elementsResult= new HashMap<>();
 
         for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getIdElement()+" ID element");
             elementsResult.put(i, list.get(i));
         }
         presenter.updateResultGraph();
