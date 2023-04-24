@@ -1,6 +1,7 @@
 package co.edu.uptc.models.graphs.modelGraphs202113049;
 
 import co.edu.uptc.pojos.MapElement;
+import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.views.maps.types.ElementType;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -11,11 +12,13 @@ public class GraphsManager {
     private Map<Integer,MapElement> elements;
     private Map<Integer,MapElement> elementsResult;
     private int count;
+    private List<Node202113049> nodes;
 
 
     public GraphsManager(){
         elements = new HashMap<>();
         elementsResult= new HashMap<>();
+        nodes = new ArrayList<Node202113049>();
     }
 
     public void addElement(MapElement element){
@@ -23,18 +26,29 @@ public class GraphsManager {
     }
     public void addElementOnly(MapElement mapElement) {
         mapElement.setIdElement(count++);
-        /*if(mapElement.getElementType()== ElementType.ROUTE){
+        if(mapElement.getElementType()== ElementType.ROUTE){
             int id1 = mapElement.getMapRoute().getPoint1().getIdElement();
-            int id2 = mapElement.getMapRoute().getPoint2().getIdElement();
-            addRouteToPoint(id1,id2,mapElement);
-        }*/
+            //int id2 = mapElement.getMapRoute().getPoint2().getIdElement();
+            //addRouteToPoint(id1,id2,mapElement);
+            addRouteToPoint(id1,mapElement);
+        }else{
+            nodes.add(new Node202113049(mapElement,nodes.size()));
+        }
         elements.put(mapElement.getIdElement(), mapElement);
     }
 
-   /* private void addRouteToPoint(int id1,int id2,MapElement mapElement){
-        getElement(id1).setMapRoute(mapElement.getMapRoute());
-        getElement(id2).setMapRoute(mapElement.getMapRoute());
+    /*private void addRouteToPoint(int id1,int id2,MapElement mapElement){
+        getNode(id1).setMapRoute(mapElement.getMapRoute());
+        getNode(id2).setMapRoute(mapElement.getMapRoute());
     }*/
+
+    private void addRouteToPoint(int id1,MapElement mapElement){
+        getNode(id1).addMapRoute(mapElement.getMapRoute());
+    }
+
+    public Node202113049 getNode(int id){
+        return nodes.get(id);
+    }
 
     private Map<Integer,MapElement> getOnlyRoutes(){
         HashMap<Integer,MapElement> routes = new HashMap<>();
@@ -92,25 +106,6 @@ public class GraphsManager {
         return route;
     }
 
-
-    private double calculateDistance(double latitude1, double longitude1, double latitude2, double longitude2){
-        latitude1 = Math.toRadians(latitude1);
-        longitude1 = Math.toRadians(longitude1);
-        latitude2 = Math.toRadians(latitude2);
-        longitude2 = Math.toRadians(longitude2);
-
-        final double RADIO_TIERRA = 6371.01;
-
-        double distance = RADIO_TIERRA * Math.acos(Math.sin(latitude1) * Math.sin(latitude2)
-                + Math.cos(latitude1) * Math.cos(latitude2) * Math.cos(longitude1 - longitude2));
-
-        return distance;
-    }
-
-
-
-
-
     public Set<MapElement> getElements() {
         return  new HashSet<>(elements.values());
     }
@@ -127,11 +122,7 @@ public class GraphsManager {
         return elements.get(id);
     }
 
-
-
-
-
-
-
-
+    public List<Node202113049> getNodes() {
+        return nodes;
+    }
 }

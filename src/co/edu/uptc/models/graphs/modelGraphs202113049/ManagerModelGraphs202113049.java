@@ -79,6 +79,7 @@ public class ManagerModelGraphs202113049 implements ContractGraphs.Model {
     public void deletePoint(int idElement) {
         if (!isRelation(idElement)) {
             graphsManager.getElements1().remove(idElement);
+            graphsManager.getNodes().remove(idElement-1);
             presenter.updateGraph();
             try {
                 persistence.store(this.graphsManager);
