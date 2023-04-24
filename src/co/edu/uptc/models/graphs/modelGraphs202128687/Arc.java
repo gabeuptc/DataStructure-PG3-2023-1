@@ -6,6 +6,7 @@ import co.edu.uptc.pojos.MapRoute;
 public class Arc {
     private MapElement elementRoute;
     private MapRoute route;
+    private OperationMaps operationMaps;
 
     public Arc(MapElement elementRoute) {
         this.elementRoute = elementRoute;
@@ -25,11 +26,23 @@ public class Arc {
         return route.getPoint1().getIdElement();
     }
 
+    public int getOtherEnd(int id){
+         if (id == getIdElementPoint1()){
+               return getIdElementPoint2();
+         }else{
+               return getIdElementPoint1();
+         }
+    }
+
     public int getIdElementPoint2() {
         return route.getPoint2().getIdElement();
     }
 
     public MapElement getMapElement() {
          return elementRoute;
+    }
+
+    public Double getDistance() {
+        return operationMaps.calculateDistance(route.getPoint1(), route.getPoint2());
     }
 }

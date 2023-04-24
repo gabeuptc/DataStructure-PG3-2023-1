@@ -1,11 +1,12 @@
 package co.edu.uptc.models.graphs.modelGraphs202128687;
 
+import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.views.maps.MapPointGraph;
 
 public class OperationMaps {
     private static final double EARTH_RADIUS_MTS = 6371000.0;
 
-    public double calculateDistance(MapPointGraph mapPoint1, MapPointGraph mapPoint2) {
+    public double calculateDistance(MapElement mapPoint1, MapElement mapPoint2) {
         double deltaLat = toRadians(mapPoint2.getGeoPosition().getLatitude() - mapPoint1.getGeoPosition().getLatitude());
         double deltaLon = toRadians(mapPoint2.getGeoPosition().getLongitude() - mapPoint1.getGeoPosition().getLongitude());
         double haversine = calculateHaversine(deltaLat, deltaLon, mapPoint1, mapPoint2);
@@ -17,7 +18,7 @@ public class OperationMaps {
         return Math.toRadians(degrees);
     }
 
-    private double calculateHaversine(double deltaLat, double deltaLon, MapPointGraph mapPoint1, MapPointGraph mapPoint2) {
+    private double calculateHaversine(double deltaLat, double deltaLon, MapElement mapPoint1, MapElement mapPoint2) {
         double sinLat = Math.sin(deltaLat / 2);
         double sinLon = Math.sin(deltaLon / 2);
         double cosLat1 = Math.cos(toRadians(mapPoint1.getGeoPosition().getLatitude()));

@@ -1,22 +1,19 @@
 package co.edu.uptc.models.graphs.modelGraphs202128687;
 
 import co.edu.uptc.pojos.MapElement;
-import co.edu.uptc.pojos.MapRoute;
-import co.edu.uptc.views.maps.*;
-import co.edu.uptc.views.maps.types.ElementType;
-import org.jxmapviewer.viewer.GeoPosition;
 
-import javax.lang.model.element.Element;
 import java.util.*;
 
 public class Graph {
     private List<Node> nodes;
     private List<Arc> arcs;
     private Map<Integer, MapElement> elements;
+    private Map<Integer, MapElement> elementsResult;
     private OperationMaps operationMaps;
 
     public Graph() {
         elements = new HashMap<>();
+        elementsResult = new HashMap<>();
         nodes = new ArrayList<>();
         arcs = new ArrayList<>();
         OperationMaps operationMaps = new OperationMaps();
@@ -57,7 +54,6 @@ public class Graph {
     }
 
     public void deleteElement(int position) {
-        System.out.println("eliminando elemento con id " + position);
         elements.remove(position, elements.get(position));
     }
 
@@ -74,5 +70,58 @@ public class Graph {
 
     public void modifyElement(MapElement mapElementModify) {
         elements.get(mapElementModify.getIdElement()).setMapRoute(mapElementModify.getMapRoute());
+    }
+
+    public Map<Integer, MapElement> getElementsResult() {
+        return elementsResult;
+    }
+
+    public void calculateShortestRouteInDistance(int idElementPoint1, int idElementPoint2) {
+        // Crear un mapa para almacenar las distancias mínimas desde el nodo de inicio a cada nodo
+        Map<Integer, Double> distances = new HashMap<>();
+        for (Node node : nodes) {
+            distances.put(node.getMapElement().getIdElement(), Double.MAX_VALUE);
+        }
+        distances.put(idElementPoint1, 0.0);
+
+        // Crear un conjunto para almacenar los nodos visitados
+        Set<Integer> visited = new HashSet<>();
+
+        // Crear una cola de prioridad para almacenar los nodos a visitar
+        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparing(distances::get));
+        queue.offer(getNodeById(idElementPoint1));
+
+        while (!queue.isEmpty()) {
+            Node currentNode = queue.poll();
+            if (visited.contains(currentNode.getMapElement().getIdElement())) {
+                continue;
+            }
+            visited.add(currentNode.getMapElement().getIdElement());
+
+            for (Arc arc : currentNode.getArcs()) {
+                Node neighbor = getNodeById(arc.getOtherEnd(currentNode.getMapElement().getIdElement()));
+                if (visited.contains(neighbor.getMapElement().getIdElement())) {
+                    continue;
+                }
+                if (currentNode.getMapElement().getIdElement() == idElementPoint2) {
+                    break;
+                }
+                double newDistance = distances.get(currentNode.getMapElement().getIdElement()) + arc.getDistance();
+                if (newDistance < distances.get(neighbor.getMapElement().getIdElement())) {
+                    distances.put(neighbor.getMapElement().getIdElement(), newDistance);
+                    queue.offer(neighbor);
+                }
+            }
+        }
+        // La distancia más corta desde idElementPoint1 a idElementPoint2 se encuentra en distances.get(idElementPoint2)
+    }
+
+    private Node getNodeById(int id) {
+        for (Node node : nodes) {
+            if (node.getMapElement().getIdElement() == id) {
+                return node;
+            }
+        }
+        return null;
     }
 }

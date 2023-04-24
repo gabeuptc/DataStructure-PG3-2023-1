@@ -128,7 +128,17 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
+        graph.getElementsResult().clear();
+        graph.calculateShortestRouteInDistance(idElementPoint1, idElementPoint2);
+        verifyResult();
+    }
 
+    private void verifyResult() {
+        if (graph.getElementsResult().isEmpty()) {
+            presenter.notifyWarning("No se encontro una ruta entre los puntos");
+        } else {
+            presenter.updateResultGraph();
+        }
     }
 
     @Override
@@ -138,8 +148,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> getResultElements() {
-        // para las rutas resultantes
-        return null;
+        return new HashSet<>(graph.getElementsResult().values());
     }
 }
 
