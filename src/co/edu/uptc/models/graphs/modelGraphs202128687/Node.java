@@ -1,4 +1,5 @@
 package co.edu.uptc.models.graphs.modelGraphs202128687;
+
 import co.edu.uptc.pojos.MapElement;
 
 import java.util.ArrayList;
@@ -8,10 +9,12 @@ public class Node {
 
     private MapElement point;
     private List<Arc> arcs;
+    private List<MapElement> mapRoutes;
 
     public Node(MapElement point) {
         this.point = point;
         this.arcs = new ArrayList<>();
+         this.mapRoutes = new ArrayList<>();
     }
 
     public MapElement getMapElement() {
@@ -21,16 +24,25 @@ public class Node {
     public boolean isConnected() {
         return point.getMapRoute() == null;
     }
+    public int getIdElement() {
+        return point.getIdElement();
+    }
 
     public void addArc(Arc arc) {
         arcs.add(arc);
     }
 
-    public int getIdElement(){
-        return point.getIdElement();
-    }
-
     public List<Arc> getArcs() {
         return arcs;
+    }
+
+    public List<MapElement> getMapRoutes() {
+        return mapRoutes;
+    }
+
+    public void printArcs() {
+         for (Arc arc : arcs) {
+               System.out.println(arc);
+         }
     }
 }

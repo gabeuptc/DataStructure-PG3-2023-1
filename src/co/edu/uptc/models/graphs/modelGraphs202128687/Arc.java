@@ -11,6 +11,7 @@ public class Arc {
     public Arc(MapElement elementRoute) {
         this.elementRoute = elementRoute;
         this.route = elementRoute.getMapRoute();
+        operationMaps = new OperationMaps();
     }
 
     public MapRoute getMapRoute() {
@@ -18,20 +19,20 @@ public class Arc {
     }
 
     @Override
-    public String toString(){
-        return "arco" + route.getPoint1().getGeoPosition().getLatitude()+ route.getPoint1().getGeoPosition().getLongitude();
+    public String toString() {
+        return "arco" + route.getPoint1().getGeoPosition().getLatitude() + route.getPoint1().getGeoPosition().getLongitude();
     }
 
     public int getIdElementPoint1() {
         return route.getPoint1().getIdElement();
     }
 
-    public int getOtherEnd(int id){
-         if (id == getIdElementPoint1()){
-               return getIdElementPoint2();
-         }else{
-               return getIdElementPoint1();
-         }
+    public int getOtherEnd(int id) {
+        if (id == getIdElementPoint1()) {
+            return getIdElementPoint2();
+        } else {
+            return getIdElementPoint1();
+        }
     }
 
     public int getIdElementPoint2() {
@@ -39,11 +40,16 @@ public class Arc {
     }
 
     public MapElement getMapElement() {
-         return elementRoute;
+        return elementRoute;
     }
 
     public Double getDistance() {
+        System.out.println("desde getDistance");
         System.out.println(" la distancia entre el nodo 1 y el nodo 2 es: " + operationMaps.calculateDistance(route.getPoint1(), route.getPoint2()));
         return operationMaps.calculateDistance(route.getPoint1(), route.getPoint2());
+    }
+
+    public Integer getIdElement() {
+        return elementRoute.getIdElement();
     }
 }

@@ -41,10 +41,14 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     }
 
     private void fillGraph(MapElement element) {
+        System.out.println("nuevo elemento con id " + element.getIdElement());
         if (element.getElementType() == ElementType.POINT) {
             graph.addNode(new Node(element));
         } else {
-            graph.addArc(new Arc(element));
+            Arc newArc = new Arc(element);
+            graph.addArc(newArc);
+            graph.searchNode(element.getMapRoute().getPoint1()).addArc(newArc);
+            graph.searchNode(element.getMapRoute().getPoint2()).addArc(newArc);
         }
     }
 
@@ -57,11 +61,13 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     @Override
     public void addElement(MapElement element) {
         element.setIdElement(numberElements);
-        System.out.println("nuevo elemento con id " + element.getIdElement());
         if (element.getElementType() == ElementType.POINT) {
             graph.addNode(new Node(element));
         } else {
-            graph.addArc(new Arc(element));
+            Arc newArc = new Arc(element);
+            graph.addArc(newArc);
+            graph.searchNode(element.getMapRoute().getPoint1()).addArc(newArc);
+            graph.searchNode(element.getMapRoute().getPoint2()).addArc(newArc);
         }
         graph.addElement(element.getIdElement(), element);
         saveAndLoadGraphs();
