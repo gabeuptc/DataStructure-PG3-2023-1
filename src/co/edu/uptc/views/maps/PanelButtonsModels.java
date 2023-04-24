@@ -49,13 +49,13 @@ public class PanelButtonsModels extends JPanel {
 
 
     private void addButtonSelectModel202127812() {
-        JButton jButtonSelectModelUser = new JButton("202127812*");
+        JButton jButtonSelectModelUser = new JButton("202127812-*");
         jButtonSelectModelUser.setPreferredSize(new Dimension(120,25));
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(e -> ManagerGeneral.getInstance().configModelGraphs202127812());
     }
     private void addButtonSelectModel202127061() {
-        JButton jButtonSelectModelUser = new JButton("202127061");
+        JButton jButtonSelectModelUser = new JButton("202127061-*");
         jButtonSelectModelUser.setPreferredSize(new Dimension(120,25));
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(e -> ManagerGeneral.getInstance().configModelGraphs202127061());
@@ -90,7 +90,7 @@ public class PanelButtonsModels extends JPanel {
     }
 
     private void addButtonSelectModel202113049() {
-        JButton jButtonSelectModelUser = new JButton("202113049");
+        JButton jButtonSelectModelUser = new JButton("202113049-*");
         jButtonSelectModelUser.setPreferredSize(new Dimension(120,25));
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(e -> ManagerGeneral.getInstance().configModelGraphs202113049());
@@ -104,14 +104,14 @@ public class PanelButtonsModels extends JPanel {
     }
 
     private void addButtonSelectModel202128687() {
-        JButton jButtonSelectModelUser = new JButton("202128687*");
+        JButton jButtonSelectModelUser = new JButton("202128687-*");
         jButtonSelectModelUser.setPreferredSize(new Dimension(120,25));
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(e -> ManagerGeneral.getInstance().configModelGraphs202128687());
     }
 
     private void addButtonSelectModel202022012() {
-        JButton jButtonSelectModelUser = new JButton("202022012*");
+        JButton jButtonSelectModelUser = new JButton("202022012-*");
         jButtonSelectModelUser.setPreferredSize(new Dimension(120,25));
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(e -> ManagerGeneral.getInstance().configModelGraphs202022012());
@@ -139,14 +139,14 @@ public class PanelButtonsModels extends JPanel {
     }
 
     private void addButtonSelectModel202115100() {
-        JButton jButtonSelectModelUser = new JButton("202115100");
+        JButton jButtonSelectModelUser = new JButton("202115100-*");
         jButtonSelectModelUser.setPreferredSize(new Dimension(120,25));
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(e -> ManagerGeneral.getInstance().configModelGraphs202115100());
     }
 
     private void addButtonSelectModel202128710() {
-        JButton jButtonSelectModelUser = new JButton("202128710");
+        JButton jButtonSelectModelUser = new JButton("202128710-*");
         jButtonSelectModelUser.setPreferredSize(new Dimension(120,25));
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(e -> ManagerGeneral.getInstance().configModelGraphs202128710());
