@@ -67,5 +67,8 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
             panelMaps.updateResultElements();
         }
     }
+    public String getUser(){
+        return presenterGraphs.getUser();
+    }
 
 }
