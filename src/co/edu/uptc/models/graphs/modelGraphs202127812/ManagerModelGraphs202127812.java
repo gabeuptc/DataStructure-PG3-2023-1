@@ -42,9 +42,14 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     @Override
     public void addElement(MapElement mapElement) {
         if (validateRoute(mapElement)) {
-            addElementOnly(mapElement);
-            updateGraph();
-            presenter.updateGraph();
+            if (validateSameRoute(mapElement)){
+                addElementOnly(mapElement);
+                updateGraph();
+                presenter.updateGraph();
+            }else {
+                presenter.updateGraph();
+                presenter.notifyWarning("No se puede crear la ruta, Ya se ha creado esta ruta antes");
+            }
         }   else {
             presenter.updateGraph();
         presenter.notifyWarning("No se puede crear la ruta, El origen debe ser diferente al destino");
@@ -59,6 +64,13 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         } else {
             return true;
         }
+    }
+    private boolean validateSameRoute(MapElement element){
+        if (element.getElementType()== ElementType.ROUTE){
+            MapRoute route = element.getMapRoute();
+            return getElement(route.getPoint1().getIdElement(), route.getPoint2().getIdElement()) == null;
+        }
+        return true;
     }
 
     public void addElementOnly(MapElement mapElement) {
