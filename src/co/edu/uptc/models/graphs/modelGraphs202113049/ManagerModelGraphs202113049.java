@@ -2,13 +2,11 @@ package co.edu.uptc.models.graphs.modelGraphs202113049;
 
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
+import co.edu.uptc.views.maps.types.ElementType;
 import com.google.gson.Gson;
-import org.jxmapviewer.viewer.GeoPosition;
 
 import java.io.FileNotFoundException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class ManagerModelGraphs202113049 implements ContractGraphs.Model {
@@ -16,15 +14,10 @@ public class ManagerModelGraphs202113049 implements ContractGraphs.Model {
     private ContractGraphs.Presenter presenter;
     private Persistence persistence;
     private GraphsManager graphsManager;
-    /*private Map<Integer,MapElement> elements;
-    private Map<Integer,MapElement> elementsResult;
-    private int count;*/
 
     public ManagerModelGraphs202113049(){
         graphsManager = new GraphsManager();
         persistence = new Persistence();
-        /*elements = new HashMap<>();
-        elementsResult= new HashMap<>();*/
     }
 
     @Override
@@ -45,7 +38,6 @@ public class ManagerModelGraphs202113049 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> getElements() {
-        //return  new HashSet<>(elements.values());
         return graphsManager.getElements();
     }
 
@@ -56,6 +48,18 @@ public class ManagerModelGraphs202113049 implements ContractGraphs.Model {
 
     @Override
     public MapElement getElement(int idElementPoint1, int idElementPoint2) {
+        for (MapElement mapElement: graphsManager.getElements1().values()) {
+            if (mapElement.getElementType()==ElementType.ROUTE){
+                if ((mapElement.getMapRoute().getPoint1().getIdElement()==idElementPoint1) &&
+                        (mapElement.getMapRoute().getPoint2().getIdElement()==idElementPoint2)) {
+                    return mapElement;
+                }
+                if ((mapElement.getMapRoute().getPoint2().getIdElement()==idElementPoint1) &&
+                        (mapElement.getMapRoute().getPoint1().getIdElement()==idElementPoint2)) {
+                    return mapElement;
+                }
+            }
+        }
         return null;
     }
 
@@ -71,43 +75,79 @@ public class ManagerModelGraphs202113049 implements ContractGraphs.Model {
 
     @Override
     public void loadGraphs() {
-        //persistence.store(this.graphsManager);
         try {
             graphsManager = new Gson().fromJson( persistence.load(),GraphsManager.class);
-            presenter.updateGraph();
+            if(graphsManager!=null){
+                presenter.updateGraph();
+            }else{
+                graphsManager = new GraphsManager();
+            }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        /*MapElement mapElement = new MapElement(new GeoPosition(5.551979677339931, -73.35750192403793));
-        graphsManager.addElementOnly(mapElement);
-        mapElement = new MapElement(new GeoPosition(5.552508263116695, -73.3560374379158));
-        graphsManager.addElementOnly(mapElement);
-        mapElement = new MapElement(new GeoPosition(5.552457540259698, -73.35597306489944));
-        graphsManager.addElementOnly(mapElement);*/
     }
 
     @Override
     public void deletePoint(int idElement) {
+        if (!isRelation(idElement)) {
+            graphsManager.getElements1().remove(idElement);
+            graphsManager.getNodes().remove(idElement-1);
+            presenter.updateGraph();
+            try {
+                persistence.store(this.graphsManager);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            presenter.notifyWarning("El punto esta relacionado, por lo tanto no se puede borrar");
+        }
 
+    }
+
+    private boolean isRelation(int id){
+        boolean isRelation = false;
+
+        for (int i = 0; i < graphsManager.getElements().size(); i++) {
+            MapElement element = graphsManager.getElement(i);
+            if(element!=null){
+                if(graphsManager.getElement(i).getElementType() == ElementType.ROUTE){
+
+                    if (graphsManager.getElement(i).getMapRoute().getPoint1().getIdElement() == id) {
+                        isRelation =true;
+                    }
+                    if (graphsManager.getElement(i).getMapRoute().getPoint2().getIdElement() == id) {
+                        isRelation = true;
+                    }
+                }
+            }else{
+                i++;
+            }
+        }
+        return isRelation;
     }
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
-
+        graphsManager.getShortestRouteInDistance(idElementPoint1,idElementPoint2);
+        presenter.updateResultGraph();
     }
 
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
-
+        graphsManager.getShortestRouteInTime(idElementPoint1,idElementPoint2);
+        presenter.updateResultGraph();
     }
 
     @Override
     public Set<MapElement> getResultElements() {
-        return null;
+        return graphsManager.getElementsResult();
     }
 
     @Override
     public void modifyElement(MapElement mapElementModify) {
-
+        MapElement mapElement = getElement(mapElementModify.getIdElement());
+        mapElement.getMapRoute().setSpeedRoute(mapElementModify.getMapRoute().getSpeedRoute());
+        mapElement.getMapRoute().setOrientationRoutes(mapElementModify.getMapRoute().getOrientationRoutes());
+        mapElement.getMapRoute().setTypeRoute(mapElementModify.getMapRoute().getTypeRoute());
     }
 }
