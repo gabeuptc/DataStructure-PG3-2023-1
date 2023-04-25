@@ -97,8 +97,7 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     @Override
     public void updateGraph() {
         try {
-            Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-            String json = gson.toJson(elements);
+            String json = new Gson().toJson(elements);
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File("data/graphsData202127812.json")));
             writer.write(json);
             writer.close();
@@ -178,17 +177,10 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
 
         try {
             File file = new File("data/graphsData202127812.json");
-            //File file = new File("data/graphsData202127812Cpy.json");
             if (file.exists()){
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-                StringBuilder json = new StringBuilder();
-                String cad;
-                while((cad = bufferedReader.readLine())!=null) {
-                    json.append(cad);
-                }
-                bufferedReader.close();
                 Type mapType = new TypeToken<HashMap<Integer,MapElement>>(){}.getType();
-                elements = new Gson().fromJson(json.toString(),mapType);
+                elements = new Gson().fromJson(bufferedReader,mapType);
             }
         }catch (IOException e){
             JOptionPane.showMessageDialog(null,"Error técnico");
