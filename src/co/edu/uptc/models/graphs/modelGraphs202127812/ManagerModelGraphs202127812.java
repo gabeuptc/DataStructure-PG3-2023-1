@@ -335,7 +335,8 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
             case TRAIL -> speedToRest= 0.3;
             case OTHER -> speedToRest= 0.5;
         }
-        return route.getSpeedRoute() - speedToRest;
+        double speed = route.getSpeedRoute() - speedToRest;
+        return speed > 0 ? speed : route.getSpeedRoute();
     }
 
     private int getNodeIndex(int idPoint){
