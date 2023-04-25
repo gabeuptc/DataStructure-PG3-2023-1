@@ -241,15 +241,15 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         presenter.updateResultGraph();*/
 
         calculateAdjacencyMatrices();
-        Node origin = new Node(getNodeIndex(idElementPoint1),true);
+        Node origin = new Node(idElementPoint1,true);
         nodes.clear();
         nodes.put(origin.getNodeIndex(),origin);
         calculateDijkstraDistance(origin);
         elementsResult.clear();
-        if (nodes.containsKey(getNodeIndex(idElementPoint2))){
+        if (nodes.containsKey(idElementPoint2)){
             MapElement destin = getElement(idElementPoint2);
             elementsResult.put(destin.getIdElement(),destin);
-            putSearch(getNodeIndex(idElementPoint2));
+            putSearch(idElementPoint2);
             presenter.updateResultGraph();
         }else {
             presenter.updateResultGraph();//como hacer que termine la busqueda y no tener que quitar todos los elm
@@ -261,9 +261,8 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         Node node = nodes.get(nodeIndex);
         int newIndex = node.getFatherNodeIndex();
         if (newIndex != -1){
-            MapElement pointFrom = getPoint(node.getFatherNodeIndex());
-            MapElement pointTo = getPoint(nodeIndex);
-            MapElement route = getElement(pointFrom.getIdElement(),pointTo.getIdElement());
+            MapElement pointFrom = getElement(node.getFatherNodeIndex());
+            MapElement route = getElement(node.getFatherNodeIndex(),nodeIndex);
             elementsResult.put(pointFrom.getIdElement(), pointFrom);
             elementsResult.put(route.getIdElement(), route);
             putSearch(newIndex);
@@ -306,19 +305,19 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         }
     }
     private void calculateAdjacencyMatrices(){
-        int pointsLength = 0;
+        /*int pointsLength = 0;
         for (MapElement element:elements.values()) {
             if (element.getElementType() == ElementType.POINT)
                 pointsLength ++;
-        }
-        adjacencyMatrixDistance = new double[pointsLength][pointsLength];
-        adjacencyMatrixTime = new double[pointsLength][pointsLength];
+        }*/
+        adjacencyMatrixDistance = new double[elements.size()][elements.size()];
+        adjacencyMatrixTime = new double[elements.size()][elements.size()];
         for (MapElement element:elements.values()) {
             if (element.getElementType() == ElementType.ROUTE){
                 MapRoute route = element.getMapRoute();
                 OrientationRoutes orientation = route.getOrientationRoutes();
-                int origin = getNodeIndex(route.getPoint1().getIdElement());
-                int destin = getNodeIndex(route.getPoint2().getIdElement());
+                int origin = route.getPoint1().getIdElement();
+                int destin = route.getPoint2().getIdElement();
                 double distance = calculateDistance(route.getPoint1().getGeoPosition(),
                         route.getPoint2().getGeoPosition());
                 double time = calculateTime(distance,route);
@@ -349,29 +348,6 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         }
         double speed = route.getSpeedRoute() - speedToRest;
         return speed > 0 ? speed : route.getSpeedRoute();
-    }
-
-    private int getNodeIndex(int idPoint){
-        int count = 0;
-        for (MapElement element:elements.values()) {
-            if (element.getIdElement() == idPoint){
-                return count;
-            }
-            if (element.getElementType() == ElementType.POINT)
-                count++;
-        }
-        return -1;
-    }
-    private MapElement getPoint(int nodeIndex){
-        int count = 0;
-        for (MapElement element:elements.values()) {
-            if (count == nodeIndex){
-                return element;
-            }
-            if (element.getElementType() == ElementType.POINT)
-                count++;
-        }
-        return null;
     }
 
     private Node getShortestDistance() {
@@ -418,15 +394,15 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         presenter.updateResultGraph();*/
 
         calculateAdjacencyMatrices();
-        Node origin = new Node(getNodeIndex(idElementPoint1),true);
+        Node origin = new Node(idElementPoint1,true);
         nodes.clear();
         nodes.put(origin.getNodeIndex(),origin);
         calculateDijkstraTime(origin);
         elementsResult.clear();
-        if (nodes.containsKey(getNodeIndex(idElementPoint2))){
+        if (nodes.containsKey(idElementPoint2)){
             MapElement destin = getElement(idElementPoint2);
             elementsResult.put(destin.getIdElement(),destin);
-            putSearch(getNodeIndex(idElementPoint2));
+            putSearch(idElementPoint2);
             presenter.updateResultGraph();
         }else {
             presenter.updateResultGraph();//como hacer que termine la busqueda y no tener que quitar todos los elm
