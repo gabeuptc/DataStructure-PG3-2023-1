@@ -182,7 +182,7 @@
     "idElement": 20,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 10.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -208,7 +208,7 @@
     "idElement": 21,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 5.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -234,7 +234,7 @@
     "idElement": 22,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 10.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -260,7 +260,7 @@
     "idElement": 23,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 8.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -286,7 +286,7 @@
     "idElement": 24,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 15.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -312,7 +312,7 @@
     "idElement": 25,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 7.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -338,7 +338,7 @@
     "idElement": 26,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 9.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -364,7 +364,7 @@
     "idElement": 27,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 30.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -416,7 +416,7 @@
     "idElement": 29,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 34.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -442,7 +442,7 @@
     "idElement": 30,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 23.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -468,7 +468,7 @@
     "idElement": 31,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 11.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -494,7 +494,7 @@
     "idElement": 32,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 14.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -520,7 +520,7 @@
     "idElement": 33,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 18.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -546,7 +546,7 @@
     "idElement": 34,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 4.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -572,7 +572,7 @@
     "idElement": 35,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 23.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -598,7 +598,7 @@
     "idElement": 36,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 11.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -624,7 +624,7 @@
     "idElement": 37,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 22.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -650,7 +650,7 @@
     "idElement": 38,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 20.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -676,7 +676,7 @@
     "idElement": 39,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 56.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -702,7 +702,7 @@
     "idElement": 40,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 18.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -728,7 +728,7 @@
     "idElement": 41,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 23.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -964,7 +964,7 @@
     "idElement": 57,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 20.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -990,7 +990,7 @@
     "idElement": 58,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 60.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -1024,7 +1024,7 @@
     "idElement": 60,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 40.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
@@ -1050,7 +1050,7 @@
     "idElement": 61,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 0.0,
+      "speedRoute": 12.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
