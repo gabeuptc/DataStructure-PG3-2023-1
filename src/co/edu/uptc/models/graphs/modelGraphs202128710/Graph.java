@@ -13,11 +13,13 @@ public class Graph {
     private int idElement;
     private List<Node> elementPointList;
     private List<Arc> elementRouteList;
+    private List<RoutesResult> possibleRouteResult;
     private List<MapElement> routeResult;
 
     public Graph(){
         elementPointList = new ArrayList<>();
         elementRouteList = new ArrayList<>();
+        possibleRouteResult = new ArrayList<>();
         routeResult = new ArrayList<>();
     }
 
@@ -94,6 +96,9 @@ public class Graph {
         return false;
     }
 
+    public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
+
+    }
 
     private int searchPointCurrent(int idElement,MapElement route){
        if (idElement!=route.getMapRoute().getPoint2().getIdElement()){
@@ -169,5 +174,13 @@ public class Graph {
 
     public void setRouteResult(List<MapElement> routeResult) {
         this.routeResult = routeResult;
+    }
+
+    public List<RoutesResult> getPossibleRouteResult() {
+        return possibleRouteResult;
+    }
+
+    public void setPossibleRouteResult(List<RoutesResult> possibleRouteResult) {
+        this.possibleRouteResult = possibleRouteResult;
     }
 }

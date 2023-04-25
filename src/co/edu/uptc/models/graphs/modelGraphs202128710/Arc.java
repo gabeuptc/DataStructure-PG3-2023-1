@@ -12,7 +12,7 @@ public class Arc {
     public Arc(MapElement arc, double distance) {
         this.arc = arc;
         this.distance = distance;
-        this.time = arc.getMapRoute().getSpeedRoute()*distance;
+        this.time = distance/arc.getMapRoute().getSpeedRoute();
         this.route = false;
     }
 
