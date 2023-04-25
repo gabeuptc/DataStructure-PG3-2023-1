@@ -57,7 +57,6 @@ public class Graph {
     }
 
     public MapElement getRoute(int idElementPoint1, int idElementPoint2) {
-        System.out.println("tamaño de arcs " + arcs.size());
         for (Arc arc : arcs) {
             if (arc.getIdElementPoint1() == idElementPoint1 && arc.getIdElementPoint2() == idElementPoint2 ||
                     arc.getIdElementPoint1() == idElementPoint2 && arc.getIdElementPoint2() == idElementPoint1) {
