@@ -16,7 +16,6 @@ public class OperationMaps {
         double deltaLon = toRadians(mapPoint2.getGeoPosition().getLongitude() - mapPoint1.getGeoPosition().getLongitude());
         double haversine = calculateHaversine(deltaLat, deltaLon, mapPoint1, mapPoint2);
         double centralAngle = calculateCentralAngle(haversine);
-        System.out.println("la distancia entre el nodo 1 y el nodo 2 es: " + EARTH_RADIUS_MTS * centralAngle);
         return EARTH_RADIUS_MTS * centralAngle;
     }
 
