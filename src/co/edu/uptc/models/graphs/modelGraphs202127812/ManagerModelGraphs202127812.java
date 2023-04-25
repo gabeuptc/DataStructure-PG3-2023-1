@@ -7,6 +7,7 @@ import co.edu.uptc.views.maps.*;
 import co.edu.uptc.views.maps.types.ElementType;
 import co.edu.uptc.views.maps.types.RouteType;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -96,21 +97,10 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     @Override
     public void updateGraph() {
         try {
-            StringBuilder json = new StringBuilder();
-            json.append("[");
-            int count = 1;
-            for (MapElement element:elements.values()) {
-                String toWrite = new Gson().toJson(element);
-                json.append(toWrite);
-                if (count!=elements.size()){
-                    json.append(",\n");
-                }
-                count++;
-            }
-            json.append("]");
+            Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+            String json = gson.toJson(elements);
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File("data/graphsData202127812.json")));
-            //BufferedWriter writer = new BufferedWriter(new FileWriter(new File("data/graphsData202127812Cpy.json")));
-            writer.write(String.valueOf(json));
+            writer.write(json);
             writer.close();
         }catch (IOException e){
             JOptionPane.showMessageDialog(null,"Error técnico");
@@ -197,11 +187,8 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
                     json.append(cad);
                 }
                 bufferedReader.close();
-                Type userListType = new TypeToken<ArrayList<MapElement>>(){}.getType();
-                List<MapElement> list = new Gson().fromJson(json.toString(),userListType);
-                for (MapElement element:list) {
-                    elements.put(element.getIdElement(), element);
-                }
+                Type mapType = new TypeToken<HashMap<Integer,MapElement>>(){}.getType();
+                elements = new Gson().fromJson(json.toString(),mapType);
             }
         }catch (IOException e){
             JOptionPane.showMessageDialog(null,"Error técnico");
