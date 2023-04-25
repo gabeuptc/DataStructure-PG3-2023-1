@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 public class PanelHeader extends JPanel {
     private DashBoard dashBoard;
     JLabel labelLogoUptc ;
+    private JLabel userMenu;
 
     public PanelHeader(DashBoard dashBoard) {
         this.dashBoard = dashBoard;
@@ -40,6 +41,7 @@ public class PanelHeader extends JPanel {
                 //System.out.println(getInstance().getWidth());
                 int posX = getInstance().getWidth()/2;
                 labelLogoUptc.setLocation(posX,(int)labelLogoUptc.getLocation().getY());
+                userMenu.setLocation(getInstance().getWidth() - 50,(int)userMenu.getLocation().getY());
 
             }
         });
@@ -48,6 +50,7 @@ public class PanelHeader extends JPanel {
     private void initializeComponents(){
         addConfigMenu();
         addIconUptc();
+        addUserMenu();
     }
 
     private void addConfigMenu(){
@@ -85,6 +88,41 @@ public class PanelHeader extends JPanel {
                 dashBoard.oapenClosePanelMenu();
             }
         });
+    }
+
+    private void addUserMenu(){
+        UtilImages utilImages = new UtilImages();
+        userMenu = new JLabel(utilImages.loadScaleImage("assets/usuario.png",40,40));
+        JPopupMenu menu = new JPopupMenu();
+        userMenu.setBounds(1,20,40,40);
+        addUserItemCloseUser(menu);
+        addUserItemConfigureUser(menu);
+        add(userMenu);
+        userMenu.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                menu.show(userMenu,0,40);
+            }
+        });
+
+    }
+
+    private void addUserItemCloseUser(JPopupMenu popupMenu){
+        JMenuItem close = new JMenuItem("Cerrar sesión");
+        close.addActionListener(e -> {
+            if (JOptionPane.showConfirmDialog(null, "¿Quiere cerrar sesión con "
+                    + dashBoard.getCurrentUser().getNameUser()+"?","Cerrar sesión",
+                    JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+                dashBoard.showLoginDialog();
+            }
+        });
+        popupMenu.add(close);
+    }
+
+    private void addUserItemConfigureUser(JPopupMenu popupMenu){
+        JMenuItem userConfigs = new JMenuItem("Configurar usuario");
+        userConfigs.addActionListener(e -> dashBoard.showPanelConfiguratonsUser());
+        popupMenu.add(userConfigs);
     }
 
 

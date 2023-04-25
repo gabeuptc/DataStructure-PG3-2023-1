@@ -2,8 +2,11 @@ package co.edu.uptc.presenter;
 
 import co.edu.uptc.models.graphs.modelGraphs202022012.ManagerModelGraphs202022012;
 import co.edu.uptc.models.graphs.modelGraphs202113049.ManagerModelGraphs202113049;
+import co.edu.uptc.models.graphs.modelGraphs202115100.ManagerModelGraphs202115100;
 import co.edu.uptc.models.graphs.modelGraphs202127061.ManagerModelGraphs202127061;
+import co.edu.uptc.models.graphs.modelGraphs202127343.ManagerModelGraphs202127343;
 import co.edu.uptc.models.graphs.modelGraphs202127812.ManagerModelGraphs202127812;
+import co.edu.uptc.models.graphs.modelGraphs202127812.ModelProof;
 import co.edu.uptc.models.graphs.modelGraphs202128710.ManagerModelGraphs202128710;
 import co.edu.uptc.models.graphs.modelGraphs202128687.ManagerModelGraphs202128687;
 import co.edu.uptc.models.people.model202128687.ManagerModel202128687;
@@ -44,6 +47,7 @@ public class ManagerGeneral {
 
 
     ContractGraphs.Presenter presenterGraphs;
+    ContractGraphs.Model modelGraphProof;
     ContractGraphs.Model modelGraphs202127812;
     ContractGraphs.Model modelGraphs202127061;
     ContractGraphs.Model modelGraphs202023577;
@@ -108,9 +112,11 @@ public class ManagerGeneral {
         modelSebastian = new ManagerModel202114641();
         model202115100 = new ManegerModel202115100();
         model202127717 = new ManagerModel202127717();
+        model202127343 = new ManagerModel202127343();
     }
 
     private void createModelGraphs() {
+        modelGraphProof = new ModelProof();
         modelGraphs202127812 = new ManagerModelGraphs202127812();
 
         modelGraphs202127061 = new ManagerModelGraphs202127061();
@@ -125,14 +131,14 @@ public class ManagerGeneral {
         //modelGraphs201813802 = new ManagerModelGraphs201813802();
         //modelGraphs202113214 = new ManagerModelGraphs02113214();
         //modelGraphs202114641 = new ManagerModelGraphs202114641();
-        //modelGraphs202115100 = new ManagerModelGraphs202115100();
+        modelGraphs202115100 = new ManagerModelGraphs202115100();
         modelGraphs202128710 = new ManagerModelGraphs202128710();
         //modelGraphs202112690 = new ManagerModelGraphs202112690();
         //modelGraphs202114852 = new ManagerModelGraphs202114852();
         //modelGraphs201721830 = new ManagerModelGraphs201721830();
         //modelGraphs201721961 = new ManagerModelGraphs201721961();
         //modelGraphs201912254 = new ManagerModelGraphs201912254();
-        //modelGraphs202127343 = new ManagerModelGraphs202127343();
+        modelGraphs202127343 = new ManagerModelGraphs202127343();
 
     }
 
@@ -205,6 +211,20 @@ public class ManagerGeneral {
         view.updatedPeople();
     }
 
+    public void configModelGraphsProof() {
+        try {
+            modelGraphProof.setPresenter(presenterGraphs);
+            presenterGraphs.setModel(modelGraphProof);
+            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphProof.loadGraphs();
+            viewGraphs.updateGraph();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            viewGraphs.notifyError("Modelo sin definir");
+        }
+    }
 
     public void configModelGraphs202127812() {
         try {
