@@ -82,7 +82,7 @@ public class Graph {
         return edges1;
     }
 
-    public Map<Integer, MapElement> minDis(int id1, int id2) {
+    public Map<Integer, MapElement> getShortestPath(int id1, int id2) {
         List<MapElement> list = dijkstraAlgorithm.shortestPath(id1, id2);
         Map<Integer, MapElement> elementMap = new HashMap<>();
         for (MapElement map : list) {
