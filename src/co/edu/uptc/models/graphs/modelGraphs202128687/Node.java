@@ -9,12 +9,10 @@ public class Node {
 
     private MapElement point;
     private List<Arc> arcs;
-    private List<MapElement> mapRoutes;
 
     public Node(MapElement point) {
         this.point = point;
         this.arcs = new ArrayList<>();
-         this.mapRoutes = new ArrayList<>();
     }
 
     public MapElement getMapElement() {
@@ -34,9 +32,5 @@ public class Node {
 
     public List<Arc> getArcs() {
         return arcs;
-    }
-
-    public List<MapElement> getMapRoutes() {
-        return mapRoutes;
     }
 }
