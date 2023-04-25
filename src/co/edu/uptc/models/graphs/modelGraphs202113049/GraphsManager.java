@@ -100,8 +100,13 @@ public class GraphsManager {
     public void getShortestRouteInDistance(int id1, int id2){
         PossibleRoute possibleRoute = searchRoutes(id1,id2);
         int size = possibleRoute.getOnlyPoints().size();
+        System.out.println("size:  "+size+ "   "+possibleRoute.getElementsResult().size());
         if(possibleRoute.getOnlyPoints().get(size-1).getIdElement()==id2){
+            System.out.println("entro");
             this.elementsResult = possibleRoute.getElementsResult();
+            for (MapElement mape:elementsResult.values()) {
+                System.out.println(mape.getElementType()+"  "+mape.getIdElement());
+            }
         }
     }
 
