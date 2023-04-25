@@ -12,9 +12,9 @@ public class Graph {
 
     private List<Node> elements;
     private List<Edge> edges;
-    private UtilGraphs utilGraphs;
+    private transient UtilGraphs utilGraphs;
     private transient DijkstraAlgorithm dijkstraAlgorithm;
-    private Set<MapElement> shortestPath;
+    private transient Set<MapElement> shortestPath;
 
     public Graph() {
         elements = new ArrayList<>();
@@ -129,6 +129,9 @@ public class Graph {
                 if (mapElement.getValue().getMapRoute().equals(edges1.get(count).getMapRoute())) {
                     elementMap.put(mapElement.getKey(), mapElement.getValue());
                     count++;
+                    if(count == edges1.size()){
+                        return elementMap;
+                    }
                 }
             }
 
