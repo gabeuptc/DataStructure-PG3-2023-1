@@ -108,9 +108,21 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     @Override
     public void updateGraph() {
         try {
-            String json = new Gson().toJson(elements);
+            StringBuilder json = new StringBuilder();
+            json.append("{" + "\n");
+            int count = 1;
+            for (MapElement element:elements.values()) {
+                json.append("\"").append(element.getIdElement()).append("\"").append(":");
+                String toWrite = new Gson().toJson(element);
+                json.append(toWrite);
+                if (count!=elements.size()){
+                    json.append(",\n");
+                }
+                count++;
+            }
+            json.append("\n"+"}");
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File("data/graphsData202127812.json")));
-            writer.write(json);
+            writer.write(String.valueOf(json));
             writer.close();
         }catch (IOException e){
             JOptionPane.showMessageDialog(null,"Error técnico");
