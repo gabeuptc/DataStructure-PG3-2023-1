@@ -25,11 +25,11 @@ public class RoutesResult {
     }
 
     public List<MapElement> getRoute() {
-        return route;
+        return routeResult;
     }
 
     public void setRoute(List<MapElement> route) {
-        this.route = route;
+        this.routeResult = route;
     }
 
     public double getDistanceRoute() {
