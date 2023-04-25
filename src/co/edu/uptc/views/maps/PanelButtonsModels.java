@@ -23,6 +23,7 @@ public class PanelButtonsModels extends JPanel {
     }
 
     private void addButtons() {
+        addButtonSelectModelProof();
         addButtonSelectModel202127812();
         addButtonSelectModel202127061();
         addButtonSelectModel202023577();
@@ -45,6 +46,13 @@ public class PanelButtonsModels extends JPanel {
         addButtonSelectModel201912254();
         addButtonSelectModel202127343();
 
+    }
+
+    private void addButtonSelectModelProof() {
+        JButton jButtonSelectModelUser = new JButton("Prueba-*");
+        jButtonSelectModelUser.setPreferredSize(new Dimension(120,25));
+        add(jButtonSelectModelUser);
+        jButtonSelectModelUser.addActionListener(e -> ManagerGeneral.getInstance().configModelGraphsProof());
     }
 
 
