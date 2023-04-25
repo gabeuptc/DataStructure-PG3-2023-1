@@ -22,11 +22,15 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     private Map<Integer,MapElement> elementsResult;
 
     private int count=0;
+    private double[][] adjacencyMatrixDistance;
+    private double[][] adjacencyMatrixTime;
+    private HashMap<Integer, Node> nodes;
 
 
     public ManagerModelGraphs202127812() {
         elements = new HashMap<>();
         elementsResult= new HashMap<>();
+        nodes = new HashMap<>();
     }
 
     @Override
@@ -57,7 +61,8 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
     }
 
     public void addElementOnly(MapElement mapElement) {
-        mapElement.setIdElement(count++);
+        //mapElement.setIdElement(count++);
+        mapElement.setIdElement(elements.size());
         elements.put(mapElement.getIdElement(), mapElement);
     }
     @Override
@@ -103,7 +108,8 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
                 count++;
             }
             json.append("]");
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("data/graphsData202127812.json")));
+            //BufferedWriter writer = new BufferedWriter(new FileWriter(new File("data/graphsData202127812.json")));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("data/graphsData202127812Cpy.json")));
             writer.write(String.valueOf(json));
             writer.close();
         }catch (IOException e){
@@ -181,7 +187,8 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         addRouteBurned(16,17);*/
 
         try {
-            File file = new File("data/graphsData202127812.json");
+            //File file = new File("data/graphsData202127812.json");
+            File file = new File("data/graphsData202127812Cpy.json");
             if (file.exists()){
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
                 StringBuilder json = new StringBuilder();
@@ -229,7 +236,7 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
-        elementsResult.clear();
+        /*elementsResult.clear();
         // add points in the route Estos estan quemados para la prueba
         elementsResult.put(4,elements.get(4));
         elementsResult.put(5,elements.get(5));
@@ -240,12 +247,168 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         elementsResult.put(23,elements.get(23));
         elementsResult.put(25,elements.get(25));
         elementsResult.put(30,elements.get(30));
-        presenter.updateResultGraph();
+        presenter.updateResultGraph();*/
+
+        calculateAdjacencyMatrices();
+        Node origin = new Node(getNodeIndex(idElementPoint1),true);
+        nodes.clear();
+        nodes.put(origin.getNodeIndex(),origin);
+        calculateDijkstraDistance(origin);
+        elementsResult.clear();
+        if (nodes.containsKey(getNodeIndex(idElementPoint2))){
+            MapElement destin = getElement(idElementPoint2);
+            elementsResult.put(destin.getIdElement(),destin);
+            putSearch(getNodeIndex(idElementPoint2));
+            presenter.updateResultGraph();
+        }else {
+            presenter.updateResultGraph();//como hacer que termine la busqueda y no tener que quitar todos los elm
+            presenter.notifyWarning("No hay solución para este recorrido");
+        }
+    }
+
+    private void putSearch(int nodeIndex){
+        Node node = nodes.get(nodeIndex);
+        int newIndex = node.getFatherNodeIndex();
+        if (newIndex != -1){
+            MapElement pointFrom = getPoint(node.getFatherNodeIndex());
+            MapElement pointTo = getPoint(nodeIndex);
+            MapElement route = getElement(pointFrom.getIdElement(),pointTo.getIdElement());
+            elementsResult.put(pointFrom.getIdElement(), pointFrom);
+            elementsResult.put(route.getIdElement(), route);
+            putSearch(newIndex);
+        }
+    }
+
+    private void calculateDijkstraDistance(Node node){
+        node.setResolved(true);
+        for (int i = 0; i < adjacencyMatrixDistance.length; i++) {
+            if (adjacencyMatrixDistance[node.getNodeIndex()][i] > 0){
+                if (!nodes.containsKey(i)){
+                    Node node1 = new Node(i,false);
+                    node1.setFatherNodeIndex(node.getNodeIndex());
+                    node1.setDistance(node.getDistance() + adjacencyMatrixDistance[node.getNodeIndex()][i]);
+                    nodes.put(node1.getNodeIndex(),node1);
+                }else {
+                    Node node1 = nodes.get(i);
+                    double newDistance = node.getDistance() + adjacencyMatrixDistance[node.getNodeIndex()][i];
+                    if (node1.getDistance() > newDistance){
+                        node1.setDistance(newDistance);
+                        node1.setFatherNodeIndex(node.getNodeIndex());
+                    }
+                }
+            }
+        }
+        Node shortestDistance = getShortestDistance();
+        if (shortestDistance!=null){
+            calculateDijkstraDistance(shortestDistance);
+        }else {
+            boolean isTerminatedDijkstra = true;
+            for (Node node1:nodes.values()) {
+                if (!node1.isResolved()){
+                    isTerminatedDijkstra = false;
+                    break;
+                }
+            }
+            if (isTerminatedDijkstra)
+                return;
+            calculateDijkstraDistance(node);
+        }
+    }
+    private void calculateAdjacencyMatrices(){
+        int pointsLength = 0;
+        for (MapElement element:elements.values()) {
+            if (element.getElementType() == ElementType.POINT)
+                pointsLength ++;
+        }
+        adjacencyMatrixDistance = new double[pointsLength][pointsLength];
+        adjacencyMatrixTime = new double[pointsLength][pointsLength];
+        for (MapElement element:elements.values()) {
+            if (element.getElementType() == ElementType.ROUTE){
+                MapRoute route = element.getMapRoute();
+                OrientationRoutes orientation = route.getOrientationRoutes();
+                int origin = getNodeIndex(route.getPoint1().getIdElement());
+                int destin = getNodeIndex(route.getPoint2().getIdElement());
+                double distance = calculateDistance(route.getPoint1().getGeoPosition(),
+                        route.getPoint2().getGeoPosition());
+                double time = calculateTime(distance,route);
+                if (orientation == OrientationRoutes.ORIGIN_DESTIN || orientation == OrientationRoutes.BOTH){
+                    adjacencyMatrixDistance[origin][destin] = distance;
+                    adjacencyMatrixTime[origin][destin] = time;
+                }
+                if (orientation == OrientationRoutes.DESTIN_ORIGIN || orientation == OrientationRoutes.BOTH){
+                    adjacencyMatrixDistance[destin][origin] = distance;
+                    adjacencyMatrixTime[destin][origin] = time;
+                }
+            }
+        }
+    }
+
+    private double calculateTime(double distance, MapRoute route) {
+        return distance / getSeep(route);
+    }
+
+    private double getSeep(MapRoute route) {
+        double speedToRest = 0;
+        switch (route.getTypeRoute()){
+            case PAVING -> speedToRest= 0.1;
+            case ROAT_RECEBO -> speedToRest= 0.4;
+            case ADOQUINATE -> speedToRest= 0.2;
+            case TRAIL -> speedToRest= 0.3;
+            case OTHER -> speedToRest= 0.5;
+        }
+        return route.getSpeedRoute() - speedToRest;
+    }
+
+    private int getNodeIndex(int idPoint){
+        int count = 0;
+        for (MapElement element:elements.values()) {
+            if (element.getIdElement() == idPoint){
+                return count;
+            }
+            if (element.getElementType() == ElementType.POINT)
+                count++;
+        }
+        return -1;
+    }
+    private MapElement getPoint(int nodeIndex){
+        int count = 0;
+        for (MapElement element:elements.values()) {
+            if (count == nodeIndex){
+                return element;
+            }
+            if (element.getElementType() == ElementType.POINT)
+                count++;
+        }
+        return null;
+    }
+
+    private Node getShortestDistance() {
+        Node shortest = null;
+        for (Node node:nodes.values()) {
+            if (!node.isResolved()){
+                if (shortest != null){
+                    if (shortest.getDistance() > node.getDistance())
+                        shortest = node;
+                } else
+                    shortest = node;
+            }
+        }
+        return shortest;
+    }
+
+    private double calculateDistance(GeoPosition point1, GeoPosition point2) {
+        double ecuatorialRadiusEarth= 6378100.0;
+        double difRadLatitudes = Math.toRadians(point1.getLatitude() - point2.getLatitude());
+        double difRadLongitudes = Math.toRadians(point1.getLongitude() - point2.getLongitude());
+        double a = Math.pow(Math.sin(difRadLatitudes/2),2) + Math.cos(Math.toRadians(point1.getLatitude()))
+                * Math.cos(Math.toRadians(point2.getLatitude())) * Math.pow(Math.sin(difRadLongitudes/2),2);
+        double c = 2 * Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+        return ecuatorialRadiusEarth * c;
     }
 
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
-        // add points in the route Estos estan quemados para la prueba
+        /*// add points in the route Estos estan quemados para la prueba
         elementsResult.clear();
         elementsResult.put(4,elements.get(4));
         elementsResult.put(5,elements.get(5));
@@ -260,9 +423,73 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         elementsResult.put(27,elements.get(27));
         elementsResult.put(28,elements.get(28));
         elementsResult.put(29,elements.get(29));
-        presenter.updateResultGraph();
+        presenter.updateResultGraph();*/
+
+        calculateAdjacencyMatrices();
+        Node origin = new Node(getNodeIndex(idElementPoint1),true);
+        nodes.clear();
+        nodes.put(origin.getNodeIndex(),origin);
+        calculateDijkstraTime(origin);
+        elementsResult.clear();
+        if (nodes.containsKey(getNodeIndex(idElementPoint2))){
+            MapElement destin = getElement(idElementPoint2);
+            elementsResult.put(destin.getIdElement(),destin);
+            putSearch(getNodeIndex(idElementPoint2));
+            presenter.updateResultGraph();
+        }else {
+            presenter.updateResultGraph();//como hacer que termine la busqueda y no tener que quitar todos los elm
+            presenter.notifyWarning("No hay solución para este recorrido");
+        }
+    }
+    private void calculateDijkstraTime(Node node){
+        node.setResolved(true);
+        for (int i = 0; i < adjacencyMatrixTime.length; i++) {
+            if (adjacencyMatrixTime[node.getNodeIndex()][i] > 0){
+                if (!nodes.containsKey(i)){
+                    Node node1 = new Node(i,false);
+                    node1.setFatherNodeIndex(node.getNodeIndex());
+                    node1.setTime(node.getTime() + adjacencyMatrixTime[node.getNodeIndex()][i]);
+                    nodes.put(node1.getNodeIndex(),node1);
+                }else {
+                    Node node1 = nodes.get(i);
+                    double newTime = node.getTime() + adjacencyMatrixTime[node.getNodeIndex()][i];
+                    if (node1.getTime() > newTime){
+                        node1.setTime(newTime);
+                        node1.setFatherNodeIndex(node.getNodeIndex());
+                    }
+                }
+            }
+        }
+        Node shortestTime = getShortestTime();
+        if (shortestTime!=null){
+            calculateDijkstraTime(shortestTime);
+        }else {
+            boolean isTerminatedDijkstra = true;
+            for (Node node1:nodes.values()) {
+                if (!node1.isResolved()){
+                    isTerminatedDijkstra = false;
+                    break;
+                }
+            }
+            if (isTerminatedDijkstra)
+                return;
+            calculateDijkstraTime(node);
+        }
     }
 
+    private Node getShortestTime() {
+        Node shortest = null;
+        for (Node node:nodes.values()) {
+            if (!node.isResolved()){
+                if (shortest != null){
+                    if (shortest.getTime() > node.getTime())
+                        shortest = node;
+                } else
+                    shortest = node;
+            }
+        }
+        return shortest;
+    }
 
     private boolean isRelation(int id){
         for (MapElement mapElement : elements.values()) {
@@ -278,8 +505,6 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         }
         return  false;
     }
-
-
 
     private void addRouteBurned(int p1, int p2){
         MapRoute mapRoute = new MapRoute();
