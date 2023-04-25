@@ -1,12 +1,13 @@
-package co.edu.uptc.models.graphs.modelGraphs202115100;
+package co.edu.uptc.models.graphs.Graphs202113214;
 
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.views.maps.types.ElementType;
 
-import java.util.*;
 
 import static java.lang.Math.*;
+
+import java.util.*;
 
 public class Graph {
     private Map<Integer, MapElement> elements;
@@ -131,7 +132,7 @@ public class Graph {
 
     private double getValueOfAttribute(MapElement element, int attributeToCompare) {
         MapRoute route = element.getMapRoute();
-        if (route == null) throw new RuntimeException("La ruta no existe entre los puntos seleccionados");
+        if (route == null) throw new RuntimeException("No existe tal ruta");
         double distance = getDistanceBetweenPoints(route.getPoint1(), route.getPoint2());
         double speed = route.getSpeedRoute();
         return switch (attributeToCompare) {
@@ -164,7 +165,16 @@ public class Graph {
         }
         return minKey;
     }
-
+    public List<MapElement> getNonOrientationChildren(int actualPoint) {
+        List<MapElement> children = new ArrayList<>();
+        for (MapElement element : elements.values()) {
+            if (element.getElementType() == ElementType.ROUTE) {
+                MapRoute route = element.getMapRoute();
+                addChildrenBoth(actualPoint, children, route);
+            }
+        }
+        return children;
+    }
     private void setTemporalValues(int idMinPoint, List<MapElement> children, Map<Integer, Double> temporalValues, int attributeToCompare) {
         for (MapElement child : children) {
             int idChildPoint = child.getIdElement();
@@ -189,15 +199,13 @@ public class Graph {
         return null;
     }
 
-    public List<MapElement> getNonOrientationChildren(int actualPoint) {
-        List<MapElement> children = new ArrayList<>();
-        for (MapElement element : elements.values()) {
-            if (element.getElementType() == ElementType.ROUTE) {
-                MapRoute route = element.getMapRoute();
-                addChildrenBoth(actualPoint, children, route);
-            }
+    
+    private void addChildrenBoth(int idPoint, List<MapElement> children, MapRoute route) {
+        if (route.getPoint1().getIdElement() == idPoint) {
+            children.add(route.getPoint2());
+        } else if (route.getPoint2().getIdElement() == idPoint) {
+            children.add(route.getPoint1());
         }
-        return children;
     }
 
     private List<MapElement> getChildren(int idPoint) {
@@ -215,13 +223,7 @@ public class Graph {
         return children;
     }
 
-    private void addChildrenBoth(int idPoint, List<MapElement> children, MapRoute route) {
-        if (route.getPoint1().getIdElement() == idPoint) {
-            children.add(route.getPoint2());
-        } else if (route.getPoint2().getIdElement() == idPoint) {
-            children.add(route.getPoint1());
-        }
-    }
+   
 
     private void addChildrenOriginDestin(int idPoint, List<MapElement> children, MapRoute route) {
         if (route.getPoint1().getIdElement() == idPoint) {

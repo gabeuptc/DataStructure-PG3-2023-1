@@ -2,22 +2,21 @@ package co.edu.uptc.models.graphs.modelGraphs202128687;
 
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
-import co.edu.uptc.views.maps.*;
 import co.edu.uptc.views.maps.types.ElementType;
-import co.edu.uptc.views.maps.types.RouteType;
-import org.jxmapviewer.viewer.GeoPosition;
 
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     private ContractGraphs.Presenter presenter;
-    private Set<MapElement> elements;
+    private Persistence persistence;
     private Graph graph;
+    private Set<MapElement> elementsManager;
+    private int numberElements = 0;
 
     public ManagerModelGraphs202128687() {
-        elements = new HashSet<>();
+        elementsManager = new HashSet<>();
+        persistence = new Persistence();
         graph = new Graph();
     }
 
@@ -26,92 +25,95 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
         this.presenter = presenter;
     }
 
-
-    public Set<MapElement> calculateShortestDistanceRoute(GeoPosition point1, GeoPosition point2) {
-        return graph.calculateShortDistanceRoute(point1, point2);
-    }
-
-    public Set<MapElement> calculateShortestTimeRoute(GeoPosition point1, GeoPosition point2) {
-        return graph.calculateShortTimeRoute(point1, point2);
-    }
-
-
-    public void setArcType(int elementID, RouteType typeRoute) {
-        MapElement element = getElement(elementID);
-        if (isRoute(element)) {
-            element.getMapRoute().setTypeRoute(typeRoute);
-            graph.getArc(element.getMapRoute()).getRoute().setTypeRoute(typeRoute);
+    @Override
+    public void loadGraphs() {
+        try {
+            graph.setElements(persistence.loadGraph());
+            for (int i = 0; i < graph.getElementsSize(); i++) {
+                elementsManager.add(graph.getElement(i));
+                fillGraph(graph.getElement(i));
+            }
+            numberElements = graph.getElementsSize();
+        } catch (Exception e) {
+            presenter.notifyWarning("No se pudo cargar el grafo");
+            e.printStackTrace();
         }
     }
 
-    public void setArcSpeed(int elementID, double speed) {
-         MapElement element = getElement(elementID);
-         if (isRoute(element)) {
-               element.getMapRoute().setSpeedRoute(speed);
-               graph.getArc(element.getMapRoute()).getRoute().setSpeedRoute(speed);
-         }
+    private void fillGraph(MapElement element) {
+        if (element.getElementType() == ElementType.POINT) {
+            graph.addNode(new Node(element));
+        } else {
+            Arc newArc = new Arc(element);
+            graph.addArc(newArc);
+            graph.searchNode(element.getMapRoute().getPoint1()).addArc(newArc);
+            graph.searchNode(element.getMapRoute().getPoint2()).addArc(newArc);
+        }
     }
 
-
-    public void setArcsOrientation(OrientationRoutes orientation) {
-         graph.setOrientation(orientation);
-    }
-
-
-    @Override
-    public void deletePoint(int idPoint) {
-
-    }
-
-    @Override
-    public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
-
-    }
-
-    @Override
-    public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
-
-    }
-
-    @Override
-    public Set<MapElement> getResultElements() {
-        return null;
-    }
-
-    @Override
-    public void modifyElement(MapElement mapElementModify) {
-
+    private void saveAndLoadGraphs() {
+        graph.savePersistence(persistence);
+        loadGraphs();
+        updateGraph();
     }
 
     @Override
     public void addElement(MapElement element) {
-        elements.add(element);
+        element.setIdElement(numberElements);
         if (element.getElementType() == ElementType.POINT) {
-            graph.addNode(new Node(element.getGeoPosition()));
+            graph.addNode(new Node(element));
+        } else {
+            Arc newArc = new Arc(element);
+            graph.addArc(newArc);
+            graph.searchNode(element.getMapRoute().getPoint1()).addArc(newArc);
+            graph.searchNode(element.getMapRoute().getPoint2()).addArc(newArc);
         }
+        graph.addElement(element.getIdElement(), element);
+        saveAndLoadGraphs();
+    }
+
+    @Override
+    public void deletePoint(int idPoint) {
+        if (!isConected(idPoint)) {
+            graph.deleteElement(idPoint);
+            elementsManager.remove(getElement(idPoint));
+            saveAndLoadGraphs();
+        } else {
+            presenter.notifyWarning("No se puede eliminar el punto porque esta conectado a una ruta");
+        }
+    }
+
+    private boolean isConected(int id) {
+        for (MapElement el : elementsManager) {
+            if (el.getElementType() == ElementType.ROUTE) {
+                if (el.getMapRoute().getPoint1().getIdElement() == id || el.getMapRoute().getPoint2().getIdElement() == id) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void modifyElement(MapElement mapElementModify) {
+        elementsManager.add(mapElementModify);
+        graph.modifyElement(mapElementModify);
+        saveAndLoadGraphs();
     }
 
     @Override
     public Set<MapElement> getElements() {
-        return cloneSet(elements);
+        return elementsManager;
     }
 
-    private Set<MapElement> cloneSet(Set<MapElement> elements) {
-        Set<MapElement> clone = new HashSet<>();
-        for (MapElement element : elements) {
-            clone.add(cloneElement(element));
+    @Override
+    public MapElement getElement(int id) {
+        for (MapElement el : elementsManager) {
+            if (el.getIdElement() == id) {
+                return el;
+            }
         }
-        return clone;
-    }
-
-    private MapElement cloneElement(MapElement element) {
-        MapElement elementClonable = new MapElement(element.getMapRoute());
-        elementClonable.setElementType(element.getElementType());
-        elementClonable.setIdElement(element.getIdElement());
-        elementClonable.setMapRoute(element.getMapRoute());
-        elementClonable.setGeoPosition(element.getGeoPosition());
-
-        return elementClonable;
+        return null;
     }
 
     @Override
@@ -125,24 +127,35 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     }
 
     @Override
-    public void loadGraphs() {
-
-    }
-
-    public MapElement getElement(int elementId) {
-        return graph.getElement(elementId);
+    public MapElement getElement(int idElementPoint1, int idElementPoint2) {
+        return graph.getRoute(idElementPoint1, idElementPoint2);
     }
 
     @Override
-    public MapElement getElement(int idElementPoint1, int idElementPoint2) {
-        return null;
+    public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
+        graph.getElementsResult().clear();
+        graph.setElementsResult(graph.calculateShortestRouteInDistance(idElementPoint1, idElementPoint2,false));
+        verifyResult();
     }
 
-    private boolean isRoute(MapElement element) {
-        return element.getElementType() == ElementType.ROUTE;
+    private void verifyResult() {
+        if (graph.getElementsResult().isEmpty()) {
+            presenter.notifyWarning("No se encontro una ruta entre los puntos");
+        } else {
+            presenter.updateResultGraph();
+        }
     }
 
-    private boolean isPoint(MapElement element) {
-        return element.getElementType() == ElementType.POINT;
+    @Override
+    public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
+        graph.getElementsResult().clear();
+        graph.setElementsResult(graph.calculateShortestRouteInDistance(idElementPoint1, idElementPoint2,true));
+        verifyResult();
+    }
+
+    @Override
+    public Set<MapElement> getResultElements() {
+        return new HashSet<>(graph.getElementsResult().values());
     }
 }
+
