@@ -7,7 +7,6 @@ import co.edu.uptc.views.maps.*;
 import co.edu.uptc.views.maps.types.ElementType;
 import co.edu.uptc.views.maps.types.RouteType;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -252,7 +251,7 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
             putSearch(idElementPoint2);
             presenter.updateResultGraph();
         }else {
-            presenter.updateResultGraph();//como hacer que termine la busqueda y no tener que quitar todos los elm
+            presenter.updateResultGraph();
             presenter.notifyWarning("No hay solución para este recorrido");
         }
     }
@@ -305,11 +304,6 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         }
     }
     private void calculateAdjacencyMatrices(){
-        /*int pointsLength = 0;
-        for (MapElement element:elements.values()) {
-            if (element.getElementType() == ElementType.POINT)
-                pointsLength ++;
-        }*/
         adjacencyMatrixDistance = new double[elements.size()][elements.size()];
         adjacencyMatrixTime = new double[elements.size()][elements.size()];
         for (MapElement element:elements.values()) {
@@ -405,7 +399,7 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
             putSearch(idElementPoint2);
             presenter.updateResultGraph();
         }else {
-            presenter.updateResultGraph();//como hacer que termine la busqueda y no tener que quitar todos los elm
+            presenter.updateResultGraph();
             presenter.notifyWarning("No hay solución para este recorrido");
         }
     }
