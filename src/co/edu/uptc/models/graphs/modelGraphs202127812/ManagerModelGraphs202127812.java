@@ -108,8 +108,8 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
                 count++;
             }
             json.append("]");
-            //BufferedWriter writer = new BufferedWriter(new FileWriter(new File("data/graphsData202127812.json")));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("data/graphsData202127812Cpy.json")));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("data/graphsData202127812.json")));
+            //BufferedWriter writer = new BufferedWriter(new FileWriter(new File("data/graphsData202127812Cpy.json")));
             writer.write(String.valueOf(json));
             writer.close();
         }catch (IOException e){
@@ -187,8 +187,8 @@ public class ManagerModelGraphs202127812 implements ContractGraphs.Model {
         addRouteBurned(16,17);*/
 
         try {
-            //File file = new File("data/graphsData202127812.json");
-            File file = new File("data/graphsData202127812Cpy.json");
+            File file = new File("data/graphsData202127812.json");
+            //File file = new File("data/graphsData202127812Cpy.json");
             if (file.exists()){
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
                 StringBuilder json = new StringBuilder();
