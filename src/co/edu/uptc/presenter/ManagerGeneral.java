@@ -5,6 +5,7 @@ import co.edu.uptc.models.graphs.modelGraphs202114641.ManagerModelGraphs20211464
 import co.edu.uptc.models.graphs.modelGraphs202113049.ManagerModelGraphs202113049;
 import co.edu.uptc.models.graphs.modelGraphs202115100.ManagerModelGraphs202115100;
 import co.edu.uptc.models.graphs.modelGraphs202127061.ManagerModelGraphs202127061;
+import co.edu.uptc.models.graphs.modelGraphs202127343.ManagerModelGraphs202127343;
 import co.edu.uptc.models.graphs.modelGraphs202127812.ManagerModelGraphs202127812;
 import co.edu.uptc.models.graphs.modelGraphs202128710.ManagerModelGraphs202128710;
 import co.edu.uptc.models.graphs.modelGraphs202128687.ManagerModelGraphs202128687;
@@ -110,6 +111,7 @@ public class ManagerGeneral {
         modelSebastian = new ManagerModel202114641();
         model202115100 = new ManegerModel202115100();
         model202127717 = new ManagerModel202127717();
+        model202127343 = new ManagerModel202127343();
     }
 
     private void createModelGraphs() {
@@ -120,6 +122,13 @@ public class ManagerGeneral {
         modelGraphs202114641 = new ManagerModelGraphs202114641();
         modelGraphs202115100 = new ManagerModelGraphs202115100();
         modelGraphs202128710 = new ManagerModelGraphs202128710();
+
+        //modelGraphs202112690 = new ManagerModelGraphs202112690();
+        //modelGraphs202114852 = new ManagerModelGraphs202114852();
+        //modelGraphs201721830 = new ManagerModelGraphs201721830();
+        //modelGraphs201721961 = new ManagerModelGraphs201721961();
+        //modelGraphs201912254 = new ManagerModelGraphs201912254();
+        modelGraphs202127343 = new ManagerModelGraphs202127343();
 
 
     }
