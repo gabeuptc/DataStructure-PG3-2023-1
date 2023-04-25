@@ -53,9 +53,6 @@ public class Graph {
         };
     }
 
-
-
-
     public MapElement getElement(int id) {
        return elements.getOrDefault(id, null);
     }
