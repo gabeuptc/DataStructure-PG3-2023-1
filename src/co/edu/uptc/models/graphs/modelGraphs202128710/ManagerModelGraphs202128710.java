@@ -27,8 +27,8 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
     public void addElement(MapElement mapElement) {
         try {
             graph.add(mapElement);
-            presenter.updateGraph();
             persistence.store(graph);
+            presenter.updateGraph();
         }catch (FileNotFoundException e){
         }
 
@@ -46,7 +46,7 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
 
     @Override
     public MapElement getElement(int idElementPoint1, int idElementPoint2) {
-        return null;
+        return graph.searchRoute(idElementPoint1,idElementPoint2);
     }
 
     @Override
@@ -87,7 +87,10 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
-
+        graph.getRouteResult().clear();
+        System.out.println("size point: "+ graph.getElementPointList().size());
+        graph.findRouteInDistance(idElementPoint1,idElementPoint2);
+        presenter.updateResultGraph();
     }
 
     @Override
@@ -97,11 +100,16 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> getResultElements() {
-        return null;
+        return new HashSet<>(graph.getRouteResult());
     }
 
     @Override
     public void modifyElement(MapElement mapElementModify) {
         graph.modifyRoute(mapElementModify);
+        try {
+            persistence.store(graph);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
