@@ -9,7 +9,7 @@ public class Graph {
     private List<Arc> arcs;
     private Map<Integer, MapElement> elements;
     private Map<Integer, MapElement> elementsResult;
-    private boolean isVelocity;
+    private boolean isVelocity = false;
 
     public Graph() {
         elements = new HashMap<>();
@@ -76,12 +76,10 @@ public class Graph {
 
     public Map<Integer, MapElement> calculateShortestRouteInDistance(int startNodeId, int endNodeId, boolean isVelocity) {
         this.isVelocity = isVelocity;
-        // Inicializar las distancias y los predecesores de los nodos
         Map<Integer, Double> nodeDistances = new HashMap<>();
         Map<Integer, Integer> nodePredecessors = new HashMap<>();
         initializeDistancesAndPredecessors(nodeDistances, startNodeId);
 
-        // Visitar todos los nodos en orden de distancia ascendente
         Set<Integer> visitedNodes = new HashSet<>();
         while (visitedNodes.size() < nodes.size()) {
             Node currentNode = findClosestUnvisitedNode(nodeDistances, visitedNodes);
@@ -91,7 +89,6 @@ public class Graph {
             visitedNodes.add(currentNode.getMapElement().getIdElement());
             updateDistancesAndPredecessors(currentNode, nodeDistances, nodePredecessors, visitedNodes);
         }
-        // Reconstruir la ruta más corta a partir de los predecesores
         return reconstructShortestRoute(nodePredecessors, endNodeId);
     }
 
@@ -123,9 +120,9 @@ public class Graph {
             }
             double newDistance = 0.0;
             if(isVelocity) {
-                newDistance = nodeDistances.get(currentNode.getMapElement().getIdElement()) + arc.getDistance();
-            }else {
                 newDistance = nodeDistances.get(currentNode.getMapElement().getIdElement()) + arc.getVelocity();
+            }else {
+                newDistance = nodeDistances.get(currentNode.getMapElement().getIdElement()) + arc.getDistance();
             }
 
             if (newDistance < nodeDistances.get(neighborNodeId)) {
@@ -150,7 +147,6 @@ public class Graph {
             currentNodeId = previousNodeId;
         }
 
-        // Invertir el orden de los elementos en shortestRoute
         Map<Integer, MapElement> reversedShortestRoute = new LinkedHashMap<>();
         ListIterator<Map.Entry<Integer, MapElement>> iterator = new ArrayList<>(shortestRoute.entrySet()).listIterator(shortestRoute.size());
         while (iterator.hasPrevious()) {
