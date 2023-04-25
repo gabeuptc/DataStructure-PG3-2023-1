@@ -11,8 +11,8 @@ import java.util.Map;
 public class Graph {
 
     private int idElement;
-    private List<MapElement> elementPointList;
-    private List<MapElement> elementRouteList;
+    private List<Node> elementPointList;
+    private List<Arc> elementRouteList;
     private List<MapElement> routeResult;
 
     public Graph(){
@@ -24,20 +24,24 @@ public class Graph {
     public void add(MapElement mapElement) throws FileNotFoundException {
         mapElement.setIdElement(idElement++);
         if (mapElement.getElementType().equals(ElementType.POINT)){
-            elementPointList.add(mapElement);
+            elementPointList.add(new Node(mapElement));
         }else {
-            elementRouteList.add(mapElement);
+            double distance = distanceCoord(mapElement.getMapRoute().getPoint1().getGeoPosition().getLatitude(),
+                    mapElement.getMapRoute().getPoint1().getGeoPosition().getLongitude(),
+                    mapElement.getMapRoute().getPoint2().getGeoPosition().getLatitude(),
+                    mapElement.getMapRoute().getPoint2().getGeoPosition().getLongitude());
+            elementRouteList.add(new Arc(mapElement,distance));
         }
     }
 
-    public MapElement searchRoute(int idElementPoint1, int idElementPoint2){
-        for (MapElement aux: elementRouteList) {
-            if (aux.getMapRoute().getPoint1().getIdElement()==idElementPoint1){
-                if (aux.getMapRoute().getPoint2().getIdElement()==idElementPoint2){
+    public Arc searchRoute(int idElementPoint1, int idElementPoint2){
+        for (Arc aux: elementRouteList) {
+            if (aux.getArc().getMapRoute().getPoint1().getIdElement()==idElementPoint1){
+                if (aux.getArc().getMapRoute().getPoint2().getIdElement()==idElementPoint2){
                     return aux;
                 }
-            } else if (aux.getMapRoute().getPoint1().getIdElement()==idElementPoint2) {
-                if (aux.getMapRoute().getPoint2().getIdElement()==idElementPoint1){
+            } else if (aux.getArc().getMapRoute().getPoint1().getIdElement()==idElementPoint2) {
+                if (aux.getArc().getMapRoute().getPoint2().getIdElement()==idElementPoint1){
                     return aux;
                 }
             }
@@ -45,12 +49,12 @@ public class Graph {
         return null;
     }
     
-    public MapElement searchElementRouteId(int id){
-        for (MapElement aux:elementRouteList) {
-            if (aux.getElementType()==ElementType.ROUTE){
-                if (aux.getMapRoute().getPoint1().getIdElement()==id){
+    public Arc searchElementRouteId(int id){
+        for (Arc aux:elementRouteList) {
+            if (aux.getArc().getElementType()==ElementType.ROUTE){
+                if (aux.getArc().getMapRoute().getPoint1().getIdElement()==id){
                     return aux;
-                } else if (aux.getMapRoute().getPoint2().getIdElement()==id) {
+                } else if (aux.getArc().getMapRoute().getPoint2().getIdElement()==id) {
                     return aux;
                 }
             }
@@ -58,41 +62,30 @@ public class Graph {
         return null;
     }
 
-    public MapElement searchElementPointId(int idElement){
-        for (MapElement aux:elementPointList) {
-            if (aux.getIdElement()==idElement){
+    public Node searchElementPointId(int idElement){
+        for (Node aux:elementPointList) {
+            if (aux.getNode().getIdElement()==idElement){
                 return aux;
             }
         }
         return null;
     }
 
-    public List<MapElement> searchRelationPointRoute(int idElement){
-        List<MapElement> routes = new ArrayList<>();
-        for (MapElement aux:elementRouteList) {
-            if (aux.getMapRoute().getPoint1().getIdElement()==idElement){
-                routes.add(aux);
-            }else if (aux.getMapRoute().getPoint2().getIdElement()==idElement){
-                routes.add(aux);
-            }
-        }
-        return routes;
-    }
 
     public void modifyRoute(MapElement mapElementModify){
-        MapElement mapElement = searchRoute(mapElementModify.getMapRoute().getPoint1().getIdElement(),
+        Arc arc = searchRoute(mapElementModify.getMapRoute().getPoint1().getIdElement(),
                 mapElementModify.getMapRoute().getPoint2().getIdElement());
-        mapElement.getMapRoute().setSpeedRoute(mapElementModify.getMapRoute().getSpeedRoute());
-        mapElement.getMapRoute().setOrientationRoutes(mapElementModify.getMapRoute().getOrientationRoutes());
-        mapElement.getMapRoute().setTypeRoute(mapElementModify.getMapRoute().getTypeRoute());
+        arc.getArc().getMapRoute().setSpeedRoute(mapElementModify.getMapRoute().getSpeedRoute());
+        arc.getArc().getMapRoute().setOrientationRoutes(mapElementModify.getMapRoute().getOrientationRoutes());
+        arc.getArc().getMapRoute().setTypeRoute(mapElementModify.getMapRoute().getTypeRoute());
     }
 
     public Boolean removePoint(int id){
-        MapElement aux = searchElementRouteId(id);
+        Arc aux = searchElementRouteId(id);
         if (aux!=null){
             return false;
         }else{
-            MapElement tmp = searchElementPointId(id);
+            Node tmp = searchElementPointId(id);
             if (tmp!=null){
                 elementPointList.remove(tmp);
                 return true;
@@ -101,59 +94,6 @@ public class Graph {
         return false;
     }
 
-    public MapElement findShortRoute(List<MapElement> possibleRoutes,MapElement pointDestin,int pointOrigen){
-        int position = 0 ;
-        int count = -1;
-        double shortDistance=0;
-        System.out.println("size: "+ elementPointList.size());
-        System.out.println("234");
-        for (MapElement aux:possibleRoutes) {
-            count++;
-            if (shortDistance==0){
-                if (aux.getMapRoute().getPoint1().getIdElement()==pointOrigen){
-                    shortDistance = distanceCoord(aux.getMapRoute().getPoint2().getGeoPosition().getLatitude(),aux.getMapRoute().getPoint2().getGeoPosition().getLongitude(),
-                            pointDestin.getGeoPosition().getLatitude(),pointDestin.getGeoPosition().getLongitude());
-                }else{
-                    shortDistance = distanceCoord(aux.getMapRoute().getPoint1().getGeoPosition().getLatitude(),aux.getMapRoute().getPoint1().getGeoPosition().getLongitude(),
-                            pointDestin.getGeoPosition().getLatitude(),pointDestin.getGeoPosition().getLongitude());
-                }
-            }else{
-                if (aux.getMapRoute().getPoint1().getIdElement()==pointOrigen){
-                    if (Double.compare(shortDistance,distanceCoord(aux.getMapRoute().getPoint2().getGeoPosition().getLatitude(),aux.getMapRoute().getPoint2().getGeoPosition().getLongitude(),
-                            pointDestin.getGeoPosition().getLatitude(),pointDestin.getGeoPosition().getLongitude()))<0){
-                        shortDistance = distanceCoord(aux.getMapRoute().getPoint2().getGeoPosition().getLatitude(),aux.getMapRoute().getPoint2().getGeoPosition().getLongitude(),
-                                pointDestin.getGeoPosition().getLatitude(),pointDestin.getGeoPosition().getLongitude());
-                        position = count;
-                    }
-                }else {
-                    if (Double.compare(shortDistance,distanceCoord(aux.getMapRoute().getPoint1().getGeoPosition().getLatitude(),aux.getMapRoute().getPoint1().getGeoPosition().getLongitude(),
-                            pointDestin.getGeoPosition().getLatitude(),pointDestin.getGeoPosition().getLongitude()))<0){
-                        shortDistance = distanceCoord(aux.getMapRoute().getPoint1().getGeoPosition().getLatitude(),aux.getMapRoute().getPoint1().getGeoPosition().getLongitude(),
-                                pointDestin.getGeoPosition().getLatitude(),pointDestin.getGeoPosition().getLongitude());
-                        position=count;
-                    }
-                }
-            }
-        }
-        return possibleRoutes.get(position);
-    }
-
-    public void findRouteInDistance(int idElementPoint1, int idElementPoint2) {
-        int idRoute = idElementPoint1;
-        MapElement routeCurrent;
-        routeCurrent = findShortRoute(searchRelationPointRoute(idElementPoint1),searchElementPointId(idElementPoint2)
-        ,idRoute);
-        idRoute = searchPointCurrent(idRoute,routeCurrent);
-        routeResult.add(routeCurrent);
-        routeResult.add(searchElementPointId(idElementPoint1));
-        routeResult.add(searchElementPointId(idRoute));
-        while (idRoute!=idElementPoint2){
-            routeCurrent = findShortRoute(searchRelationPointRoute(idRoute),searchElementPointId(idElementPoint2),idRoute);
-            idRoute = searchPointCurrent(idRoute,routeCurrent);
-            routeResult.add(routeCurrent);
-            routeResult.add(searchElementPointId(idRoute));
-        }
-    }
 
     private int searchPointCurrent(int idElement,MapElement route){
        if (idElement!=route.getMapRoute().getPoint2().getIdElement()){
@@ -177,9 +117,25 @@ public class Graph {
         return distancia;
     }
 
+    private List<MapElement> getElementListNode(){
+        List<MapElement> nodes = new ArrayList<>();
+        for (Node aux:elementPointList) {
+            nodes.add(aux.getNode());
+        }
+        return nodes;
+    }
+
+    private List<MapElement> getElementListArc(){
+        List<MapElement> arcs = new ArrayList<>();
+        for (Arc aux:elementRouteList) {
+            arcs.add(aux.getArc());
+        }
+        return arcs;
+    }
+
     public List<MapElement> getElementList(){
-        List<MapElement> elements = elementPointList;
-        elements.addAll(elementRouteList);
+        List<MapElement> elements = getElementListNode();
+        elements.addAll(getElementListArc());
         return elements;
     }
 
@@ -191,19 +147,19 @@ public class Graph {
         this.idElement = idElement;
     }
 
-    public List<MapElement> getElementPointList() {
+    public List<Node> getElementPointList() {
         return elementPointList;
     }
 
-    public void setElementPointList(List<MapElement> elementPointList) {
+    public void setElementPointList(List<Node> elementPointList) {
         this.elementPointList = elementPointList;
     }
 
-    public List<MapElement> getElementRouteList() {
+    public List<Arc> getElementRouteList() {
         return elementRouteList;
     }
 
-    public void setElementRouteList(List<MapElement> elementRouteList) {
+    public void setElementRouteList(List<Arc> elementRouteList) {
         this.elementRouteList = elementRouteList;
     }
 

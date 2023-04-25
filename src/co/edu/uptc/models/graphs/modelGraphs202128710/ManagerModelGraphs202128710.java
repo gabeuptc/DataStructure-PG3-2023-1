@@ -41,12 +41,14 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
 
     @Override
     public MapElement getElement(int id) {
-        return graph.searchElementPointId(id);
+        Node tmp = graph.searchElementPointId(id);
+        return tmp.getNode();
     }
 
     @Override
     public MapElement getElement(int idElementPoint1, int idElementPoint2) {
-        return graph.searchRoute(idElementPoint1,idElementPoint2);
+        Arc tmp =graph.searchRoute(idElementPoint1,idElementPoint2);
+        return tmp.getArc();
     }
 
     @Override
@@ -88,8 +90,7 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
         graph.getRouteResult().clear();
-        System.out.println("size point: "+ graph.getElementPointList().size());
-        graph.findRouteInDistance(idElementPoint1,idElementPoint2);
+
         presenter.updateResultGraph();
     }
 
