@@ -7,7 +7,6 @@ public class MapRoute {
 
     private RouteType typeRoute;
     private double speedRoute;
-
     private OrientationRoutes orientationRoutes;
     private MapElement point1;
     private MapElement point2;
