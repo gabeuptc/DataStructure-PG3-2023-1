@@ -41,7 +41,6 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     }
 
     private void fillGraph(MapElement element) {
-        System.out.println("nuevo elemento con id " + element.getIdElement());
         if (element.getElementType() == ElementType.POINT) {
             graph.addNode(new Node(element));
         } else {
@@ -135,7 +134,7 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
         graph.getElementsResult().clear();
-        graph.setElementsResult(graph.calculateShortestRouteInDistance(idElementPoint1, idElementPoint2));
+        graph.setElementsResult(graph.calculateShortestRouteInDistance(idElementPoint1, idElementPoint2,false));
         verifyResult();
     }
 
@@ -149,7 +148,9 @@ public class ManagerModelGraphs202128687 implements ContractGraphs.Model {
 
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
-
+        graph.getElementsResult().clear();
+        graph.setElementsResult(graph.calculateShortestRouteInDistance(idElementPoint1, idElementPoint2,true));
+        verifyResult();
     }
 
     @Override

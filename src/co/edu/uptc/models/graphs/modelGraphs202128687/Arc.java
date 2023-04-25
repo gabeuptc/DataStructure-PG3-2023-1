@@ -44,9 +44,11 @@ public class Arc {
     }
 
     public Double getDistance() {
-        System.out.println("desde getDistance");
-        System.out.println(" la distancia entre el nodo 1 y el nodo 2 es: " + operationMaps.calculateDistance(route.getPoint1(), route.getPoint2()));
         return operationMaps.calculateDistance(route.getPoint1(), route.getPoint2());
+    }
+
+    public Double getVelocity() {
+        return operationMaps.calculateVelocity(this.getMapRoute());
     }
 
     public Integer getIdElement() {

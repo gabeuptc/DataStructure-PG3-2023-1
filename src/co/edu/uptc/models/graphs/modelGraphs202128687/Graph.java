@@ -9,15 +9,13 @@ public class Graph {
     private List<Arc> arcs;
     private Map<Integer, MapElement> elements;
     private Map<Integer, MapElement> elementsResult;
-    private Set<Integer> visited;
-    private OperationMaps operationMaps;
+    private boolean isVelocity;
 
     public Graph() {
         elements = new HashMap<>();
         elementsResult = new HashMap<>();
         nodes = new ArrayList<>();
         arcs = new ArrayList<>();
-        OperationMaps operationMaps = new OperationMaps();
     }
 
     public void addNode(Node node) {
@@ -77,7 +75,8 @@ public class Graph {
         return elementsResult;
     }
 
-    public Map<Integer, MapElement> calculateShortestRouteInDistance(int startNodeId, int endNodeId) {
+    public Map<Integer, MapElement> calculateShortestRouteInDistance(int startNodeId, int endNodeId, boolean isVelocity) {
+        this.isVelocity = isVelocity;
         // Inicializar las distancias y los predecesores de los nodos
         Map<Integer, Double> nodeDistances = new HashMap<>();
         Map<Integer, Integer> nodePredecessors = new HashMap<>();
@@ -117,15 +116,20 @@ public class Graph {
         return closestNode;
     }
 
-    private void updateDistancesAndPredecessors(Node currentNode, Map<Integer, Double> nodeDistances,
-                                                Map<Integer, Integer> nodePredecessors, Set<Integer> visitedNodes) {
+    private void updateDistancesAndPredecessors(Node currentNode, Map<Integer, Double> nodeDistances, Map<Integer, Integer> nodePredecessors, Set<Integer> visitedNodes) {
         for (Arc arc : currentNode.getArcs()) {
             currentNode.printArcs();
             int neighborNodeId = arc.getOtherEnd(currentNode.getMapElement().getIdElement());
             if (visitedNodes.contains(neighborNodeId)) {
                 continue;
             }
-            double newDistance = nodeDistances.get(currentNode.getMapElement().getIdElement()) + arc.getDistance();
+            double newDistance = 0.0;
+            if(isVelocity) {
+                newDistance = nodeDistances.get(currentNode.getMapElement().getIdElement()) + arc.getDistance();
+            }else {
+                newDistance = nodeDistances.get(currentNode.getMapElement().getIdElement()) + arc.getVelocity();
+            }
+
             if (newDistance < nodeDistances.get(neighborNodeId)) {
                 nodeDistances.put(neighborNodeId, newDistance);
                 nodePredecessors.put(neighborNodeId, currentNode.getMapElement().getIdElement());
@@ -160,13 +164,13 @@ public class Graph {
     }
 
     private Arc findArcBetweenNodes(Integer previousNodeId, Integer currentNodeId) {
-         for (Arc arc : arcs) {
-               if (arc.getIdElementPoint1() == previousNodeId && arc.getIdElementPoint2() == currentNodeId ||
-                     arc.getIdElementPoint1() == currentNodeId && arc.getIdElementPoint2() == previousNodeId) {
-                  return arc;
-               }
-         }
-         return null;
+        for (Arc arc : arcs) {
+            if (arc.getIdElementPoint1() == previousNodeId && arc.getIdElementPoint2() == currentNodeId ||
+                    arc.getIdElementPoint1() == currentNodeId && arc.getIdElementPoint2() == previousNodeId) {
+                return arc;
+            }
+        }
+        return null;
     }
 
 
@@ -180,7 +184,7 @@ public class Graph {
     }
 
     public void setElementsResult(Map<Integer, MapElement> integerMapElementMap) {
-         this.elementsResult = integerMapElementMap;
+        this.elementsResult = integerMapElementMap;
     }
 
     public Node searchNode(MapElement point) {
