@@ -8,15 +8,6 @@ import java.io.*;
 import java.util.*;
 
 public class Persistence {
-    private Properties properties;
-    public Persistence() {
-        properties = new Properties();
-        try {
-            properties.load(new FileInputStream("resources/config.properties"));
-        } catch (IOException e) {
-            throw new RuntimeException("No se encontra el archivo");
-        }
-    }
     private Map<Integer, MapElement> fillGraph(MapElement[] mapElements, FileReader reader) throws IOException {
         Map<Integer, MapElement> elements = new HashMap<>();
         if (mapElements != null) {
@@ -29,7 +20,7 @@ public class Persistence {
     }
     public void save(Map<Integer, MapElement> elements) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        FileWriter writer = new FileWriter(properties.getProperty("DATA_FILE_202127061"));
+        FileWriter writer = new FileWriter("data/Graph202127061.json");
         writer.write(gson.toJson(elements.values()));
         writer.close();
     }
@@ -37,9 +28,9 @@ public class Persistence {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         FileReader reader = null;
         try {
-            reader = new FileReader(properties.getProperty("DATA_FILE_202127061"));
+            reader = new FileReader("data/Graph202127061.json");
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("No se encontra el archivo " + properties.getProperty("DATA_FILE_202127061") + ", se creara uno nuevo");
+            throw new RuntimeException("No se encontra el archivo " + "Graph202127061" + ", se creara uno nuevo");
         }
         return fillGraph(gson.fromJson(reader, MapElement[].class), reader);
     }

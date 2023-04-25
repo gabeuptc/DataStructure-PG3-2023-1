@@ -103,7 +103,7 @@ public class ManagerModelGraphs202127061 implements ContractGraphs.Model {
         return  false;
     }
     private void verifyResult() {
-        if (graph.getResultElements().size() == 0) {
+        if (graph.getrElements().size() == 0) {
             presenter.notifyWarning("No se encontraron rutas");
         } else {
             presenter.updateResultGraph();
@@ -112,17 +112,17 @@ public class ManagerModelGraphs202127061 implements ContractGraphs.Model {
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
         graph.clearResult();
-        graph.shortestRoute(idElementPoint1, idElementPoint2, Graph.DISTANCE);
+        graph.shortestRoute(idElementPoint1, idElementPoint2, 1);
         verifyResult();
     }
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
         graph.clearResult();
-        graph.shortestRoute(idElementPoint1, idElementPoint2, Graph.TIME);
+        graph.shortestRoute(idElementPoint1, idElementPoint2, 0);
         verifyResult();
     }
     @Override
     public Set<MapElement> getResultElements() {
-        return new HashSet<>(graph.getResultElements().values());
+        return new HashSet<>(graph.getrElements().values());
     }
 }

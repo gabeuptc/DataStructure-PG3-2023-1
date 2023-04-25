@@ -546,7 +546,7 @@
     "idElement": 34,
     "mapRoute": {
       "typeRoute": "PAVING",
-      "speedRoute": 4.0,
+      "speedRoute": 224.0,
       "orientationRoutes": "ORIGIN_DESTIN",
       "point1": {
         "elementType": "POINT",
