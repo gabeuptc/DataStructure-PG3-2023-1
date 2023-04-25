@@ -163,7 +163,7 @@ public class Graph202114641 {
         path.addFirst(points.get(startIdx));
         return path;
     }
-    public List<MapElement> getShortestForNodes(MapElement start, MapElement end){
+    public List<MapElement> getShortestForDistance(MapElement start, MapElement end){
             List<MapElement> pointsElements= findShortestPathDistance(start,end);
             List<MapElement> mapElements= new ArrayList<>(pointsElements);
 

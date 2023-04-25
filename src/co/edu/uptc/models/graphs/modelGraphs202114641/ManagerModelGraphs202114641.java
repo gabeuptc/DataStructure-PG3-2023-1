@@ -1,9 +1,10 @@
 package co.edu.uptc.models.graphs.modelGraphs202114641;
 
+import co.edu.uptc.models.graphs.modelGraphs202022012.Persistence;
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.types.ElementType;
-import org.jxmapviewer.viewer.GeoPosition;
+
 
 import java.util.*;
 
@@ -13,22 +14,27 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
     private Map<Integer,MapElement> elements;
     private Map<Integer,MapElement> elementsResult;
     private Graph202114641 graph;
+    Persistence202114641 persistence;
 
     @Override
     public void setPresenter(ContractGraphs.Presenter presenter) {
         this.presenter = presenter;
-        elements= new HashMap<>();
+        persistence= new Persistence202114641();
+        readData();
         elementsResult= new HashMap<>();
+
     }
 
     public void addElementOnly(MapElement mapElement) {
         mapElement.setIdElement(count++);
         elements.put(mapElement.getIdElement(), mapElement);
+        saveData();
     }
 
     @Override
     public void addElement(MapElement mapElement) {
         addElementOnly(mapElement);
+        saveData();
         presenter.updateGraph();
     }
 
@@ -78,7 +84,7 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
     public void deletePoint(int idElement) {
         if (!isRelation(idElement)) {
             elements.remove(idElement);
-            count--;
+            saveData();
             actualizateGraph();
             presenter.updateGraph();
         } else {
@@ -96,7 +102,7 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
         elementsResult.clear();
         actualizateGraph();
-        List<MapElement> list= graph.getShortestForTime(getElement(idElementPoint1),getElement(idElementPoint2));
+        List<MapElement> list= graph.getShortestForDistance(getElement(idElementPoint1),getElement(idElementPoint2));
         elementsResult= new HashMap<>();
 
         for (int i = 0; i < list.size(); i++) {
@@ -112,8 +118,9 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
         actualizateGraph();
         List<MapElement> list= graph.getShortestForTime(getElement(idElementPoint1),getElement(idElementPoint2));
         elementsResult= new HashMap<>();
-
-
+        for (int i = 0; i < list.size(); i++) {
+            elementsResult.put(i, list.get(i));
+        }
         presenter.updateResultGraph();
 
     }
@@ -136,4 +143,11 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
         List<MapElement> list= new ArrayList<>(elements.values());
     graph= new Graph202114641(list);
     }
+    private void saveData(){
+        persistence.saveElements(elements);
+    }
+    private void readData(){
+        elements= persistence.loadElements();
+    }
+
 }
