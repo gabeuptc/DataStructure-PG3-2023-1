@@ -46,17 +46,6 @@ public class ManagerModelGraphs202127343 implements ContractGraphs.Model {
         return null;
     }
 
-    private void calculateDistance(MapRoute mapRoute) {
-    /*    MapRoute origin = mapRoute.getPoint1();
-        MapPoint destin = mapRoute.getPoint1();
-        //deben calcular la distancia de una ruta
-        //cuando calculen la distancia (en metros) de una ruta deben setearla en el elemento
-        //ejs:
-        mapRoute.setDistance(230.556);
-        //esto para que se puedan mostrar esos detalles en la vista*/
-    }
-
-
     @Override
     public void setPresenter(ContractGraphs.Presenter presenter) {
         this.presenter = presenter;
@@ -142,9 +131,15 @@ public class ManagerModelGraphs202127343 implements ContractGraphs.Model {
         return false;
     }
 
-    private void loadInformation() throws IOException {
+    private void loadInformation()  {
         GsonMapper gsonMapper = new GsonMapper("data/graphs202127343.json");
-        ArrayList<MapElement> graphs = gsonMapper.getInformation();
+        ArrayList<MapElement> graphs = null;
+        try {
+            graphs = gsonMapper.getInformation();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void saveInformation() throws IOException {
