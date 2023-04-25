@@ -132,7 +132,7 @@ public class PanelButtonsModels extends JPanel {
     }
 
     private void addButtonSelectModel202114641() {
-        JButton jButtonSelectModelUser = new JButton("202114641");
+        JButton jButtonSelectModelUser = new JButton("202114641-*");
         jButtonSelectModelUser.setPreferredSize(new Dimension(120,25));
         add(jButtonSelectModelUser);
         jButtonSelectModelUser.addActionListener(e -> ManagerGeneral.getInstance().configModelGraphs202114641());

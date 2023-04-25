@@ -114,7 +114,6 @@ public class ManagerGeneral {
 
     private void createModelGraphs() {
         modelGraphs202127812 = new ManagerModelGraphs202127812();
-
         modelGraphs202127061 = new ManagerModelGraphs202127061();
         //modelGraphs202023577 = new ManagerModelGraphs202023577();
         //modelGraphs201612075 = new ManagerModelGraphs201612075();
@@ -126,7 +125,7 @@ public class ManagerGeneral {
         modelGraphs202022012 = new ManagerModelGraphs202022012();
         //modelGraphs201813802 = new ManagerModelGraphs201813802();
         //modelGraphs202113214 = new ManagerModelGraphs02113214();
-        //modelGraphs202114641 = new ManagerModelGraphs202114641();
+        modelGraphs202114641 = new ManagerModelGraphs202114641();
         modelGraphs202115100 = new ManagerModelGraphs202115100();
         modelGraphs202128710 = new ManagerModelGraphs202128710();
         //modelGraphs202112690 = new ManagerModelGraphs202112690();
