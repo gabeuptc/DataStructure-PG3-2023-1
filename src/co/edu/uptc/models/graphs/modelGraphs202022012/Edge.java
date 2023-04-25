@@ -46,6 +46,7 @@ public class Edge{
 
     @Override
     public String toString() {
-        return "arco" + mapRoute.getPoint1().getGeoPosition().getLatitude()+ mapRoute.getPoint1().getGeoPosition().getLongitude();
+        return "Arco --> " + mapRoute.getPoint1().getGeoPosition().getLongitude()+ " " +mapRoute.getPoint1().getGeoPosition().getLatitude()
+                +" "+ mapRoute.getPoint2().getGeoPosition().getLongitude()+" " + mapRoute.getPoint2().getGeoPosition().getLatitude();
     }
 }

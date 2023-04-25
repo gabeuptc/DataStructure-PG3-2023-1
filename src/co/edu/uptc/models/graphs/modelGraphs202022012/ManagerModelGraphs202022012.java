@@ -58,6 +58,7 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
         if (elements.containsKey(idPoint)) {
             if (!isRelation(idPoint)) {
                 graph.deletePoint(elements.get(idPoint));
+                saveData();
                 elements.remove(idPoint);
                 presenter.updateGraph();
             } else {
@@ -80,7 +81,9 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
-        //graph.fastestRoute();
+        elementsResult = graph.minDis(idElementPoint1,idElementPoint2);
+        elementsResult.putAll(graph.edgeToMapElement(elements));
+        presenter.updateResultGraph();
     }
 
 
@@ -91,7 +94,7 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> getResultElements() {
-        return null;
+        return new HashSet<>(elementsResult.values());
     }
 
     @Override
@@ -100,6 +103,7 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
         mapElement.getMapRoute().setSpeedRoute(mapElementModify.getMapRoute().getSpeedRoute());
         mapElement.getMapRoute().setOrientationRoutes(mapElementModify.getMapRoute().getOrientationRoutes());
         mapElement.getMapRoute().setTypeRoute(mapElementModify.getMapRoute().getTypeRoute());
+        saveData();
     }
 
     @Override
@@ -144,8 +148,8 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
     public void loadGraphs() {
         Graph graph1 = graph.loadData();
         if (graph1 != null) {
-            for (int i = 0; i < graph1.getNodes().size(); i++) {
-                addElementOnly(graph1.getNodes().get(i).getMapElement());
+            for (int i = 0; i < graph1.getElements().size(); i++) {
+                addElementOnly(graph1.getElements().get(i).getMapElement());
             }
             for (int i = 0; i < graph1.getEdges().size(); i++) {
                 MapRoute mapRoute = new MapRoute();
