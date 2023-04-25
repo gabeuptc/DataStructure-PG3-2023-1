@@ -53,7 +53,10 @@ public class Graph202114641 {
         }
         public int searchPointForIndex(MapElement point){
             for (int i = 0; i < points.size(); i++) {
-                if (point.equals(points.get(i))){
+                MapElement point2=points.get(i);
+                if (point.getGeoPosition().getLatitude()==point2.getGeoPosition().getLatitude()&&
+                point.getGeoPosition().getLongitude()==point2.getGeoPosition().getLongitude()){
+
                     return i;
                 }
             }

@@ -21,6 +21,7 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
         this.presenter = presenter;
         persistence= new Persistence202114641();
         readData();
+
         elementsResult= new HashMap<>();
 
     }
@@ -28,6 +29,7 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
     public void addElementOnly(MapElement mapElement) {
         mapElement.setIdElement(count++);
         elements.put(mapElement.getIdElement(), mapElement);
+
         saveData();
     }
 
