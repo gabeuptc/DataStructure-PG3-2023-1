@@ -115,6 +115,9 @@ public class ManagerModelGraphs202127717 implements ContractGraphs.Model {
                         routes.remove(getElement(revP1, revP2).getIdElement());
                     } else {
                         temp = element2.getMapRoute().getPoint2().getIdElement();
+                        if (temp == point1){
+                            routes.remove(getElement(element2.getMapRoute().getPoint1().getIdElement(), temp).getIdElement(), getElement(element2.getMapRoute().getPoint1().getIdElement(), temp));
+                        }
                         break;
                     }
                 }
