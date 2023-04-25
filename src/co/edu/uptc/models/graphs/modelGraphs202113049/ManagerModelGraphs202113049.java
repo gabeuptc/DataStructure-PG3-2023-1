@@ -48,6 +48,18 @@ public class ManagerModelGraphs202113049 implements ContractGraphs.Model {
 
     @Override
     public MapElement getElement(int idElementPoint1, int idElementPoint2) {
+        for (MapElement mapElement: graphsManager.getElements1().values()) {
+            if (mapElement.getElementType()==ElementType.ROUTE){
+                if ((mapElement.getMapRoute().getPoint1().getIdElement()==idElementPoint1) &&
+                        (mapElement.getMapRoute().getPoint2().getIdElement()==idElementPoint2)) {
+                    return mapElement;
+                }
+                if ((mapElement.getMapRoute().getPoint2().getIdElement()==idElementPoint1) &&
+                        (mapElement.getMapRoute().getPoint1().getIdElement()==idElementPoint2)) {
+                    return mapElement;
+                }
+            }
+        }
         return null;
     }
 
@@ -116,13 +128,14 @@ public class ManagerModelGraphs202113049 implements ContractGraphs.Model {
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
-
-        graphsManager.searchRoutes(idElementPoint1,idElementPoint2);
+        graphsManager.getShortestRouteInDistance(idElementPoint1,idElementPoint2);
+        presenter.updateResultGraph();
     }
 
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
-
+        graphsManager.getShortestRouteInTime(idElementPoint1,idElementPoint2);
+        presenter.updateResultGraph();
     }
 
     @Override
@@ -132,6 +145,9 @@ public class ManagerModelGraphs202113049 implements ContractGraphs.Model {
 
     @Override
     public void modifyElement(MapElement mapElementModify) {
-
+        MapElement mapElement = getElement(mapElementModify.getIdElement());
+        mapElement.getMapRoute().setSpeedRoute(mapElementModify.getMapRoute().getSpeedRoute());
+        mapElement.getMapRoute().setOrientationRoutes(mapElementModify.getMapRoute().getOrientationRoutes());
+        mapElement.getMapRoute().setTypeRoute(mapElementModify.getMapRoute().getTypeRoute());
     }
 }

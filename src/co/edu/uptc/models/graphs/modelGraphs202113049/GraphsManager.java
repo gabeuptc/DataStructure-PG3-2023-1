@@ -2,6 +2,7 @@ package co.edu.uptc.models.graphs.modelGraphs202113049;
 
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
+import co.edu.uptc.views.maps.OrientationRoutes;
 import co.edu.uptc.views.maps.types.ElementType;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -27,20 +28,18 @@ public class GraphsManager {
     public void addElementOnly(MapElement mapElement) {
         mapElement.setIdElement(count++);
         if(mapElement.getElementType()== ElementType.ROUTE){
-            int id1 = mapElement.getMapRoute().getPoint1().getIdElement();
-            //int id2 = mapElement.getMapRoute().getPoint2().getIdElement();
-            //addRouteToPoint(id1,id2,mapElement);
-            addRouteToPoint(id1,mapElement);
+            if(mapElement.getMapRoute().getOrientationRoutes()== OrientationRoutes.ORIGIN_DESTIN){
+                int id1 = getIDNode(mapElement.getMapRoute().getPoint1());
+                addRouteToPoint(id1,mapElement);
+            }else if(mapElement.getMapRoute().getOrientationRoutes()== OrientationRoutes.DESTIN_ORIGIN){
+                int id1 = getIDNode(mapElement.getMapRoute().getPoint2());
+                addRouteToPoint(id1,mapElement);
+            }
         }else{
             nodes.add(new Node202113049(mapElement,nodes.size()));
         }
         elements.put(mapElement.getIdElement(), mapElement);
     }
-
-    /*private void addRouteToPoint(int id1,int id2,MapElement mapElement){
-        getNode(id1).setMapRoute(mapElement.getMapRoute());
-        getNode(id2).setMapRoute(mapElement.getMapRoute());
-    }*/
 
     private void addRouteToPoint(int id1,MapElement mapElement){
         getNode(id1).addMapRoute(mapElement.getMapRoute());
@@ -50,60 +49,79 @@ public class GraphsManager {
         return nodes.get(id);
     }
 
-    private Map<Integer,MapElement> getOnlyRoutes(){
-        HashMap<Integer,MapElement> routes = new HashMap<>();
-        int auxI = 0;
-        for (int i = 0; i <elements.size() ; i++) {
-            MapElement element = elements.get(i);
-            if(element!=null){
-                if(elements.get(i).getElementType()==ElementType.ROUTE){
-                    if(routes.size()==0){
-                        routes.put(elements.get(0).getIdElement(),elements.get(i));
-                    }else{
-                        auxI++;
-                        routes.put(elements.get(auxI).getIdElement(),elements.get(i));
+    public int getIDNode(MapElement element){
+        for (int i = 0; i <nodes.size() ; i++) {
+            if(nodes.get(i).getNode().getIdElement()==element.getIdElement()){
+                return nodes.get(i).getId();
+            }
+        }
+        return -1;
+    }
+
+    public Node202113049 searchNodeByIdElement(int id1){
+        for (int i = 0; i <nodes.size() ; i++) {
+            if(nodes.get(i).getNode().getIdElement()==id1){
+                return nodes.get(i);
+            }
+        }
+        return null;
+    }
+
+    public PossibleRoute searchRoutes(int id1, int id2){
+        Node202113049 tmp = searchNodeByIdElement(id1);
+        PossibleRoute possibleRoute = new PossibleRoute(tmp.getNode());
+
+        while(tmp.getNode().getIdElement()!=id2){
+            if(tmp.getArcs().size()==0) tmp = searchNodeByIdElement(id1);
+            tmp.getArcs().sort(new ArcComparator());
+            for (int i = 0; i <tmp.getArcs().size() ; i++) {
+                while(tmp.getArcs().size()!=0&&tmp.getNode().getIdElement()!=id2){
+                    getNode(tmp.getId()).setVisited(true);
+                    if(tmp.getArcs().get(i).getArc().getOrientationRoutes()==OrientationRoutes.ORIGIN_DESTIN) {
+                        Node202113049 aux = tmp;
+                        tmp = searchNodeByIdElement(tmp.getArcs().get(i).getArc().getPoint2().getIdElement());
+                        tmp.getArcs().sort(new ArcComparator());
+                        possibleRoute.addElement(tmp.getNode());
+                        if (aux.getArcs().size() != 0) possibleRoute.addRoute(aux.getArcs().get(i).getArc());
                     }
                 }
-            }else{
-                i++;
+                if(tmp.getArcs().size()==0&&tmp.getNode().getIdElement()!=id2){
+                    tmp = searchNodeByIdElement(id1);
+                    tmp.getArcs().sort(new ArcComparator());
+                    possibleRoute.deleteNodes();
+                }
             }
-
         }
-        return routes;
+        return possibleRoute;
     }
 
-    public void searchRoutes(int id1,int id2){
-        Map<Integer,MapElement> routes = getOnlyRoutes();
-        ArrayList<PossibleRoute> possibleRoutes = new ArrayList<PossibleRoute>();
-        MapElement elementAux = new MapElement(new GeoPosition(new double[2]));
-        MapElement elementAux2 = searchRouteById(id1);
-        int idAux =id1;
-        int idAux2 = id1;
-        for (int i = 0; i < routes.size(); i++) {
-            if(searchRouteById(idAux).getMapRoute().getPoint1()!=null){
-                idAux = searchRouteById(idAux).getMapRoute().getPoint1().getIdElement();
-            }
-            if(searchRouteById(idAux2).getMapRoute().getPoint2()!=null) {
-                idAux2 = searchRouteById(idAux2).getMapRoute().getPoint2().getIdElement();
-            }
+
+
+    public void getShortestRouteInDistance(int id1, int id2){
+        PossibleRoute possibleRoute = searchRoutes(id1,id2);
+        int size = possibleRoute.getOnlyPoints().size();
+        if(possibleRoute.getOnlyPoints().get(size-1).getIdElement()==id2){
+            this.elementsResult = possibleRoute.getElementsResult();
         }
     }
 
-    public MapElement searchRouteById(int id){
-        Map<Integer,MapElement> routes = getOnlyRoutes();
-        MapElement route = null;
-        boolean isFound = false;
-        int i =0;
-        while (isFound==false||i!=routes.size()){
-            if(routes.get(i).getMapRoute().getPoint1().getIdElement()==id){
-                isFound = true;
-                route=routes.get(i);
-                i=routes.size();
-            }else{
-                i++;
+    public void getShortestRouteInTime(int id1, int id2){
+        PossibleRoute possibleRoute = searchRoutes(id1,id2);
+        int size = possibleRoute.getOnlyPoints().size();
+        if(possibleRoute.getOnlyPoints().get(size-1).getIdElement()==id2){
+            this.elementsResult = possibleRoute.getElementsResult();
+        }
+    }
+
+    public Node202113049 getNextNode(Arc202113049 arc){
+        for (int i = 0; i <nodes.size() ; i++) {
+            for (int j = 0; j < nodes.get(i).getArcs().size(); j++) {
+                if(nodes.get(i).getArcs().get(j)==arc){
+                    return nodes.get(i);
+                }
             }
         }
-        return route;
+        return null;
     }
 
     public Set<MapElement> getElements() {
