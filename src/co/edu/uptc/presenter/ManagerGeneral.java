@@ -352,6 +352,7 @@ public class ManagerGeneral {
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
+            e.printStackTrace();
         }
     }
 

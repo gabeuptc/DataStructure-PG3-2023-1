@@ -4,9 +4,10 @@ import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.views.maps.types.ElementType;
 
-import java.util.*;
 
 import static java.lang.Math.*;
+
+import java.util.*;
 
 public class Graph {
     private Map<Integer, MapElement> elements;

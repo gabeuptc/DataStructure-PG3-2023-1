@@ -7,7 +7,6 @@ import java.util.Set;
 
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.presenter.ContractGraphs;
-import co.edu.uptc.views.maps.MapElementGraph;
 import co.edu.uptc.views.maps.types.ElementType;
 
 public class ManagerModelGraphs202113214 implements ContractGraphs.Model {
@@ -59,7 +58,7 @@ public class ManagerModelGraphs202113214 implements ContractGraphs.Model {
 
     @Override
     public String getUser() {
-        return "Santiago Andr\u00e9s Orjuela L\u00f3pez";
+        return "Carlos Alfredo Manrique Cruz";
     }
 
     @Override
@@ -77,13 +76,12 @@ public class ManagerModelGraphs202113214 implements ContractGraphs.Model {
 
     @Override
     public void deletePoint(int idElement) {
-        //Pendiente - Eliminar el punto
         if (!pointHasRelation(idElement)) {
             graph.deleteElement(idElement);
             keepGraph();
             presenter.updateGraph();
         } else {
-            presenter.notifyWarning("El punto esta relacionado, por lo tanto no se puede borrar");
+            presenter.notifyWarning("No es posible eliminar");
         }
     }
 
@@ -91,7 +89,7 @@ public class ManagerModelGraphs202113214 implements ContractGraphs.Model {
         try {
             new Persistence202113214().keepGraph(graph.getElements());
         } catch (Exception e) {
-            presenter.notifyWarning("Error al guardar el grafo");
+            presenter.notifyWarning("Error al guardar");
             e.printStackTrace();
         }
     }
@@ -126,13 +124,12 @@ public class ManagerModelGraphs202113214 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> getResultElements() {
-        System.out.println("Tamaño lista de puntos finales: " + graph.getResultElements().values().size());
         return new HashSet<>(graph.getResultElements().values());
     }
 
     @Override
     public void modifyElement(MapElement mapElementModify) {
-        // TODO implementar
+        //TODO por implementar
     }
 
 

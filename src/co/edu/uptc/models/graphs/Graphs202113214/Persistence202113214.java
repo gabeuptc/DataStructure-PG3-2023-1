@@ -22,7 +22,7 @@ public class Persistence202113214 {
         try {
             properties.load(new FileInputStream("resources/config.properties"));
         } catch (IOException e) {
-            throw new RuntimeException("Arvhico no encontrado o inexistente");
+            throw new RuntimeException("Arvhico no encontrado");
         }
     }
 
@@ -43,7 +43,7 @@ public class Persistence202113214 {
         try {
             reader = new FileReader(properties.getProperty("DATA_FILE_202113214"));
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("Arvhico no encontrado o inexistente" + properties.getProperty("DATA_FILE_202113214") + ", se creara uno nuevo");
+            throw new RuntimeException("Arvhico no encontrado" + properties.getProperty("DATA_FILE_202113214") + ", se creara uno nuevo");
         }
         return fillGraph(gson.fromJson(reader, MapElement[].class), reader);
     }
