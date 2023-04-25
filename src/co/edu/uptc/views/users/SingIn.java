@@ -65,7 +65,7 @@ public class SingIn extends JDialog {
         add(login.getConfiguratedLabel(new JLabel("Contraseña"),12,3,30));
         add(login.createIconMode("assets/candado.png",3));
         passwordText = (JPasswordField) login.getConfiguratedText(new JPasswordField(),14,3,230);
-        JLabel iconSee = login.createIconModeSmaller("assets/ver.png",3);
+        JLabel iconSee = login.createLabelIconModeSmaller("assets/ver.png",3);
         add(passwordText);
         add(iconSee);
         iconSee.addMouseListener(new MouseAdapter() {
@@ -88,7 +88,7 @@ public class SingIn extends JDialog {
         add(login.getConfiguratedLabel(new JLabel("Confirmar contraseña"),12,4,30));
         add(login.createIconMode("assets/candado.png",4));
         passwordConfirm = (JPasswordField) login.getConfiguratedText(new JPasswordField(),14,4,230);
-        JLabel iconSeeConfirm = login.createIconModeSmaller("assets/ver.png",4);
+        JLabel iconSeeConfirm = login.createLabelIconModeSmaller("assets/ver.png",4);
         add(passwordConfirm);
         add(iconSeeConfirm);
         iconSeeConfirm.addMouseListener(new MouseAdapter() {
@@ -121,6 +121,7 @@ public class SingIn extends JDialog {
                     if (!managerUsers.isExist(user)){
                         managerUsers.addUser(user);
                         JOptionPane.showMessageDialog(null,"Registrado " + userText.getText());
+                        getInstance().setVisible(false);
                     }else {
                         JOptionPane.showMessageDialog(null,"Este usuario y/o correo ya se ha registrado antes");
                     }
