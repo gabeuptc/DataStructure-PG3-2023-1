@@ -1,24 +1,21 @@
 package co.edu.uptc.models.graphs.modelGraphs202128687;
 
 import co.edu.uptc.pojos.MapElement;
-import co.edu.uptc.pojos.MapRoute;
-import co.edu.uptc.views.maps.*;
-import org.jxmapviewer.viewer.GeoPosition;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Graph {
     private List<Node> nodes;
     private List<Arc> arcs;
-    private OrientationRoutes orientation;
+    private Map<Integer, MapElement> elements;
+    private Map<Integer, MapElement> elementsResult;
+    private boolean isVelocity = false;
 
     public Graph() {
+        elements = new HashMap<>();
+        elementsResult = new HashMap<>();
         nodes = new ArrayList<>();
         arcs = new ArrayList<>();
-        this.orientation = OrientationRoutes.ORIGIN_DESTIN;
     }
 
     public void addNode(Node node) {
@@ -29,78 +26,167 @@ public class Graph {
         arcs.add(arc);
     }
 
-    public void removeNode(GeoPosition point) {
-        Node toRemove = null;
-        for (Node node1 : nodes) {
-            if (node1.getPoint().equals(point)) {
-                toRemove = node1;
-            }
-        }
-        nodes.remove(toRemove);
+    public Map<Integer, MapElement> getElements() {
+        return elements;
     }
 
-    public Arc getArc(MapRoute route) {
+    public int getElementsSize() {
+        return elements.size();
+    }
+
+    public MapElement getElement(int elementID) {
+        return elements.get(elementID);
+    }
+
+    public void savePersistence(Persistence persistence) {
+        persistence.saveGraph(elements);
+    }
+
+    public void addElement(int position, MapElement element) {
+        elements.put(position, element);
+    }
+
+    public void setElements(Map<Integer, MapElement> elements) {
+        this.elements = elements;
+        nodes.clear();
+        arcs.clear();
+    }
+
+    public void deleteElement(int position) {
+        elements.remove(position, elements.get(position));
+    }
+
+    public MapElement getRoute(int idElementPoint1, int idElementPoint2) {
         for (Arc arc : arcs) {
-            if (arc.getRoute().equals(route)) {
+            if (arc.getIdElementPoint1() == idElementPoint1 && arc.getIdElementPoint2() == idElementPoint2 ||
+                    arc.getIdElementPoint1() == idElementPoint2 && arc.getIdElementPoint2() == idElementPoint1) {
+                return arc.getMapElement();
+            }
+        }
+        return null;
+    }
+
+    public void modifyElement(MapElement mapElementModify) {
+        elements.get(mapElementModify.getIdElement()).setMapRoute(mapElementModify.getMapRoute());
+    }
+
+    public Map<Integer, MapElement> getElementsResult() {
+        return elementsResult;
+    }
+
+    public Map<Integer, MapElement> calculateShortestRouteInDistance(int startNodeId, int endNodeId, boolean isVelocity) {
+        this.isVelocity = isVelocity;
+        Map<Integer, Double> nodeDistances = new HashMap<>();
+        Map<Integer, Integer> nodePredecessors = new HashMap<>();
+        initializeDistancesAndPredecessors(nodeDistances, startNodeId);
+
+        Set<Integer> visitedNodes = new HashSet<>();
+        while (visitedNodes.size() < nodes.size()) {
+            Node currentNode = findClosestUnvisitedNode(nodeDistances, visitedNodes);
+            if (currentNode == null) {
+                break;
+            }
+            visitedNodes.add(currentNode.getMapElement().getIdElement());
+            updateDistancesAndPredecessors(currentNode, nodeDistances, nodePredecessors, visitedNodes);
+        }
+        return reconstructShortestRoute(nodePredecessors, endNodeId);
+    }
+
+    private void initializeDistancesAndPredecessors(Map<Integer, Double> nodeDistances, int startNodeId) {
+        for (Node node : nodes) {
+            nodeDistances.put(node.getMapElement().getIdElement(), Double.POSITIVE_INFINITY);
+        }
+        nodeDistances.put(startNodeId, 0.0);
+    }
+
+    private Node findClosestUnvisitedNode(Map<Integer, Double> nodeDistances, Set<Integer> visitedNodes) {
+        Node closestNode = null;
+        double minDistance = Double.POSITIVE_INFINITY;
+        for (Node node : nodes) {
+            if (!visitedNodes.contains(node.getMapElement().getIdElement())
+                    && nodeDistances.get(node.getMapElement().getIdElement()) < minDistance) {
+                closestNode = node;
+                minDistance = nodeDistances.get(node.getMapElement().getIdElement());
+            }
+        }
+        return closestNode;
+    }
+
+    private void updateDistancesAndPredecessors(Node currentNode, Map<Integer, Double> nodeDistances, Map<Integer, Integer> nodePredecessors, Set<Integer> visitedNodes) {
+        for (Arc arc : currentNode.getArcs()) {
+            int neighborNodeId = arc.getOtherEnd(currentNode.getMapElement().getIdElement());
+            if (visitedNodes.contains(neighborNodeId)) {
+                continue;
+            }
+            double newDistance = 0.0;
+            if(isVelocity) {
+                newDistance = nodeDistances.get(currentNode.getMapElement().getIdElement()) + arc.getVelocity();
+            }else {
+                newDistance = nodeDistances.get(currentNode.getMapElement().getIdElement()) + arc.getDistance();
+            }
+
+            if (newDistance < nodeDistances.get(neighborNodeId)) {
+                nodeDistances.put(neighborNodeId, newDistance);
+                nodePredecessors.put(neighborNodeId, currentNode.getMapElement().getIdElement());
+            }
+        }
+    }
+
+    private Map<Integer, MapElement> reconstructShortestRoute(Map<Integer, Integer> nodePredecessors, int endNodeId) {
+        Map<Integer, MapElement> shortestRoute = new LinkedHashMap<>();
+        Integer currentNodeId = endNodeId;
+        while (currentNodeId != null) {
+            shortestRoute.put(currentNodeId, getNodeById(currentNodeId).getMapElement());
+            Integer previousNodeId = nodePredecessors.get(currentNodeId);
+            if (previousNodeId != null) {
+                Arc connectingArc = findArcBetweenNodes(previousNodeId, currentNodeId);
+                if (connectingArc != null) {
+                    shortestRoute.put(connectingArc.getIdElement(), connectingArc.getMapElement());
+                }
+            }
+            currentNodeId = previousNodeId;
+        }
+
+        Map<Integer, MapElement> reversedShortestRoute = new LinkedHashMap<>();
+        ListIterator<Map.Entry<Integer, MapElement>> iterator = new ArrayList<>(shortestRoute.entrySet()).listIterator(shortestRoute.size());
+        while (iterator.hasPrevious()) {
+            Map.Entry<Integer, MapElement> entry = iterator.previous();
+            reversedShortestRoute.put(entry.getKey(), entry.getValue());
+        }
+
+        return reversedShortestRoute;
+    }
+
+    private Arc findArcBetweenNodes(Integer previousNodeId, Integer currentNodeId) {
+        for (Arc arc : arcs) {
+            if (arc.getIdElementPoint1() == previousNodeId && arc.getIdElementPoint2() == currentNodeId ||
+                    arc.getIdElementPoint1() == currentNodeId && arc.getIdElementPoint2() == previousNodeId) {
                 return arc;
             }
         }
         return null;
     }
 
-    public Set<MapElement> calculateShortDistanceRoute(GeoPosition point1, GeoPosition point2) {
-        Set<MapElement> elements = new HashSet<>();
-        // dijsktra
-        return cloneSet(elements);
-    }
 
-    private Set<MapElement> cloneSet(Set<MapElement> set) {
-        Set<MapElement> setClonabled = new HashSet<>();
-        for (MapElement element : set) {
-            setClonabled.add(cloneElement(element));
+    private Node getNodeById(int id) {
+        for (Node node : nodes) {
+            if (node.getIdElement() == id) {
+                return node;
+            }
         }
-        return setClonabled;
-    }
-
-    private MapElement cloneElement(MapElement element) {
-        MapElement elementClonable = new MapElement(element.getMapRoute());
-        elementClonable.setElementType(element.getElementType());
-        elementClonable.setIdElement(element.getIdElement());
-        elementClonable.setMapRoute(element.getMapRoute());
-        elementClonable.setGeoPosition(element.getGeoPosition());
-
-        return elementClonable;
-    }
-
-    public Set<MapElement> calculateShortTimeRoute(GeoPosition point1, GeoPosition point2) {
         return null;
     }
 
-    public MapElement getElement(int elementID) {
+    public void setElementsResult(Map<Integer, MapElement> integerMapElementMap) {
+        this.elementsResult = integerMapElementMap;
+    }
+
+    public Node searchNode(MapElement point) {
+        for (Node node : nodes) {
+            if (node.getMapElement().getIdElement() == point.getIdElement()) {
+                return node;
+            }
+        }
         return null;
-    }
-
-    public void setOrientation(OrientationRoutes orientation) {
-        this.orientation = orientation;
-    }
-
-    public List<Node> getNodes() {
-        return nodes;
-    }
-
-    public void setNodes(List<Node> nodes) {
-        this.nodes = nodes;
-    }
-
-    public List<Arc> getArcs() {
-        return arcs;
-    }
-
-    public void setArcs(List<Arc> arcs) {
-        this.arcs = arcs;
-    }
-
-    public OrientationRoutes getOrientation() {
-        return orientation;
     }
 }
