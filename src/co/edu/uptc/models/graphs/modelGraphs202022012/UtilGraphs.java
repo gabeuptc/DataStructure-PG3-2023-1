@@ -18,6 +18,9 @@ public class UtilGraphs {
     }
 
     public double calculateTime(MapElement mapPoint1, MapElement mapPoint2, double speed ){
+        if(speed == 0.0){
+            return 0;
+        }
         return calculateDistance(mapPoint1,mapPoint2)/speed;
     }
 }

@@ -1,12 +1,9 @@
 package co.edu.uptc.models.graphs.modelGraphs202022012;
 
 import co.edu.uptc.pojos.MapElement;
-import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.views.maps.MapPointGraph;
-import co.edu.uptc.views.maps.MapRouteGraph;
-import co.edu.uptc.views.maps.OrientationRoutes;
 import co.edu.uptc.views.maps.types.ElementType;
-import org.jxmapviewer.input.MapClickListener;
+import com.google.gson.annotations.Expose;
 
 import java.util.*;
 
@@ -16,7 +13,7 @@ public class Graph {
     private List<Node> elements;
     private List<Edge> edges;
     private UtilGraphs utilGraphs;
-    private DijkstraAlgorithm dijkstraAlgorithm;
+    private transient DijkstraAlgorithm dijkstraAlgorithm;
     private Set<MapElement> shortestPath;
 
     public Graph() {

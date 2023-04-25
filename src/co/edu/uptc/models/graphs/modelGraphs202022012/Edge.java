@@ -3,13 +3,15 @@ package co.edu.uptc.models.graphs.modelGraphs202022012;
 
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
+import com.google.gson.annotations.Expose;
 
 
 public class Edge{
-
-
+    @Expose
     private MapRoute mapRoute;
+    @Expose
     private double distance;
+    @Expose
     private double time;
 
     public Edge(MapRoute mapRoute) {
