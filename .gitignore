@@ -11,6 +11,7 @@
 /out-tsc
 /bazel-out
 /out
+/data/*.json
 
 
 # IDEs and editors
