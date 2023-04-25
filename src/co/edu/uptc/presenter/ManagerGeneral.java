@@ -6,6 +6,7 @@ import co.edu.uptc.models.graphs.modelGraphs202115100.ManagerModelGraphs20211510
 import co.edu.uptc.models.graphs.modelGraphs202127061.ManagerModelGraphs202127061;
 import co.edu.uptc.models.graphs.modelGraphs202127343.ManagerModelGraphs202127343;
 import co.edu.uptc.models.graphs.modelGraphs202127812.ManagerModelGraphs202127812;
+import co.edu.uptc.models.graphs.modelGraphs202127812.ModelProof;
 import co.edu.uptc.models.graphs.modelGraphs202128710.ManagerModelGraphs202128710;
 import co.edu.uptc.models.graphs.modelGraphs202128687.ManagerModelGraphs202128687;
 import co.edu.uptc.models.people.model202128687.ManagerModel202128687;
@@ -46,6 +47,7 @@ public class ManagerGeneral {
 
 
     ContractGraphs.Presenter presenterGraphs;
+    ContractGraphs.Model modelGraphProof;
     ContractGraphs.Model modelGraphs202127812;
     ContractGraphs.Model modelGraphs202127061;
     ContractGraphs.Model modelGraphs202023577;
@@ -114,6 +116,7 @@ public class ManagerGeneral {
     }
 
     private void createModelGraphs() {
+        modelGraphProof = new ModelProof();
         modelGraphs202127812 = new ManagerModelGraphs202127812();
 
         modelGraphs202127061 = new ManagerModelGraphs202127061();
@@ -208,6 +211,20 @@ public class ManagerGeneral {
         view.updatedPeople();
     }
 
+    public void configModelGraphsProof() {
+        try {
+            modelGraphProof.setPresenter(presenterGraphs);
+            presenterGraphs.setModel(modelGraphProof);
+            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            modelGraphProof.loadGraphs();
+            viewGraphs.updateGraph();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            viewGraphs.notifyError("Modelo sin definir");
+        }
+    }
 
     public void configModelGraphs202127812() {
         try {
