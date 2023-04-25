@@ -39,10 +39,4 @@ public class Node {
     public List<MapElement> getMapRoutes() {
         return mapRoutes;
     }
-
-    public void printArcs() {
-         for (Arc arc : arcs) {
-               System.out.println(arc);
-         }
-    }
 }

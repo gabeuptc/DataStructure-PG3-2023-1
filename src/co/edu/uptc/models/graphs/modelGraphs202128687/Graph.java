@@ -117,7 +117,6 @@ public class Graph {
 
     private void updateDistancesAndPredecessors(Node currentNode, Map<Integer, Double> nodeDistances, Map<Integer, Integer> nodePredecessors, Set<Integer> visitedNodes) {
         for (Arc arc : currentNode.getArcs()) {
-            currentNode.printArcs();
             int neighborNodeId = arc.getOtherEnd(currentNode.getMapElement().getIdElement());
             if (visitedNodes.contains(neighborNodeId)) {
                 continue;

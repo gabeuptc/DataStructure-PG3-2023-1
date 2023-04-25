@@ -2,7 +2,6 @@ package co.edu.uptc.models.graphs.modelGraphs202128687;
 
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.pojos.MapRoute;
-import co.edu.uptc.views.maps.MapPointGraph;
 
 public class OperationMaps {
     private static final double EARTH_RADIUS_MTS = 6371000.0;
@@ -21,13 +20,6 @@ public class OperationMaps {
         return EARTH_RADIUS_MTS * centralAngle;
     }
 
-    public Double calculateVelocity(MapRoute mapRoute) {
-        double distance = calculateDistance(mapRoute.getPoint1(),mapRoute.getPoint2());
-        double penalization = calculatePenalization(mapRoute);
-        double velocity = mapRoute.getSpeedRoute();
-        return distance*penalization*velocity;
-    }
-
     private double calculatePenalization(MapRoute mapRoute) {
         double penalization = 0.0;
         penalization = switch (mapRoute.getTypeRoute()) {
@@ -38,6 +30,13 @@ public class OperationMaps {
             case OTHER -> OTHER;
         };
         return penalization;
+    }
+
+    public Double calculateVelocity(MapRoute mapRoute) {
+        double distance = calculateDistance(mapRoute.getPoint1(),mapRoute.getPoint2());
+        double penalization = calculatePenalization(mapRoute);
+        double velocity = mapRoute.getSpeedRoute();
+        return (distance/velocity)*penalization;
     }
 
     private double toRadians(double degrees) {
