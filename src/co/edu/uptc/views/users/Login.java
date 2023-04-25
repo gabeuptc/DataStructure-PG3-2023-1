@@ -70,7 +70,7 @@ public class Login extends JDialog {
         add(createIconMode("assets/candado.png",2));
         passwordText = (JPasswordField) getConfiguratedText(new JPasswordField(),14,2,230);
         add(passwordText);
-        JLabel iconSee = createIconModeSmaller("assets/ver.png",2);
+        JLabel iconSee = createLabelIconModeSmaller("assets/ver.png",2);
         add(iconSee);
         iconSee.addMouseListener(new MouseAdapter() {
             @Override
@@ -100,9 +100,9 @@ public class Login extends JDialog {
                 User user = managerUsers.getUser(userText.getText());
                 if (user!=null){
                     if (managerEncoding.decode(user.getPassword()).equals(new String(passwordText.getPassword()))){
+                        dashBoard.setCurrentUser(user);
                         getInstance().dispose();
                         singIn.dispose();
-                        dashBoard.setVisible(true);
                     }else {
                         JOptionPane.showMessageDialog(null,"Contraseña incorrecta");
                     }
@@ -173,13 +173,19 @@ public class Login extends JDialog {
         comp.setForeground(ValuesGlobals.COLOR_LABELS_FIELDS);
         return comp;
     }
-    public Component getConfiguratedText(Component comp, int size,int line,int width){
+    public static JLabel getConfiguratedLabel(JLabel comp, int size, int line,int weith, int heigth){
+        comp.setFont(new Font("Tahoma", Font.BOLD, size));
+        comp.setBounds(70,line*90,weith,heigth);
+        comp.setForeground(ValuesGlobals.COLOR_LABELS_FIELDS);
+        return comp;
+    }
+    public static Component getConfiguratedText(Component comp, int size,int line,int width){
         comp.setFont(new Font("Tahoma", Font.BOLD, size));
         comp.setBounds(70,line * 90 + 30,width,30);
         comp.setForeground(ValuesGlobals.COLOR_TEXT_FIELDS);
         return comp;
     }
-    public JLabel createIconMode(String fileName, int line){
+    public static JLabel createIconMode(String fileName, int line){
         ImageIcon icon = new ImageIcon(fileName);
         Image image = icon.getImage();
         Image scaledInstance = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -189,13 +195,13 @@ public class Login extends JDialog {
         return  label;
     }
 
-    public JLabel createIconModeSmaller(String fileName, int line){
+    public static JLabel createLabelIconModeSmaller(String fileName, int line){
         ImageIcon icon = getIconSmaller(fileName);
         JLabel label = new JLabel(icon);
         label.setBounds(310,90*line + 30,30,30);
         return  label;
     }
-    public ImageIcon getIconSmaller(String fileName){
+    public static ImageIcon getIconSmaller(String fileName){
         ImageIcon icon = new ImageIcon(fileName);
         Image image = icon.getImage();
         Image scaledInstance = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH);

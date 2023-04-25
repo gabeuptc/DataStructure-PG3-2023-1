@@ -2,6 +2,7 @@ package co.edu.uptc.views.maps;
 
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.views.board.DashBoard;
+import co.edu.uptc.views.email.ManagerEmail;
 import co.edu.uptc.views.maps.types.ElementType;
 import co.edu.uptc.views.maps.types.SelectionType;
 import org.jxmapviewer.JXMapViewer;
@@ -236,6 +237,14 @@ public class PanelMaps extends JPanel {
 
         }
 
+    }
+
+    public void sendGraph(){
+        //TODO obtener nombre del archivo del modelo
+        ManagerEmail.getInstance().createEmail(dashBoard.getCurrentUser().getEmail(),"Grafo del modelo de "
+                + ManagerGraphs.getInstance().getUser(),"Usuario: " + dashBoard.getCurrentUser().getNameUser() + "\n Se le envia" +
+                "el grafo del  modelo de " + ManagerGraphs.getInstance().getUser(),"data/---");
+        ManagerEmail.getInstance().sendEmail();
     }
 
 }
