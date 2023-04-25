@@ -14,11 +14,7 @@ public class Persistence {
     private static Persistence persistence;
     private Properties properties;
 
-    public static Persistence getInstance(){
-        return persistence == null? persistence = new Persistence(): persistence;
-    }
-
-    public void loadProperties(){
+    public Persistence(){
         properties = new Properties();
         try {
             properties.load(new FileInputStream("resources/config.properties"));
@@ -27,11 +23,15 @@ public class Persistence {
         }
     }
 
+    public static Persistence getInstance(){
+        return persistence == null? persistence = new Persistence(): persistence;
+    }
+
+
     public void saveData(Graph graph) {
-        //loadProperties();
         try {
             String json = new Gson().toJson(graph);
-            PrintWriter print = new PrintWriter("data/graphsData202022012.json");
+            PrintWriter print = new PrintWriter(properties.getProperty("DATA_FILE_202022012"));
             print.write(json);
             print.close();
         }catch (FileNotFoundException e){
@@ -39,11 +39,10 @@ public class Persistence {
     }
 
     public Graph loadData() {
-        //loadProperties();
         Graph graph = null;
         try {
             Gson gson = new Gson();
-            FileReader fileReader = new FileReader("data/graphsData202022012.json");
+            FileReader fileReader = new FileReader(properties.getProperty("DATA_FILE_202022012"));
             BufferedReader br = new BufferedReader(fileReader);
             Type type = new TypeToken<Graph>(){}.getType();
             graph = gson.fromJson(br, type);
