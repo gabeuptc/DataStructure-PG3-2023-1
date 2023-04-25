@@ -27,8 +27,8 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
     public void addElement(MapElement mapElement) {
         try {
             graph.add(mapElement);
-            presenter.updateGraph();
             persistence.store(graph);
+            presenter.updateGraph();
         }catch (FileNotFoundException e){
         }
 
@@ -41,12 +41,14 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
 
     @Override
     public MapElement getElement(int id) {
-        return graph.searchElementId(id);
+        Node tmp = graph.searchElementPointId(id);
+        return tmp.getNode();
     }
 
     @Override
     public MapElement getElement(int idElementPoint1, int idElementPoint2) {
-        return null;
+        Arc tmp =graph.searchRoute(idElementPoint1,idElementPoint2);
+        return tmp.getArc();
     }
 
     @Override
@@ -73,12 +75,23 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
 
     @Override
     public void deletePoint(int idElement) {
-        graph.removePoint(idElement);
+        try {
+            if (graph.removePoint(idElement)){
+                graph.removePoint(idElement);
+                presenter.updateGraph();
+                persistence.store(graph);
+            }else{
+                presenter.notifyWarning("El punto esta relacionado, por lo tanto no se puede borrar");
+            }
+        }catch (FileNotFoundException e){
+        }
     }
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
+        graph.getRouteResult().clear();
 
+        presenter.updateResultGraph();
     }
 
     @Override
@@ -88,11 +101,16 @@ public class ManagerModelGraphs202128710 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> getResultElements() {
-        return null;
+        return new HashSet<>(graph.getRouteResult());
     }
 
     @Override
     public void modifyElement(MapElement mapElementModify) {
-
+        graph.modifyRoute(mapElementModify);
+        try {
+            persistence.store(graph);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
