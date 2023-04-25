@@ -1,8 +1,8 @@
 package co.edu.uptc.models.graphs.modelGraphs202127343;
 
+import co.edu.uptc.models.graphs.modelGraphs202115100.Graph;
 import co.edu.uptc.models.graphs.modelGraphs202127343.persistence.GsonMapper;
 import co.edu.uptc.pojos.MapElement;
-import co.edu.uptc.pojos.MapRoute;
 import co.edu.uptc.presenter.ContractGraphs;
 import co.edu.uptc.views.maps.types.ElementType;
 
@@ -54,12 +54,14 @@ public class ManagerModelGraphs202127343 implements ContractGraphs.Model {
     public void addOnlyOnePoint(MapElement mapElement) {
         mapElement.setIdElement(idElementPoint++);
         elementsPoint.put(mapElement.getIdElement(), mapElement);
+        graphPoints.setTmpElementsPoint(elementsPoint);
     }
 
     @Override
     public void addElement(MapElement mapElement) {
         addOnlyOnePoint(mapElement);
         presenter.updateGraph();
+        graphPoints.setTmpElementsPoint(elementsPoint);
     }
 
     @Override
@@ -79,7 +81,6 @@ public class ManagerModelGraphs202127343 implements ContractGraphs.Model {
 
     @Override
     public void loadGraphs() {
-
     }
 
     @Override
@@ -89,6 +90,7 @@ public class ManagerModelGraphs202127343 implements ContractGraphs.Model {
                 graphPoints.removePoint(elementsPoint.get(idElement));
                 elementsPoint.remove(idElement);
                 presenter.updateGraph();
+                graphPoints.setTmpElementsPoint(elementsPoint);
             } else {
                 presenter.notifyWarning("Contiene una ruta, no se puede borrar");
             }
@@ -97,17 +99,19 @@ public class ManagerModelGraphs202127343 implements ContractGraphs.Model {
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
-
+        graphPoints.getShortRoute(idElementPoint1, idElementPoint2, Graph.DISTANCE);
+        presenter.updateResultGraph();
     }
 
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
-
+        graphPoints.getShortRoute(idElementPoint1, idElementPoint2, Graph.TIME);
+        presenter.updateResultGraph();
     }
 
     @Override
     public Set<MapElement> getResultElements() {
-        return new HashSet<>(elementsPoint.values());
+        return new HashSet<>(graphPoints.getRoutesElements().values());
     }
 
     @Override
