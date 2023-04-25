@@ -7,7 +7,9 @@ import co.edu.uptc.views.About.PanelAbout;
 import co.edu.uptc.views.Globals.ValuesGlobals;
 import co.edu.uptc.views.maps.PanelMaps;
 import co.edu.uptc.views.people.PanelPeople;
+import co.edu.uptc.views.users.ConfiguratorUser;
 import co.edu.uptc.views.users.Login;
+import co.edu.uptc.views.users.User;
 
 
 import javax.swing.*;
@@ -26,12 +28,21 @@ public class DashBoard extends JFrame implements ContractPeople.View {
 
     private PanelMenu panelMenu;
     private JPanel panelCenter;
-    private Login login;
+    private User currentUser;
+    private ConfiguratorUser configuratorUser;
 
 
     public DashBoard() {
         configGlobal();
         initializeComponents();
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
     private void configGlobal() {
@@ -45,11 +56,11 @@ public class DashBoard extends JFrame implements ContractPeople.View {
         addMenu();
         addHeader();
         showPanelAbout();
-        addUsersComponents();
+        showLoginDialog();
     }
 
-    private void addUsersComponents() {
-        login = new Login(this);
+    public void showLoginDialog() {
+        Login login = new Login(this);
         login.setVisible(true);
     }
 
@@ -77,6 +88,12 @@ public class DashBoard extends JFrame implements ContractPeople.View {
         panelPeople = new PanelPeople(this);
         panelCenter.add(panelPeople);
         panelPeople.updatedPerson();
+    }
+
+    protected void showPanelConfiguratonsUser(){
+        setPanel();
+        configuratorUser = new ConfiguratorUser(this);
+        panelCenter.add(configuratorUser);
     }
 
     protected void showPanelAbout() {
@@ -141,6 +158,10 @@ public class DashBoard extends JFrame implements ContractPeople.View {
         if (panelAbout != null) {
             panelAbout.setVisible(false);
             remove(panelAbout);
+        }
+        if (configuratorUser != null){
+            configuratorUser.setVisible(false);
+            remove(configuratorUser);
         }
     }
 
