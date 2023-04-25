@@ -11,13 +11,13 @@ import java.util.*;
 public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
 
     private ContractGraphs.Presenter presenter;
-    private Map<Integer,MapElement> elements;
-    private Map<Integer,MapElement> elementsResult;
+    private Map<Integer, MapElement> elements;
+    private Map<Integer, MapElement> elementsResult;
     private Graph graph;
 
     private int count = 0;
 
-    public ManagerModelGraphs202022012(){
+    public ManagerModelGraphs202022012() {
         elements = new HashMap<>();
         elementsResult = new HashMap<>();
         graph = new Graph();
@@ -35,53 +35,57 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
         presenter.updateGraph();
     }
 
-    public void addElementOnly(MapElement mapElement){
+    public void addElementOnly(MapElement mapElement) {
         mapElement.setIdElement(count++);
         elements.put(mapElement.getIdElement(), mapElement);
         addElementsToGraph(mapElement);
     }
 
-    private void addElementsToGraph(MapElement mapElement){
-        if(mapElement.getElementType() == ElementType.POINT){
+    private void addElementsToGraph(MapElement mapElement) {
+        if (mapElement.getElementType() == ElementType.POINT) {
             graph.addNode(new Node(mapElement));
-        }else{
+        } else {
             graph.addEdge(new Edge(mapElement.getMapRoute()));
         }
     }
 
     private void saveData() {
-       graph.saveData(graph);
+        graph.saveData(graph);
     }
 
     @Override
     public void deletePoint(int idPoint) {
-        if(elements.containsKey(idPoint)){
-            if(!isRelation(idPoint)) {
+        if (elements.containsKey(idPoint)) {
+            if (!isRelation(idPoint)) {
                 graph.deletePoint(elements.get(idPoint));
+                saveData();
                 elements.remove(idPoint);
                 presenter.updateGraph();
-            }else{
+            } else {
                 presenter.notifyWarning("No se puede borrar, el punto esta conectado");
             }
         }
     }
 
-    private boolean isRelation(int id){
+    private boolean isRelation(int id) {
         for (MapElement mapElement : elements.values()) {
-            if (mapElement.getElementType()== ElementType.ROUTE){
+            if (mapElement.getElementType() == ElementType.ROUTE) {
                 if (mapElement.getMapRoute().getPoint1().getIdElement() == id
-                    || mapElement.getMapRoute().getPoint2().getIdElement() == id) {
+                        || mapElement.getMapRoute().getPoint2().getIdElement() == id) {
                     return true;
                 }
             }
         }
-        return  false;
+        return false;
     }
 
     @Override
     public void findSortestRouteINDisntance(int idElementPoint1, int idElementPoint2) {
-
+        elementsResult = graph.minDis(idElementPoint1,idElementPoint2);
+        elementsResult.putAll(graph.edgeToMapElement(elements));
+        presenter.updateResultGraph();
     }
+
 
     @Override
     public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
@@ -90,7 +94,7 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
 
     @Override
     public Set<MapElement> getResultElements() {
-        return null;
+        return new HashSet<>(elementsResult.values());
     }
 
     @Override
@@ -99,6 +103,7 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
         mapElement.getMapRoute().setSpeedRoute(mapElementModify.getMapRoute().getSpeedRoute());
         mapElement.getMapRoute().setOrientationRoutes(mapElementModify.getMapRoute().getOrientationRoutes());
         mapElement.getMapRoute().setTypeRoute(mapElementModify.getMapRoute().getTypeRoute());
+        saveData();
     }
 
     @Override
@@ -113,14 +118,14 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
 
     @Override
     public MapElement getElement(int idElementPoint1, int idElementPoint2) {
-        for (MapElement mapElement: elements.values()) {
-            if (mapElement.getElementType()== ElementType.ROUTE){
-                if ((mapElement.getMapRoute().getPoint1().getIdElement()==idElementPoint1) &&
-                        (mapElement.getMapRoute().getPoint2().getIdElement()==idElementPoint2)) {
+        for (MapElement mapElement : elements.values()) {
+            if (mapElement.getElementType() == ElementType.ROUTE) {
+                if ((mapElement.getMapRoute().getPoint1().getIdElement() == idElementPoint1) &&
+                        (mapElement.getMapRoute().getPoint2().getIdElement() == idElementPoint2)) {
                     return mapElement;
                 }
-                if ((mapElement.getMapRoute().getPoint2().getIdElement()==idElementPoint1) &&
-                        (mapElement.getMapRoute().getPoint1().getIdElement()==idElementPoint2)) {
+                if ((mapElement.getMapRoute().getPoint2().getIdElement() == idElementPoint1) &&
+                        (mapElement.getMapRoute().getPoint1().getIdElement() == idElementPoint2)) {
                     return mapElement;
                 }
 
@@ -142,12 +147,10 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
     @Override
     public void loadGraphs() {
         Graph graph1 = graph.loadData();
-        if(graph1 != null) {
-            for (int i = 0; i < graph1.getNodes().size(); i++) {
-                System.out.println(graph1.getNodes().size());
-                addElementOnly(graph1.getNodes().get(i).getMapElement());
+        if (graph1 != null) {
+            for (int i = 0; i < graph1.getElements().size(); i++) {
+                addElementOnly(graph1.getElements().get(i).getMapElement());
             }
-            System.out.println("size: " + graph1.getEdges().size());
             for (int i = 0; i < graph1.getEdges().size(); i++) {
                 MapRoute mapRoute = new MapRoute();
                 mapRoute.setOrientationRoutes(graph1.getEdges().get(i).getMapRoute().getOrientationRoutes());
@@ -156,13 +159,10 @@ public class ManagerModelGraphs202022012 implements ContractGraphs.Model {
                 mapRoute.setSpeedRoute((graph1.getEdges().get(i).getMapRoute().getSpeedRoute()));
                 mapRoute.setTypeRoute(graph1.getEdges().get(i).getMapRoute().getTypeRoute());
                 MapElement mapElement = new MapElement(mapRoute);
-                System.out.println("entraaa");
                 addElementOnly(mapElement);
             }
         }
     }
-
-
 
 
 }
