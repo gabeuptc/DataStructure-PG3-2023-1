@@ -1,4 +1,4 @@
-package co.edu.uptc.models.graphs.Graphs202113214;
+package co.edu.uptc.models.graphs.modelGraphs202113214;
 
 import java.util.ArrayList;
 import java.util.HashSet;
