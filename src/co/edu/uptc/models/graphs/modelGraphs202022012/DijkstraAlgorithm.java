@@ -21,7 +21,7 @@ public class DijkstraAlgorithm {
         path = new ArrayList<>();
     }
 
-    public List<MapElement> shortestPath(int idNode1, int idNode2) {
+    public List<MapElement> shortestPath(int idNode1, int idNode2, int type) {
         Node source = null;
         Node target = null;
         for (Node node : graph.getElements()) {
@@ -37,7 +37,7 @@ public class DijkstraAlgorithm {
         }
         setNodeMaxValue();
         setSource(source);
-        browsePath(target);
+        browsePath(target,type);
         addPoints(target);
         return path;
     }
@@ -64,22 +64,51 @@ public class DijkstraAlgorithm {
         }
     }
 
-    private void browsePath(Node target){
+    private void browsePath(Node target, int type){
         while (!queue.isEmpty()) {
             Node current = queue.poll();
             if (current.equals(target)) {
                 break;
             }
-            for (Edge edge : graph.getEdges()) {
-                if (edge.getMapRoute().getPoint1().getIdElement() == current.getMapElement().getIdElement()) {
-                    double distance = distances.get(current) + edge.getDistance();
-                    if (distance < distances.get(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()))) {
-                        distances.put(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()), distance);
-                        previous.put(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()), edge);
-                        queue.add(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()));
+            switch (type) {
+                case Graph.DISTANCE -> {
+                    for (Edge edge : graph.getEdges()) {
+                        if (edge.getMapRoute().getPoint1().getIdElement() == current.getMapElement().getIdElement()
+                                || edge.getMapRoute().getPoint2().getIdElement() == current.getMapElement().getIdElement()){
+                            double distance = distances.get(current) + edge.getDistance();
+                            addIntoLists(edge, distance);
+//                        if (distance < distances.get(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()))) {
+//                            distances.put(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()), distance);
+//                            previous.put(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()), edge);
+//                            queue.add(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()));
+//                        }
+                        }
+                    }
+                }
+                case Graph.TIME -> {
+                    for (Edge edge : graph.getEdges()) {
+                        if ((edge.getMapRoute().getPoint1().getIdElement()  == current.getMapElement().getIdElement() ||
+                                edge.getMapRoute().getPoint2().getIdElement() == current.getMapElement().getIdElement())) {
+                            double time = distances.get(current) + edge.getTime();
+                            addIntoLists(edge, time);
+//                            if (time < distances.get(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()))) {
+//                                distances.put(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()), time);
+//                                previous.put(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()), edge);
+//                                queue.add(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()));
+//                            }
+                        }
                     }
                 }
             }
+        }
+
+    }
+
+    private void addIntoLists(Edge edge, double param){
+        if (param < distances.get(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()))) {
+            distances.put(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()), param);
+            previous.put(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()), edge);
+            queue.add(graph.getNodeById(edge.getMapRoute().getPoint2().getIdElement()));
         }
     }
 
