@@ -259,8 +259,6 @@ public class PanelMaps extends JPanel {
                 JOptionPane.showMessageDialog(null,"Error técnico");
             }
         }
-
-
     }
 
 }
