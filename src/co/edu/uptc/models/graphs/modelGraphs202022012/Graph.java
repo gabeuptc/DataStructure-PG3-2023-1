@@ -12,10 +12,11 @@ public class Graph {
 
     private List<Node> elements;
     private List<Edge> edges;
-    private UtilGraphs utilGraphs;
+    private transient UtilGraphs utilGraphs;
     private transient DijkstraAlgorithm dijkstraAlgorithm;
-    private Set<MapElement> shortestPath;
-
+    private transient Set<MapElement> shortestPath;
+    public static final int TIME = 0;
+    public static final int DISTANCE = 1;
     public Graph() {
         elements = new ArrayList<>();
         edges = new ArrayList<>();
@@ -52,12 +53,6 @@ public class Graph {
         return Persistence.getInstance().loadData();
     }
 
-    public Set<MapElement> calculateFastestRout(MapPointGraph point1, MapPointGraph point2) {
-        Set<MapElement> mapElements = new HashSet<>();
-        return mapElements;
-
-    }
-
     public void setEdgeDistance() {
         for (Edge edge : edges) {
             edge.setDistance(utilGraphs.calculateDistance(edge.getMapRoute().getPoint1(), edge.getMapRoute().getPoint2()));
@@ -82,8 +77,8 @@ public class Graph {
         return edges1;
     }
 
-    public Map<Integer, MapElement> minDis(int id1, int id2) {
-        List<MapElement> list = dijkstraAlgorithm.shortestPath(id1, id2);
+    public Map<Integer, MapElement> getShortestPath(int id1, int id2, int type) {
+        List<MapElement> list = dijkstraAlgorithm.shortestPath(id1, id2, type);
         Map<Integer, MapElement> elementMap = new HashMap<>();
         for (MapElement map : list) {
             elementMap.put(map.getIdElement(), map);
@@ -108,15 +103,25 @@ public class Graph {
     public List<Edge> getEdgesToMapElements(List<MapElement> mapElements) {
         int count = 0;
         List<Edge> edgesAux = new ArrayList<>();
-        while (count < mapElements.size() - 1) {
             for (Edge edge : edges) {
                 if (edge.getMapRoute().getPoint1().getIdElement() == mapElements.get(count).getIdElement()
-                        && edge.getMapRoute().getPoint2().getIdElement() == mapElements.get(count + 1).getIdElement()) {
+                        || edge.getMapRoute().getPoint2().getIdElement() == mapElements.get(count).getIdElement()) {
                     edgesAux.add(edge);
+                    count++;
+                }
+                if(count <= mapElements.size()){
+                    return edgesAux;
                 }
             }
-            count++;
-        }
+//        while (count <= mapElements.size() - 1) {
+//            for (Edge edge : edges) {
+//                if (edge.getMapRoute().getPoint1().getIdElement() == mapElements.get(count).getIdElement()
+//                        && edge.getMapRoute().getPoint2().getIdElement() == mapElements.get(count + 1).getIdElement()) {
+//                    edgesAux.add(edge);
+//                }
+//            }
+//            count++;
+//        }
         return edgesAux;
     }
 
@@ -129,6 +134,9 @@ public class Graph {
                 if (mapElement.getValue().getMapRoute().equals(edges1.get(count).getMapRoute())) {
                     elementMap.put(mapElement.getKey(), mapElement.getValue());
                     count++;
+                    if(count == edges1.size()){
+                        return elementMap;
+                    }
                 }
             }
 
