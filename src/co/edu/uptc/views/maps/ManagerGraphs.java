@@ -68,7 +68,7 @@ public class ManagerGraphs extends JPanel implements ContractGraphs.View{
         }
     }
     public String getUser(){
-        return presenterGraphs.getUser();
+        return instance.presenterGraphs.getUser();
     }
 
 }

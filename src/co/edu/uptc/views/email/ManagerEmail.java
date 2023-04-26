@@ -59,9 +59,11 @@ public class ManagerEmail {
             emailToSend.setSubject(subject);
             emailToSend.setContent(elements);
 
+            sendEmail();
 
-        } catch (MessagingException e) {
-            JOptionPane.showMessageDialog(null,"No se creó el correo");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"No se creó el correo, " +
+                    "compruebe el nombre del archivo dentro de las properties");
         }
     }
 
@@ -73,8 +75,9 @@ public class ManagerEmail {
             transport.close();
 
             JOptionPane.showMessageDialog(null, "Correo enviado");
-        } catch (MessagingException ex) {
-            JOptionPane.showMessageDialog(null,"No se envió el mensaje");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null,"No se envió el mensaje, " +
+                    "talvez el correo del usuario puede ser incorrecto");
         }
     }
 
