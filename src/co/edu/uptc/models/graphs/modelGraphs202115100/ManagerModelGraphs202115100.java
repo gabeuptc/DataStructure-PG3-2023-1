@@ -27,17 +27,14 @@ public class ManagerModelGraphs202115100 implements ContractGraphs.Model {
         updateGraph();
         saveGraph();
     }
-
     @Override
     public Set<MapElement> getElements() {
         return new HashSet<>(graph.getElements().values());
     }
-
     @Override
     public MapElement getElement(int id) {
         return graph.getElement(id);
     }
-
     @Override
     public MapElement getElement(int idElementPoint1, int idElementPoint2) {
         return graph.getRouteBetween(idElementPoint1, idElementPoint2);
