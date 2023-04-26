@@ -3,6 +3,7 @@ package co.edu.uptc.models.graphs.modelGraphs202128710;
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.views.maps.types.ElementType;
 
+import javax.mail.internet.NewsAddress;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,21 @@ public class Graph {
         return null;
     }
 
+    private List<Arc> searchRoutesRelation(int idElementSearch){
+        List<Arc> tmp = new ArrayList<>();
+        for (Arc aux:elementRouteList) {
+            if (!aux.getRoute()){
+                if (aux.getIdPoint1()==idElementSearch){
+                    tmp.add(aux);
+                    aux.setRoute(true);
+                } else if (aux.getIdPoint2()==idElementSearch) {
+                    tmp.add(aux);
+                    aux.setRoute(true);
+                }
+            }
+        }
+        return tmp;
+    }
 
     public void modifyRoute(MapElement mapElementModify){
         Arc arc = searchRoute(mapElementModify.getMapRoute().getPoint1().getIdElement(),
@@ -96,15 +112,84 @@ public class Graph {
         return false;
     }
 
-    public void findShortestRouteInTime(int idElementPoint1, int idElementPoint2) {
-
+    public double distanceToDestinationPoint(int idPointActual,int idPointFinal){
+        Node tmp1 = searchElementPointId(idPointActual);
+        Node tmp2 = searchElementPointId(idPointFinal);
+        return distanceCoord(tmp1.getNode().getGeoPosition().getLatitude(),tmp1.getNode().getGeoPosition().getLongitude(),
+                tmp2.getNode().getGeoPosition().getLatitude(),tmp2.getNode().getGeoPosition().getLongitude());
     }
 
-    private int searchPointCurrent(int idElement,MapElement route){
-       if (idElement!=route.getMapRoute().getPoint2().getIdElement()){
-           return route.getMapRoute().getPoint2().getIdElement();
+    public Arc findPossibleRoute(int idElementSearch,double distance, int idPointFinal){
+        List<Arc> tmp = searchRoutesRelation(idElementSearch);
+        double distanceTmp = distance+0.3;
+        int position=-1;
+        int count = -1;
+        for (Arc aux:tmp) {
+            count++;
+            if (aux.getIdPoint1()!=idElementSearch) {
+                if (distanceToDestinationPoint(aux.getIdPoint1(),idPointFinal)<distanceTmp){
+                    position=count;
+                    distanceTmp = distanceToDestinationPoint(aux.getIdPoint1(),idPointFinal);
+                }
+            }
+        }
+        if (position==-1){
+            return null;
+        }
+        return tmp.get(position);
+    }
+
+    public void findShortestRouteInDistance(int idElementPoint1, int idElementPoint2) {
+        double distance = distanceToDestinationPoint(idElementPoint1,idElementPoint2);
+        RoutesResult tmp = new RoutesResult();
+        List<Arc> relationRoute = searchRoutesRelation(idElementPoint1);
+        int idPointA;
+        Boolean verify = false;
+        for (int i = 0; i < relationRoute.size(); i++) {
+            tmp.add(searchElementPointId(relationRoute.get(i).getIdPoint1()),
+                    searchElementPointId(relationRoute.get(i).getIdPoint2()),
+                    relationRoute.get(i));
+            idPointA = searchPointCurrent(idElementPoint1,relationRoute.get(i));
+            distance = distanceToDestinationPoint(idPointA,idElementPoint2);
+            while (distance!=0 && verify==false){
+                Arc arc = findPossibleRoute(idPointA,distance,idElementPoint2);
+                if (arc!=null){
+                    tmp.add(searchElementPointId(arc.getIdPoint1()),
+                            searchElementPointId(arc.getIdPoint2()),arc);
+                    idPointA = searchPointCurrent(idPointA,arc);
+                    distance = distanceToDestinationPoint(idPointA,idElementPoint2);
+                }else{
+                    verify=true;
+                }
+            }
+            possibleRouteResult.add(tmp);
+            tmp = new RoutesResult();
+        }
+        findShortRoute();
+    }
+
+    public void findShortRoute(){
+        int count =-1;
+        int position=0;
+        double distance = 0;
+        for (RoutesResult aux: possibleRouteResult) {
+            count++;
+            if (distance==0){
+                distance = aux.getDistanceRoute();
+                position = count;
+            } else if (aux.getDistanceRoute()<distance) {
+                distance = aux.getDistanceRoute();
+                position = count;
+            }
+        }
+        setRouteResult(possibleRouteResult.get(position).getRouteResult());
+    }
+
+    private int searchPointCurrent(int idElement,Arc arc){
+       if (idElement!=arc.getIdPoint2()){
+           return arc.getIdPoint2();
        }else {
-           return route.getMapRoute().getPoint1().getIdElement();
+           return arc.getIdPoint1();
        }
     }
 

@@ -2,6 +2,7 @@ package co.edu.uptc.models.graphs.modelGraphs202128710;
 
 import co.edu.uptc.pojos.MapElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoutesResult {
@@ -10,18 +11,37 @@ public class RoutesResult {
     private List<Arc> arcs;
     private List<MapElement> routeResult;
     private double distanceRoute;
+    private double timeRoute;
 
     public RoutesResult(){
+        nodes = new ArrayList<>();
+        arcs = new ArrayList<>();
+        routeResult = new ArrayList<>();
         distanceRoute =0;
     }
 
     public void add(Node point1,Node point2,Arc route){
-        nodes.add(point1);
-        nodes.add(point2);
         arcs.add(route);
-        routeResult.add(point1.getNode());
-        routeResult.add(point2.getNode());
+        distanceRoute += route.getDistance();
+        timeRoute += route.getTime();
+        if (!ignoreCopy(point1)){
+            nodes.add(point1);
+            routeResult.add(point1.getNode());
+        }
+        if (!ignoreCopy(point2)){
+            nodes.add(point2);
+            routeResult.add(point2.getNode());
+        }
         routeResult.add(route.getArc());
+    }
+
+    private Boolean ignoreCopy(Node aux){
+        for (Node tmp:nodes) {
+            if (aux.getNode().getIdElement()==tmp.getNode().getIdElement()){
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<MapElement> getRoute() {
@@ -38,5 +58,37 @@ public class RoutesResult {
 
     public void setDistanceRoute(double distanceRoute) {
         this.distanceRoute = distanceRoute;
+    }
+
+    public List<Node> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<Node> nodes) {
+        this.nodes = nodes;
+    }
+
+    public List<Arc> getArcs() {
+        return arcs;
+    }
+
+    public void setArcs(List<Arc> arcs) {
+        this.arcs = arcs;
+    }
+
+    public List<MapElement> getRouteResult() {
+        return routeResult;
+    }
+
+    public void setRouteResult(List<MapElement> routeResult) {
+        this.routeResult = routeResult;
+    }
+
+    public double getTimeRoute() {
+        return timeRoute;
+    }
+
+    public void setTimeRoute(double timeRoute) {
+        this.timeRoute = timeRoute;
     }
 }

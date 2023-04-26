@@ -1,6 +1,6 @@
 package co.edu.uptc.presenter;
 
-import co.edu.uptc.models.graphs.Graphs202113214.ManagerModelGraphs202113214;
+import co.edu.uptc.models.graphs.modelGraphs202113214.ManagerModelGraphs202113214;
 import co.edu.uptc.models.graphs.modelGraphs202022012.ManagerModelGraphs202022012;
 import co.edu.uptc.models.graphs.modelGraphs202114641.ManagerModelGraphs202114641;
 import co.edu.uptc.models.graphs.modelGraphs202113049.ManagerModelGraphs202113049;
@@ -51,28 +51,17 @@ public class ManagerGeneral {
 
     ContractGraphs.Presenter presenterGraphs;
     ContractGraphs.Model modelGraphProof;
-    ContractGraphs.Model modelGraphs202127812;
-    ContractGraphs.Model modelGraphs202127061;
-    ContractGraphs.Model modelGraphs202023577;
-    ContractGraphs.Model modelGraphs201612075;
-    ContractGraphs.Model modelGraphs202127717;
-    ContractGraphs.Model modelGraphs202128778;
-    ContractGraphs.Model modelGraphs202113049;
-    ContractGraphs.Model modelGraphs201920890;
-    ContractGraphs.Model modelGraphs202128687;
     ContractGraphs.Model modelGraphs202022012;
-    ContractGraphs.Model modelGraphs201813802;
+    ContractGraphs.Model modelGraphs202113049;
     ContractGraphs.Model modelGraphs202113214;
     ContractGraphs.Model modelGraphs202114641;
     ContractGraphs.Model modelGraphs202115100;
-    ContractGraphs.Model modelGraphs202128710;
-    ContractGraphs.Model modelGraphs202112690;
-    ContractGraphs.Model modelGraphs202114852;
-    ContractGraphs.Model modelGraphs201721830;
-    ContractGraphs.Model modelGraphs201721961;
-    ContractGraphs.Model modelGraphs201912254;
+    ContractGraphs.Model modelGraphs202127061;
     ContractGraphs.Model modelGraphs202127343;
-
+    ContractGraphs.Model modelGraphs202127717;
+    ContractGraphs.Model modelGraphs202127812;
+    ContractGraphs.Model modelGraphs202128687;
+    ContractGraphs.Model modelGraphs202128710;
 
 
     private ManagerGeneral() {
@@ -90,7 +79,6 @@ public class ManagerGeneral {
 
         view.setPresenter(presenter);
         viewGraphs.setPresenter(presenterGraphs);
-
 
         createModelsPeople();
         createModelGraphs();
@@ -120,30 +108,19 @@ public class ManagerGeneral {
 
     private void createModelGraphs() {
         modelGraphProof = new ModelProof();
-        modelGraphs202127812 = new ManagerModelGraphs202127812();
-        modelGraphs202127061 = new ManagerModelGraphs202127061();
-        //modelGraphs202023577 = new ManagerModelGraphs202023577();
-        //modelGraphs201612075 = new ManagerModelGraphs201612075();
-        modelGraphs202127717 = new ManagerModelGraphs202127717();
-        //modelGraphs202128778 = new ManagerModelGraphs202128778();
-        modelGraphs202113049 = new ManagerModelGraphs202113049();
-        //modelGraphs201920890 = new ManagerModelGraphs201920890();
-        modelGraphs202128687 = new ManagerModelGraphs202128687();
         modelGraphs202022012 = new ManagerModelGraphs202022012();
-        //modelGraphs201813802 = new ManagerModelGraphs201813802();
-        modelGraphs202114641 = new ManagerModelGraphs202114641();
+        modelGraphs202113049 = new ManagerModelGraphs202113049();
         modelGraphs202113214 = new ManagerModelGraphs202113214();
+        modelGraphs202114641 = new ManagerModelGraphs202114641();
         modelGraphs202115100 = new ManagerModelGraphs202115100();
-        modelGraphs202128710 = new ManagerModelGraphs202128710();
-        //modelGraphs202112690 = new ManagerModelGraphs202112690();
-        //modelGraphs202114852 = new ManagerModelGraphs202114852();
-        //modelGraphs201721830 = new ManagerModelGraphs201721830();
-        //modelGraphs201721961 = new ManagerModelGraphs201721961();
-        //modelGraphs201912254 = new ManagerModelGraphs201912254();
+        modelGraphs202127061 = new ManagerModelGraphs202127061();
         modelGraphs202127343 = new ManagerModelGraphs202127343();
+        modelGraphs202127717 = new ManagerModelGraphs202127717();
+        modelGraphs202127812 = new ManagerModelGraphs202127812();
+        modelGraphs202128687 = new ManagerModelGraphs202128687();
+        modelGraphs202128710 = new ManagerModelGraphs202128710();
 
     }
-
 
     public void configModelUserGerman() {
         modelGerman.setPresenter(presenter);
@@ -217,7 +194,7 @@ public class ManagerGeneral {
         try {
             modelGraphProof.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphProof);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            viewGraphs.setUser("Modelo de: " + presenterGraphs.getModel().getUser());
             modelGraphProof.loadGraphs();
             viewGraphs.updateGraph();
 
@@ -228,75 +205,12 @@ public class ManagerGeneral {
         }
     }
 
-    public void configModelGraphs202127812() {
+    public void configModelGraphs202022012() {
         try {
-            modelGraphs202127812.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs202127812);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs202127812.loadGraphs();
-            viewGraphs.updateGraph();
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs202127061() {
-        try {
-            modelGraphs202127061.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs202127061);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs202127061.loadGraphs();
-            viewGraphs.updateGraph();
-        } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs202023577() {
-        try {
-            modelGraphs202023577.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs202023577);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs202023577.loadGraphs();
-            viewGraphs.updateGraph();
-        } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs201612075() {
-        try {
-            modelGraphs201612075.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs201612075);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs201612075.loadGraphs();
-            viewGraphs.updateGraph();
-        } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs202127717() {
-        try {
-            modelGraphs202127717.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs202127717);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs202127717.loadGraphs();
-            viewGraphs.updateGraph();
-        } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs202128778() {
-        try {
-            modelGraphs202128778.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs202128778);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs202128778.loadGraphs();
+            modelGraphs202022012.setPresenter(presenterGraphs);
+            presenterGraphs.setModel(modelGraphs202022012);
+            viewGraphs.setUser("Modelo de: " + presenterGraphs.getModel().getUser());
+            modelGraphs202022012.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -307,56 +221,8 @@ public class ManagerGeneral {
         try {
             modelGraphs202113049.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202113049);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            viewGraphs.setUser("Modelo de: " + presenterGraphs.getModel().getUser());
             modelGraphs202113049.loadGraphs();
-            viewGraphs.updateGraph();
-        } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs201920890() {
-        try {
-            modelGraphs201920890.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs201920890);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs201920890.loadGraphs();
-            viewGraphs.updateGraph();
-        } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs202128687() {
-        try {
-            modelGraphs202128687.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs202128687);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs202128687.loadGraphs();
-            viewGraphs.updateGraph();
-        } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs202022012() {
-        try {
-            modelGraphs202022012.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs202022012);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs202022012.loadGraphs();
-            viewGraphs.updateGraph();
-        } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs201813802() {
-        try {
-            modelGraphs201813802.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs201813802);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs201813802.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -367,7 +233,7 @@ public class ManagerGeneral {
         try {
             modelGraphs202113214.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202113214);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            viewGraphs.setUser("Modelo de: " + presenterGraphs.getModel().getUser());
             modelGraphs202113214.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
@@ -380,7 +246,7 @@ public class ManagerGeneral {
         try {
             modelGraphs202114641.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202114641);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            viewGraphs.setUser("Modelo de: " + presenterGraphs.getModel().getUser());
             modelGraphs202114641.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
@@ -392,7 +258,7 @@ public class ManagerGeneral {
         try {
             modelGraphs202115100.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202115100);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            viewGraphs.setUser("Modelo de: " + presenterGraphs.getModel().getUser());
             modelGraphs202115100.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
@@ -400,72 +266,12 @@ public class ManagerGeneral {
         }
     }
 
-    public void configModelGraphs202128710() {
+    public void configModelGraphs202127061() {
         try {
-            modelGraphs202128710.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs202128710);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs202128710.loadGraphs();
-            viewGraphs.updateGraph();
-        } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs202112690() {
-        try {
-            modelGraphs202112690.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs202112690);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs202112690.loadGraphs();
-            viewGraphs.updateGraph();
-        } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs202114852() {
-        try {
-            modelGraphs202114852.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs202114852);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs202114852.loadGraphs();
-            viewGraphs.updateGraph();
-        } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs201721830() {
-        try {
-            modelGraphs201721830.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs201721830);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs201721830.loadGraphs();
-            viewGraphs.updateGraph();
-        } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs201721961() {
-        try {
-            modelGraphs201721961.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs201721961);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs201721961.loadGraphs();
-            viewGraphs.updateGraph();
-        } catch (Exception e) {
-            viewGraphs.notifyError("Modelo sin definir");
-        }
-    }
-
-    public void configModelGraphs201912254() {
-        try {
-            modelGraphs201912254.setPresenter(presenterGraphs);
-            presenterGraphs.setModel(modelGraphs201912254);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
-            modelGraphs201912254.loadGraphs();
+            modelGraphs202127061.setPresenter(presenterGraphs);
+            presenterGraphs.setModel(modelGraphs202127061);
+            viewGraphs.setUser("Modelo de: " + presenterGraphs.getModel().getUser());
+            modelGraphs202127061.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
             viewGraphs.notifyError("Modelo sin definir");
@@ -476,7 +282,7 @@ public class ManagerGeneral {
         try {
             modelGraphs202127343.setPresenter(presenterGraphs);
             presenterGraphs.setModel(modelGraphs202127343);
-            viewGraphs.setUser("Modelo de: "+presenterGraphs.getModel().getUser());
+            viewGraphs.setUser("Modelo de: " + presenterGraphs.getModel().getUser());
             modelGraphs202127343.loadGraphs();
             viewGraphs.updateGraph();
         } catch (Exception e) {
@@ -484,6 +290,54 @@ public class ManagerGeneral {
         }
     }
 
+    public void configModelGraphs202127717() {
+        try {
+            modelGraphs202127717.setPresenter(presenterGraphs);
+            presenterGraphs.setModel(modelGraphs202127717);
+            viewGraphs.setUser("Modelo de: " + presenterGraphs.getModel().getUser());
+            modelGraphs202127717.loadGraphs();
+            viewGraphs.updateGraph();
+        } catch (Exception e) {
+            viewGraphs.notifyError("Modelo sin definir");
+        }
+    }
+
+
+    public void configModelGraphs202127812() {
+        try {
+            modelGraphs202127812.setPresenter(presenterGraphs);
+            presenterGraphs.setModel(modelGraphs202127812);
+            viewGraphs.setUser("Modelo de: " + presenterGraphs.getModel().getUser());
+            modelGraphs202127812.loadGraphs();
+            viewGraphs.updateGraph();
+        } catch (Exception e) {
+            viewGraphs.notifyError("Modelo sin definir");
+        }
+    }
+
+    public void configModelGraphs202128687() {
+        try {
+            modelGraphs202128687.setPresenter(presenterGraphs);
+            presenterGraphs.setModel(modelGraphs202128687);
+            viewGraphs.setUser("Modelo de: " + presenterGraphs.getModel().getUser());
+            modelGraphs202128687.loadGraphs();
+            viewGraphs.updateGraph();
+        } catch (Exception e) {
+            viewGraphs.notifyError("Modelo sin definir");
+        }
+    }
+
+    public void configModelGraphs202128710() {
+        try {
+            modelGraphs202128710.setPresenter(presenterGraphs);
+            presenterGraphs.setModel(modelGraphs202128710);
+            viewGraphs.setUser("Modelo de: " + presenterGraphs.getModel().getUser());
+            modelGraphs202128710.loadGraphs();
+            viewGraphs.updateGraph();
+        } catch (Exception e) {
+            viewGraphs.notifyError("Modelo sin definir");
+        }
+    }
 
 
     public void runProject() {
