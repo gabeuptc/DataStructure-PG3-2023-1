@@ -21,7 +21,7 @@ public class ManagerModelGraphs202114641 implements ContractGraphs.Model {
         this.presenter = presenter;
         persistence= new Persistence202114641();
         readData();
-
+        count=elements.get(elements.size()).getIdElement();
         elementsResult= new HashMap<>();
 
     }
