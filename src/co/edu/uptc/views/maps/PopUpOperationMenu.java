@@ -21,7 +21,7 @@ public class PopUpOperationMenu{
         addItemAddRoutes();
         makeMenuItemLayers();
         makeMenuItemAddOther();
-        //makeMenuItemSendEmail();
+        makeMenuItemSendEmail();
     }
 
     public SelectionType getSelectionType() {

@@ -1,5 +1,6 @@
 package co.edu.uptc.views.maps;
 
+import co.edu.uptc.models.graphs.modelGraphs202127812.ModelProof;
 import co.edu.uptc.pojos.MapElement;
 import co.edu.uptc.views.board.DashBoard;
 import co.edu.uptc.views.email.ManagerEmail;
@@ -20,8 +21,10 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 public class PanelMaps extends JPanel {
@@ -240,11 +243,22 @@ public class PanelMaps extends JPanel {
     }
 
     public void sendGraph(){
-        //TODO obtener nombre del archivo del modelo
-        ManagerEmail.getInstance().createEmail(dashBoard.getCurrentUser().getEmail(),"Grafo del modelo de "
-                + ManagerGraphs.getInstance().getUser(),"Usuario: " + dashBoard.getCurrentUser().getNameUser() + "\n Se le envia" +
-                "el grafo del  modelo de " + ManagerGraphs.getInstance().getUser(),"data/---");
-        ManagerEmail.getInstance().sendEmail();
+        if (ManagerGraphs.getInstance().getPresenterGraphs().getModel().getClass() == ModelProof.class){
+            JOptionPane.showMessageDialog(null,"Este modelo es de prueba");
+        }else {
+            try{
+                Properties properties = new Properties();
+                properties.load(new FileInputStream("resources/config.properties"));
+                String filePath = properties.getProperty("DATA_FILE_" +
+                        ManagerGraphs.getInstance().getPresenterGraphs().getModel().getClass()
+                                .getSimpleName().substring(18));
+                ManagerEmail.getInstance().createEmail(dashBoard.getCurrentUser().getEmail(),"Grafo del modelo de "
+                        + ManagerGraphs.getInstance().getUser(),"Usuario: " + dashBoard.getCurrentUser().getNameUser() +
+                        " - Se le envía el grafo del  modelo de " + ManagerGraphs.getInstance().getUser(), filePath);
+            }catch (IOException e){
+                JOptionPane.showMessageDialog(null,"Error técnico");
+            }
+        }
     }
 
 }
